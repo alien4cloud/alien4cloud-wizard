@@ -1,0 +1,7 @@
+id: alien4cloud-wizard-api
+name: API for Alien4Cloud Wizard
+version: ${project.version}
+description: >
+  This is the API for Alien4Cloud Wizard
+configuration_class: alien4cloud.wizard.PluginConfiguration
+component_descriptors:
