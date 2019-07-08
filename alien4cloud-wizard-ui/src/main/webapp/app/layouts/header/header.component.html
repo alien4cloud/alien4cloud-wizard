@@ -1,0 +1,12 @@
+<div [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+  <mat-toolbar color="primary" layout="fill">
+    Welcome to {{ title }}
+    <span class="fill-space"></span>
+    <mat-slide-toggle color="accent" (change)="onThemeChange($event)">
+      Dark Theme
+    </mat-slide-toggle>
+  </mat-toolbar>
+</div>
+<mat-card [style.fontSize.px]="'14'" [style.borderRadius.px]="'0'">
+  This is the new Alien4cloud UI using Angular <b>{{ angularVersion }}</b>
+</mat-card>

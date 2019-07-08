@@ -1,0 +1,32 @@
+.tp-button-row button,
+.tp-button-row a {
+   margin-right: 8px;
+}
+
+
+.tp-card {
+    max-width: 400px;
+    height:100px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+ }
+ .tp-header-image {
+    background-size: cover;
+ }
+
+
+ .container {
+    width: 100vw;
+    height: 100vh;   
+   overflow: none;    
+}
+
+
+.solution { 
+  
+  padding: 20%;
+  overflow:none;
+}
+
+

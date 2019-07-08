@@ -1,0 +1,79 @@
+<div class="container" [class.solution-dark-theme]="isDarkThemeActive">
+  <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="space-around stretch" fxFill>
+
+    <!-- Header ------------------------------------------------------------------------->
+    <div fxFlex="none">
+      <solution-header [angularVersion]="ngVersion" [materialVersion]="'2.0.0-beta.12'">
+      </solution-header>
+    </div>
+    <!----------------------------------------------------------------------------------->
+    <mat-divider></mat-divider>
+    <!-- Solution ----------------------------------------------------------------------->
+    <mat-card fxFlex fxLayoutAlign="center start" fxLayout="row" class="solution" [style.borderRadius.px]="'0'"
+      [style.paddingTop.px]="'60'">
+
+   
+
+      <!-- Solution to your problem here ------------------------------------------------>
+      <!--
+      <button mat-button>
+        <mat-icon>mic</mat-icon> Start Recording
+      </button>
+      <br />
+      <button mat-raised-button color="accent">
+        <mat-icon>mic</mat-icon> Start Recording
+      </button>
+      -->
+      <!--------------------------------------------------------------------------------->
+ 
+
+      <mat-card>
+        <mat-card-content>
+          <div fxLayout="row" flex fxLayoutGap="10px">
+            <div fxLayout="column" flex="500">
+              <button mat-stroked-button>
+                <mat-icon>get_app</mat-icon>
+                Import
+              </button>
+      
+            </div>
+            <div fxLayout="column" flex="500">
+              <button mat-stroked-button>
+                <mat-icon>dashboard</mat-icon>
+                Dashboard Applications
+              </button>
+            </div>
+            <div fxLayout="column" flex="500">
+              <button mat-stroked-button>
+                <mat-icon>view_module</mat-icon>
+                Modules
+              </button>
+            </div>
+          </div>
+    
+          <!--<app-status>TEST STATE</app-status>-->
+          <app-apps></app-apps>
+     
+        </mat-card-content>
+
+      </mat-card>
+
+      
+
+    </mat-card>
+
+    <!-- Footer ------------------------------------------------------------------------->
+    <!--
+    <div fxFlex="none">
+      <solution-footer></solution-footer>
+    </div>
+    -->
+    <!----------------------------------------------------------------------------------->
+
+  </div>
+
+  
+
+</div>
+
+
