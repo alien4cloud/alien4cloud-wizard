@@ -30,7 +30,7 @@ export class AppsComponent implements OnInit {
     @ViewChild(MatPaginator,{static: true}) paginator: MatPaginator;
 
   constructor(
-    private restApi: AppsService , 
+    private restApi: AppsService ,
     private cookieService: CookieService,
     private myCookieService: MyCookieService) {
     restApi: AppsService
@@ -41,7 +41,7 @@ export class AppsComponent implements OnInit {
     this.loadApplications() ;
     //this.dataSource.sort = this.sort;
     this.loadStatus();
- 
+
   }
 
   ngAfterViewInit(): void {
@@ -53,7 +53,7 @@ export class AppsComponent implements OnInit {
   loadStatus() {
     return this.restApi.getStatus().subscribe((data: Status) => {
       this.state = data.status;
-      //alert("The new status is :"+this.state) ;         
+      //alert("The new status is :"+this.state) ;
       console.log("The new status is :"+this.state) ;
     })
   }
@@ -66,12 +66,12 @@ export class AppsComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
 
-      //alert("The new status is :"+this.state) ;         
+      //alert("The new status is :"+this.state) ;
       console.log("THE FIRST APP NAME IS :"+this.apps[0].name) ;
     })
-  } 
+  }
 
-  
+
 /*
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
