@@ -31,11 +31,7 @@ export class ApplicationsComponent implements OnInit {
     @ViewChild(MatPaginator,{static: true}) paginator: MatPaginator;
 
   constructor(
-<<<<<<< HEAD:alien4cloud-wizard-ui/src/main/webapp/app/layouts/applications/applications.component.ts
     private restApi: ApplicationsService , 
-=======
-    private restApi: AppsService ,
->>>>>>> 4eb5245257ee729bba4be006a9548b800a760e38:alien4cloud-wizard-ui/src/main/webapp/app/layouts/apps/apps.component.ts
     private cookieService: CookieService,
     private myCookieService: MyCookieService) {
     restApi: ApplicationsService
@@ -48,7 +44,7 @@ export class ApplicationsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   // this.dataSource.filter = filterValue.trim().toLowerCase();
     this.loadStatus();
-
+ 
   }
 
   ngAfterViewInit(): void {
@@ -60,7 +56,7 @@ export class ApplicationsComponent implements OnInit {
   loadStatus() {
     return this.restApi.getStatus().subscribe((data: Status) => {
       this.state = data.status;
-      //alert("The new status is :"+this.state) ;
+      //alert("The new status is :"+this.state) ;         
       console.log("The new status is :"+this.state) ;
     })
   }
@@ -68,33 +64,19 @@ export class ApplicationsComponent implements OnInit {
     // Get employees list
   loadApplications() {
     return this.restApi.getApplications().subscribe((data: {}) => {
-<<<<<<< HEAD:alien4cloud-wizard-ui/src/main/webapp/app/layouts/applications/applications.component.ts
      // this.apps = data['data']['data'];
       this.dataSource.data= data['data']['data'] as Application[];
       //alert("The new status is :"+this.state) ;         
       //console.log("THE FIRST APP NAME IS :"+this.apps[0].name) ;
-=======
-      this.apps = data['data']['data'];
-      this.dataSource.data = data['data']['data'] as Application[];
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-
-      //alert("The new status is :"+this.state) ;
-      console.log("THE FIRST APP NAME IS :"+this.apps[0].name) ;
->>>>>>> 4eb5245257ee729bba4be006a9548b800a760e38:alien4cloud-wizard-ui/src/main/webapp/app/layouts/apps/apps.component.ts
     })
-  }
+  } 
 
-
-<<<<<<< HEAD:alien4cloud-wizard-ui/src/main/webapp/app/layouts/applications/applications.component.ts
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   
-=======
->>>>>>> 4eb5245257ee729bba4be006a9548b800a760e38:alien4cloud-wizard-ui/src/main/webapp/app/layouts/apps/apps.component.ts
 /*
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
