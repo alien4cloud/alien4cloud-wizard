@@ -1,28 +1,45 @@
 <!--
           <br><br>
           <div>STATUT: {{state}}</div>
- -->     
-          <br><br><br>
-      
-      
-       <!--  <mat-divider></mat-divider> --> 
+ -->
+<br><br><br>
 
+
+<!--  <mat-divider></mat-divider> -->
+
+
+<mat-card>
+    <mat-card-content>
+        <div fxLayout="row" flex fxLayoutGap="10px">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Profile">
+              </mat-form-field>
+              <div fxLayout="column" flex="500">
+                  <button mat-stroked-button>
+                    Creer une application
+                  </button>
+                </div>
+          
+        </div>
+     
+    </mat-card-content>
+</mat-card>  
 <table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="Application">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Application </th>
     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
- 
+
   <ng-container matColumnDef="Description">
     <th mat-header-cell *matHeaderCellDef> Description </th>
     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
- 
+
   <ng-container matColumnDef="Etat">
-    <th mat-header-cell *matHeaderCellDef > Etat </th>
+    <th mat-header-cell *matHeaderCellDef> Etat </th>
     <td mat-cell *matCellDef="let element"> undeployed </td>
   </ng-container>
- 
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns">
   </tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

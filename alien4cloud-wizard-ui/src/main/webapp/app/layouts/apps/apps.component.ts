@@ -42,6 +42,7 @@ export class AppsComponent implements OnInit {
     this.loadApplications() ;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  // this.dataSource.filter = filterValue.trim().toLowerCase();
     this.loadStatus();
  
   }
@@ -69,6 +70,11 @@ export class AppsComponent implements OnInit {
       //console.log("THE FIRST APP NAME IS :"+this.apps[0].name) ;
     })
   } 
+
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   
 /*
