@@ -7,10 +7,12 @@ import { A4cThemeService } from './../../shared/a4c-theming/a4c-theme.service';
 })
 export class HeaderComponent {
   // -----------------------------------------------------------------------//
-  private title = 'Alien4Cloud';
+  public title = 'Alien4Cloud';
   @Input() angularVersion: string = '';
   @Input() materialVersion: string = '';
-  //private websiteUrl: string = 'https://iamfaisal.live/';  
+  //private websiteUrl: string = 'https://iamfaisal.live/';
+
+  public isActive : boolean = true;
   // -----------------------------------------------------------------------//
   constructor(private readonly _sharedDataService: A4cThemeService) { }
 

@@ -8,11 +8,11 @@ import { A4cThemeService } from '../../shared/a4c-theming/a4c-theme.service';
 })
 export class MainComponent {
 
-  
+
   title = 'Alien4cloud';
 
-  private ngVersion: string = VERSION.full;
-  private isDarkThemeActive: boolean;
+  public ngVersion: string = VERSION.full;
+  public isDarkThemeActive: boolean;
 
   constructor(private readonly _sharedDataService: A4cThemeService) {
     this._sharedDataService.OnThemeSwitch.subscribe(value => {
