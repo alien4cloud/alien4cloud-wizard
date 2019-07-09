@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { AppsService } from "./apps.service";
+import { ApplicationsService } from "./applications.service";
 import { Status } from "../../shared/a4c-payloads/status";
 import { Application } from "../../shared/a4c-payloads/application.model";
 import { CookieService } from 'ngx-cookie-service';
@@ -12,11 +12,11 @@ import {MatTableDataSource} from '@angular/material/table';
 
 
 @Component({
-  selector: 'app-apps',
-  templateUrl: './apps.component.html',
-  styleUrls: ['./apps.component.css']
+  selector: 'app-applications',
+  templateUrl: './applications.component.html',
+  styleUrls: ['./applications.component.css']
 })
-export class AppsComponent implements OnInit {
+export class ApplicationsComponent implements OnInit {
 
     //public restApi;
     public state: string;
@@ -31,10 +31,10 @@ export class AppsComponent implements OnInit {
     @ViewChild(MatPaginator,{static: true}) paginator: MatPaginator;
 
   constructor(
-    private restApi: AppsService , 
+    private restApi: ApplicationsService , 
     private cookieService: CookieService,
     private myCookieService: MyCookieService) {
-    restApi: AppsService
+    restApi: ApplicationsService
   }
 
   ngOnInit() {

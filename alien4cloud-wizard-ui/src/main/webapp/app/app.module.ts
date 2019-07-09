@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
-import { AppRoutingModule } from './app-routing.module';
 // Forms module
 import { FormsModule } from '@angular/forms';
 import { RestApiService } from './shared/a4c-rest-api/rest-api.service';
@@ -25,19 +23,28 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { A4cThemeService} from './shared/a4c-theming/a4c-theme.service';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MainComponent } from './layouts/main/main.component';
-import { SharedModule } from './shared/shared.module';
-import { AppsComponent } from './layouts/apps/apps.component';
-import { AppsService } from './layouts/apps/apps.service';
+import { SharedModule } from './shared/shared.module'; 
+//import { ApplicationsComponent } from './layouts/applications/applications.component';
+import { ApplicationsService } from './layouts/applications/applications.service';
+//import { ModulesComponent } from './layouts/modules/modules.component';
+//import { ImportsComponent } from './layouts/imports/imports.component';
 
+import { AppRoutingModule,routingComponents} from './app-routing.module';
 
 @NgModule({
   declarations: [
     //AppComponent
    // StatusComponent,
     HeaderComponent,
-    AppsComponent,
+  
 
-  MainComponent],
+  MainComponent,
+
+  //ModulesComponent,
+  //ApplicationsComponent,
+  // ImportsComponent
+  routingComponents
+],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -62,7 +69,7 @@ import { AppsService } from './layouts/apps/apps.service';
     RestApiService,
     A4cThemeService,
     OverlayContainer,
-    AppsService
+    ApplicationsService
   ],
   bootstrap: [MainComponent]
 })

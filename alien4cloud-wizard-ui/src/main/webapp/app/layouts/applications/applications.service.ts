@@ -8,7 +8,7 @@ import { retry, catchError,tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AppsService {
+export class ApplicationsService {
 
   apiURL = '/api';
   public searchEnvUrl = '/rest/latest/applications/environments';

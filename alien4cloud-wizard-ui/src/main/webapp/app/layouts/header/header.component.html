@@ -10,5 +10,34 @@
 
 
 <mat-card [style.fontSize.px]="'14'" [style.borderRadius.px]="'0'">
-  This is the new Alien4cloud UI using Angular <b>{{ angularVersion }}</b>
+
+  <div fxLayout="row" flex fxLayoutGap="10px" fxLayoutAlign="center center">
+    <!--
+    <div>
+        This is the new Alien4cloud UI using Angular <b>{{ angularVersion }}</b>
+    </div>
+    -->
+      <div fxLayout="column" flex="500">
+        <button mat-stroked-button  [routerLink]="['/imports']">
+          <mat-icon>get_app</mat-icon>
+          Import
+        </button>
+    
+      </div>
+      <div fxLayout="column" flex="500">
+        <button mat-stroked-button [routerLink]="['/applications']">
+          <mat-icon>dashboard</mat-icon>
+          Dashboard Applications
+        </button>
+      </div>
+      <div fxLayout="column" flex="500">
+        <button mat-stroked-button [routerLink]="['/modules']">
+          <mat-icon>view_module</mat-icon>
+          Modules
+        </button>
+      </div>
+    </div>
+    
 </mat-card>
+
+

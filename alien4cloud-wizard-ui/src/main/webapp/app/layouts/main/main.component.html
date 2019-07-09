@@ -1,8 +1,8 @@
-<div class="container" [class.solution-dark-theme]="isDarkThemeActive">
-  <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="space-around stretch" fxFill>
+<!--<div class="container" [class.solution-dark-theme]="isDarkThemeActive"> -->
+  <div fxLayout="column" class="container" fxLayout.xs="column" fxLayoutAlign="space-around stretch"  [class.solution-dark-theme]="isDarkThemeActive" fxFill>
 
     <!-- Header ------------------------------------------------------------------------->
-    <div fxFlex="none">
+    <div>
       <solution-header [angularVersion]="ngVersion" [materialVersion]="'2.0.0-beta.12'">
       </solution-header>
     </div>
@@ -29,38 +29,14 @@
       -->
       <!--------------------------------------------------------------------------------->
  
-
-      <mat-card>
-        <mat-card-content>
-          <div fxLayout="row" flex fxLayoutGap="10px">
-            <div fxLayout="column" flex="500">
-              <button mat-stroked-button>
-                <mat-icon>get_app</mat-icon>
-                Import
-              </button>
-      
-            </div>
-            <div fxLayout="column" flex="500">
-              <button mat-stroked-button>
-                <mat-icon>dashboard</mat-icon>
-                Dashboard Applications
-              </button>
-            </div>
-            <div fxLayout="column" flex="500">
-              <button mat-stroked-button>
-                <mat-icon>view_module</mat-icon>
-                Modules
-              </button>
-            </div>
-          </div>
-    
           <!--<app-status>TEST STATE</app-status>-->
-          <app-apps></app-apps>
+          <!---app-applications></app-applications> -->
+
+
+            
+          <router-outlet></router-outlet>
      
-        </mat-card-content>
-
-      </mat-card>
-
+      
       
 
     </mat-card>
@@ -76,7 +52,8 @@
   </div>
 
   
-
+<!--
 </div>
+-->
 
 

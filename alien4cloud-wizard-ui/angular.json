@@ -24,7 +24,7 @@
               "src/main/webapp/assets"
             ],
             "styles": [
-              "src/main/webapp/content/scss/theme.scss",
+              "src/main/webapp/content/scss/global.scss",
               "src/main/webapp/content/css/styles.css"
             ],
             "scripts": []
@@ -84,7 +84,7 @@
               "src/main/webapp/favicon.ico",
               "src/main/webapp/assets"
             ],
-            "styles": [         
+            "styles": [
               "src/main/webapp/content/scss/theme.scss",
               "src/main/webapp/content/css/styles.css"
             ],
