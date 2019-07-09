@@ -24,9 +24,11 @@
 
 
 .solution { 
-  
+
   padding: 20%;
-  overflow:none;
+   
+  overflow:auto;
+  
 }
 
 
