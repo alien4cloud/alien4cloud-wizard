@@ -24,7 +24,7 @@
               "src/main/webapp/assets"
             ],
             "styles": [
-              "src/main/webapp/content/scss/global.scss",
+              "src/main/webapp/content/scss/a4c-theme.scss",
               "src/main/webapp/content/css/styles.css"
             ],
             "scripts": []

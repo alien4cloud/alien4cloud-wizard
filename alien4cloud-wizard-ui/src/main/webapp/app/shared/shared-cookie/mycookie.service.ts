@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class MyCookieService {
-private cookie  = 'node01mjxjji0b1knlzgvmc0a8czta1.node0' ;
+private cookie  = 'node0v2e7upfrndqmutty3klx6g8f2.node0' ;
 
   constructor() {} ;
 

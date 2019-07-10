@@ -1,0 +1,72 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+
+@mixin mat-table-hover($is-dark) {
+    [mat-row] {
+      @if $is-dark {
+        &:hover {
+          background: rgba(255, 255, 255, 0.04);
+        }
+      }
+      @else {
+        &:hover {
+          background: rgba(0, 0, 0, 0.04);
+        }
+      }
+    } ;
+
+    [mat-header-row] {
+        @if $is-dark {
+            background: rgba(252, 252, 252, 0.068);
+        }
+        @else {
+            background : #DCDCDC;
+
+        }
+      } ;
+  }
+
+
+
+$a4c-theme-primary: mat-palette($mat-indigo);
+$a4c-theme-accent:  mat-palette($mat-pink, A200, A100, A400);
+$a4c-theme-warn:    mat-palette($mat-red);
+$a4c-theme-theme: mat-light-theme($a4c-theme-primary, $a4c-theme-accent, $a4c-theme-warn);
+
+@include angular-material-theme($a4c-theme-theme);
+@include mat-table-hover(false);
+
+
+
+
+$a4c-theme-dark-primary: mat-palette($mat-pink);
+$a4c-theme-dark-accent:  mat-palette($mat-grey, A200, A100, A400);
+$a4c-theme-app-dark-warn:    mat-palette($mat-red);
+$a4c-dark-theme: mat-dark-theme($a4c-theme-dark-primary, $a4c-theme-dark-accent, $a4c-theme-app-dark-warn);
+
+
+.solution-dark-theme {
+  @include angular-material-theme($a4c-dark-theme);
+  @include mat-table-hover(true);
+}
+
+
+/*
+// Define a mixin that accepts a theme and outputs the theme-specific styles.
+@mixin candy-carousel-theme($theme) {
+  // Extract the palettes you need from the theme definition.
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  // Define any styles affected by the theme.
+  .mat-row:hover{
+    background-color: mat-color($primary,hover);
+  }
+}
+
+@include candy-carousel-theme($a4c-dark-theme) ;
+
+*/
+

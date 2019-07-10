@@ -30,6 +30,7 @@ import { ApplicationsService } from './layouts/applications/applications.service
 //import { ImportsComponent } from './layouts/imports/imports.component';
 
 import { AppRoutingModule,routingComponents} from './app-routing.module';
+import { ApplicationDetailsComponent } from './layouts/application-details/application-details.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,9 @@ import { AppRoutingModule,routingComponents} from './app-routing.module';
   //ModulesComponent,
   //ApplicationsComponent,
   // ImportsComponent
-  routingComponents
+  routingComponents,
+
+  ApplicationDetailsComponent
 ],
   imports: [
     BrowserModule,
