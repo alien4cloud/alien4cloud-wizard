@@ -31,6 +31,7 @@ import { ApplicationsService } from './layouts/applications/applications.service
 
 import { AppRoutingModule,routingComponents} from './app-routing.module';
 import { ApplicationDetailsComponent } from './layouts/application-details/application-details.component';
+import { MetapropertyService } from './core/metaproperties/metaproperty.service';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { ApplicationDetailsComponent } from './layouts/application-details/appli
     RestApiService,
     A4cThemeService,
     OverlayContainer,
-    ApplicationsService
+    ApplicationsService,
+    MetapropertyService
   ],
   bootstrap: [MainComponent]
 })

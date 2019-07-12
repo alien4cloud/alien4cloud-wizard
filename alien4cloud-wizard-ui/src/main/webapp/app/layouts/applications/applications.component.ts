@@ -8,6 +8,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MetapropertyService } from '../../core/metaproperties/metaproperty.service';
+import { Metaproperty } from '../../shared/a4c-payloads/metaproperty.model';
 //import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
@@ -35,7 +37,8 @@ export class ApplicationsComponent implements OnInit {
 
   public state: string;
   public apps: Application[];
-  public displayedColumns: string[] = ['select','name', 'id', 'Etat'];
+  public metas: Metaproperty[];
+  public displayedColumns: string[] = ['select','name', 'description', 'Etat'];
 
   /* Sort */
   public dataSource = new MatTableDataSource<Application>();
@@ -46,10 +49,12 @@ export class ApplicationsComponent implements OnInit {
 
   /* selection */
   selection = new SelectionModel<Application>(allowMultiSelect, initialSelection);
-  //theCheckbox = false;
-  //marked = false;
-  //@Input ("Selected") isSelecteded : boolean ;
-  //selection = new SelectionModel<Application>(true, []);
+
+   /* recuperation metatproperties */
+   targetAppsLocations :string[] = ["application","location"]
+   targetApps :string[] = ["application"]
+
+
 
 
 
@@ -57,7 +62,9 @@ export class ApplicationsComponent implements OnInit {
   constructor(
     private restApi: ApplicationsService,
     private cookieService: CookieService,
-    private myCookieService: MyCookieService) {
+    private myCookieService: MyCookieService,
+    private metapropertiesService: MetapropertyService
+    ) {
     restApi: ApplicationsService
   }
 
@@ -66,7 +73,8 @@ export class ApplicationsComponent implements OnInit {
     this.loadApplications();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.loadStatus();
+    //this.loadStatus();
+    this.loadMetaproperties(this.targetApps) ;
 
   }
 
@@ -91,6 +99,19 @@ export class ApplicationsComponent implements OnInit {
       this.dataSource.data = data['data']['data'] as Application[];
     })
   }
+
+    // Get applications metaproperties
+    loadMetaproperties(metas:string[]) {
+      return this.metapropertiesService.getMetaproperties(metas).subscribe((data: {}) => {
+        this.metas = data['data']['data'];
+        console.log("The first meta is : "+this.metas[0].name) ;
+      
+      })
+    }
+
+
+
+
 
 
   applyFilter(filterValue: string) {
@@ -128,20 +149,6 @@ export class ApplicationsComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
   }
-
-  
-  isAppSelected() {
-    //return this.checked ;
-    return true
-    //return this.marked ;
-  }
-
- /*   
-  toggleVisibility(e){
-    this.marked= e.target.checked;
-  }
-*/
-
 
 }
 

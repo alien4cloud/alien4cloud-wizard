@@ -13,6 +13,7 @@ export class ApplicationsService {
   apiURL = '/api';
   public searchEnvUrl = '/rest/latest/applications/environments';
   public searchUrl = '/rest/latest/applications/search';
+ 
 
   projects: Application[];
 
