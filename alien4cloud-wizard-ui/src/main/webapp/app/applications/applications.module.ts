@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {A4cMaterialModule} from '../shared/a4c-material/a4c-material.module';
+import {A4cMaterialModule} from '@app/shared/a4c-material.module';
 
 @NgModule({
   declarations: [],

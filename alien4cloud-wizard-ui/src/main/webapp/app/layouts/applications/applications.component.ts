@@ -1,15 +1,10 @@
 import { Component, OnInit, ViewChild ,Input } from '@angular/core';
-import { ApplicationsService } from "./applications.service";
-import { Status } from "../../shared/a4c-payloads/status";
-import { Application } from "../../shared/a4c-payloads/application.model";
+import { Application, ApplicationsService,MyCookieService ,MetapropertyService,Metaproperty} from "@app/core";
 import { CookieService } from 'ngx-cookie-service';
-import { MyCookieService } from '../../shared/shared-cookie/mycookie.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MetapropertyService } from '../../core/metaproperties/metaproperty.service';
-import { Metaproperty } from '../../shared/a4c-payloads/metaproperty.model';
 //import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
@@ -84,13 +79,14 @@ export class ApplicationsComponent implements OnInit {
   } */
 
 
-  // Get status
+  /*
   loadStatus() {
     return this.restApi.getStatus().subscribe((data: Status) => {
       this.state = data.status;
       console.log("The new status is :" + this.state);
     })
   }
+  */
 
   // Get applications list
   loadApplications() {

@@ -1,6 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { Application } from "../../shared/a4c-payloads/application.model";
-import { Metaproperty } from '../../shared/a4c-payloads/metaproperty.model';
+import { Application,Metaproperty } from "@app/core";
+
 
 @Component({
   selector: 'app-application-details',

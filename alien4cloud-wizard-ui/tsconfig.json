@@ -18,6 +18,11 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@app/*": ["src/main/webapp/app/*"],
+      "@env/*": ["src/main/webapp/environments/*"],
+      "@cont/*": ["src/main/webapp/content/*"]
+    }
   }
 }

@@ -1,3 +1,3 @@
 export class Status {
-    status: string ;
+    status: string;
 }

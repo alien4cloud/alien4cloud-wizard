@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { A4cThemeService } from './../../shared/a4c-theming/a4c-theme.service';
+import { A4cThemeService } from '@app/core';
 
 @Component({
   selector: 'solution-header',

@@ -22,7 +22,9 @@ th.mat-sort-header-sorted {
 }
 */
 
-
+p {
+  max-width: 75ch;
+}
 
 
 /* expandable row */

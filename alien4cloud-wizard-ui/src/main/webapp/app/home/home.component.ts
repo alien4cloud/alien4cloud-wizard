@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { MyCookieService } from '../shared/shared-cookie/mycookie.service';
-import { RestApiService } from "../shared/a4c-rest-api/rest-api.service";
+import { MyCookieService } from '@app/core';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +10,7 @@ import { RestApiService } from "../shared/a4c-rest-api/rest-api.service";
 export class HomeComponent implements OnInit {
 
   constructor(
-    private restApi: RestApiService,
+    //private restApi: RestApiService,
     private cookieService: CookieService,
     private myCookieService: MyCookieService
   ) { }
@@ -23,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   // Get employees list
   loadApplications() {
-    this.restApi.getApplications();
+    //this.restApi.getApplications();
   }
 
 

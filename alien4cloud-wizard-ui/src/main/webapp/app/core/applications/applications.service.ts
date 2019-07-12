@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Status } from '../../shared/a4c-payloads/status';
-import { Application } from '../../shared/a4c-payloads/application.model';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError,tap } from 'rxjs/operators';
+import { Status,Application } from '@app/core';
+
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,7 @@ export class ApplicationsService {
     }
   
     // HttpClient API get() method => Fetch employees list
+    
     getStatus(): Observable<Status> {
       return this.http.get<Status>(this.apiURL + '/rest/admin/health')
         .pipe(

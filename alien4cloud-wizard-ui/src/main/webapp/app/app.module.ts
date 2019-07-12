@@ -3,35 +3,17 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 // Forms module
 import { FormsModule } from '@angular/forms';
-import { RestApiService } from './shared/a4c-rest-api/rest-api.service';
-import { MyCookieService } from './shared/shared-cookie/mycookie.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-//import { MatTabsModule } from '@angular/material/tabs';
-//import { StatusComponent } from './test/status/status.component';
-import { HomeModule } from './home/home.module';
-//import { HeaderComponent } from './layouts/header/header.component';
-
+import { HomeModule } from '@app/home';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-//import { NoopAnimationsModule} from '@angular/platform-browser/animations';
-
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { CookieService } from 'ngx-cookie-service';
-
-import {A4cMaterialModule} from './shared/a4c-material/a4c-material.module';
-import { HeaderComponent } from './layouts/header/header.component';
-import { A4cThemeService} from './shared/a4c-theming/a4c-theme.service';
+import {A4cMaterialModule,SharedModule} from '@app/shared';
+import { HeaderComponent,MainComponent,ApplicationDetailsComponent} from '@app/layouts';
+import { A4cThemeService, MetapropertyService,ApplicationsService,MyCookieService} from '@app/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { MainComponent } from './layouts/main/main.component';
-import { SharedModule } from './shared/shared.module'; 
-//import { ApplicationsComponent } from './layouts/applications/applications.component';
-import { ApplicationsService } from './layouts/applications/applications.service';
-//import { ModulesComponent } from './layouts/modules/modules.component';
-//import { ImportsComponent } from './layouts/imports/imports.component';
-
 import { AppRoutingModule,routingComponents} from './app-routing.module';
-import { ApplicationDetailsComponent } from './layouts/application-details/application-details.component';
-import { MetapropertyService } from './core/metaproperties/metaproperty.service';
+
 
 @NgModule({
   declarations: [
@@ -70,7 +52,6 @@ import { MetapropertyService } from './core/metaproperties/metaproperty.service'
   providers: [
     MyCookieService,
     CookieService,
-    RestApiService,
     A4cThemeService,
     OverlayContainer,
     ApplicationsService,

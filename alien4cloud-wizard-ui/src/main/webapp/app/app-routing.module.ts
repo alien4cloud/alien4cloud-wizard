@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ApplicationsService } from './layouts/applications/applications.service';
-import { ApplicationsComponent } from './layouts/applications/applications.component';
-import { ModulesComponent } from './layouts/modules/modules.component';
-import { ImportsComponent } from './layouts/imports/imports.component';
-//const routes: Routes = [];
+import { ApplicationsComponent,ModulesComponent,ImportsComponent} from '@app/layouts';
 
 const routes: Routes = [
   { path: '', redirectTo: '/applications', pathMatch: 'full' },
