@@ -9,10 +9,11 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import {A4cMaterialModule,SharedModule} from '@app/shared';
-import { HeaderComponent,MainComponent,ApplicationDetailsComponent} from '@app/layouts';
+import { HeaderComponent,MainComponent,ApplicationDetailsComponent,CreationApplicationComponent} from '@app/layouts';
 import { A4cThemeService, MetapropertyService,ApplicationsService,MyCookieService} from '@app/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppRoutingModule,routingComponents} from './app-routing.module';
+
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AppRoutingModule,routingComponents} from './app-routing.module';
   // ImportsComponent
   routingComponents,
 
-  ApplicationDetailsComponent
+  ApplicationDetailsComponent,
+  CreationApplicationComponent
 ],
   imports: [
     BrowserModule,
