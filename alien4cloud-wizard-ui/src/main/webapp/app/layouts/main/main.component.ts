@@ -20,5 +20,9 @@ export class MainComponent {
     });
   }
 
+  onThemeChange(event){
+    this._sharedDataService.OnThemeSwitch.next(event.checked);
+  }
+
 }
 

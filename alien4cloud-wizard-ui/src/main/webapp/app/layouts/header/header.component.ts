@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { A4cThemeService } from '@app/core';
+
 
 @Component({
   selector: 'solution-header',
@@ -14,10 +14,7 @@ export class HeaderComponent {
 
   public isActive : boolean = true;
   // -----------------------------------------------------------------------//
-  constructor(private readonly _sharedDataService: A4cThemeService) { }
+  constructor() { }
 
-  onThemeChange(event){
-    this._sharedDataService.OnThemeSwitch.next(event.checked);
-  }
 }
 

@@ -1,24 +1,36 @@
 <!--<div class="container" [class.solution-dark-theme]="isDarkThemeActive"> -->
-  <div fxLayout="column" class="container" fxLayout.xs="column" fxLayoutAlign="space-around stretch"  [class.solution-dark-theme]="isDarkThemeActive" fxFill>
+<div fxLayout="column" class="container" fxLayout.xs="column" fxLayoutAlign="space-around stretch"
+  [class.solution-dark-theme]="isDarkThemeActive" fxFill>
 
-    <!-- Header ------------------------------------------------------------------------->
-    <div>
-      <solution-header [angularVersion]="ngVersion" [materialVersion]="'2.0.0-beta.12'">
-      </solution-header>
+  <!-- Header ------------------------------------------------------------------------->
+  <div>
+    <div [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+      <mat-toolbar color="primary" layout="fill">
+        Welcome to {{ title }}
+        <span class="fill-space"></span>
+        <mat-slide-toggle color="accent" (change)="onThemeChange($event)">
+          Dark Theme
+        </mat-slide-toggle>
+      </mat-toolbar>
     </div>
-    <!----------------------------------------------------------------------------------->
-    <!--<mat-divider></mat-divider> -->
-    <!-- Solution ----------------------------------------------------------------------->
+
+    <router-outlet name="header"></router-outlet>
     <!--
+      <solution-header [angularVersion]="ngVersion" [materialVersion]="'2.0.0-beta.12'">
+      </solution-header> -->
+  </div>
+  <!----------------------------------------------------------------------------------->
+  <!--<mat-divider></mat-divider> -->
+  <!-- Solution ----------------------------------------------------------------------->
+  <!--
     <mat-card fxFlex fxLayoutAlign="center start" fxLayout="row" class="solution" [style.borderRadius.px]="'0'"
       [style.paddingTop.px]="'60'">
 -->
-    <mat-card  class="solution" [style.borderRadius.px]="'0'"
-      [style.paddingTop.px]="'60'">
-   
+  <mat-card class="solution" [style.borderRadius.px]="'0'" [style.paddingTop.px]="'60'">
 
-      <!-- Solution to your problem here ------------------------------------------------>
-      <!--
+
+    <!-- Solution to your problem here ------------------------------------------------>
+    <!--
       <button mat-button>
         <mat-icon>mic</mat-icon> Start Recording
       </button>
@@ -27,33 +39,34 @@
         <mat-icon>mic</mat-icon> Start Recording
       </button>
       -->
-      <!--------------------------------------------------------------------------------->
- 
-          <!--<app-status>TEST STATE</app-status>-->
-          <!---app-applications></app-applications> -->
+    <!--------------------------------------------------------------------------------->
+
+    <!--<app-status>TEST STATE</app-status>-->
+    <!---app-applications></app-applications> -->
 
 
-            
-          <router-outlet></router-outlet>
-     
-      
-      
 
-    </mat-card>
+    <router-outlet></router-outlet>
 
-    <!-- Footer ------------------------------------------------------------------------->
-    <!--
+
+
+
+  </mat-card>
+
+  <!-- Footer ------------------------------------------------------------------------->
+  <div>
+    <router-outlet name="footer"></router-outlet>
+  </div>
+  <!--
     <div fxFlex="none">
       <solution-footer></solution-footer>
     </div>
     -->
-    <!----------------------------------------------------------------------------------->
+  <!----------------------------------------------------------------------------------->
 
-  </div>
+</div>
 
-  
+
 <!--
 </div>
 -->
-
-
