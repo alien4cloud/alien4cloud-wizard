@@ -1,30 +1,33 @@
-<div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%">
-  <mat-icon>search</mat-icon>
-  <mat-form-field>
-    <input matInput placeholder="Search for ..." [formControl]="searchField">
-  </mat-form-field>
-  <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+<div fxLayout="column">
+
+  <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
+    <mat-icon>search</mat-icon>
+    <mat-form-field fxFlex="50%">
+      <input matInput placeholder="Search for ..." [formControl]="searchField" id="applicationDashboardSearchInput">
+    </mat-form-field>
+    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+  </div>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let application of applications" (opened)="openDetails(application.id)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ application.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ application.description }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>Here we will display app modules, metadata ....</p>
+      <mat-action-row>
+        <button mat-button>Deploy / Undeploy</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-paginator [length]="length"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="pageSizeOptions"
+                (page)="pageEvent = handlePage($event)">
+  </mat-paginator>
 </div>
-
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let application of applications" (opened)="openDetails(application.id)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ application.name }}
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ application.description }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>Here we will display app modules, metadata ....</p>
-    <mat-action-row>
-      <button mat-button>Deploy / Undeploy</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-
-<mat-paginator [length]="length"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="pageSizeOptions"
-              (page)="pageEvent = handlePage($event)">
-</mat-paginator>
