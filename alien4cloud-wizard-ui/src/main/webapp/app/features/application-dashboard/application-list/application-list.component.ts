@@ -31,6 +31,9 @@ export class ApplicationListComponent implements OnInit {
   // a form control to bind to serch input
   searchField: FormControl = new FormControl();
 
+  // indicates data loading
+  isLoading: boolean = false;
+
   ngOnInit() {
     this.loadApplications(0);
 
@@ -44,9 +47,11 @@ export class ApplicationListComponent implements OnInit {
   }
 
   private loadApplications(from: number) {
+    this.isLoading = true;
     this.applicationsService.getApplications(from, this.pageSize, this.query).subscribe((data: {}) => {
       this.applications = data['data']['data'] as Application[];
       this.length = data['data']['totalResults'];
+      this.isLoading = false;
     })
   }
 

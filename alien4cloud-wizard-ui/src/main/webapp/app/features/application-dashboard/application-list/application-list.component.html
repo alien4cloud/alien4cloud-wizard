@@ -3,6 +3,7 @@
   <mat-form-field>
     <input matInput placeholder="Search for ..." [formControl]="searchField">
   </mat-form-field>
+  <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
 </div>
 
 <mat-accordion>
