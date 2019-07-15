@@ -1,0 +1,37 @@
+<h3 class="title">{{ 'Home.WelcomeTitle'|translate }}</h3>
+<p class="title">{{ 'Home.WelcomeText'|translate }}</p>
+<mat-divider></mat-divider>
+<div layout="row">
+  <button
+    mat-flat-button [routerLink]="['/applications']">
+    <mat-icon>dashboard</mat-icon>
+    Applications dashboard
+  </button>
+  <span class="desc">List all applications, view deployment status, view meta-data, view applications' modules ...</span>
+</div>
+<mat-divider></mat-divider>
+<div layout="row">
+  <button
+    mat-flat-button [routerLink]="['/application-dashboard']">
+    <mat-icon>dashboard</mat-icon>
+    Applications dashboard (Alt)
+  </button>
+  <span class="desc">List all applications, view deployment status, view meta-data, view applications' modules ...</span>
+</div>
+<mat-divider></mat-divider>
+<div layout="row">
+  <button mat-flat-button [routerLink]="['/creationapplication']">
+    <mat-icon>create_new_folder</mat-icon>
+    Create New Application
+  </button>
+  <span class="desc">Create a new application from a template</span>
+</div>
+<mat-divider></mat-divider>
+<div layout="row">
+  <button mat-flat-button [routerLink]="['/modules']">
+    <mat-icon>view_module</mat-icon>
+    Modules
+  </button>
+  <span class="desc">Browse plateforme modules</span>
+</div>
+<mat-divider></mat-divider>

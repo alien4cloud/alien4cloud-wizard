@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild ,Input } from '@angular/core';
-import { Application, ApplicationsService,MyCookieService ,MetapropertyService,Metaproperty} from "@app/core";
-import { CookieService } from 'ngx-cookie-service';
+import { Application, ApplicationsService, MetapropertyService, Metaproperty} from "@app/core";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -56,15 +55,12 @@ export class ApplicationsComponent implements OnInit {
 
   constructor(
     private restApi: ApplicationsService,
-    private cookieService: CookieService,
-    private myCookieService: MyCookieService,
     private metapropertiesService: MetapropertyService
     ) {
     restApi: ApplicationsService
   }
 
   ngOnInit() {
-    this.cookieService.set('JSESSIONID', this.myCookieService.getCookie());
     this.loadApplications();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -101,7 +97,7 @@ export class ApplicationsComponent implements OnInit {
       return this.metapropertiesService.getMetaproperties(metas).subscribe((data: {}) => {
         this.metas = data['data']['data'];
         console.log("The first meta is : "+this.metas[0].name) ;
-      
+
       })
     }
 
@@ -147,5 +143,3 @@ export class ApplicationsComponent implements OnInit {
   }
 
 }
-
-

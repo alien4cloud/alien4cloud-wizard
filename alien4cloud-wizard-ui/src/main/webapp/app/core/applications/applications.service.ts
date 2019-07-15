@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError,tap } from 'rxjs/operators';
-import { Status,Application } from '@app/core';
+import { Application } from '@app/core';
 
 
 @Injectable({
@@ -13,7 +13,7 @@ export class ApplicationsService {
   apiURL = '/api';
   public searchEnvUrl = '/rest/latest/applications/environments';
   public searchUrl = '/rest/latest/applications/search';
- 
+
 
   projects: Application[];
 
@@ -28,31 +28,31 @@ export class ApplicationsService {
       }),
       observe: 'response'
     }
-  
+
     // HttpClient API get() method => Fetch employees list
-    
-    getStatus(): Observable<Status> {
-      return this.http.get<Status>(this.apiURL + '/rest/admin/health')
-        .pipe(
-          retry(1),
-          catchError(this.handleError)
-        )
-    }
-  
+
+    // getStatus(): Observable<Status> {
+    //   return this.http.get<Status>(this.apiURL + '/rest/admin/health')
+    //     .pipe(
+    //       retry(1),
+    //       catchError(this.handleError)
+    //     )
+    // }
+
     getAppsEnv(): {} {
       //const data = { "from": 0,"size": 20} ;
-  
-  
+
+
       //let options = new RequestOptions({ headers: headers, withCredentials: true });
-  
+
       console.log('---------------------> THE SEARCH URL :' + this.apiURL + this.searchUrl);
-  
+
       return this.http.post(this.apiURL + this.searchUrl, ["TestApp"], {
         headers: new HttpHeaders({
           'Content-Type': 'application/json; charset=UTF-8',
           // 'Access-Control-Allow-Origin': '*'
           'A4C-Agent': 'AngularJS_UI'
-  
+
         }),
         // observe: 'response' // uncomment of you what the whole response http : data will be accessed by data.body
       }).subscribe(
@@ -60,31 +60,40 @@ export class ApplicationsService {
           console.log("POST Request is successful ", data);
         },
         error => {
-  
+
           console.log("Error", error);
-  
+
         }
-  
+
       );
-  
-  
+
+
       //  console.log("AFTER RESPONSE")
     }
-  
-  
-    getApplications(): Observable<{}> {
-  
-      return this.http.post(this.apiURL + this.searchUrl, {"from":0,"size":20}, {
+
+
+    getApplications(from?: number, size?: number, query?: string): Observable<{}> {
+      if (!from) {
+        from = 0;
+      }
+      if (!size) {
+        size = 20;
+      }
+      if (!query) {
+        query = "";
+      }
+      let data = {"from":from,"size":size,"query":query};
+      return this.http.post(this.apiURL + this.searchUrl, data, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json; charset=UTF-8',
         }),
       }).pipe(
        data => data );
-  
+
     }
-  
-  
-    // Error handling 
+
+
+    // Error handling
     handleError(error) {
       let errorMessage = '';
       if (error.error instanceof ErrorEvent) {
@@ -98,5 +107,3 @@ export class ApplicationsService {
       return throwError(errorMessage);
     }
 }
-
-

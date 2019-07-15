@@ -1,0 +1,30 @@
+<div [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+  <mat-toolbar color="primary" layout="fill">
+
+    <button mat-icon-button [routerLink]="['']">
+      <mat-icon>home</mat-icon>
+    </button>
+
+    <span class="fill-space"></span>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [disabled]="isAuthenticated" [routerLink]="['/login']">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Login</span>
+      </button>
+      <button mat-menu-item [disabled]="!isAuthenticated" (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+    <mat-slide-toggle color="accent" (change)="onThemeChange($event)">
+      Dark Theme
+    </mat-slide-toggle>
+    <span class="fill-space"></span>
+    <!-- accent warn -->
+    <mat-icon color="{{ (isConnected) ? 'default' : 'warn' }}" matTooltip="{{ getStatusText() }}">{{ getStatusIcon() }}</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

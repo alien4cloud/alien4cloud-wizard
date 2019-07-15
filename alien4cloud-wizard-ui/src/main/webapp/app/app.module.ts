@@ -1,38 +1,51 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // Forms module
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HomeModule } from '@app/home';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
+import { AppComponent } from './app.component';
+import {
+  FooterComponent,
+  LHeaderComponent,
+  HomeComponent,
+  SharedModule
+} from './shared';
+import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
-import {A4cMaterialModule,SharedModule} from '@app/shared';
+import {A4cMaterialModule} from '@app/shared';
 import { HeaderComponent,MainComponent,ApplicationDetailsComponent,CreationApplicationComponent} from '@app/layouts';
-import { A4cThemeService, MetapropertyService,ApplicationsService,MyCookieService} from '@app/core';
+import { A4cThemeService, MetapropertyService, ApplicationsService} from '@app/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppRoutingModule,routingComponents} from './app-routing.module';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { AuthInterceptor } from './core/authentication/authentication.interceptor';
 
-
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
-    //AppComponent
+    AppComponent,
+    LHeaderComponent,
+    FooterComponent,
+    HomeComponent,
    // StatusComponent,
     HeaderComponent,
-  
-
-  MainComponent,
-
-  //ModulesComponent,
-  //ApplicationsComponent,
-  // ImportsComponent
-  routingComponents,
-
-  ApplicationDetailsComponent,
-  CreationApplicationComponent
-],
+    MainComponent,
+    routingComponents,
+    LoginComponent,
+    ApplicationDetailsComponent,
+    CreationApplicationComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,26 +53,35 @@ import { AppRoutingModule,routingComponents} from './app-routing.module';
     HttpClientModule,
     FlexLayoutModule,
     A4cMaterialModule,
-    BrowserAnimationsModule, 
+    BrowserAnimationsModule,
   //  NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HomeModule,
-    SharedModule.forRoot()
-
+    SharedModule.forRoot(),
+    NgxWebstorageModule.forRoot({ prefix: 'w4c', separator: '-' }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   exports: [
     A4cMaterialModule
   ],
   providers: [
-    MyCookieService,
-    CookieService,
     A4cThemeService,
     OverlayContainer,
     ApplicationsService,
-    MetapropertyService
+    MetapropertyService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
-  bootstrap: [MainComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(overlayContainer: OverlayContainer) {

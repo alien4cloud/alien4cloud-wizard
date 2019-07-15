@@ -1,3 +1,28 @@
+<div [class.mat-elevation-z2]="!isActive" [class.mat-elevation-z8]="isActive">
+  <mat-toolbar color="primary" layout="fill">
+    Welcomesss to {{ title }}
+    <span class="fill-space"></span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+    <mat-slide-toggle color="accent" (change)="onThemeChange($event)">
+      Dark Theme
+    </mat-slide-toggle>
+  </mat-toolbar>
+</div>
+
+
 <mat-card [style.fontSize.px]="'14'" [style.borderRadius.px]="'0'">
 
   <div fxLayout="row" flex fxLayoutGap="10px" fxLayoutAlign="center center">
@@ -11,7 +36,7 @@
           <mat-icon>get_app</mat-icon>
           Import
         </button>
-    
+
       </div>
       <div fxLayout="column" flex="500">
         <button mat-stroked-button [routerLink]="['/applications']">
@@ -26,7 +51,5 @@
         </button>
       </div>
     </div>
-    
+
 </mat-card>
-
-
