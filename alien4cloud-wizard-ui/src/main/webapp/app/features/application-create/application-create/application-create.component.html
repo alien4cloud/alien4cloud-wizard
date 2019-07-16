@@ -1,0 +1,66 @@
+<br><br>
+<mat-horizontal-stepper [linear]="isLinear" #stepper [@.disabled] = "true">
+    <br>
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Choix modèle application</ng-template>
+                <app-topology-template></app-topology-template>
+                <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill > 
+                    <button mat-stroked-button matStepperNext>Suivant</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Choix cible</ng-template>
+                Formulaire Contenu ici
+                <div  fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+                    <button mat-stroked-button matStepperPrevious>Précédent</button>
+                    <button mat-stroked-button matStepperNext>Suivant</button>
+                </div>
+            </form>
+        </mat-step>
+        <!--
+        <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Paramètres d'entrées</ng-template>
+                Formulaire Contenu ici
+                <div>
+                    <button mat-stroked-button matStepperPrevious>Précédent</button>
+                    <button mat-stroked-button matStepperNext>Suivant</button>
+                </div>
+            </form>
+        </mat-step>
+    
+        <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Matching</ng-template>
+                Formulaire Contenu ici
+                <div>
+                    <button mat-stroked-button matStepperPrevious>Précédent</button>
+                    <button mat-stroked-button matStepperNext>Suivant</button>
+                </div>
+            </form>
+        </mat-step>
+    
+        <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>MLS</ng-template>
+                Formulaire Contenu ici
+                <div>
+                    <button mat-stroked-button matStepperPrevious>Précédent</button>
+                    <button mat-stroked-button matStepperNext>Suivant</button>
+                </div>
+            </form>
+        </mat-step>
+        -->
+        <mat-step>
+            <ng-template matStepLabel>Validation</ng-template>
+            Fini
+            <div  fxLayout="row"  fxLayoutAlign="center center" fxFlexFill>
+                <button mat-stroked-button matStepperPrevious>Précédent</button>
+                <button mat-stroked-button (click)="stepper.reset()">Annuler</button>
+                <button mat-stroked-button [routerLink]="['/applications']" >Déployer</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>

@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'application-dashboard',
     loadChildren: () => import('./features/application-dashboard/application-dashboard.module').then(mod => mod.ApplicationDashboardModule)
   },
+  {
+    path: 'create-application',
+    loadChildren: () => import('./features/application-create/application-create.module').then(mod => mod.ApplicationCreateModule)
+  },
   { path: 'creationapplication', component: CreationApplicationComponent },
   { path: 'imports', component: ImportsComponent },
   { path: 'modules', component: ModulesComponent }
