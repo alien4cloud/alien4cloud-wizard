@@ -72,7 +72,28 @@ export class ApplicationsService {
     }
 
 
-    getApplications(from?: number, size?: number, query?: string): Observable<{}> {
+  getApplications(from?: number, size?: number, query?: string): Observable<{}> {
+      if (!from) {
+        from = 0;
+      }
+      if (!size) {
+        size = 20;
+      }
+      if (!query) {
+        query = "";
+      }
+      let data = {"from":from,"size":size,"query":query};
+      return this.http.post(this.apiURL + this.searchUrl, data, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json; charset=UTF-8',
+        }),
+      }).pipe(
+       data => data );
+
+    }
+
+
+    getApplicationEnvironments(from?: number, size?: number, query?: string): Observable<{}> {
       if (!from) {
         from = 0;
       }
