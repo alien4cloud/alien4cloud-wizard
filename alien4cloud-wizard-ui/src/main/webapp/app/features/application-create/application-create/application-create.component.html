@@ -1,66 +1,111 @@
 <br><br>
-<mat-horizontal-stepper [linear]="isLinear" #stepper [@.disabled] = "true">
+<mat-horizontal-stepper [linear]="isLinear" #stepper [@.disabled]="true">
     <br>
-        <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="firstFormGroup">
-                <ng-template matStepLabel>Choix modèle application</ng-template>
-                <app-topology-template></app-topology-template>
-                <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill > 
-                    <button mat-stroked-button matStepperNext>Suivant</button>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Choix modèle application</ng-template>
+
+            <!-------------------------------------------TOPOLOGY TEMPLATE--------------------------------------------------------------------------->
+
+            <div fxLayout="column">
+                <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="50%">
+                        <mat-label>Search for ...</mat-label>
+                        <input matInput [formControl]="searchField" id="applicationDashboardSearchInput">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
                 </div>
-            </form>
-        </mat-step>
-        <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>Choix cible</ng-template>
-                Formulaire Contenu ici
-                <div  fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
-                    <button mat-stroked-button matStepperPrevious>Précédent</button>
-                    <button mat-stroked-button matStepperNext>Suivant</button>
-                </div>
-            </form>
-        </mat-step>
-        <!--
-        <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>Paramètres d'entrées</ng-template>
-                Formulaire Contenu ici
-                <div>
-                    <button mat-stroked-button matStepperPrevious>Précédent</button>
-                    <button mat-stroked-button matStepperNext>Suivant</button>
-                </div>
-            </form>
-        </mat-step>
-    
-        <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>Matching</ng-template>
-                Formulaire Contenu ici
-                <div>
-                    <button mat-stroked-button matStepperPrevious>Précédent</button>
-                    <button mat-stroked-button matStepperNext>Suivant</button>
-                </div>
-            </form>
-        </mat-step>
-    
-        <mat-step [stepControl]="secondFormGroup">
-            <form [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>MLS</ng-template>
-                Formulaire Contenu ici
-                <div>
-                    <button mat-stroked-button matStepperPrevious>Précédent</button>
-                    <button mat-stroked-button matStepperNext>Suivant</button>
-                </div>
-            </form>
-        </mat-step>
-        -->
-        <mat-step>
-            <ng-template matStepLabel>Validation</ng-template>
-            Fini
-            <div  fxLayout="row"  fxLayoutAlign="center center" fxFlexFill>
-                <button mat-stroked-button matStepperPrevious>Précédent</button>
-                <button mat-stroked-button (click)="stepper.reset()">Annuler</button>
-                <button mat-stroked-button [routerLink]="['/applications']" >Déployer</button>
+
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let topology of topologyTemplate" (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [ngClass]="panelOpenState? 'mat-elevation-z2': 'mat-elevation-z2'">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ topology.id }}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                {{ topology.description }}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <p>Here we will display app modules, metadata ....</p>
+                        <mat-action-row>
+                            <button mat-button (click)="getSelectedTopology(topology.id)" >Select</button>
+                        </mat-action-row>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <br><br>
+                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageEvent = handlePage($event)">
+                </mat-paginator>
             </div>
-        </mat-step>
-    </mat-horizontal-stepper>
+            <!----------------------------------------------------------------------------------------------------------------------------------->
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+                <button mat-stroked-button matStepperNext (click)="createAppByTopo()">Suivant</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Choix cible</ng-template>
+
+
+           <!-------------------------------------------TOPOLOGY TEMPLATE--------------------------------------------------------------------------->
+
+           <div fxLayout="column">
+                <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
+                    <mat-form-field fxFlex="50%">
+                        <mat-label>Search for ...</mat-label>
+                        <input matInput [formControl]="searchField" id="applicationDashboardSearchInput">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+                </div>
+
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let topology of topologyTemplate" (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [ngClass]="panelOpenState? 'mat-elevation-z2': 'mat-elevation-z2'">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ topology.id }}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                {{ topology.description }}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <p>Here we will display app modules, metadata ....</p>
+                        <mat-action-row>
+                            <button mat-button (click)="getSelectedTopology(topology.id)" matStepperNext>Select</button>
+                        </mat-action-row>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <br><br>
+                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageEvent = handlePage($event)">
+                </mat-paginator>
+            </div>
+
+            <!----------------------------------------------------------------------------------------------------------------------------------->
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+                <button mat-stroked-button matStepperPrevious>Précédent</button>
+                <button mat-stroked-button matStepperNext>Suivant</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>Validation</ng-template>
+        Fini
+        <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+            <button mat-stroked-button matStepperPrevious>Précédent</button>
+            <button mat-stroked-button (click)="stepper.reset()">Annuler</button>
+            <button mat-stroked-button [routerLink]="['/applications']">Déployer</button>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>

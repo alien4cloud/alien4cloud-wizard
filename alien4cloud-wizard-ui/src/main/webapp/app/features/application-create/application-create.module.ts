@@ -5,11 +5,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {A4cMaterialModule} from '@app/shared';
 import { CreateApplicationRoutingModule } from './application-create-routing.module';
 import { ApplicationCreateComponent } from './application-create/application-create.component';
-import { TopologyTemplateComponent } from './topology-template/topology-template.component';
+
 
 
 @NgModule({
-  declarations: [ApplicationCreateComponent, TopologyTemplateComponent],
+  declarations: [ApplicationCreateComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
