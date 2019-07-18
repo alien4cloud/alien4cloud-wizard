@@ -27,6 +27,12 @@ const routes: Routes = [
     loadChildren: () => import('./features/application-dashboard/application-dashboard.module').then(mod => mod.ApplicationDashboardModule)
   },
   {
+    // path: 'topology-graph',
+    path: 'topology-graph/:topologyId/:topologyVersion',
+    loadChildren: () => import('./features/topology-graph/topology-graph.module').then(mod => mod.TopologyGraphModule)
+  },
+  // { path: 'topology-graph/:topologyId/:topologyVersion', component: TopologyGraphContainerComponent },
+  {
     path: 'create-application',
     loadChildren: () => import('./features/application-create/application-create.module').then(mod => mod.ApplicationCreateModule)
   },
@@ -35,7 +41,7 @@ const routes: Routes = [
   { path: 'modules', component: ModulesComponent }
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes/*, { enableTracing: true } */)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

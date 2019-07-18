@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
-import { Application, ApplicationsService } from "@app/core";
 import { PageEvent } from '@angular/material/paginator';
 import { Subject, Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
+import * as _ from 'lodash';
+
+
+
+import { Application, ApplicationsService, ApplicationOverview, MetaProperty, ApplicationModule } from "@app/core";
 
 @Component({
   selector: 'app-application-list',
   templateUrl: './application-list.component.html',
-  styleUrls: ['./application-list.component.css']
+  styleUrls: ['./application-list.component.scss']
 })
 export class ApplicationListComponent implements OnInit {
 
@@ -17,22 +20,26 @@ export class ApplicationListComponent implements OnInit {
     private applicationsService: ApplicationsService
   ) { }
 
-  public applications: Application[];
+  // make lodash usable from template
+  private lodash = _;
+
+  private applications: Application[];
+  private overview: ApplicationOverview;
 
   // Paginator config
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  query = null;
+  private length = 100;
+  private pageSize = 10;
+  private pageSizeOptions: number[] = [5, 10, 25, 100];
+  private query = null;
 
   // MatPaginator Output
-  pageEvent: PageEvent;
+  private pageEvent: PageEvent;
 
-  // a form control to bind to serch input
-  searchField: FormControl = new FormControl();
+  // a form control to bind to search input
+  private searchField: FormControl = new FormControl();
 
   // indicates data loading
-  isLoading: boolean = false;
+  private isLoading: boolean = false;
 
   ngOnInit() {
     this.loadApplications(0);
@@ -52,7 +59,7 @@ export class ApplicationListComponent implements OnInit {
       this.applications = data['data']['data'] as Application[];
       this.length = data['data']['totalResults'];
       this.isLoading = false;
-    })
+    });
   }
 
   /**
@@ -63,9 +70,16 @@ export class ApplicationListComponent implements OnInit {
     this.loadApplications(e.pageIndex);
   }
 
+  /**
+   * Trigered when the panel is expanded.
+   */
   private openDetails(applicationId: string) {
     // TODO: query plugin endpoint to retrieve details
     console.log("Openning ", applicationId);
+    this.overview = undefined;
+    this.applicationsService.getApplicationOverview(applicationId).subscribe((data: {}) => {
+      this.overview = data['data'] as ApplicationOverview;
+    });
   }
 
 }

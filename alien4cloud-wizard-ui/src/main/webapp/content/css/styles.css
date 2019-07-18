@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-/*@import '@angular/material/prebuilt-themes/deeppurple-amber.css'; 
+/*@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 /* Add application styles & imports to this file! */
 /* @import url("theme.scss");*/
 
@@ -11,5 +11,3 @@ body {
   .fill-space {
     flex: 1 1 auto;
   }
-  
-  

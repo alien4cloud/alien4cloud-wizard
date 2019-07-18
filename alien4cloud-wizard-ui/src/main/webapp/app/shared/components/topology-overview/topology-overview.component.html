@@ -1,0 +1,96 @@
+<!-- All this should be moved into a dedicated component that accept a TopologyWrapper as input -->
+<div *ngIf="overview; else loadingOverview" fxLayout="row" fxFlex="100%">
+  <div fxFlex="50%" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <span class="title">Description</span>
+      <a mat-button [routerLink]="['/topology-graph/' + overview.topologyId + '/' + overview.topologyVersion]">Graph</a>
+    </div>
+    <div class="desciption" fxFlex>
+      <span>{{ overview.description }}</span>
+      <!-- <w4c-topology-graph *ngIf="overview" [topologyGraph]="overview.topologyGraph"></w4c-topology-graph> -->
+    </div>
+  </div>
+  <div fxFlex="50%" fxLayout="column">
+    <span class="title">Meta-properties</span>
+    <div class="metaproperties">
+      <mat-chip-list>
+        <ng-container *ngFor="let namedMetaProperty of overview.namedMetaProperties;">
+          <mat-chip
+            *ngIf="namedMetaProperty.value"
+            matTooltip="{{namedMetaProperty.configuration.description}}">
+            {{namedMetaProperty.configuration.name}}: {{namedMetaProperty.value}}
+          </mat-chip>
+        </ng-container>
+      </mat-chip-list>
+      <!-- <table mat-table [dataSource]="overview.namedMetaProperties" fxFlex *ngIf="false">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.configuration.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef> Value </th>
+          <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-icon
+              *ngIf="element.configuration.description"
+              matTooltip="{{element.configuration.description}}">
+              info
+            </mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table> -->
+    </div>
+    <span class="title">Modules</span>
+    <div class="modules">
+      <table mat-table [dataSource]="overview.modules" fxFlex>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element" matTooltip="{{element.nodeType.description}}">
+            {{element.nodeType.elementId|toscaTypeShortName}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="version">
+          <th mat-header-cell *matHeaderCellDef> Version </th>
+          <td mat-cell *matCellDef="let element"
+            matTooltip="{{element.nodeType.archiveName}}:{{element.nodeType.archiveVersion}}">
+            {{element.nodeType.archiveVersion}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="icon">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <img src="{{element.nodeType|toscaTypeImageSrc}}"
+                  style="max-height:24px; max-width:24px; height:auto; width:auto;"
+                  matTooltip="{{element.nodeType.elementId}}">
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="metaproperties">
+          <th mat-header-cell *matHeaderCellDef> </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-list>
+              <ng-container *ngFor="let namedMetaProperty of element.namedMetaProperties;">
+                <mat-chip
+                  *ngIf="namedMetaProperty.value"
+                  matTooltip="{{namedMetaProperty.configuration.description}}">
+                  {{namedMetaProperty.configuration.name}}: {{namedMetaProperty.value}}
+                </mat-chip>
+              </ng-container>
+            </mat-chip-list>
+          </td>
+        </ng-container>
+        <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr> -->
+        <tr mat-row *matRowDef="let row; columns: modulesDisplayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<ng-template #loadingOverview>
+  <div fxFlex="100%" fxLayout="row" fxLayoutAlign="center center">
+    <mat-spinner [diameter]="100"></mat-spinner>
+  </div>
+</ng-template>

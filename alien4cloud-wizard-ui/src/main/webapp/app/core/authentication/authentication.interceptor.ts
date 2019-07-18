@@ -45,12 +45,11 @@ export class AuthInterceptor implements HttpInterceptor {
         },
         (err: any) => {
           if (err instanceof HttpErrorResponse && !this.failureDetected) {
-            this.loginService.logout(this.router.url);
-            this.failureDetected = true;
-            // if (err.status === 403 || err.status === 401) {
-            //   console.log("Current route is : " + this.router.url);
-            //   this.loginService.logout();
-            // }
+            if (err.status === 403 || err.status === 401) {
+              this.failureDetected = true;
+              console.log("Current route is : " + this.router.url);
+              this.loginService.logout(this.router.url);
+            }
           }
         }
       )
