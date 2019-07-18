@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ApplicationListComponent } from './application-list/application-list.component';
+
+import { TopologyGraphContainerComponent } from './topology-graph-popup/topology-graph-container.component';
 
 const routes: Routes = [{
     path: '',
-    component: ApplicationListComponent
-  }
-];
+    component: TopologyGraphContainerComponent
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ApplicationDashboardRoutingModule { }
+export class TopologyGraphRoutingModule { }

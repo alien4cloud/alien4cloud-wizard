@@ -68,7 +68,8 @@ export function createTranslateLoader(http: HttpClient) {
     })
   ],
   exports: [
-    A4cMaterialModule
+    A4cMaterialModule,
+    SharedModule
   ],
   providers: [
     A4cThemeService,

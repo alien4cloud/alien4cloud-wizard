@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError,tap } from 'rxjs/operators';
-import { Application } from '@app/core';
 
 
 @Injectable({
@@ -13,9 +12,6 @@ export class ApplicationsService {
   apiURL = '/api';
   public searchEnvUrl = '/rest/latest/applications/environments';
   public searchUrl = '/rest/latest/applications/search';
-
-
-  projects: Application[];
 
   constructor(private http: HttpClient) { }
 
@@ -89,9 +85,25 @@ export class ApplicationsService {
         }),
       }).pipe(
        data => data );
-
     }
 
+    getApplicationOverview(id: string): Observable<{}> {
+      return this.http.get(`/api/rest/latest/wizard/applications/overview/${id}`, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json; charset=UTF-8',
+        }),
+      }).pipe(
+       data => data );
+    }
+
+    getTopologyGraph(topologyId: string, topologyVersion: string): Observable<{}> {
+      return this.http.get(`/api/rest/latest/wizard/applications/graph/${topologyId}:${topologyVersion}`, {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json; charset=UTF-8',
+        }),
+      }).pipe(
+       data => data );
+    }
 
     // Error handling
     handleError(error) {
