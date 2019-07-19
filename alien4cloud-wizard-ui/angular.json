@@ -27,7 +27,10 @@
               "src/main/webapp/content/scss/a4c-theme.scss",
               "src/main/webapp/content/css/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "lazyModules": [
+              "src/main/webapp/app/features/topology-graph/topology-graph.module"
+            ]
           },
           "configurations": {
             "production": {

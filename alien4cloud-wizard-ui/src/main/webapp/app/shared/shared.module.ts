@@ -7,17 +7,19 @@ import { RouterModule } from '@angular/router';
 // import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { A4cMaterialModule } from './a4c-material.module';
+import { LoadModuleDirective, SvgNodeTypeImageSourceDirective } from './directives';
 import { ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe } from './pipes';
 import {
-  TopologyOverviewComponent,
-  TopologyGraphComponent
+  TopologyOverviewComponent
 } from './components';
 
 @NgModule({
   declarations: [
     TopologyOverviewComponent,
     ToscaTypeShortNamePipe,
-    ToscaTypeImageSrcPipe
+    ToscaTypeImageSrcPipe,
+    LoadModuleDirective,
+    SvgNodeTypeImageSourceDirective
   ],
   imports: [
     A4cMaterialModule,
@@ -36,9 +38,12 @@ import {
     ReactiveFormsModule,
     TopologyOverviewComponent,
     ToscaTypeShortNamePipe,
-    ToscaTypeImageSrcPipe],
+    ToscaTypeImageSrcPipe,
+    LoadModuleDirective,
+    SvgNodeTypeImageSourceDirective
+  ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA]
-  providers: [],
+  providers: [ToscaTypeImageSrcPipe],
 })
 export class SharedModule {
   static forRoot() {
