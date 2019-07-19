@@ -23,7 +23,7 @@
         <image [w4cSvgNoteTypeImageSource]="node.nodeType" x="2" y="2" height="25px" width="25px"/>
       </svg>
       <svg:text alignment-baseline="central" [attr.x]="30" [attr.y]="node.dimension.height / 2">
-        {{node.label}}
+        {{ lodash.truncate(node.label, {'length': 15}) }}
       </svg:text>
     </svg:g>
   </ng-template>
@@ -37,7 +37,7 @@
           [style.dominant-baseline]="link.dominantBaseline"
           startOffset="50%"
         >
-          {{link.label}}
+          {{ lodash.truncate(link.label, {'length': 15}) }}
         </textPath>
       </svg:text>
     </svg:g>
