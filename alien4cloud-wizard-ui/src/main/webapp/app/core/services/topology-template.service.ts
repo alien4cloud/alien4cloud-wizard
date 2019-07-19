@@ -27,6 +27,7 @@ export class AppCreationTopoPayload {
   name: string;
   archiveName: string;
   topologyTemplateVersionId: string;
+  description : string ;
 }
 
 @Injectable({

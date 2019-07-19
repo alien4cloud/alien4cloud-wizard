@@ -7,49 +7,34 @@
 
             <!-------------------------------------------TOPOLOGY TEMPLATE--------------------------------------------------------------------------->
 
-            <div fxLayout="column">
-                <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
-                    <mat-form-field fxFlex="50%">
-                        <mat-label>Search for ...</mat-label>
-                        <input matInput [formControl]="searchField" id="applicationDashboardSearchInput">
-                        <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>
-                    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
-                </div>
-
-                <mat-accordion>
-                    <mat-expansion-panel *ngFor="let topology of topologyTemplate" (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false"
-                        [ngClass]="panelOpenState? 'mat-elevation-z2': 'mat-elevation-z2'">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{ topology.id }}
-                            </mat-panel-title>
-                            <mat-panel-description>
-                                {{ topology.description }}
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <p>Here we will display app modules, metadata ....</p>
-                        <mat-action-row>
-                            <button mat-button (click)="getSelectedTopology(topology.id)">Select</button>
-                        </mat-action-row>
-
-                    </mat-expansion-panel>
-                </mat-accordion>
-                <br><br>
-                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-                    (page)="pageEvent = handlePage($event)">
-                </mat-paginator>
-            </div>
+            <app-topology-template  (selectedTopologyChanged)="getSelectedTopologyFromChild($event)">Chargement ...</app-topology-template>
             <!----------------------------------------------------------------------------------------------------------------------------------->
 
             <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
-                <button mat-stroked-button matStepperNext (click)="createAppByTopo()">Suivant</button>
+                <button mat-stroked-button matStepperNext >Suivant</button>
             </div>
         </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Description</ng-template>
+
+
+            <!-------------------------------------------TOPOLOGY TEMPLATE--------------------------------------------------------------------------->
+           
+            <app-application-description [selectedTopoArchiveName] = "selectedTopoArchiveName"  [selectedTopoDescription]="selectedTopoDescription">Chargement...</app-application-description>
+
+            <!----------------------------------------------------------------------------------------------------------------------------------->
+
+            <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+                <button mat-stroked-button matStepperPrevious>Précédent</button>
+                <button mat-stroked-button matStepperNext (click)="createAppByTopo()">Suivant</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
             <ng-template matStepLabel>Choix cible</ng-template>
 
 
@@ -64,6 +49,7 @@
             </div>
         </form>
     </mat-step>
+
 
     <mat-step>
         <ng-template matStepLabel>Validation</ng-template>
