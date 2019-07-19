@@ -10,9 +10,10 @@ import { TopologyGraphRoutingModule } from './topology-graph-routing.module';
 
 import { TopologyGraphPopupComponent } from './topology-graph-popup/topology-graph-popup.component';
 import { TopologyGraphContainerComponent } from './topology-graph-popup/topology-graph-container.component';
+import { TopologyGraphViewerComponent } from '.';
 
 @NgModule({
-  declarations: [TopologyGraphPopupComponent, TopologyGraphContainerComponent],
+  declarations: [TopologyGraphPopupComponent, TopologyGraphContainerComponent, TopologyGraphViewerComponent],
   imports: [
     CommonModule,
     SharedModule,

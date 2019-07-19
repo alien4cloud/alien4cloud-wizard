@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-import { ApplicationsService, TopologyGraph } from "@app/core";
+import {ApplicationsService, TopologyGraph} from "@app/core";
 
 export interface DialogData {
   topologyId: string;
@@ -21,7 +21,8 @@ export class TopologyGraphPopupComponent implements OnInit {
     private dialogRef: MatDialogRef<TopologyGraphPopupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: DialogData,
     private applicationsService: ApplicationsService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.topologyGraph = undefined;

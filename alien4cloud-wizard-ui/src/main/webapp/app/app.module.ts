@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, SystemJsNgModuleLoader, NgModuleFactoryLoader } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -80,6 +80,11 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+    },
+    // For module lazy loading
+    {
+      provide: NgModuleFactoryLoader,
+      useClass: SystemJsNgModuleLoader
     }
   ],
   bootstrap: [AppComponent]

@@ -31,8 +31,8 @@ export class TopologyGraphContainerComponent implements OnInit, OnDestroy {
 
   openDialog(topologyId: string, topologyVersion: string): void {
     const dialogRef = this.dialog.open(TopologyGraphPopupComponent, {
-      width: '800px',
-      height: '600px',
+      // width: '800px',
+      // height: '600px',
       data: {topologyId: topologyId, topologyVersion: topologyVersion}
     });
 
