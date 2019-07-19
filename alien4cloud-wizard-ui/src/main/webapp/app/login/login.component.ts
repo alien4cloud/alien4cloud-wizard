@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { FormControl } from '@angular/forms';
 
-import { LoginService } from '../core/authentication/login.service';
+import { LoginService } from '../core/services/login.service';
 
 @Component({
   selector: 'app-login',

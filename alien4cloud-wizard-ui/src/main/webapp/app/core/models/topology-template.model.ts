@@ -1,4 +1,4 @@
-import { TopologyNestedVersion } from './topology-nested-version.model';
+import { TopologyNestedVersion } from '@app/core/models';
 
 export class TopologyTemplate {  
     archiveName: string ;

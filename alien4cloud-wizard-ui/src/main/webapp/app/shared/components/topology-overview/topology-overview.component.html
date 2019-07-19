@@ -4,6 +4,7 @@
     <div fxLayout="row" fxLayoutAlign="start center">
       <span class="title">Description</span>
       <a mat-button [routerLink]="['/topology-graph/' + overview.topologyId + '/' + overview.topologyVersion]">Graph</a>
+      <!-- <a mat-button [routerLink]="[{ outlets: { popup: ['/topology-graph/' + overview.topologyId + '/' + overview.topologyVersion] } }]">Graph</a> -->
     </div>
     <div class="desciption" fxFlex>
       <span>{{ overview.description }}</span>

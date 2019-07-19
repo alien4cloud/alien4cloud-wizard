@@ -1,4 +1,8 @@
-import { OrchestratorStatus } from './orchestrator-status.enum';
+
+export enum OrchestratorStatus {
+  CONNECTED,
+  DISCONNECTED
+}
 
 export class Orchestrator {
     id: string;

@@ -1,4 +1,4 @@
-import { ApplicationStatus } from './application-status.enum';
+import { ApplicationStatus } from '@app/core/models';
 
 export class Environment {
 

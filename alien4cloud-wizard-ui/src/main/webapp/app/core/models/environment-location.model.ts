@@ -1,5 +1,4 @@
-import { A4cLocation } from './a4c-location.model';
-import { Orchestrator } from './orchestrator.model';
+import {A4cLocation, Orchestrator} from '@app/core/models';
 
 export class EnvironmentLocation {
 

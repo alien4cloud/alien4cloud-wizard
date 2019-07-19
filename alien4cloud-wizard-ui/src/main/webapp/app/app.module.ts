@@ -26,7 +26,7 @@ import { A4cThemeService, MetapropertyService, ApplicationsService} from '@app/c
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppRoutingModule,routingComponents} from './app-routing.module';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { AuthInterceptor } from './core/authentication/authentication.interceptor';
+import { AuthInterceptor } from './core/interceptors/authentication.interceptor';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
