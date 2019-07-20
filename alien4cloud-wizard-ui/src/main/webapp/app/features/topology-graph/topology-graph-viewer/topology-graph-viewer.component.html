@@ -1,4 +1,4 @@
-<ngx-graph
+<ngx-graph *ngIf="topologyGraph"
   class="chart-container"
   layout="dagre"
   [curve]="curve"
@@ -8,7 +8,6 @@
   [nodes]="topologyGraph.nodes"
   [zoomToFit$]="zoomToFit$"
   [center$]="center$"
-  [view]="[800, 500]"
   [nodeWidth]=150
   >
   <ng-template #nodeTemplate let-node>

@@ -15,6 +15,14 @@ export class ApplicationsService {
 
   constructor(private http: HttpClient) { }
 
+    private topologyId: string;
+    private topologyVersion: string;
+
+    public setTopology(topologyId: string, topologyVersion: string ) {
+      this.topologyId = topologyId;
+      this.topologyVersion = topologyVersion;
+    }
+
     // Http Options
     httpOptions = {
       headers: new HttpHeaders({
@@ -117,14 +125,7 @@ export class ApplicationsService {
        data => data );
     }
 
-    getTopologyGraph(topologyId: string, topologyVersion: string): Observable<{}> {
-      return this.http.get(`/api/rest/latest/wizard/applications/graph/${topologyId}:${topologyVersion}`, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json; charset=UTF-8',
-        }),
-      }).pipe(
-       data => data );
-    }
+
 
     // Error handling
     handleError(error) {

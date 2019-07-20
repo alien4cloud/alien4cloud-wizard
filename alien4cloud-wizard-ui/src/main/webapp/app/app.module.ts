@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, SystemJsNgModuleLoader, NgModuleFactoryLoader } from '@angular/core';
+import {NgModule} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -26,7 +26,9 @@ import { A4cThemeService, MetapropertyService, ApplicationsService} from '@app/c
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppRoutingModule,routingComponents} from './app-routing.module';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { AuthInterceptor } from './core/interceptors/authentication.interceptor';
+import { AuthInterceptor } from '@app/core';
+import {HeroLoaderModule} from "@herodevs/hero-loader";
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -65,11 +67,13 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    HeroLoaderModule
   ],
   exports: [
     A4cMaterialModule,
-    SharedModule
+    SharedModule,
+    HeroLoaderModule
   ],
   providers: [
     A4cThemeService,
@@ -80,11 +84,6 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    },
-    // For module lazy loading
-    {
-      provide: NgModuleFactoryLoader,
-      useClass: SystemJsNgModuleLoader
     }
   ],
   bootstrap: [AppComponent]

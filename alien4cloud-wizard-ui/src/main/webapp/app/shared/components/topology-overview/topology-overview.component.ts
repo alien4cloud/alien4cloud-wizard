@@ -1,35 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatTabChangeEvent } from '@angular/material';
-import { TopologyOverview, MetaProperty, ApplicationModule } from "@app/core";
-
+import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
+import {TopologyOverview, TopologyGraphService} from "@app/core";
 
 @Component({
   selector: 'w4c-topology-overview',
   templateUrl: './topology-overview.component.html',
   styleUrls: ['./topology-overview.component.scss']
 })
-export class TopologyOverviewComponent implements OnInit {
+export class TopologyOverviewComponent {
 
   @Input() overview: TopologyOverview;
 
-  constructor(private router: Router) { }
-
-  // usefull of we display metaproperties in a table
-  // displayedColumns = ['description', 'name', 'value'];
-  // TODO: will be moved in TopologyOverviewComponent
-  modulesDisplayedColumns = ['icon', 'name', 'version', 'metaproperties'];
-
-  ngOnInit() {
+  constructor(
+    private router: Router,
+    private topologyGraphService: TopologyGraphService) {
   }
 
-  mainTabSelected(event: MatTabChangeEvent) {
-    console.log(event);
-    // if (event.index === 1) {
-    //   this.router.navigate([{ outlets: { popup: ['topology-graph', 'foo', 'bar'] }}]);
-    //   // this.router.navigate([{ outlets: { topology-graph-outlet: ['topology-graph', 'foo', 'bar'] }}]);
-    //   // this.router.navigate(['topology-graph', 'foo', 'bar']);
-    // }
+  modulesDisplayedColumns = ['icon', 'name', 'version', 'metaproperties'];
+
+  /**
+   * Inidicates if the graph view should be displayed.
+   */
+  displayGraph: boolean;
+
+  /**
+   * Activate/Deactivate the graph view.
+   * The 'displayGraph' boolean will trigger lazy load of TopologyGraphModule using 'hero-loader' selector.
+   */
+  switchGraphView() {
+    this.displayGraph = !this.displayGraph;
+    if (this.displayGraph) {
+      this.topologyGraphService.setTopology(this.overview.topologyId, this.overview.topologyVersion);
+    }
   }
 
 }

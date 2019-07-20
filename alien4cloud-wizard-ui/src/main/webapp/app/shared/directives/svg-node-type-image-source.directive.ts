@@ -2,6 +2,10 @@ import {Directive, ElementRef, Renderer2, Input, OnInit} from '@angular/core';
 import {NodeType} from "@app/core";
 import {ToscaTypeImageSrcPipe} from "@app/shared/pipes";
 
+/**
+ * Given a NodeType, set an attribute of type xlink:href="api/img?id=..." for a svg image.
+ * This is used in svg template to display components' images.
+ */
 @Directive({
   selector: '[w4cSvgNoteTypeImageSource]'
 })

@@ -1,19 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {NgxGraphModule} from '@swimlane/ngx-graph';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {SharedModule} from '@app/shared';
 
-import { NgxGraphModule } from '@swimlane/ngx-graph';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {TopologyGraphRoutingModule} from './topology-graph-routing.module';
+import {TopologyGraphViewerComponent} from '.';
+import {CommonModule} from "@angular/common";
 
-import { SharedModule } from '@app/shared';
-
-import { TopologyGraphRoutingModule } from './topology-graph-routing.module';
-
-import { TopologyGraphPopupComponent } from './topology-graph-popup/topology-graph-popup.component';
-import { TopologyGraphContainerComponent } from './topology-graph-popup/topology-graph-container.component';
-import { TopologyGraphViewerComponent } from '.';
-
+/**
+ * This module should be lazy loaded since it embeds NgxGraphModule and NgxChartsModule. Do not import statically.
+ * It's declared in the lazyModules section of angular.js so ng build a separate chunk for it.
+ */
 @NgModule({
-  declarations: [TopologyGraphPopupComponent, TopologyGraphContainerComponent, TopologyGraphViewerComponent],
+  declarations: [TopologyGraphViewerComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -21,8 +20,12 @@ import { TopologyGraphViewerComponent } from '.';
     NgxChartsModule,
     TopologyGraphRoutingModule
   ],
-  entryComponents: [
-    TopologyGraphPopupComponent
-  ]
+  bootstrap: [TopologyGraphViewerComponent]
 })
-export class TopologyGraphModule { }
+export class TopologyGraphModule {
+
+  constructor() {
+    console.log("================ Graph module instanciated");
+  }
+
+}

@@ -37,7 +37,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <!-- start of TopologyOverviewComponent -->
-        <w4c-topology-overview [overview]="overview"></w4c-topology-overview>
+      <w4c-topology-overview *ngIf="isOpenned" [overview]="overview"></w4c-topology-overview>
       <!-- end of TopologyOverviewComponent -->
       <mat-action-row fxLayout="row" fxLayoutAlign="end center">
         <!-- TODO: translate status -->

@@ -1,24 +1,25 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { RouterModule } from '@angular/router';
-// import { NgxGraphModule } from '@swimlane/ngx-graph';
-// import { NgxChartsModule } from '@swimlane/ngx-charts';
-
-import { A4cMaterialModule } from './a4c-material.module';
-import { LoadModuleDirective, SvgNodeTypeImageSourceDirective } from './directives';
-import { ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe } from './pipes';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {RouterModule} from '@angular/router';
+import {A4cMaterialModule} from './a4c-material.module';
+import {SvgNodeTypeImageSourceDirective} from './directives';
+import {ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe} from './pipes';
 import {
   TopologyOverviewComponent
 } from './components';
+import {HeroLoaderModule} from "@herodevs/hero-loader";
 
+/**
+ * As it's name indicates, this is a shared module that embed all shared stuffs.
+ * It should never import something in 'app/features' but should be imported by others feature modules.
+ */
 @NgModule({
   declarations: [
     TopologyOverviewComponent,
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
-    LoadModuleDirective,
     SvgNodeTypeImageSourceDirective
   ],
   imports: [
@@ -27,9 +28,9 @@ import {
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    HeroLoaderModule
   ],
-  //entryComponents: [JhiLoginModalComponent],
   exports: [
     A4cMaterialModule,
     CommonModule,
@@ -39,7 +40,6 @@ import {
     TopologyOverviewComponent,
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
-    LoadModuleDirective,
     SvgNodeTypeImageSourceDirective
   ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA]
