@@ -8,7 +8,7 @@
       "schematics": {},
       "root": "",
       "sourceRoot": "src/main/webapp",
-      "prefix": "app",
+      "prefix": "w4c",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
