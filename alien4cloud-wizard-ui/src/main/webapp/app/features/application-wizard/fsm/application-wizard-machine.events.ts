@@ -1,7 +1,13 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-export type ApplicationWizardMachineEvents = Init | DoSelectTemplate | DoCreateApplication | OnApplicationCreateError | OnApplicationCreateSucess;
+export type ApplicationWizardMachineEvents =
+  Init |
+  DoSelectTemplate |
+  GoBack |
+  DoCreateApplication |
+  OnApplicationCreateError |
+  OnApplicationCreateSucess;
 
 export class Init {
   readonly type = 'INIT';
@@ -23,6 +29,11 @@ export class OnApplicationCreateError {
 export class OnApplicationCreateSucess {
   readonly type = 'ON_APPLICATION_CREATE_SUCCESS';
   constructor(public applicationId: string) {}
+}
+
+export class GoBack {
+  readonly type = 'GO_BACK';
+  constructor() {}
 }
 
 export interface Errors {

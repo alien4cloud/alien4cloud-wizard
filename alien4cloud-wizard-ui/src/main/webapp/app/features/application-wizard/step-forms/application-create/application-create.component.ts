@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/fsm/application-wizard-machine.service";
-import {DoCreateApplication} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
+import {DoCreateApplication, GoBack} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
 import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe} from "@app/shared";
 import {WizardFromComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 
@@ -40,6 +40,10 @@ export class ApplicationCreateComponent implements OnInit, WizardFromComponent {
 
   createApp() {
     this.fsm.send(new DoCreateApplication(this.applicationName, this.applicationDescription));
+  }
+
+  back() {
+    this.fsm.send(new GoBack());
   }
 
 }

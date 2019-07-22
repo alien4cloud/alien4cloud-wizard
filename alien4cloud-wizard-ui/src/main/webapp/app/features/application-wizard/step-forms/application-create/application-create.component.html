@@ -6,6 +6,7 @@
     <input matInput placeholder="Description" [(ngModel)]="applicationDescription" name="applicationDescription" required>
   </mat-form-field>
   <div>
+    <button (click)="back()" type="button">Back</button>
     <button (click)="createApp()" type="button">Create</button>
   </div>
 </form>

@@ -71,6 +71,9 @@ export const applicationWizardMachineConfig: MachineConfig<
           target: 'applicationCreating',
           actions: ['assignAppInfo']
           // actions: ['assignUser', 'loginSuccess']
+        },
+        GO_BACK: {
+          target: 'templateSelectionForm'
         }
       }
     },
