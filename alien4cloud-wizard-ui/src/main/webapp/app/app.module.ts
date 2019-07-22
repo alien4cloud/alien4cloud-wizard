@@ -29,7 +29,6 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AuthInterceptor } from '@app/core';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
 
-
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

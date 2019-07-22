@@ -76,6 +76,17 @@ export class TopologyTemplateService {
       .pipe(data => data);
   }
 
+  createApplication(payload: AppCreationTopoPayload): Observable<{}> {
+
+    //let data = { "name": payload.name, "archiveName": payload.archiveName, "topologyTemplateVersionId": payload.topologyTemplateVersionId };
+    console.log("topologyTemplateVersionId  :", payload.topologyTemplateVersionId)
+    return this.http.post(this.apiURL + this.createAppByTopoUrl, payload, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      }),
+    });
+  }
+
   createAppByTopology(payload: AppCreationTopoPayload): Observable<{}> {
 
     //let data = { "name": payload.name, "archiveName": payload.archiveName, "topologyTemplateVersionId": payload.topologyTemplateVersionId };

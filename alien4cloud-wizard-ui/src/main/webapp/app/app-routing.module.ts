@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'topology-graph/:topologyId/:topologyVersion',
     loadChildren: () => import('./features/topology-graph/topology-graph.module').then(mod => mod.TopologyGraphModule)
   },
+  {
+    path: 'application-wizard',
+    loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
+  },
   // { path: 'topology-graph/:topologyId/:topologyVersion', component: TopologyGraphContainerComponent },
   {
     path: 'create-application',
