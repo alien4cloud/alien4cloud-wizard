@@ -1,8 +1,50 @@
-<form>
-  <mat-form-field>
-    <input matInput placeholder="Template ID" [(ngModel)]="templateId" name="templateId" required>
-  </mat-form-field>
-  <div>
-    <button (click)="selectTemplate()" type="button">Choose</button>
+<div fxLayout="column">
+  <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
+    <mat-form-field fxFlex="50%">
+      <mat-label>Search for ...</mat-label>
+      <input matInput [formControl]="searchField" id="applicationDashboardSearchInput">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
   </div>
-</form>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let topology of topologyTemplates; let isOpenned = false"
+                         (opened)="openDetails(topology.id); isOpenned = true"
+                         (closed)="isOpenned = false"
+                         [ngClass]="isOpenned? 'mat-elevation-z2': 'mat-elevation-z2'">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center" >
+            <div fxFlex="5%">
+              <img src="{{topology|toscaTypeImageSrc}}"
+                   style="max-height:24px; max-width:24px; height:auto; width:auto;"
+                   >
+<!--              <img *ngIf="application.imageId; else defaultIcon"-->
+<!--                   src="api/img?id={{ application.imageId }}&quality=QUALITY_64"-->
+<!--                   style="max-height:46px; max-width:46px; height:auto; width:auto;">-->
+              <ng-template #defaultIcon>
+                <mat-icon>airplay</mat-icon>
+              </ng-template>
+            </div>
+            <div fxFlex="30%">{{ topology.archiveName|w4cToscaTypeShortName }}</div>
+            <div fxFlex="65%">
+              <span *ngIf="!isOpenned">
+                {{ lodash.truncate(topology.description, {'length': 100, 'separator': ' '}) }}
+              </span>
+            </div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>Here we will display app modules, metadata ....</p>
+      <mat-action-row>
+        <button mat-button (click)="selectTemplate(topology.id)">Select</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br><br>
+  <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                 (page)="handlePage($event)">
+  </mat-paginator>
+</div>

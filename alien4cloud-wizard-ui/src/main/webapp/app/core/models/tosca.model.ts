@@ -1,6 +1,6 @@
-import {Tag} from "@app/core/models";
+import {HasTags, Tag} from "@app/core/models";
 
-export class AbstractToscaType {
+export class AbstractToscaType implements HasTags {
   archiveName: string;
   archiveVersion: string;
   elementId: string;

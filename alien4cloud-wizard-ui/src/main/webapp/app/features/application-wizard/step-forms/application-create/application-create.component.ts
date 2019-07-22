@@ -4,6 +4,8 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/fsm/application-wizard-machine.service";
 import {DoCreateApplication} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
 import {WizardFormStep} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.schema";
+import {TopologyTemplateService} from "@app/core";
+import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe} from "@app/shared";
 
 @Component({
   selector: 'w4c-application-create',
@@ -18,11 +20,17 @@ export class ApplicationCreateComponent implements OnInit, WizardFromComponent {
   @Input() fsmContext: ApplicationWizardMachineContext;
   @Input() wizardFormStep: WizardFormStep;
 
-  constructor(private fsm: AppplicationWizardMachineService) { }
+  constructor(private fsm: AppplicationWizardMachineService,
+              private w4cToscaTypeShortName: ToscaTypeShortNamePipe,
+              private w4cToscaIdArchiveExtractor: ToscaIdArchiveExtractorPipe) { }
 
   ngOnInit() {
     if (this.fsmContext) {
-      this.applicationName = this.fsmContext.applicationName;
+      if (this.fsmContext.applicationName) {
+        this.applicationName = this.fsmContext.applicationName;
+      } else {
+        this.applicationName = this.w4cToscaTypeShortName.transform(this.w4cToscaIdArchiveExtractor.transform(this.fsmContext.templateId));
+      }
       this.applicationDescription = this.fsmContext.applicationDescription;
     }
   }

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NodeType } from '@app/core';
+import {HasTags, NodeType} from '@app/core';
 import * as _ from 'lodash';
 
 /**
@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 })
 export class ToscaTypeImageSrcPipe implements PipeTransform {
 
-  transform(value: NodeType): string {
+  transform(value: HasTags): string {
     let tagValue = _.get(_.find(value.tags, {name:'icon'}), 'value');
     return `api/img?id=${tagValue}&quality=QUALITY_64`;
   }

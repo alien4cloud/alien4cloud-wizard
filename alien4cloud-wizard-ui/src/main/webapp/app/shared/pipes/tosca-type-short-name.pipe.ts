@@ -5,7 +5,7 @@ import * as _ from 'lodash';
  * Get the last part of dotted name. For example if the value is 'org.alien4cloud.Stuff', returns 'Stuff'.
  */
 @Pipe({
-  name: 'toscaTypeShortName'
+  name: 'w4cToscaTypeShortName'
 })
 export class ToscaTypeShortNamePipe implements PipeTransform {
 

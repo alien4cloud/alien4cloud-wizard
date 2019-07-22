@@ -37,7 +37,7 @@ export class TopologyTemplateComponent implements OnInit {
   searchField: FormControl = new FormControl();
 
 
-  public topologyTemplate: TopologyTemplate[];
+  public topologyTemplates: TopologyTemplate[];
   public selectedTopology: TopologyTemplate;
   //public createAppByTopoPayload: AppCreationTopoPayload;
 
@@ -65,7 +65,7 @@ export class TopologyTemplateComponent implements OnInit {
   private loadTopologies(from: number) {
     this.isLoading = true;
     this.topologyTemplateService.getTopologies(from, this.pageSize, this.query).subscribe((data: {}) => {
-      this.topologyTemplate = data['data']['data'] as TopologyTemplate[];
+      this.topologyTemplates = data['data']['data'] as TopologyTemplate[];
       this.length = data['data']['totalResults'];
       this.isLoading = false;
     })

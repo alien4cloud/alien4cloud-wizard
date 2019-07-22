@@ -3,6 +3,10 @@ export class Tag {
   value : string;
 }
 
+export interface HasTags {
+  tags: Tag[];
+}
+
 export class MetaPropertyConfiguration {
   id: string;
   name: string;

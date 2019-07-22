@@ -33,7 +33,7 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
           <td mat-cell *matCellDef="let element" matTooltip="{{element.nodeType.description}}">
-            {{element.nodeType.elementId|toscaTypeShortName}}
+            {{element.nodeType.elementId|w4cToscaTypeShortName}}
           </td>
         </ng-container>
         <ng-container matColumnDef="version">
