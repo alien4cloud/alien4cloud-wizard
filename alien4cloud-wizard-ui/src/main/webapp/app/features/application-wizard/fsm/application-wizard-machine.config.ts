@@ -90,7 +90,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     applicationCreationError: {
       on: {
         '': [
-          { target: 'templateSelectionForm' }
+          { target: 'applicationCreateForm' }
         ]
       }
     },
