@@ -1,15 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WizardFromComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.component";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/fsm/application-wizard-machine.service";
-import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.schema";
+import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
 import {DoSelectTemplate} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
-import {WizardFormStep} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.schema";
 import {PageEvent} from "@angular/material";
 import {FormControl} from "@angular/forms";
 import {TopologyTemplate, TopologyTemplateService} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
-import {ToscaTypeShortNamePipe} from "@app/shared";
+import {WizardFromComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 
 @Component({
   selector: 'w4c-template-selection',
@@ -45,7 +43,6 @@ export class TemplateSelectionComponent implements OnInit, WizardFromComponent {
   ) { }
 
   @Input() fsmContext: ApplicationWizardMachineContext;
-  @Input() wizardFormStep: WizardFormStep;
 
   ngOnInit() {
     if (this.fsmContext) {

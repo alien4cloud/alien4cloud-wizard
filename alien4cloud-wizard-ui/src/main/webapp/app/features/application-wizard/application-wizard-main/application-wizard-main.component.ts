@@ -1,17 +1,22 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {MatStepper} from "@angular/material";
-import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.schema";
-import {WizardFormStep} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.schema";
+import {WizardFormStep} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 import {WizardStepContainerComponent} from "@app/features/application-wizard/wizard-step-container/wizard-step-container.component";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/fsm/application-wizard-machine.service";
 import {ApplicationWizardMainService} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.service";
 import {StepComponentDirective} from "@app/features/application-wizard/application-wizard-main/step-component.directive";
+import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
 
-export interface WizardFromComponent {
-  fsmContext: ApplicationWizardMachineContext;
-  wizardFormStep: WizardFormStep;
-}
 
+
+/**
+ * This main component knows:
+ * <li>
+ *     <ul>the state machine : it suscribe to it's state change events.</ul>
+ *     <ul>the stepper : it suscribe to it's selected change events in order to render the ad-hoc form.</ul>
+ * </li>
+ *
+ */
 @Component({
   selector: 'w4c-application-wizard-main',
   templateUrl: './application-wizard-main.component.html',
@@ -21,10 +26,12 @@ export class ApplicationWizardMainComponent implements OnInit {
 
   @ViewChild('applicationWizardStepper', {static: true}) stepper: MatStepper;
 
-  steps: WizardFormStep[];
-  @ViewChild(WizardStepContainerComponent, {static: true}) stepBanner: WizardStepContainerComponent;
+  @ViewChild(WizardStepContainerComponent, {static: true}) stepFormContainer: WizardStepContainerComponent;
 
-  // @ViewChildren(StepComponentDirective) matSteps !: QueryList<StepComponentDirective>;
+  /**
+   * The wizard form steps definition.
+   */
+  steps: WizardFormStep[];
 
   private currentFsmContext: ApplicationWizardMachineContext;
 
@@ -37,42 +44,54 @@ export class ApplicationWizardMainComponent implements OnInit {
 
   ngOnInit() {
 
+    // get the wizard form steps definitions
     this.steps = this.mainService.getSteps();
-    this.currentStepIndex = 0;
-    // this.matSteps.changes.subscribe((r) => { console.log("MatStep change : " + r); });
 
+    // let's suscribe to the stepper selection change events
     this.stepper.selectionChange.subscribe(data => {
       console.log(data);
       console.log("Current step is : " + data.selectedIndex);
       const currentWizardFormStep = this.steps[data.selectedIndex];
-      this.stepBanner.displayStep(currentWizardFormStep, this.currentFsmContext);
-      // this.displayStep(currentWizardFormStep);
+      // render the form this step concerns
+      this.stepFormContainer.renderStepForm(currentWizardFormStep, this.currentFsmContext);
     });
 
+    // let's suscribe to FSM state change events
     this.fsm.applicationWizardState$.subscribe(data => {
       console.log(data);
       console.log("State is now : " + data.value);
+
+      // we store locally the current FSM context
+      this.currentFsmContext = data.context;
+
+      // if a wizard step is associated with this state, we'll find it here
       const expectedStep = this.steps.filter(step => step.fsmStateName == data.value)[0];
       if (expectedStep) {
         console.log(expectedStep.fsmStateName + " is a form state !");
-        this.currentFsmContext = data.context;
         this.stepper.steps.forEach((item, index) => {
+          // the precedent step is considered as completed
           if (index === this.currentStepIndex) {
             item.completed = true;
             item.editable = false;
           }
+          // the concerned step is made editable
           if (index === expectedStep.index) {
             item.editable = true;
           }
         });
-        this.stepper.selectedIndex = expectedStep.index;
+        // store the current step index
         this.currentStepIndex = expectedStep.index;
-        // this.stepBanner.displayStep(expectedStep);
+        // trigger a selection change on the stepper
+        this.stepper.selectedIndex = expectedStep.index;
       } else {
+        // nothing to do here: a state is not always a form state.
         console.log("Not a form state !");
       }
     });
-    this.stepBanner.displayStep(this.steps[0], this.currentFsmContext);
+
+    // let's init the wizard
+    this.currentStepIndex = 0;
+    this.stepFormContainer.renderStepForm(this.steps[this.currentStepIndex], this.currentFsmContext);
 
   }
 

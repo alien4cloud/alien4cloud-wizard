@@ -15,14 +15,16 @@ import {TopologyTemplateService} from "@app/core";
 import {
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema
-} from "@app/features/application-wizard/fsm/application-wizard-machine.schema";
+} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
 import {
   ApplicationWizardMachineEvents, DoCreateApplication, DoSelectTemplate, OnApplicationCreateError,
   OnApplicationCreateSucess
 } from "@app/features/application-wizard/fsm/application-wizard-machine.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/fsm/application-wizard-machine.config";
 
-
+/**
+ * Manages the machine initialization.
+ */
 @Injectable()
 export class AppplicationWizardMachineService {
   machineOptions: Partial<MachineOptions<ApplicationWizardMachineContext, ApplicationWizardMachineEvents>> = {
@@ -53,16 +55,6 @@ export class AppplicationWizardMachineService {
       assignAppId: assign<ApplicationWizardMachineContext, OnApplicationCreateSucess>((_, event) => ({
         applicationId: event.applicationId
       }))
-      // ,
-      // assignErrors: assign<AuthContext, LoginFail>((_, event) => ({
-      //   errors: Object.keys(event.errors || {}).map(
-      //     key => `${key} ${event.errors[key]}`
-      //   )
-      // })),
-      // loginSuccess: (ctx, _) => {
-      //   localStorage.setItem('jwtToken', ctx.user.token);
-      //   this.router.navigateByUrl('');
-      // }
     }
   };
 
@@ -71,6 +63,9 @@ export class AppplicationWizardMachineService {
   ).withConfig(this.machineOptions);
   private service = interpret(this._applicationWizardMachine, { devTools: true }).start();
 
+  /**
+   * This subject will broadcast state changed events (AKA transition).
+   */
   applicationWizardState$ = fromEventPattern<[State<ApplicationWizardMachineContext, ApplicationWizardMachineEvents>, EventObject]>(
     handler => {
       return this.service.onTransition(handler);
@@ -78,9 +73,17 @@ export class AppplicationWizardMachineService {
     (_, service) => service.stop()
   ).pipe(map(([state, _]) => state));
 
+  constructor(
+    private topologyTemplateService: TopologyTemplateService,
+    private router: Router
+  ) {}
+
+  /**
+   * Send an event to the machine in order to trigger a transition.
+   * @param event
+   */
   send(event: ApplicationWizardMachineEvents) {
     this.service.send(event);
   }
 
-  constructor(private topologyTemplateService: TopologyTemplateService, private router: Router) {}
 }

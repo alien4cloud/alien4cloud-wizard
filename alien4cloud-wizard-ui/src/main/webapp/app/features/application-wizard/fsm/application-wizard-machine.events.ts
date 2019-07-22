@@ -1,3 +1,8 @@
+/**
+ * The event types our FSM will manage to trigger transition between states.
+ */
+export type ApplicationWizardMachineEvents = Init | DoSelectTemplate | DoCreateApplication | OnApplicationCreateError | OnApplicationCreateSucess;
+
 export class Init {
   readonly type = 'INIT';
 }
@@ -19,8 +24,6 @@ export class OnApplicationCreateSucess {
   readonly type = 'ON_APPLICATION_CREATE_SUCCESS';
   constructor(public applicationId: string) {}
 }
-
-export type ApplicationWizardMachineEvents = Init | DoSelectTemplate | DoCreateApplication | OnApplicationCreateError | OnApplicationCreateSucess;
 
 export interface Errors {
   [key: string]: string;

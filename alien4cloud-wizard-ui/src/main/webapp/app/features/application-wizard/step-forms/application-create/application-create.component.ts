@@ -1,11 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WizardFromComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.component";
-import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.schema";
+import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/fsm/application-wizard-machine.service";
 import {DoCreateApplication} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
-import {WizardFormStep} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.schema";
-import {TopologyTemplateService} from "@app/core";
 import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe} from "@app/shared";
+import {WizardFromComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 
 @Component({
   selector: 'w4c-application-create',
@@ -18,7 +16,6 @@ export class ApplicationCreateComponent implements OnInit, WizardFromComponent {
   applicationDescription: string;
 
   @Input() fsmContext: ApplicationWizardMachineContext;
-  @Input() wizardFormStep: WizardFormStep;
 
   constructor(private fsm: AppplicationWizardMachineService,
               private w4cToscaTypeShortName: ToscaTypeShortNamePipe,
@@ -29,9 +26,15 @@ export class ApplicationCreateComponent implements OnInit, WizardFromComponent {
       if (this.fsmContext.applicationName) {
         this.applicationName = this.fsmContext.applicationName;
       } else {
+        // no applicationName is found in the context, let's pre-fill the applicationName using topology template name
         this.applicationName = this.w4cToscaTypeShortName.transform(this.w4cToscaIdArchiveExtractor.transform(this.fsmContext.templateId));
       }
-      this.applicationDescription = this.fsmContext.applicationDescription;
+      if (this.applicationDescription) {
+        this.applicationDescription = this.fsmContext.applicationDescription;
+      } else {
+        // TODO: here pre-fill using topology template description
+        this.applicationDescription = '';
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {WizardFormStep} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.schema";
+import {WizardFormStep} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 import {WelcomeComponent} from "@app/features/application-wizard/step-forms/welcome/welcome.component";
 import {TemplateSelectionComponent} from "@app/features/application-wizard/step-forms/template-selection/template-selection.component";
 import {ApplicationCreateComponent} from "@app/features/application-wizard/step-forms/application-create/application-create.component";

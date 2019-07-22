@@ -2,11 +2,14 @@ import { MachineConfig, actions } from 'xstate';
 import {
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema
-} from "@app/features/application-wizard/fsm/application-wizard-machine.schema";
+} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
 import {ApplicationWizardMachineEvents} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
 
 const { log } = actions;
 
+/**
+ * The machine context.
+ */
 export const context: ApplicationWizardMachineContext = {
   templateId: undefined,
   applicationName: undefined,
@@ -15,6 +18,9 @@ export const context: ApplicationWizardMachineContext = {
   errors: []
 };
 
+/**
+ * The machine configuration : define steps and transitions.
+ */
 export const applicationWizardMachineConfig: MachineConfig<
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema,
