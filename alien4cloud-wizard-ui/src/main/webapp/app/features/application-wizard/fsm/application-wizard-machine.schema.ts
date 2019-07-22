@@ -16,6 +16,5 @@ export interface ApplicationWizardMachineContext {
   applicationName: string;
   applicationDescription: string;
   applicationId: string;
-  // user: User;
   errors: string[];
 }

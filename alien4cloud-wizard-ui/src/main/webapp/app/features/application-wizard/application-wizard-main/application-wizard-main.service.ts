@@ -16,10 +16,10 @@ export class ApplicationWizardMainService {
 
   getSteps() {
     return [
-      new WizardFormStep(0, "Welcome", WelcomeComponent, "", false, false),
-      new WizardFormStep(1, "Pick a template", TemplateSelectionComponent, "templateSelectionForm", false, false),
-      new WizardFormStep(2, "Fill the app form", ApplicationCreateComponent, "applicationCreateForm", false, false),
-      new WizardFormStep(3, "Select Target", TargetSelectionComponent, "targetSelectionForm", false, false)
+      new WizardFormStep(0, "Welcome", WelcomeComponent, ""),
+      new WizardFormStep(1, "Pick a template", TemplateSelectionComponent, "templateSelectionForm"),
+      new WizardFormStep(2, "Fill the app form", ApplicationCreateComponent, "applicationCreateForm"),
+      new WizardFormStep(3, "Select Target", TargetSelectionComponent, "targetSelectionForm")
     ];
   }
 

@@ -56,7 +56,6 @@ export class ApplicationWizardMainComponent implements OnInit {
       if (expectedStep) {
         console.log(expectedStep.fsmStateName + " is a form state !");
         this.currentFsmContext = data.context;
-        expectedStep.editable = true;
         this.stepper.steps.forEach((item, index) => {
           if (index === this.currentStepIndex) {
             item.completed = true;

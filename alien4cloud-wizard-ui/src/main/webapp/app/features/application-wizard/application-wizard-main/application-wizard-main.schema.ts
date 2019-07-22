@@ -5,8 +5,6 @@ export class WizardFormStep {
     public index: number,
     public stepLabel: string,
     public component: Type<any>,
-    public fsmStateName: string,
-    public completed: boolean,
-    public editable: boolean
+    public fsmStateName: string
   ) {}
 }

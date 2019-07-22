@@ -21,7 +21,6 @@ export class WelcomeComponent implements OnInit, WizardFromComponent {
   }
 
   startWizard() {
-    this.wizardFormStep.completed = true;
     this.fsm.send(new Init());
   }
 
