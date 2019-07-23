@@ -1,13 +1,13 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
 import {
   WizardFormStep,
-  WizardFromComponent
+  WizardFormComponent
 } from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 import {StepComponentDirective} from "@app/features/application-wizard/application-wizard-main/step-component.directive";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
 
 /**
- * This component is responsible of rendering the WizardFromComponent that must be shown at a given state.
+ * This component is responsible of rendering the WizardFormComponent that must be shown at a given state.
  */
 @Component({
   selector: 'w4c-wizard-step-container',
@@ -39,7 +39,7 @@ export class WizardStepContainerComponent implements OnInit {
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
     // give the context to the form component
-    (<WizardFromComponent>componentRef.instance).fsmContext = context;
+    (<WizardFormComponent>componentRef.instance).fsmContext = context;
   }
 
 }

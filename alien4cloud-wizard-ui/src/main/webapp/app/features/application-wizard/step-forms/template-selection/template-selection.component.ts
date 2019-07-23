@@ -7,14 +7,14 @@ import {FormControl} from "@angular/forms";
 import {TopologyTemplate, TopologyTemplateService} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
-import {WizardFromComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
+import {WizardFormComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 
 @Component({
   selector: 'w4c-template-selection',
   templateUrl: './template-selection.component.html',
   styleUrls: ['./template-selection.component.css']
 })
-export class TemplateSelectionComponent implements OnInit, WizardFromComponent {
+export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
 
   // make lodash usable from template
   private lodash = _;

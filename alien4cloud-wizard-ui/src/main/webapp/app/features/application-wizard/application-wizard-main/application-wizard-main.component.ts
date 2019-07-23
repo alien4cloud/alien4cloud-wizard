@@ -6,7 +6,7 @@ import {AppplicationWizardMachineService} from "@app/features/application-wizard
 import {ApplicationWizardMainService} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.service";
 import {StepComponentDirective} from "@app/features/application-wizard/application-wizard-main/step-component.directive";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
-
+import * as _ from "lodash";
 
 
 /**
@@ -65,8 +65,9 @@ export class ApplicationWizardMainComponent implements OnInit {
       this.currentFsmContext = data.context;
 
       // if a wizard step is associated with this state, we'll find it here
-      const expectedStep = this.steps.filter(step => step.fsmStateName == data.value)[0];
-      if (expectedStep) {
+      const expectedStepIndex = _.findIndex(this.steps, step => step.fsmStateName == data.value);
+      if (expectedStepIndex > -1) {
+        const expectedStep = this.steps[expectedStepIndex];
         console.log(expectedStep.fsmStateName + " is a form state !");
         this.stepper.steps.forEach((item, index) => {
           // the precedent step is considered as completed
@@ -75,17 +76,17 @@ export class ApplicationWizardMainComponent implements OnInit {
             item.editable = false;
           }
           // the concerned step is made editable
-          if (index === expectedStep.index) {
+          if (index === expectedStepIndex) {
             item.editable = true;
           }
         });
         // store the current step index
-        this.currentStepIndex = expectedStep.index;
+        this.currentStepIndex = expectedStepIndex;
         // trigger a selection change on the stepper
-        this.stepper.selectedIndex = expectedStep.index;
+        this.stepper.selectedIndex = expectedStepIndex;
       } else {
         // nothing to do here: a state is not always a form state.
-        console.log("Not a form state !");
+        console.log(`${data.value} is not a form state !`);
       }
     });
 

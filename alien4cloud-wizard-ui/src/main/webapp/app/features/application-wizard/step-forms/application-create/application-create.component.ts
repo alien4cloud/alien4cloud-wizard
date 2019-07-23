@@ -3,14 +3,14 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/fsm/application-wizard-machine.service";
 import {DoCreateApplication, GoBack} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
 import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe} from "@app/shared";
-import {WizardFromComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
+import {WizardFormComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
 
 @Component({
   selector: 'w4c-application-create',
   templateUrl: './application-create.component.html',
   styleUrls: ['./application-create.component.css']
 })
-export class ApplicationCreateComponent implements OnInit, WizardFromComponent {
+export class ApplicationCreateComponent implements OnInit, WizardFormComponent {
 
   applicationName: string;
   applicationDescription: string;

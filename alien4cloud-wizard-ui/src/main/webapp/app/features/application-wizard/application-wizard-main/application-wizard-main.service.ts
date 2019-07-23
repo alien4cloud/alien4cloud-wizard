@@ -5,6 +5,18 @@ import {TemplateSelectionComponent} from "@app/features/application-wizard/step-
 import {ApplicationCreateComponent} from "@app/features/application-wizard/step-forms/application-create/application-create.component";
 import {TargetSelectionComponent} from "@app/features/application-wizard/step-forms/target-selection/target-selection.component";
 
+/**
+ * This is the configuration of our wizard. The step order is the same that this array order.
+ *
+ * TODO: labels should be i18n
+ */
+export const wizardDefinition: WizardFormStep[] = [
+  // This first step is not related to any FSM state.
+  {stepLabel: "Welcome", component: WelcomeComponent, fsmStateName: ""},
+  {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
+  {stepLabel: "Fill the app form", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
+  {stepLabel: "Select Target", component: TargetSelectionComponent, fsmStateName: "targetSelectionForm"}
+];
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +27,7 @@ export class ApplicationWizardMainService {
   }
 
   getSteps() {
-    return [
-      new WizardFormStep(0, "Welcome", WelcomeComponent, ""),
-      new WizardFormStep(1, "Pick a template", TemplateSelectionComponent, "templateSelectionForm"),
-      new WizardFormStep(2, "Fill the app form", ApplicationCreateComponent, "applicationCreateForm"),
-      new WizardFormStep(3, "Select Target", TargetSelectionComponent, "targetSelectionForm")
-    ];
+    return wizardDefinition;
   }
 
 }
