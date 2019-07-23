@@ -15,7 +15,7 @@ Then :
 `constructor(private fsm: AppplicationWizardMachineService) { }`
  
 * declare your component in the ``entryComponents`` of the ``ApplicationWizardModule``.
-* finally declare your form step in ``application-wizard-main/application-wizard-main.service.ts``
+* finally declare your form step in ``application-wizard-main/wizard.service.ts``
 
 Remeber that a form step component should only :
 * Read values from the fsmContext

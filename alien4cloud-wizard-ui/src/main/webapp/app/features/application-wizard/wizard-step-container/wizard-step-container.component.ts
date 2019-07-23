@@ -2,9 +2,9 @@ import {Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/c
 import {
   WizardFormStep,
   WizardFormComponent
-} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
-import {StepComponentDirective} from "@app/features/application-wizard/application-wizard-main/step-component.directive";
-import {ApplicationWizardMachineContext} from "@app/features/application-wizard/fsm/application-wizard-machine.model";
+} from "@app/features/application-wizard/wizard-main/wizard-main.model";
+import {StepComponentDirective} from "@app/features/application-wizard/wizard-step-container/step-component.directive";
+import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 
 /**
  * This component is responsible of rendering the WizardFormComponent that must be shown at a given state.
