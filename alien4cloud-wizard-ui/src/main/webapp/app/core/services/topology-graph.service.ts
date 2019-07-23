@@ -23,7 +23,7 @@ export class TopologyGraphService {
   }
 
   private getTopologyGraph(topologyId: string, topologyVersion: string): Observable<{}> {
-    return this.http.get(`/api/rest/latest/wizard/applications/graph/${topologyId}:${topologyVersion}`, {
+    return this.http.get(`/api/rest/latest/wizard/topologies/graph/${topologyId}:${topologyVersion}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       }),

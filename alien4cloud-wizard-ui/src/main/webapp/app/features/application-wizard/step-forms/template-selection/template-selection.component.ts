@@ -4,7 +4,7 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {DoSelectTemplate} from "@app/features/application-wizard/fsm/application-wizard-machine.events";
 import {PageEvent} from "@angular/material";
 import {FormControl} from "@angular/forms";
-import {TopologyTemplate, TopologyTemplateService} from "@app/core";
+import {ApplicationOverview, TopologyOverview, TopologyTemplate, TopologyTemplateService} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
 import {WizardFormComponent} from "@app/features/application-wizard/application-wizard-main/application-wizard-main.model";
@@ -35,7 +35,8 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   searchField: FormControl = new FormControl();
 
 
-  public topologyTemplates: TopologyTemplate[];
+  private topologyTemplates: TopologyTemplate[];
+  private overview: TopologyOverview;
 
   constructor(
     private fsm: AppplicationWizardMachineService,
@@ -83,15 +84,15 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   private openDetails(topologyId: string) {
     // TODO: query plugin endpoint to retrieve details
     console.log("Openning ", topologyId);
-    // this.overview = undefined;
-    // this.applicationsService.getApplicationOverview(applicationId).subscribe((data: {}) => {
-    //   this.overview = data['data'] as ApplicationOverview;
-    // });
+    this.overview = undefined;
+    this.topologyTemplateService.getTopologyOverview(topologyId).subscribe((data: {}) => {
+      this.overview = data['data'] as TopologyOverview;
+    });
   }
 
-  selectTemplate(topologyId: string) {
+  selectTemplate(topologyId: string, topologyDescription: string) {
     console.log(`Selected template: id=${topologyId}`);
-    this.fsm.send(new DoSelectTemplate(topologyId));
+    this.fsm.send(new DoSelectTemplate(topologyId, topologyDescription));
   }
 
 }

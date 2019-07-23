@@ -14,7 +14,7 @@ export class Init {
 }
 export class DoSelectTemplate {
   readonly type = 'DO_SELECT_TEMPLATE';
-  constructor(public templateId: string) {}
+  constructor(public templateId: string, public templateDescription: string) {}
 }
 
 export class DoCreateApplication {

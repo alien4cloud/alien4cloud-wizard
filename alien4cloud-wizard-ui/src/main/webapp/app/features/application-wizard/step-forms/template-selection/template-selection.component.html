@@ -17,12 +17,10 @@
         <mat-panel-title>
           <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center" >
             <div fxFlex="5%">
-              <img src="{{topology|toscaTypeImageSrc}}"
+<!--              TODO : retrieve the topology icon-->
+              <img *ngIf="false; else defaultIcon" src="{{topology|toscaTypeImageSrc}}"
                    style="max-height:24px; max-width:24px; height:auto; width:auto;"
                    >
-<!--              <img *ngIf="application.imageId; else defaultIcon"-->
-<!--                   src="api/img?id={{ application.imageId }}&quality=QUALITY_64"-->
-<!--                   style="max-height:46px; max-width:46px; height:auto; width:auto;">-->
               <ng-template #defaultIcon>
                 <mat-icon>airplay</mat-icon>
               </ng-template>
@@ -36,9 +34,9 @@
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <p>Here we will display app modules, metadata ....</p>
+      <w4c-topology-overview *ngIf="isOpenned" [overview]="overview"></w4c-topology-overview>
       <mat-action-row>
-        <button mat-button (click)="selectTemplate(topology.id)">Select</button>
+        <button mat-button (click)="selectTemplate(topology.id, topology.description)">Select</button>
       </mat-action-row>
 
     </mat-expansion-panel>

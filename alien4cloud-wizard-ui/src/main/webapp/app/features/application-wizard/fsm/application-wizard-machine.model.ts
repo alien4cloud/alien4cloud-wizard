@@ -23,6 +23,10 @@ export interface ApplicationWizardMachineContext {
    * The topology template id that have been chosen.
    */
   templateId: string;
+  /**
+   * The deccsription of the chosen topology template.
+   */
+  templateDescription: string;
   applicationName: string;
   applicationDescription: string;
   /**

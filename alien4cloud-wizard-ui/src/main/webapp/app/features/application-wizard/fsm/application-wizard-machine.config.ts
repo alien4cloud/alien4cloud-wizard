@@ -8,10 +8,11 @@ import {ApplicationWizardMachineEvents} from "@app/features/application-wizard/f
 const { log } = actions;
 
 /**
- * The machine context.
+ * The initial machine context.
  */
 export const context: ApplicationWizardMachineContext = {
   templateId: undefined,
+  templateDescription: undefined,
   applicationName: undefined,
   applicationDescription: undefined,
   applicationId: undefined,

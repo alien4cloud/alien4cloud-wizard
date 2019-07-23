@@ -47,7 +47,7 @@ export class AppplicationWizardMachineService {
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
-        templateId: event.templateId
+        templateId: event.templateId, templateDescription: event.templateDescription
       })),
       assignAppInfo: assign<ApplicationWizardMachineContext, DoCreateApplication>((_, event) => ({
         applicationName: event.name, applicationDescription: event.description

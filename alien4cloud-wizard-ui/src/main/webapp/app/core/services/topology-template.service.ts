@@ -47,6 +47,14 @@ export class TopologyTemplateService {
   constructor(private http: HttpClient) { }
 
 
+  getTopologyOverview(id: string): Observable<{}> {
+    return this.http.get(`/api/rest/latest/wizard/topologies/overview/${id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      }),
+    }).pipe(
+      data => data );
+  }
 
   getTopologies(from?: number, size?: number, query?: string): Observable<{}> {
     if (!from) {

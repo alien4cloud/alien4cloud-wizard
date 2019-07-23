@@ -32,8 +32,8 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent {
       if (this.applicationDescription) {
         this.applicationDescription = this.fsmContext.applicationDescription;
       } else {
-        // TODO: here pre-fill using topology template description
-        this.applicationDescription = '';
+        // pre-fill using topology template description
+        this.applicationDescription = this.fsmContext.templateDescription;
       }
     }
   }
