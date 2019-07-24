@@ -36,7 +36,7 @@ export class AppplicationWizardMachineService {
         this.topologyTemplateService
           .createApplication({
             name: _.applicationName,
-            archiveName: _.applicationName,
+            archiveName: this.topologyTemplateService.trimName(_.applicationName),
             topologyTemplateVersionId: _.templateId,
             description: _.applicationDescription
           })
@@ -45,16 +45,8 @@ export class AppplicationWizardMachineService {
             catchError(result => of(new OnApplicationCreateError({})))
           ),
       selectLocation: (_, event) =>
-        this.topologyTemplateService
-          .createApplication({
-            name: _.applicationName,
-            archiveName: _.applicationName,
-            topologyTemplateVersionId: _.templateId,
-            description: _.applicationDescription
-          })
-          .pipe(
-            map(data => new OnTargetSelected("retour"))       
-          )
+        this.topologyTemplateService.getEnvLocations(_.templateId,_.appEnvironments[0].id)
+            .pipe(map(data => new OnTargetSelected("retour")))
     },
     guards: {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')

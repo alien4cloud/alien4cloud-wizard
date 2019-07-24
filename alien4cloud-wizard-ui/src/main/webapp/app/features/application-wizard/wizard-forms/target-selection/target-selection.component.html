@@ -1,11 +1,10 @@
-<h3>Application created : {{fsmContext.applicationId}}</h3>
-
-<div _ngcontent-sjx-c16="" class="docs-component-category-list">
-  <a _ngcontent-sjx-c16="" class="docs-component-category-list-item ng-star-inserted">
-    <mat-card _ngcontent-sjx-c16="" class="docs-component-category-list-card mat-card" (click)="clicked()">
-      <mat-card-title _ngcontent-sjx-c16="" class="mat-card-title">Form Controls</mat-card-title>
-      <mat-card-content _ngcontent-sjx-c16="" class="docs-component-category-list-card-summary mat-card-content">
-        Controls that collect and validate user input.</mat-card-content>
-    </mat-card>
-  </a>
+<div >
+    <div *ngFor="let location  of environmentLocation; ">
+        <mat-card _ngcontent-sjx-c16="" class="docs-component-category-list-card mat-card" (click)="clicked(location.location.name)">
+            <mat-card-title _ngcontent-sjx-c16="" class="mat-card-title">{{ location.location.name }}</mat-card-title>
+            <mat-card-content _ngcontent-sjx-c16="" class="docs-component-category-list-card-summary mat-card-content">
+                {{ location.location.orchestratorId}}</mat-card-content>
+        </mat-card>  
+        <br> 
+    </div>
 </div>

@@ -1,3 +1,5 @@
+import { Environment } from '@app/core';
+
 /**
  * Specify the schema of our state machine configuration.
  */
@@ -39,4 +41,6 @@ export interface ApplicationWizardMachineContext {
   applicationId: string;
   targetId: string;
   errors: string[];
+  appEnvironments: Environment[] ;
+  locations: [];
 }

@@ -4,6 +4,7 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import { ApplicationWizardMachineEvents } from "@app/features/application-wizard/core/fsm.events";
+import { Environment } from '@app/core';
 
 const { log } = actions;
 
@@ -17,7 +18,10 @@ export const context: ApplicationWizardMachineContext = {
   applicationDescription: undefined,
   applicationId: undefined,
   targetId: undefined,
-  errors: []
+  appEnvironments: [],
+  locations: [],
+  errors: [],
+  
 };
 
 /**

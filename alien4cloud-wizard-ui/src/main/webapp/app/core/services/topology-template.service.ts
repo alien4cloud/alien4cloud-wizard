@@ -28,7 +28,7 @@ export class AppCreationTopoPayload {
   name: string;
   archiveName: string;
   topologyTemplateVersionId: string;
-  description : string ;
+  description: string;
 }
 
 @Injectable({
@@ -38,8 +38,8 @@ export class TopologyTemplateService {
 
   apiURL = '/api';
   public searchTopoUrl: string = '/rest/latest/catalog/topologies/search';
-  public createAppByTopoUrl: string  = '/rest/latest/applications';
-  public deployAppUrl: string  = '/rest/latest/applications/deployment';
+  public createAppByTopoUrl: string = '/rest/latest/applications';
+  public deployAppUrl: string = '/rest/latest/applications/deployment';
 
   //public searchUrl = '/rest/latest/applications/search';
 
@@ -55,7 +55,7 @@ export class TopologyTemplateService {
         'Content-Type': 'application/json; charset=UTF-8',
       }),
     }).pipe(
-      data => data );
+      data => data);
   }
 
   getTopologies(from?: number, size?: number, query?: string): Observable<{}> {
@@ -88,6 +88,7 @@ export class TopologyTemplateService {
 
   createApplication(payload: AppCreationTopoPayload): Observable<{}> {
 
+    //payload.archiveName = this.trimName(payload.archiveName)
     //let data = { "name": payload.name, "archiveName": payload.archiveName, "topologyTemplateVersionId": payload.topologyTemplateVersionId };
     console.log("topologyTemplateVersionId  :", payload.topologyTemplateVersionId)
     return this.http.post(this.apiURL + this.createAppByTopoUrl, payload, {
@@ -122,15 +123,15 @@ export class TopologyTemplateService {
   }
 
 
-  getEnvDeploymentTopology(appArchive: string , envId:String): Observable<{}> {
+  getEnvDeploymentTopology(appArchive: string, envId: String): Observable<{}> {
     let getDeplUrl = `/rest/latest/applications/${appArchive}/environments/${envId}/deployment-topology`;
     return this.http.get(this.apiURL + getDeplUrl)
       //if api returns any data
       .pipe(data => data);
   }
 
-  
-  putEnvDeploymentTopology(appArchive: string , envId:String,providerDeploymentProperties: {}): Observable<{}> {
+
+  putEnvDeploymentTopology(appArchive: string, envId: String, providerDeploymentProperties: {}): Observable<{}> {
     let getDeplUrl = `/rest/latest/applications/${appArchive}/environments/${envId}/deployment-topology`;
     return this.http.post(this.apiURL + getDeplUrl, providerDeploymentProperties, {
       headers: new HttpHeaders({
@@ -139,10 +140,10 @@ export class TopologyTemplateService {
     }).pipe(
       data => data);
   }
-  
-  postLocationPolicies( appArchive: String , envId: String , orchestratorId : string, groupLocation : string): Observable<{}> {
+
+  postLocationPolicies(appArchive: String, envId: String, orchestratorId: string, groupLocation: string): Observable<{}> {
     let getDeplUrl = `/rest/latest/applications/${appArchive}/environments/${envId}/deployment-topology/location-policies`;
-    let payload = {"orchestratorId": orchestratorId,"groupsToLocations":{"_A4C_ALL":groupLocation}}
+    let payload = { "orchestratorId": orchestratorId, "groupsToLocations": { "_A4C_ALL": groupLocation } }
     return this.http.post(this.apiURL + getDeplUrl, payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -151,24 +152,24 @@ export class TopologyTemplateService {
       data => data);
   }
 
-  
-  getDeploymentPropertyDefinitions(orchId:String): Observable<{}> {
+
+  getDeploymentPropertyDefinitions(orchId: String): Observable<{}> {
     let getDeplPropUrl = `/rest/latest/orchestrators/${orchId}/deployment-property-definitions`;
     return this.http.get(this.apiURL + getDeplPropUrl)
       //if api returns any data
       .pipe(data => data);
   }
-  
 
-  getEnvLocations(topoArchive: string , envId:String): Observable<{}> {
+
+  getEnvLocations(topoArchive: string, envId: String): Observable<{}> {
     let getEnvLocUrl = `/rest/latest/topologies/${topoArchive}/locations?environmentId=${envId}`;
     return this.http.get(this.apiURL + getEnvLocUrl)
       //if api returns any data
       .pipe(data => data);
   }
 
-  deploymentPropCheck( payloadProp: DeploymentPropertyCheck ,orchestratorId : string): Observable<{}> {
-    let postDeplPropUrl = `/rest/latest/orchestrators/${orchestratorId}/deployment-prop-check`;   
+  deploymentPropCheck(payloadProp: DeploymentPropertyCheck, orchestratorId: string): Observable<{}> {
+    let postDeplPropUrl = `/rest/latest/orchestrators/${orchestratorId}/deployment-prop-check`;
     return this.http.post(this.apiURL + postDeplPropUrl, payloadProp, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -180,13 +181,17 @@ export class TopologyTemplateService {
 
 
 
-  deployApplication( applicationId: String , applicationEnvironmentId: String ): Observable<{}> {
-    let payload = {"applicationId":applicationId, "applicationEnvironmentId":applicationEnvironmentId};   
+  deployApplication(applicationId: String, applicationEnvironmentId: String): Observable<{}> {
+    let payload = { "applicationId": applicationId, "applicationEnvironmentId": applicationEnvironmentId };
     return this.http.post(this.apiURL + this.deployAppUrl, payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       }),
     }).pipe(
       data => data);
+  }
+
+  public trimName(name: string): string {
+    return name.replace(/\s/g, "")
   }
 }
