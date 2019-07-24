@@ -24,7 +24,7 @@ We store here data that have a meaning concerning the wizard (it not a _fourre t
 
 If you need to implement something new in the wizard, you'll probably need to add some states, events, and configure somme transitions in the FSM.
 
-You must have a clear idea of what you need. If not, draw your state chart on a paper or whatever you want. 
+You must have a clear idea of what you need. If not, draw your state chart on a paper or whatever you want. Then :
 
 * declare your states in ``ApplicationWizardMachineSchema`` ([core/fsm.model.ts](src/main/webapp/app/features/application-wizard/core/fsm.model.ts)).
 * add your event classes in [core/fsm.events.ts](src/main/webapp/app/features/application-wizard/core/fsm.events.ts).
@@ -32,6 +32,8 @@ You must have a clear idea of what you need. If not, draw your state chart on a 
 * don't forget to declare your new states types in ``ApplicationWizardMachineEvents``.
 * declare your actions and services in ``AppplicationWizardMachineService.machineOptions`` ([core/fsm.service.ts](src/main/webapp/app/features/application-wizard/core/fsm.service.ts)).
 * add your states and transition configuration in ``applicationWizardMachineConfig`` ([core/fsm.config.ts](src/main/webapp/app/features/application-wizard/core/fsm.config.ts)). 
+
+Once the machine is correctly configured, you'll propably need to add a form in the wizard.
 
 # How-To add a form step in the wizard
 
