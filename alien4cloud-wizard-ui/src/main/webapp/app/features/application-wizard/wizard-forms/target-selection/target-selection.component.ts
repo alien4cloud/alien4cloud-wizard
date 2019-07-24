@@ -16,4 +16,11 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
   ngOnInit() {
   }
 
+  clicked() {
+    alert("clicked")
+  }
+
+  ggetLocationlist() {
+    
+  }
 }

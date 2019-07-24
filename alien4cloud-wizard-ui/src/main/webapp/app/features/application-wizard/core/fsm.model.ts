@@ -11,6 +11,9 @@ export interface ApplicationWizardMachineSchema {
     applicationCreated: {};
     applicationCreationError: {};
     targetSelectionForm: {};
+    targetSelecting: {};
+    targetSelected: {};
+    deploymentForm: {};
   };
 }
 
@@ -34,5 +37,6 @@ export interface ApplicationWizardMachineContext {
    * application has not been yet created.
    */
   applicationId: string;
+  targetId: string;
   errors: string[];
 }

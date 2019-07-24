@@ -12,6 +12,7 @@ import {TargetSelectionComponent} from './wizard-forms/target-selection/target-s
 import {NgxGraphModule} from "@swimlane/ngx-graph";
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
+import { ApplicationDeploymentComponent } from './wizard-forms/application-deployment/application-deployment.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
     StepComponentDirective,
     WizardStepContainerComponent,
     WelcomeComponent,
-    TargetSelectionComponent
+    TargetSelectionComponent,
+    ApplicationDeploymentComponent
   ],
   imports: [
     SharedModule,
@@ -35,7 +37,9 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
     WelcomeComponent,
     TemplateSelectionComponent,
     ApplicationCreateComponent,
-    TargetSelectionComponent]
+    TargetSelectionComponent,
+    ApplicationDeploymentComponent]
 })
+
 export class ApplicationWizardModule {
 }

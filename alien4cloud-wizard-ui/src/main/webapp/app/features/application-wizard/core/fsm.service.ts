@@ -11,14 +11,15 @@ import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import {TopologyTemplateService} from "@app/core";
+import { TopologyTemplateService } from "@app/core";
 import {
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import {
   ApplicationWizardMachineEvents, DoCreateApplication, DoSelectTemplate, OnApplicationCreateError,
-  OnApplicationCreateSucess
+  OnApplicationCreateSucess,
+  OnTargetSelected, DoSelectTarget
 } from "@app/features/application-wizard/core/fsm.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
@@ -42,6 +43,17 @@ export class AppplicationWizardMachineService {
           .pipe(
             map(data => new OnApplicationCreateSucess(data['data'])),
             catchError(result => of(new OnApplicationCreateError({})))
+          ),
+      selectLocation: (_, event) =>
+        this.topologyTemplateService
+          .createApplication({
+            name: _.applicationName,
+            archiveName: _.applicationName,
+            topologyTemplateVersionId: _.templateId,
+            description: _.applicationDescription
+          })
+          .pipe(
+            map(data => new OnTargetSelected("retour"))       
           )
     },
     guards: {
@@ -56,6 +68,9 @@ export class AppplicationWizardMachineService {
       })),
       assignAppId: assign<ApplicationWizardMachineContext, OnApplicationCreateSucess>((_, event) => ({
         applicationId: event.applicationId
+      })),
+      assignTargetId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
+        targetId: event.targetId
       }))
     }
   };

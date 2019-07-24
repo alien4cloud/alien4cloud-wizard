@@ -7,7 +7,10 @@ export type ApplicationWizardMachineEvents =
   GoBack |
   DoCreateApplication |
   OnApplicationCreateError |
-  OnApplicationCreateSucess;
+  OnApplicationCreateSucess |
+  DoSelectTarget |
+  OnTargetSelected 
+;
 
 export class Init {
   readonly type = 'INIT';
@@ -21,6 +24,17 @@ export class DoCreateApplication {
   readonly type = 'DO_CREATE_APPLICATION';
   constructor(public name: string , public description: string) {}
 }
+
+export class DoSelectTarget {
+  readonly type = 'DO_SELECT_TARGET';
+  constructor(public targetId: string) {}
+}
+
+export class OnTargetSelected {
+  readonly type = 'ON_TARGET_SELECTED';
+  constructor(public targetId: string) {}
+}
+
 export class OnApplicationCreateError {
   readonly type = 'ON_APPLICATION_CREATE_ERROR';
   constructor(public errors: Errors) {}

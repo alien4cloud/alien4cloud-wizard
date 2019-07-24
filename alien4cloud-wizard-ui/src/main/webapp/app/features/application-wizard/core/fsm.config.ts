@@ -3,7 +3,7 @@ import {
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
-import {ApplicationWizardMachineEvents} from "@app/features/application-wizard/core/fsm.events";
+import { ApplicationWizardMachineEvents } from "@app/features/application-wizard/core/fsm.events";
 
 const { log } = actions;
 
@@ -16,6 +16,7 @@ export const context: ApplicationWizardMachineContext = {
   applicationName: undefined,
   applicationDescription: undefined,
   applicationId: undefined,
+  targetId: undefined,
   errors: []
 };
 
@@ -26,7 +27,7 @@ export const applicationWizardMachineConfig: MachineConfig<
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema,
   ApplicationWizardMachineEvents
-  > = {
+> = {
   id: 'applicationWizard',
   strict: true,
   context,
@@ -35,7 +36,8 @@ export const applicationWizardMachineConfig: MachineConfig<
     boot: {
       on: {
         'INIT': [
-          { target: 'templateSelectionForm',
+          {
+            target: 'templateSelectionForm',
             actions: log(
               (context, event) => `boot: ${JSON.stringify(context)}`,
               'applicationWizard'
@@ -57,7 +59,8 @@ export const applicationWizardMachineConfig: MachineConfig<
     templateSelected: {
       on: {
         '': [
-          { target: 'applicationCreateForm',
+          {
+            target: 'applicationCreateForm',
             actions: log(
               (context, event) => `templateSelected: ${JSON.stringify(context)}`,
               'applicationWizard'
@@ -82,7 +85,8 @@ export const applicationWizardMachineConfig: MachineConfig<
       // type: 'final'
       on: {
         '': [
-          { target: 'targetSelectionForm',
+          {
+            target: 'targetSelectionForm',
             actions: log(
               (context, event) => `applicationCreated: ${JSON.stringify(context)}`,
               'applicationWizard'
@@ -116,7 +120,44 @@ export const applicationWizardMachineConfig: MachineConfig<
       }
     },
     targetSelectionForm: {
-      type: 'final'
+      on: {
+        DO_SELECT_TARGET: {
+          target: 'targetSelecting',
+          actions: ['assignTargetId']
+          // actions: ['assignUser', 'loginSuccess']
+        }
+      }
     },
+    targetSelecting: {
+      invoke: {
+        id: 'selectLocation',
+        src: 'selectLocation'
+      },
+      on: {
+        ON_TARGET_SELECTED: {
+          target: 'targetSelected'
+          //actions: ['assignLocation']
+          // actions: ['assignUser', 'loginSuccess']
+        }
+      }
+    },
+    targetSelected: {
+      on: {
+        '': [
+          {
+            target: 'deploymentForm',
+            actions: log(
+              (context, event) => `targetSelected: ${JSON.stringify(context)}`,
+              'applicationWizard'
+            )
+          }
+        ]
+      }
+
+    },
+    deploymentForm: {
+      type: 'final'
+    }
   }
+
 };
