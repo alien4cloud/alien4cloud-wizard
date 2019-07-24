@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-
 import {SharedModule} from "@app/shared";
 import {WizardMainComponent} from "@app/features/application-wizard/wizard-main/wizard-main.component";
 import {TemplateSelectionComponent} from "@app/features/application-wizard/wizard-forms/template-selection/template-selection.component";
@@ -10,7 +8,10 @@ import {WizardStepContainerComponent} from "@app/features/application-wizard/wiz
 import {WelcomeComponent} from "@app/features/application-wizard/wizard-forms/welcome/welcome.component";
 import {ApplicationWizardRoutingModule} from "@app/features/application-wizard/application-wizard-routing.module";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
-import { TargetSelectionComponent } from './wizard-forms/target-selection/target-selection.component';
+import {TargetSelectionComponent} from './wizard-forms/target-selection/target-selection.component';
+import {NgxGraphModule} from "@swimlane/ngx-graph";
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {HeroLoaderModule} from "@herodevs/hero-loader";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,10 @@ import { TargetSelectionComponent } from './wizard-forms/target-selection/target
   ],
   imports: [
     SharedModule,
-    ApplicationWizardRoutingModule
+    ApplicationWizardRoutingModule,
+    NgxGraphModule,
+    NgxChartsModule,
+    HeroLoaderModule
   ],
   providers: [AppplicationWizardMachineService],
   entryComponents: [

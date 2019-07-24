@@ -1,4 +1,4 @@
-# How it work
+# How it works
 
 ![Zozor](readme-wizard-arch.png)
 
@@ -12,7 +12,7 @@ Before creating a form step, you must known to which FSM state it is related.
 Then :
 
 * create a component in the folder 'wizard-forms'
-* make your component implement ``WizardFromComponent`` . You'll then need to define an input of type ``ApplicationWizardMachineContext``. We need this to inject the FSM context when the component will be created.
+* make your component implement ``WizardFormComponent`` . You'll then need to define an input of type ``ApplicationWizardMachineContext``. We need this to inject the FSM context when the component will be created.
 
 `@Input() fsmContext: ApplicationWizardMachineContext;`
 

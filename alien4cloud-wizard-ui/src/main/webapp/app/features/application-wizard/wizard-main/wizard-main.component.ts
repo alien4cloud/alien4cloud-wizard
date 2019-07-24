@@ -4,10 +4,8 @@ import {WizardFormStep} from "@app/features/application-wizard/wizard-main/wizar
 import {WizardStepContainerComponent} from "@app/features/application-wizard/wizard-step-container/wizard-step-container.component";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {WizardService} from "@app/features/application-wizard/core/wizard.service";
-import {StepComponentDirective} from "@app/features/application-wizard/wizard-step-container/step-component.directive";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import * as _ from "lodash";
-
 
 /**
  * This main component knows:
@@ -15,7 +13,6 @@ import * as _ from "lodash";
  *     <ul>the state machine : it suscribe to it's state change events.</ul>
  *     <ul>the stepper : it suscribe to it's selected change events in order to render the ad-hoc form.</ul>
  * </li>
- *
  */
 @Component({
   selector: 'w4c-wizard-main',
@@ -62,6 +59,7 @@ export class WizardMainComponent implements OnInit {
     this.fsm.applicationWizardState$.subscribe(data => {
       console.log(data);
       console.log("State is now : " + data.value);
+
 
       // we store locally the current FSM context
       this.currentFsmContext = data.context;
