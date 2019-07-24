@@ -1,4 +1,4 @@
-<div>
+<div class="fsmGraphViewer">
 
   <ngx-graph *ngIf="fsmGraph"
              class="chart-container"
@@ -42,12 +42,12 @@
         <svg:rect
           [attr.width]="node.dimension.width"
           [attr.height]="node.dimension.height"
-          [attr.fill]="(node.active) ? 'lightgreen' : ((node.activated) ? 'lightblue' : 'gainsboro')"
-          stroke="black"
+          [attr.fill]="(node.active) ? 'lightgreen' : ((node.activated) ? 'lightblue' : 'white')"
+          stroke="#7f7f7f"
           rx="5"
           ry="5"
         />
-        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2" >
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2" stroke="gray" >
           {{lodash.truncate(node.label, {'length': 21, 'separator': ' '})}}
         </svg:text>
       </svg:g>
