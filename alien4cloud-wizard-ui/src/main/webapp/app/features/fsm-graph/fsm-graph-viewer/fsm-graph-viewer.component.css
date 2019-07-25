@@ -8,10 +8,8 @@
 
 .activated {
   stroke: green;
-  color: green;
 }
 
 .desactivated {
   stroke: #7f7f7f;
-  color: white;
 }

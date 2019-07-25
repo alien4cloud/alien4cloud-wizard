@@ -1,13 +1,16 @@
-<form>
-  <mat-form-field>
-    <input matInput placeholder="Name" [(ngModel)]="applicationName" name="applicationName" required>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Description" [(ngModel)]="applicationDescription" name="applicationDescription" required>
-  </mat-form-field>
-  <div>
-    <button (click)="back()" type="button">Back</button>
-    <button (click)="createApp()" type="button">Create</button>
+<div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="center center" fxFlex>
+    <mat-form-field class="example-full-width" fxFlex>
+      <input matInput placeholder="Application name" [(ngModel)]="applicationName" name="applicationName" required fxFlex>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" floatLabel="never" fxFlex>
+          <textarea matInput placeholder="Application description" rows="4" [(ngModel)]="applicationDescription"
+                    name="applicationDescription" fxFlex></textarea>
+    </mat-form-field>
+    <div>
+      <button (click)="back()" type="button">Back</button>
+      <button (click)="createApp()" type="button">Create</button>
+    </div>
   </div>
-</form>
-
+</div>
+|

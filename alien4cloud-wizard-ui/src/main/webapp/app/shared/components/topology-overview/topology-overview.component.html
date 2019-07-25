@@ -7,10 +7,10 @@
         <mat-icon *ngIf="displayGraph">format_align_justify</mat-icon>
       </button>
     </div>
-    <div *ngIf="!displayGraph" class="desciption" fxFlex>
+    <div *ngIf="!displayGraph" class="desciption" fxFlex="100%">
       <span>{{ overview.description }}</span>
     </div>
-    <div *ngIf="displayGraph" class="desciption" fxFlex>
+    <div *ngIf="displayGraph" class="desciption" fxFlex="100%">
       <hero-loader moduleName="src/main/webapp/app/features/topology-graph/topology-graph.module#TopologyGraphModule"></hero-loader>
     </div>
   </div>
