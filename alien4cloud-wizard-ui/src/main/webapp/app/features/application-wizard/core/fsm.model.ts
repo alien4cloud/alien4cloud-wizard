@@ -41,6 +41,8 @@ export interface ApplicationWizardMachineContext {
   applicationId: string;
   targetId: string;
   errors: string[];
-  appEnvironments: Environment[] ;
-  locations: [];
+  environmentId: string ;
+  //locationId: [];
+  locationId: string;
+  orchestratorId: string;
 }

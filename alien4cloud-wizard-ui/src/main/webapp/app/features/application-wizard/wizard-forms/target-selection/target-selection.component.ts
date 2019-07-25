@@ -2,13 +2,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ApplicationWizardMachineContext } from "@app/features/application-wizard/core/fsm.model";
 import { WizardFormComponent } from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {
-  GenericsService, Environment, TopologyTemplateService, EnvironmentLocation,
+  GenericsService, Environment, TopologyTemplateService, EnvironmentLocation, ConcretGenericsService, TopologyTemplate,
   //Environment, 
   //EnvironmentLocation, 
   //DeploymentPropertyCheck, 
   //DefinitionIdValues 
 } from '@app/core';
 import { AppplicationWizardMachineService } from '../../core/fsm.service';
+import { DoSelectTarget } from '../../core/fsm.events';
 @Component({
   selector: 'w4c-target-selection',
   templateUrl: './target-selection.component.html',
@@ -23,11 +24,13 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
   query = null;
   appEnvironments: Environment[];
   environmentLocation: EnvironmentLocation[];
+  locationPolicies : TopologyTemplate;
   numberOflocations: number;
   @Input() fsmContext: ApplicationWizardMachineContext;
 
   constructor(
-    private genericsService: GenericsService,
+    //private genericsService: GenericsService,
+    private genericsService: ConcretGenericsService,
     private topologyTemplateService: TopologyTemplateService,
     private fsm: AppplicationWizardMachineService
   ) { }
@@ -36,19 +39,22 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
     this.getAppEnvironments(0);
   }
 
-  clicked(locationName : string) {
-    alert(locationName+ " is selected")
+  selectLocation(locationId: string, orchestratorId : string) {
+
+    this.fsmContext.orchestratorId = orchestratorId ;
+    this.fsmContext.locationId = locationId
+    //alert(locationId + " is selected")
+    console.log(`Selected template: id=${locationId}`);
+    this.fsm.send(new DoSelectTarget());
   }
 
 
 
+
   getAppEnvironments(from: number) {
-    let getTopoUrl = `/rest/latest/applications/${this.genericsService.trimName(this.fsmContext.applicationName)}` + `/environments/search`;
-    console.log("url env app :" + getTopoUrl);
-    this.genericsService.getGenerics(getTopoUrl, from, this.pageSize, this.query).subscribe((data: {}) => {
+    this.genericsService.getAppEnvironments(from, this.pageSize, this.query, this.fsmContext.applicationId).subscribe((data: {}) => {
       this.appEnvironments = data['data']['data'];
-      this.fsmContext.appEnvironments = data['data']['data'];
-      this.length = data['data']['totalResults'];
+      this.fsmContext.environmentId = this.appEnvironments[0].id ;
       if (this.length > 0) {
         console.log("environment id  :" + this.appEnvironments[0].id);
         this.getEnvironmentLocations();
@@ -58,12 +64,22 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
     })
   }
 
+  public postLocationPolicies() {
+    this.topologyTemplateService.postLocationPolicies(this.fsmContext.templateId, this.appEnvironments[0].id,this.environmentLocation[0].orchestrator.id,this.environmentLocation[0].location.name).
+      subscribe((data: {}) => {
+        this.locationPolicies = data['data']['topology'] as TopologyTemplate;
+        console.log("The Location Policyes  post response :", this.locationPolicies.archiveName);
+        //this.getEnvironmentLocations();
+      })
+  }
+
+
   public getEnvironmentLocations() {
 
     this.topologyTemplateService.getEnvLocations(this.fsmContext.templateId, this.appEnvironments[0].id).
       subscribe((data: {}) => {
         this.environmentLocation = data['data'] as EnvironmentLocation[];
-        this.fsmContext.locations = data['data'] ;
+        //this.fsmContext.locations = data['data'];
         console.log("First Location The deployment topology :", this.environmentLocation[0].location.name);
       })
   }

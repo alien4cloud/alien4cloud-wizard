@@ -27,7 +27,7 @@ export class DoCreateApplication {
 
 export class DoSelectTarget {
   readonly type = 'DO_SELECT_TARGET';
-  constructor(public targetId: string) {}
+  constructor() {}
 }
 
 export class OnTargetSelected {

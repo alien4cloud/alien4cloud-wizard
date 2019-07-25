@@ -1,10 +1,16 @@
-<div >
-    <div *ngFor="let location  of environmentLocation; ">
-        <mat-card _ngcontent-sjx-c16="" class="docs-component-category-list-card mat-card" (click)="clicked(location.location.name)">
-            <mat-card-title _ngcontent-sjx-c16="" class="mat-card-title">{{ location.location.name }}</mat-card-title>
+<div style="display:flex; flex-direction: row; justify-content: center; align-items: center; " >
+    <div *ngFor="let location  of environmentLocation; "   style="margin: 3% 3%;">
+        <mat-card _ngcontent-sjx-c16="" class="docs-component-category-list-card mat-card">
+            <mat-card-header>
+                <mat-card-title _ngcontent-sjx-c16="" class="mat-card-title">{{ location.location.name }}
+                </mat-card-title>
+            </mat-card-header>
             <mat-card-content _ngcontent-sjx-c16="" class="docs-component-category-list-card-summary mat-card-content">
-                {{ location.location.orchestratorId}}</mat-card-content>
-        </mat-card>  
-        <br> 
+                Orchestrator : {{ location.orchestrator.name}}</mat-card-content>
+            <mat-card-actions>
+                <button mat-stroked-button  (click)="selectLocation(location.location.id,location.orchestrator.id)">Select this Location</button>
+            </mat-card-actions>
+        </mat-card>
+        <br>
     </div>
 </div>

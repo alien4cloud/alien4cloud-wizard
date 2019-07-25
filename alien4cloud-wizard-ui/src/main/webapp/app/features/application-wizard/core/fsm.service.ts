@@ -21,8 +21,8 @@ import {
   OnApplicationCreateSucess,
   OnTargetSelected, DoSelectTarget
 } from "@app/features/application-wizard/core/fsm.events";
-import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
-import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
+import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
+import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
 import * as _ from "lodash";
 
 /**
@@ -36,7 +36,7 @@ export class AppplicationWizardMachineService {
         this.topologyTemplateService
           .createApplication({
             name: _.applicationName,
-            archiveName: this.topologyTemplateService.trimName(_.applicationName),
+            archiveName: _.applicationName,
             topologyTemplateVersionId: _.templateId,
             description: _.applicationDescription
           })
@@ -45,8 +45,10 @@ export class AppplicationWizardMachineService {
             catchError(result => of(new OnApplicationCreateError({})))
           ),
       selectLocation: (_, event) =>
-        this.topologyTemplateService.getEnvLocations(_.templateId,_.appEnvironments[0].id)
-            .pipe(map(data => new OnTargetSelected("retour")))
+        this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
+        .pipe(
+          map(data => new OnTargetSelected(data['data'])))
+
     },
     guards: {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')
@@ -62,7 +64,7 @@ export class AppplicationWizardMachineService {
         applicationId: event.applicationId
       })),
       assignTargetId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
-        targetId: event.targetId
+       // locationId: event.locationId , orchestratorId: event.orchestratorId
       }))
     }
   };
@@ -101,15 +103,13 @@ export class AppplicationWizardMachineService {
     const graph = new FsmGraph();
     console.log("Initial state : " + applicationWizardMachineConfig.initial);
 
-    Object.entries(applicationWizardMachineConfig.states).forEach(([state, value]) =>
-    {
+    Object.entries(applicationWizardMachineConfig.states).forEach(([state, value]) => {
       console.log(`Add a state <${state}>`);
       graph.nodes.push(new FsmGraphNode(state, state));
       console.log("ON: ", value.on);
 
       if (value.on) {
-        Object.entries(value.on).forEach(([eventType, transitions]) =>
-        {
+        Object.entries(value.on).forEach(([eventType, transitions]) => {
           console.log("transitions: " + transitions);
           console.log("eventType: " + eventType);
           console.log("transitions: " + JSON.stringify(transitions));
@@ -129,7 +129,7 @@ export class AppplicationWizardMachineService {
             // graph.edges.push(new FsmGraphEdge(state + ":On:" + eventType, state, eventType));
             // add a edge between the event and target
             console.log(`Add a edge <${eventType}> from ${state} to ${target}`);
-            graph.edges.push(new FsmGraphEdge( state + "-" + eventType + "-" + target, state, target, eventType, []));
+            graph.edges.push(new FsmGraphEdge(state + "-" + eventType + "-" + target, state, target, eventType, []));
           }
         });
       }

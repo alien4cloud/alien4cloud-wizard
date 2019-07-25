@@ -2,8 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {DoCreateApplication, GoBack} from "@app/features/application-wizard/core/fsm.events";
-import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe} from "@app/shared";
+import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe} from "@app/shared";
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
+
 
 @Component({
   selector: 'w4c-application-create',
@@ -19,7 +20,8 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent {
 
   constructor(private fsm: AppplicationWizardMachineService,
               private w4cToscaTypeShortName: ToscaTypeShortNamePipe,
-              private w4cToscaIdArchiveExtractor: ToscaIdArchiveExtractorPipe) { }
+              private w4cToscaIdArchiveExtractor: ToscaIdArchiveExtractorPipe,
+              private trimName: TrimNamePipe) { }
 
   ngOnInit() {
     if (this.fsmContext) {
@@ -39,7 +41,7 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent {
   }
 
   createApp() {
-    this.fsm.send(new DoCreateApplication(this.applicationName, this.applicationDescription));
+    this.fsm.send(new DoCreateApplication(this.trimName.transform(this.applicationName), this.applicationDescription));
   }
 
   back() {

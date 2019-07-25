@@ -6,7 +6,7 @@ import { Observable, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GenericsService {
+export abstract class GenericsService {
 
   projects: Application[];
   apiURL = '/api';

@@ -141,9 +141,9 @@ export class TopologyTemplateService {
       data => data);
   }
 
-  postLocationPolicies(appArchive: String, envId: String, orchestratorId: string, groupLocation: string): Observable<{}> {
+  postLocationPolicies(appArchive: String, envId: String, orchestratorId: string, locationId: string): Observable<{}> {
     let getDeplUrl = `/rest/latest/applications/${appArchive}/environments/${envId}/deployment-topology/location-policies`;
-    let payload = { "orchestratorId": orchestratorId, "groupsToLocations": { "_A4C_ALL": groupLocation } }
+    let payload = { "orchestratorId": orchestratorId, "groupsToLocations": { "_A4C_ALL": locationId } }
     return this.http.post(this.apiURL + getDeplUrl, payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',

@@ -34,7 +34,7 @@ export class ApplicationCreateComponent implements OnInit {
 
   public selectedTopology: TopologyTemplate;
   public deploymentTopology: TopologyTemplate;
-  public locationPolicies : TopologyTemplate ;
+  public locationPolicies: TopologyTemplate;
   public environmentLocation: EnvironmentLocation[];
   public selectedTopoArchiveName: string;
   public selectedTopoDescription: string;
@@ -131,17 +131,27 @@ export class ApplicationCreateComponent implements OnInit {
       })
   }
 
-/*
   public postLocationPolicies() {
-    this.topologyTemplateService.postLocationPolicies(this.genericsService.trimName(this.applicationDescriptionComponent.displayArchiveName), this.appEnvironments[0].id).
+    this.topologyTemplateService.postLocationPolicies(this.applicationDescriptionComponent.displayArchiveName, this.appEnvironments[0].id, this.environmentLocation[0].orchestrator.id, this.environmentLocation[0].location.name).
       subscribe((data: {}) => {
         this.locationPolicies = data['data']['topology'] as TopologyTemplate;
         console.log("The Location Policyes  post response :", this.locationPolicies.archiveName);
         //testEnvLocations
-        this.getEnvironmentLocations() ;
+        //this.getEnvironmentLocations() ;
       })
   }
-  */
+
+  /*
+    public postLocationPolicies() {
+      this.topologyTemplateService.postLocationPolicies(this.genericsService.trimName(this.applicationDescriptionComponent.displayArchiveName), this.appEnvironments[0].id).
+        subscribe((data: {}) => {
+          this.locationPolicies = data['data']['topology'] as TopologyTemplate;
+          console.log("The Location Policyes  post response :", this.locationPolicies.archiveName);
+          //testEnvLocations
+          this.getEnvironmentLocations() ;
+        })
+    }
+    */
 
 
   public getEnvironmentLocations() {
@@ -151,20 +161,20 @@ export class ApplicationCreateComponent implements OnInit {
         this.environmentLocation = data['data'] as EnvironmentLocation[];
         console.log("The deployment topology :", this.environmentLocation[0].location.name);
 
-        this.deploymentPropertyCheck(DefinitionIdValues.managerEmail , "manager@gmail.com" );
-        this.deploymentPropertyCheck(DefinitionIdValues.managementUrl , "http://manager.com" );
-        this.deploymentPropertyCheck(DefinitionIdValues.NumberBackup , "1" );
+        this.deploymentPropertyCheck(DefinitionIdValues.managerEmail, "manager@gmail.com");
+        this.deploymentPropertyCheck(DefinitionIdValues.managementUrl, "http://manager.com");
+        this.deploymentPropertyCheck(DefinitionIdValues.NumberBackup, "1");
 
         //deploy app
-        this.deployApplication() ;
+        this.deployApplication();
 
       })
   }
 
 
-  public deploymentPropertyCheck(definitionId :DefinitionIdValues , value :string ) {
-    let payload = {"definitionId":definitionId,"value":value}
-    this.topologyTemplateService.deploymentPropCheck(payload , this.environmentLocation[0].orchestrator.id).
+  public deploymentPropertyCheck(definitionId: DefinitionIdValues, value: string) {
+    let payload = { "definitionId": definitionId, "value": value }
+    this.topologyTemplateService.deploymentPropCheck(payload, this.environmentLocation[0].orchestrator.id).
       subscribe((data: {}) => {
         console.log("property checked :", data['data']);
       })
@@ -174,11 +184,11 @@ export class ApplicationCreateComponent implements OnInit {
 
 
   public deployApplication() {
-    this.topologyTemplateService.deployApplication(this.appEnvironments[0].applicationId , this.appEnvironments[0].id).
-    subscribe((data: {}) => {
-      console.log("APPLICATION DEPLOYED :", data['data']);
-    })
-    
+    this.topologyTemplateService.deployApplication(this.appEnvironments[0].applicationId, this.appEnvironments[0].id).
+      subscribe((data: {}) => {
+        console.log("APPLICATION DEPLOYED :", data['data']);
+      })
+
   }
 
   /*

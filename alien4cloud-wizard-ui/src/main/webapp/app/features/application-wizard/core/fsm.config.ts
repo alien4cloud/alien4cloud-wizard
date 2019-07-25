@@ -18,8 +18,9 @@ export const context: ApplicationWizardMachineContext = {
   applicationDescription: undefined,
   applicationId: undefined,
   targetId: undefined,
-  appEnvironments: [],
-  locations: [],
+  environmentId: undefined,
+  locationId: undefined,
+  orchestratorId: undefined,
   errors: [],
   
 };
@@ -139,7 +140,8 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         ON_TARGET_SELECTED: {
-          target: 'targetSelected'
+          target: 'targetSelected',
+          actions: ['assignLocationId']
           //actions: ['assignLocation']
           // actions: ['assignUser', 'loginSuccess']
         }
