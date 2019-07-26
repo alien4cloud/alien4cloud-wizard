@@ -12,6 +12,9 @@ export interface ApplicationWizardMachineSchema {
     applicationCreating: {};
     applicationCreated: {};
     applicationCreationError: {};
+    environmentSearching: {};
+    environmentSelectionForm: {};
+    environmentSelected: {};
     targetSelectionForm: {};
     targetSelecting: {};
     targetSelected: {};
@@ -39,6 +42,7 @@ export interface ApplicationWizardMachineContext {
    * application has not been yet created.
    */
   applicationId: string;
+  environments: Environment[];
   targetId: string;
   errorMessage: string;
   // errors: string[];

@@ -91,4 +91,4 @@ export class AppModule {
   constructor(overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('solution-dark-theme');
   }
- }
+}

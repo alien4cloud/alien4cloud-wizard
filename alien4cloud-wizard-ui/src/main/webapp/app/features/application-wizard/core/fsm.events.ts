@@ -1,11 +1,15 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
+import {Environment} from "@app/core";
+
 export type ApplicationWizardMachineEvents =
   Init |
   DoSelectTemplate |
   GoBack |
   DoCreateApplication |
+  OnEnvironmentsFetched |
+  DoSelectEnvironment |
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   DoSelectTarget |
@@ -23,6 +27,16 @@ export class DoSelectTemplate {
 export class DoCreateApplication {
   readonly type = 'DO_CREATE_APPLICATION';
   constructor(public name: string , public description: string) {}
+}
+
+export class OnEnvironmentsFetched {
+  readonly type = 'ON_ENVIRONMENTS_FETCHED';
+  constructor(public environments: Environment[]) {}
+}
+
+export class DoSelectEnvironment {
+  readonly type = 'DO_SELECT_ENVIRONMENT';
+  constructor(public environmentId: string) {}
 }
 
 export class DoSelectTarget {

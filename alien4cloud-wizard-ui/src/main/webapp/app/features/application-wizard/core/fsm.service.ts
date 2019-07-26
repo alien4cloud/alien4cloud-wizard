@@ -19,12 +19,13 @@ import {
 import {
   ApplicationWizardMachineEvents, DoCreateApplication, DoSelectTemplate, OnApplicationCreateError,
   OnApplicationCreateSucess,
-  OnTargetSelected, DoSelectTarget, OnError
+  OnTargetSelected, DoSelectTarget, OnError, OnEnvironmentsFetched, DoSelectEnvironment
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
 import * as _ from "lodash";
 import {V2ApplicationService} from "@app/core/serviceV2/application.service";
+import {V2ApplicationEnvironmentService} from "@app/core/serviceV2/application-environment.service";
 
 /**
  * Manages the machine initialization.
@@ -35,6 +36,7 @@ export class AppplicationWizardMachineService {
   constructor(
     private applicationService: V2ApplicationService,
     private topologyTemplateService: TopologyTemplateService,
+    private applicationEnvironmentService: V2ApplicationEnvironmentService,
     private router: Router
   ) { }
 
@@ -55,6 +57,22 @@ export class AppplicationWizardMachineService {
               return of(new OnApplicationCreateError(err.message));
             })
           ),
+      searchEnvironments: (_, event) =>
+        this.applicationEnvironmentService.search(
+          0,
+          50,
+          "",
+          {applicationId: _.applicationId}
+          ).pipe(
+            map(environments => {
+              if (environments.data.length == 1) {
+                // we have just one env, we'll skip the environment selection form
+                return new DoSelectEnvironment(environments.data[0].id);
+              } else {
+                return new OnEnvironmentsFetched(environments.data);
+              }
+            })
+        ),
       selectLocation: (_, event) =>
         this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
         .pipe(
@@ -73,6 +91,12 @@ export class AppplicationWizardMachineService {
       })),
       assignAppId: assign<ApplicationWizardMachineContext, OnApplicationCreateSucess>((_, event) => ({
         applicationId: event.applicationId
+      })),
+      assignEnvironments: assign<ApplicationWizardMachineContext, OnEnvironmentsFetched>((_, event) => ({
+        environments: event.environments
+      })),
+      assignEnvironmentId: assign<ApplicationWizardMachineContext, DoSelectEnvironment>((_, event) => ({
+        environmentId: event.environmentId
       })),
       assignError: assign<ApplicationWizardMachineContext, OnError>((_, event) => ({
         errorMessage: event.message

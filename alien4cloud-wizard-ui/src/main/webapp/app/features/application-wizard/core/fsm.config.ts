@@ -17,6 +17,7 @@ export const context: ApplicationWizardMachineContext = {
   applicationName: undefined,
   applicationDescription: undefined,
   applicationId: undefined,
+  environments: undefined,
   targetId: undefined,
   environmentId: undefined,
   locationId: undefined,
@@ -90,7 +91,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         '': [
           {
-            target: 'targetSelectionForm',
+            target: 'environmentSearching',
             actions: log(
               (context, event) => `applicationCreated: ${JSON.stringify(context)}`,
               'applicationWizard'
@@ -123,6 +124,44 @@ export const applicationWizardMachineConfig: MachineConfig<
           target: 'applicationCreationError',
           actions: ['assignError']
         }
+      }
+    },
+    environmentSearching: {
+      invoke: {
+        id: 'searchEnvironments',
+        src: 'searchEnvironments'
+      },
+      on: {
+        DO_SELECT_ENVIRONMENT: {
+          target: 'environmentSelected',
+          actions: ['assignEnvironmentId']
+        },
+        ON_ENVIRONMENTS_FETCHED: {
+          target: 'environmentSelectionForm',
+          actions: ['assignEnvironments']
+        }
+      }
+    },
+    environmentSelectionForm: {
+      on: {
+        DO_SELECT_ENVIRONMENT: {
+          target: 'environmentSelected',
+          actions: ['assignEnvironmentId']
+          // actions: ['assignUser', 'loginSuccess']
+        }
+      }
+    },
+    environmentSelected: {
+      on: {
+        '': [
+          {
+            target: 'targetSelectionForm',
+            actions: log(
+              (context, event) => `environmentSelected: ${JSON.stringify(context)}`,
+              'applicationWizard'
+            )
+          }
+        ]
       }
     },
     targetSelectionForm: {

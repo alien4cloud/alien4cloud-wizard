@@ -21,7 +21,7 @@ export class V2ApplicationService extends V2GenericService<Application> {
 
   createApplication(payload: AppCreationTopoPayload): Observable<string> {
     console.log("topologyTemplateVersionId  :", payload.topologyTemplateVersionId)
-    return this.http.post(this.endpointUrl, payload, {
+    return this.http.post(this.getUrl(), payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       }),
