@@ -1,1 +1,14 @@
-<p>application-deployment works!</p>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div>
+    <p><span>Application : {{application}} </span></p>
+    <p><span>Version : {{version}} </span></p>
+    <p><span>Target : {{target}}</span></p>
+  </div> 
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button mat-stroked-button (click)="back()" type="button">Back</button>
+  <button mat-stroked-button (click)="cancel()" type="button">Cancel</button>
+  <button mat-stroked-button (click)="leave()" type="button">leave application undeployed</button>
+  <button mat-stroked-button (click)="deployApp()" type="button">Deploy application</button>
+</div>

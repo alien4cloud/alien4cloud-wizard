@@ -202,8 +202,46 @@ export const applicationWizardMachineConfig: MachineConfig<
 
     },
     deploymentForm: {
+      on: {
+        DO_SUBMIT_DEPLOYMENT: {
+          target: 'deploymentSubmitting',
+          //actions: ['assignTargetId']
+          // actions: ['assignUser', 'loginSuccess']
+        }
+      }
+      //
+    },
+    deploymentSubmitting: {
+      invoke: {
+        id: 'deployApplication',
+        src: 'deployApplication'
+      },
+      on: {
+        ON_DEPLOYMENT_SUBMITTED: {
+          target: 'deployInProgress',
+          //actions: ['assignLocationId']
+          //actions: ['assignLocation']
+          // actions: ['assignUser', 'loginSuccess']
+        }
+      }
+    },
+    deployInProgress: {
+      on: {
+        '': [
+          {
+            target: 'applicationDeployed',
+            actions: log(
+              (context, event) => `applicationDeployed: ${JSON.stringify(context)}`,
+              'applicationWizard'
+            )
+          }
+        ]
+      }
+    },
+    applicationDeployed: {
       type: 'final'
     }
-  }
+  },
+
 
 };

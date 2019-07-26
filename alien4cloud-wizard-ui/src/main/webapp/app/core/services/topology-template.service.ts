@@ -179,8 +179,6 @@ export class TopologyTemplateService {
   }
 
 
-
-
   deployApplication(applicationId: String, applicationEnvironmentId: String): Observable<{}> {
     let payload = { "applicationId": applicationId, "applicationEnvironmentId": applicationEnvironmentId };
     return this.http.post(this.apiURL + this.deployAppUrl, payload, {

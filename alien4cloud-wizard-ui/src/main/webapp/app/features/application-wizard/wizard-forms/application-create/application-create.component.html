@@ -1,17 +1,18 @@
-<div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
-  <div fxLayout="column" fxLayoutAlign="center center" fxFlex>
-    <div class="error" fxFlex>{{fsmContext.errorMessage}}</div>
-    <mat-form-field class="example-full-width" fxFlex>
-      <input matInput placeholder="Application name" [(ngModel)]="applicationName" name="applicationName" required fxFlex>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div class="error">{{fsmContext.errorMessage}}</div>
+  <form class="example-form">
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Application name" [(ngModel)]="applicationName" name="applicationName" required>
     </mat-form-field>
-    <mat-form-field class="example-full-width" floatLabel="never" fxFlex>
-          <textarea matInput placeholder="Application description" rows="4" [(ngModel)]="applicationDescription"
-                    name="applicationDescription" fxFlex></textarea>
+    <mat-form-field class="example-full-width" floatLabel="never">
+      <textarea matInput placeholder="Application description" rows="4" [(ngModel)]="applicationDescription"
+        name="applicationDescription"></textarea>
     </mat-form-field>
-    <div>
-      <button (click)="back()" type="button">Back</button>
-      <button (click)="createApp()" type="button">Create</button>
-    </div>
+  </form>
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button mat-stroked-button (click)="back()" type="button">Back</button>
+    <button mat-stroked-button (click)="createApp()" type="button">Create</button>
   </div>
 </div>
-|

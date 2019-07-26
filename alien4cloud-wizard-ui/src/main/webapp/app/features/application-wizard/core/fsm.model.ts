@@ -19,6 +19,10 @@ export interface ApplicationWizardMachineSchema {
     targetSelecting: {};
     targetSelected: {};
     deploymentForm: {};
+    deploymentSubmitting:{},
+    deployInProgress:{},
+    applicationDeployed:{}
+
   };
 }
 

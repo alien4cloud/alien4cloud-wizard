@@ -13,7 +13,9 @@ export type ApplicationWizardMachineEvents =
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   DoSelectTarget |
-  OnTargetSelected 
+  OnTargetSelected|
+  DoSubmitDeployment|
+  OnDeploymentSubmitting
 ;
 
 export class Init {
@@ -62,6 +64,16 @@ export class OnApplicationCreateError extends OnError {
 export class OnApplicationCreateSucess {
   readonly type = 'ON_APPLICATION_CREATE_SUCCESS';
   constructor(public applicationId: string) {}
+}
+
+export class DoSubmitDeployment{
+  readonly type = 'DO_SUBMIT_DEPLOYMENT';
+  constructor() {}
+}
+
+export class OnDeploymentSubmitting {
+  readonly type = 'ON_DEPLOYMENT_SUBMITTED';
+  constructor() {}
 }
 
 export class GoBack {

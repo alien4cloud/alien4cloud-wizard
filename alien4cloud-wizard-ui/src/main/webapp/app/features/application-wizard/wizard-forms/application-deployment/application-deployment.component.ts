@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import { ApplicationWizardMachineContext } from '../../core/fsm.model';
 import { AppplicationWizardMachineService } from '../../core/fsm.service';
+import { TopologyTemplateService } from '@app/core';
+import { DoSubmitDeployment } from '../../core/fsm.events';
 
 @Component({
   selector: 'w4c-application-deployment',
@@ -10,12 +12,39 @@ import { AppplicationWizardMachineService } from '../../core/fsm.service';
 })
 export class ApplicationDeploymentComponent implements OnInit , WizardFormComponent {
 
+  application:string ;
+  version: string ;
+  target : string 
+
   @Input() fsmContext: ApplicationWizardMachineContext;
   
 
-  constructor(private fsm: AppplicationWizardMachineService) { }
+  constructor(
+    private fsm: AppplicationWizardMachineService,
+    private topologyTemplateService: TopologyTemplateService
+    ) { }
 
   ngOnInit() {
+    this.application = this.fsmContext.applicationName
+    //this.version = this.fsmContext.
+    this.target = this.fsmContext.locationId
+
   }
+
+  deployApp(){
+    console.log("About to Deploy")
+    this.fsm.send(new DoSubmitDeployment());
+  }
+
+  leave() {
+  }
+
+  cancel(){
+  }
+
+  back(){
+  }
+
+
 
 }

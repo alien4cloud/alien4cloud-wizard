@@ -19,13 +19,14 @@ import {
 import {
   ApplicationWizardMachineEvents, DoCreateApplication, DoSelectTemplate, OnApplicationCreateError,
   OnApplicationCreateSucess,
-  OnTargetSelected, DoSelectTarget, OnError, OnEnvironmentsFetched, DoSelectEnvironment
+  OnTargetSelected, DoSelectTarget, OnError, OnEnvironmentsFetched, DoSelectEnvironment, OnDeploymentSubmitting
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
 import * as _ from "lodash";
-import {V2ApplicationService} from "@app/core/serviceV2/application.service";
-import {V2ApplicationEnvironmentService} from "@app/core/serviceV2/application-environment.service";
+import { V2ApplicationService } from "@app/core/serviceV2/application.service";
+import { V2ApplicationEnvironmentService } from "@app/core/serviceV2/application-environment.service";
+import { ApplicationDeploymentService } from '@app/core/serviceV2/application-deployment.service';
 
 /**
  * Manages the machine initialization.
@@ -37,6 +38,7 @@ export class AppplicationWizardMachineService {
     private applicationService: V2ApplicationService,
     private topologyTemplateService: TopologyTemplateService,
     private applicationEnvironmentService: V2ApplicationEnvironmentService,
+    private applicationDeploymentService: ApplicationDeploymentService,
     private router: Router
   ) { }
 
@@ -62,22 +64,27 @@ export class AppplicationWizardMachineService {
           0,
           50,
           "",
-          {applicationId: _.applicationId}
-          ).pipe(
-            map(environments => {
-              if (environments.data.length == 1) {
-                // we have just one env, we'll skip the environment selection form
-                return new DoSelectEnvironment(environments.data[0].id);
-              } else {
-                return new OnEnvironmentsFetched(environments.data);
-              }
-            })
+          { applicationId: _.applicationId }
+        ).pipe(
+          map(environments => {
+            if (environments.data.length == 1) {
+              // we have just one env, we'll skip the environment selection form
+              return new DoSelectEnvironment(environments.data[0].id);
+            } else {
+              return new OnEnvironmentsFetched(environments.data);
+            }
+          })
         ),
       selectLocation: (_, event) =>
         this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
-        .pipe(
-          map(data => new OnTargetSelected(data['data'])))
-
+          .pipe(
+            map(data => new OnTargetSelected(data['data'])))
+      ,
+      deployApplication: (_, event) =>
+        this.applicationDeploymentService.deployApplication(
+          _.applicationId, _.environmentId
+        ).pipe(
+          map(data => new OnDeploymentSubmitting()))
     },
     guards: {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')
@@ -102,7 +109,7 @@ export class AppplicationWizardMachineService {
         errorMessage: event.message
       })),
       assignTargetId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
-       // locationId: event.locationId , orchestratorId: event.orchestratorId
+        // locationId: event.locationId , orchestratorId: event.orchestratorId
       }))
     }
   };
