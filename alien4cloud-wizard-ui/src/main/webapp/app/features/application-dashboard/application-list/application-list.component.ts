@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
-import { Subject, Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {PageEvent} from '@angular/material/paginator';
+import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
-
-
-import { Application, ApplicationsService, ApplicationOverview, MetaProperty, ApplicationModule } from "@app/core";
+import {Application, ApplicationOverview} from "@app/core";
+import {V2ApplicationOverviewService} from "@app/core/serviceV2/application-overview.service";
+import {V2ApplicationService} from "@app/core/serviceV2/application.service";
 
 @Component({
   selector: 'app-application-list',
@@ -17,8 +16,10 @@ import { Application, ApplicationsService, ApplicationOverview, MetaProperty, Ap
 export class ApplicationListComponent implements OnInit {
 
   constructor(
-    private applicationsService: ApplicationsService
-  ) { }
+    private applicationService: V2ApplicationService,
+    private applicationOverviewService: V2ApplicationOverviewService
+  ) {
+  }
 
   // make lodash usable from template
   private lodash = _;
@@ -50,14 +51,14 @@ export class ApplicationListComponent implements OnInit {
       .subscribe(term => {
         this.query = term;
         this.loadApplications(0);
-    });
+      });
   }
 
   private loadApplications(from: number) {
     this.isLoading = true;
-    this.applicationsService.getApplications(from, this.pageSize, this.query).subscribe((data: {}) => {
-      this.applications = data['data']['data'] as Application[];
-      this.length = data['data']['totalResults'];
+    this.applicationService.search(from, this.pageSize, this.query).subscribe((data) => {
+      this.applications = data.data;
+      this.length = data.totalResults;
       this.isLoading = false;
     });
   }
@@ -74,11 +75,10 @@ export class ApplicationListComponent implements OnInit {
    * Trigered when the panel is expanded.
    */
   private openDetails(applicationId: string) {
-    // TODO: query plugin endpoint to retrieve details
     console.log("Openning ", applicationId);
     this.overview = undefined;
-    this.applicationsService.getApplicationOverview(applicationId).subscribe((data: {}) => {
-      this.overview = data['data'] as ApplicationOverview;
+    this.applicationOverviewService.getById(applicationId).subscribe((data) => {
+      this.overview = data;
     });
   }
 

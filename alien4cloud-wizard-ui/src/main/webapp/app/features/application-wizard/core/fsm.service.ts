@@ -19,21 +19,29 @@ import {
 import {
   ApplicationWizardMachineEvents, DoCreateApplication, DoSelectTemplate, OnApplicationCreateError,
   OnApplicationCreateSucess,
-  OnTargetSelected, DoSelectTarget
+  OnTargetSelected, DoSelectTarget, OnError
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
 import * as _ from "lodash";
+import {V2ApplicationService} from "@app/core/serviceV2/application.service";
 
 /**
  * Manages the machine initialization.
  */
 @Injectable()
 export class AppplicationWizardMachineService {
+
+  constructor(
+    private applicationService: V2ApplicationService,
+    private topologyTemplateService: TopologyTemplateService,
+    private router: Router
+  ) { }
+
   machineOptions: Partial<MachineOptions<ApplicationWizardMachineContext, ApplicationWizardMachineEvents>> = {
     services: {
       createApplication: (_, event) =>
-        this.topologyTemplateService
+        this.applicationService
           .createApplication({
             name: _.applicationName,
             archiveName: _.applicationName,
@@ -41,8 +49,11 @@ export class AppplicationWizardMachineService {
             description: _.applicationDescription
           })
           .pipe(
-            map(data => new OnApplicationCreateSucess(data['data'])),
-            catchError(result => of(new OnApplicationCreateError({})))
+            map(applicationId => new OnApplicationCreateSucess(applicationId)),
+            catchError(err => {
+              console.log("------------ Error catch by service : " + err);
+              return of(new OnApplicationCreateError(err.message));
+            })
           ),
       selectLocation: (_, event) =>
         this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
@@ -62,6 +73,9 @@ export class AppplicationWizardMachineService {
       })),
       assignAppId: assign<ApplicationWizardMachineContext, OnApplicationCreateSucess>((_, event) => ({
         applicationId: event.applicationId
+      })),
+      assignError: assign<ApplicationWizardMachineContext, OnError>((_, event) => ({
+        errorMessage: event.message
       })),
       assignTargetId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
        // locationId: event.locationId , orchestratorId: event.orchestratorId
@@ -85,11 +99,7 @@ export class AppplicationWizardMachineService {
     (_, service) => service.stop()
   ).pipe(map(([state, _]) => state));
 
-  constructor(
-    private topologyTemplateService: TopologyTemplateService,
-    private router: Router
-  ) {
-  }
+
 
   /**
    * Send an event to the machine in order to trigger a transition.

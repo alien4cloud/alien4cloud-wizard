@@ -80,10 +80,16 @@ export class WizardMainComponent implements OnInit {
             item.editable = true;
           }
         });
-        // store the current step index
-        this.currentStepIndex = expectedStepIndex;
-        // trigger a selection change on the stepper
-        this.stepper.selectedIndex = expectedStepIndex;
+        if (this.currentStepIndex !== expectedStepIndex) {
+          // store the current step index
+          this.currentStepIndex = expectedStepIndex;
+          // trigger a selection change on the stepper
+          this.stepper.selectedIndex = expectedStepIndex;
+        } else {
+          // the step index has not changed (can occur when error is thrown)
+          // we have to set the fsmContext to the current form
+          this.stepFormContainer.setContext(this.currentFsmContext);
+        }
       } else {
         // nothing to do here: a state is not always a form state.
         console.log(`${data.value} is not a form state !`);

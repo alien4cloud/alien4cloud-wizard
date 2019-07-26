@@ -4,10 +4,12 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {DoSelectTemplate} from "@app/features/application-wizard/core/fsm.events";
 import {PageEvent} from "@angular/material";
 import {FormControl} from "@angular/forms";
-import {ApplicationOverview, TopologyOverview, TopologyTemplate, TopologyTemplateService} from "@app/core";
+import {TopologyOverview, TopologyTemplate} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
+import {V2TopologyTemplateService} from "@app/core/serviceV2/topology-template.service";
+import {V2TopologyOverviewService} from "@app/core/serviceV2/topology-overview.service";
 
 @Component({
   selector: 'w4c-template-selection',
@@ -40,7 +42,8 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
 
   constructor(
     private fsm: AppplicationWizardMachineService,
-    private topologyTemplateService: TopologyTemplateService
+    private topologyTemplateService: V2TopologyTemplateService,
+    private topologyOverviewService: V2TopologyOverviewService
   ) { }
 
   @Input() fsmContext: ApplicationWizardMachineContext;
@@ -63,9 +66,9 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
 
   private loadTopologies(from: number) {
     this.isLoading = true;
-    this.topologyTemplateService.getTopologies(from, this.pageSize, this.query).subscribe((data: {}) => {
-      this.topologyTemplates = data['data']['data'] as TopologyTemplate[];
-      this.length = data['data']['totalResults'];
+    this.topologyTemplateService.search(from, this.pageSize, this.query).subscribe((data) => {
+      this.topologyTemplates = data.data;
+      this.length = data.totalResults;
       this.isLoading = false;
     })
   }
@@ -85,8 +88,8 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
     // TODO: query plugin endpoint to retrieve details
     console.log("Openning ", topologyId);
     this.overview = undefined;
-    this.topologyTemplateService.getTopologyOverview(topologyId).subscribe((data: {}) => {
-      this.overview = data['data'] as TopologyOverview;
+    this.topologyOverviewService.getById(topologyId).subscribe(data => {
+      this.overview = data;
     });
   }
 

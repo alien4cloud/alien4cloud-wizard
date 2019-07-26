@@ -18,6 +18,8 @@ export class WizardStepContainerComponent implements OnInit {
 
   @ViewChild(StepComponentDirective, {static: true}) stepComponent: StepComponentDirective;
 
+  private wizardForm : WizardFormComponent;
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver
   ) { }
@@ -38,8 +40,14 @@ export class WizardStepContainerComponent implements OnInit {
     // create the form component into the view
     const componentRef = viewContainerRef.createComponent(componentFactory);
 
+    this.wizardForm = <WizardFormComponent>componentRef.instance;
+
     // give the context to the form component
-    (<WizardFormComponent>componentRef.instance).fsmContext = context;
+    this.setContext(context);
+  }
+
+  setContext(fsmContext: ApplicationWizardMachineContext) {
+    this.wizardForm.fsmContext = fsmContext;
   }
 
 }

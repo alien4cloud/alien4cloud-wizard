@@ -10,4 +10,5 @@ export * from './tosca.model';
 export * from './topology-graph.model';
 export * from './wrappers.model';
 export * from './orchestrator-properties.model';
+export * from './rest.model';
 

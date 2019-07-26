@@ -21,8 +21,7 @@ export const context: ApplicationWizardMachineContext = {
   environmentId: undefined,
   locationId: undefined,
   orchestratorId: undefined,
-  errors: [],
-  
+  errorMessage: undefined
 };
 
 /**
@@ -103,7 +102,9 @@ export const applicationWizardMachineConfig: MachineConfig<
     applicationCreationError: {
       on: {
         '': [
-          { target: 'applicationCreateForm' }
+          {
+            target: 'applicationCreateForm'
+          }
         ]
       }
     },
@@ -119,8 +120,8 @@ export const applicationWizardMachineConfig: MachineConfig<
           // actions: ['assignUser', 'loginSuccess']
         },
         ON_APPLICATION_CREATE_ERROR: {
-          target: 'applicationCreationError'
-          // actions: ['assignErrors']
+          target: 'applicationCreationError',
+          actions: ['assignError']
         }
       }
     },

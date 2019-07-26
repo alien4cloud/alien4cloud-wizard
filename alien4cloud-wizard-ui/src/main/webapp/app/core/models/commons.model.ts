@@ -17,3 +17,4 @@ export class MetaProperty {
   configuration: MetaPropertyConfiguration;
   value: string;
 }
+

@@ -35,9 +35,14 @@ export class OnTargetSelected {
   constructor(public targetId: string) {}
 }
 
-export class OnApplicationCreateError {
+export abstract class OnError {
+  abstract readonly type;
+  constructor(public message: string) {}
+}
+
+export class OnApplicationCreateError extends OnError {
   readonly type = 'ON_APPLICATION_CREATE_ERROR';
-  constructor(public errors: Errors) {}
+  constructor(public message: string) { super(message) }
 }
 
 export class OnApplicationCreateSucess {

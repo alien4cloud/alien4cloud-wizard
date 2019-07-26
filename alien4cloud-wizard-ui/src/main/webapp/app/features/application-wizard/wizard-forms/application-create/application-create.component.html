@@ -1,5 +1,6 @@
 <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
   <div fxLayout="column" fxLayoutAlign="center center" fxFlex>
+    <div class="error" fxFlex>{{fsmContext.errorMessage}}</div>
     <mat-form-field class="example-full-width" fxFlex>
       <input matInput placeholder="Application name" [(ngModel)]="applicationName" name="applicationName" required fxFlex>
     </mat-form-field>
