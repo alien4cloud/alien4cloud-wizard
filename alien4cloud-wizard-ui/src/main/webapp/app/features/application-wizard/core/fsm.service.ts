@@ -19,7 +19,7 @@ import {
 import {
   ApplicationWizardMachineEvents, DoCreateApplication, DoSelectTemplate, OnApplicationCreateError,
   OnApplicationCreateSucess,
-  OnTargetSelected, DoSelectTarget, OnError, OnEnvironmentsFetched, DoSelectEnvironment, OnDeploymentSubmitting
+  DoSelectTarget, OnError, OnEnvironmentsFetched, DoSelectEnvironment, OnDeploymentSubmitting, OnTargetFetched, OnDeploymentTopologyFetched
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
@@ -27,6 +27,7 @@ import * as _ from "lodash";
 import { V2ApplicationService } from "@app/core/serviceV2/application.service";
 import { V2ApplicationEnvironmentService } from "@app/core/serviceV2/application-environment.service";
 import { ApplicationDeploymentService } from '@app/core/serviceV2/application-deployment.service';
+import { ApplicationLocationService } from '@app/core/serviceV2/application-location.service';
 
 /**
  * Manages the machine initialization.
@@ -39,6 +40,7 @@ export class AppplicationWizardMachineService {
     private topologyTemplateService: TopologyTemplateService,
     private applicationEnvironmentService: V2ApplicationEnvironmentService,
     private applicationDeploymentService: ApplicationDeploymentService,
+    private applicationLocationService : ApplicationLocationService,
     private router: Router
   ) { }
 
@@ -75,10 +77,31 @@ export class AppplicationWizardMachineService {
             }
           })
         ),
+        fetchDeploymentTopology: (_, event) =>
+        this.applicationService.getDeploymentTopology(
+          _.applicationId,
+          _.environmentId
+        ).pipe(
+          map(dto =>  new OnDeploymentTopologyFetched(dto))
+        ),
+      searchLocations :(_, event) =>
+        this.applicationLocationService.getEnvLocations(_.deploymentTopologyId, _.environmentId)
+        .pipe(
+          map(locations => {
+            if (locations.length == 1) {
+              console.log("Only one location exists :"+locations[0].location.id)
+              return new DoSelectTarget(locations[0].location.id);
+            } else {
+              console.log("Several locations exist :"+locations.length)
+              return new OnTargetFetched(locations);
+              
+            }
+          })
+        ),
       selectLocation: (_, event) =>
         this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .pipe(
-            map(data => new OnTargetSelected(data['data'])))
+            map(data => new OnTargetFetched(data['data'])))
       ,
       deployApplication: (_, event) =>
         this.applicationDeploymentService.deployApplication(
@@ -108,9 +131,16 @@ export class AppplicationWizardMachineService {
       assignError: assign<ApplicationWizardMachineContext, OnError>((_, event) => ({
         errorMessage: event.message
       })),
-      assignTargetId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
-        // locationId: event.locationId , orchestratorId: event.orchestratorId
-      }))
+      assignLocationId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
+         locationId: event.locationId
+      })),
+      assignLocation: assign<ApplicationWizardMachineContext, OnTargetFetched>((_, event) => ({
+        locations: event.locations
+      })),
+
+      assignDeploymentTopologyId: assign<ApplicationWizardMachineContext, OnDeploymentTopologyFetched>((_, event) => ({
+        deploymentTopologyId: event.deploymentTopology.topology.id
+      })),
     }
   };
 

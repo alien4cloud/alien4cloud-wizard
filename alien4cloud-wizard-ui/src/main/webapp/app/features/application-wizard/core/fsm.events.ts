@@ -1,7 +1,8 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-import {Environment} from "@app/core";
+import {Environment, EnvironmentLocation} from "@app/core";
+import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology-DTO.model';
 
 export type ApplicationWizardMachineEvents =
   Init |
@@ -10,10 +11,12 @@ export type ApplicationWizardMachineEvents =
   DoCreateApplication |
   OnEnvironmentsFetched |
   DoSelectEnvironment |
+  OnDeploymentTopologyFetched|
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   DoSelectTarget |
-  OnTargetSelected|
+  ///OnTargetSelected|
+  OnTargetFetched|
   DoSubmitDeployment|
   OnDeploymentSubmitting
 ;
@@ -41,15 +44,30 @@ export class DoSelectEnvironment {
   constructor(public environmentId: string) {}
 }
 
-export class DoSelectTarget {
-  readonly type = 'DO_SELECT_TARGET';
-  constructor() {}
+
+export class OnDeploymentTopologyFetched {
+  readonly type = 'ON_DEPLOYMENT_TOPOLOGY_FETCHED';
+  constructor(public deploymentTopology: DeploymentTopologyDTO) {}
 }
 
+
+export class DoSelectTarget {
+  readonly type = 'DO_SELECT_TARGET';
+  constructor(public locationId: string) {}
+}
+/*
 export class OnTargetSelected {
   readonly type = 'ON_TARGET_SELECTED';
   constructor(public targetId: string) {}
 }
+*/
+
+
+export class OnTargetFetched {
+  readonly type = 'ON_TARGET_FETCHED';
+  constructor(public locations: EnvironmentLocation[]) {}
+}
+
 
 export abstract class OnError {
   abstract readonly type;

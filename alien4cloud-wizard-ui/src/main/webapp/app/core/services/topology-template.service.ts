@@ -161,7 +161,7 @@ export class TopologyTemplateService {
   }
 
 
-  getEnvLocations(topoArchive: string, envId: String): Observable<{}> {
+getEnvLocations(topoArchive: string, envId: String): Observable<{}> {
     let getEnvLocUrl = `/rest/latest/topologies/${topoArchive}/locations?environmentId=${envId}`;
     return this.http.get(this.apiURL + getEnvLocUrl)
       //if api returns any data

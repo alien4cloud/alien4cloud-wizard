@@ -31,7 +31,7 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
     this.fsmContext.orchestratorId = orchestratorId ;
     this.fsmContext.locationId = locationId
     console.log(`Selected template: id=${locationId}`);
-    this.fsm.send(new DoSelectTarget());
+    this.fsm.send(new DoSelectTarget(locationId));
   }
 
   public postLocationPolicies() {

@@ -67,11 +67,12 @@ export class WizardMainComponent implements OnInit {
       // if a wizard step is associated with this state, we'll find it here
       const expectedStepIndex = _.findIndex(this.steps, step => step.fsmStateName == data.value);
       if (expectedStepIndex > -1) {
+        console.log(`currentStepIndex: ${this.currentStepIndex}, expectedStepIndex : ${expectedStepIndex}`);
         const expectedStep = this.steps[expectedStepIndex];
         console.log(expectedStep.fsmStateName + " is a form state !");
         this.stepper.steps.forEach((item, index) => {
           // the precedent step is considered as completed
-          if (index === this.currentStepIndex) {
+          if (index === this.currentStepIndex || index < expectedStepIndex) {
             item.completed = true;
             item.editable = false;
           }

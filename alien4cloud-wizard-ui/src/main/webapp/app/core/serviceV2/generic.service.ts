@@ -59,7 +59,11 @@ export abstract class V2GenericService<T> {
    * @param urlParams
    */
   protected getUrl(urlParams?: any) : string {
-    let url = this.endpointUrl;
+    return this.getCustomUrl(this.endpointUrl, urlParams);
+  }
+
+  protected getCustomUrl(customUrl: string, urlParams?: any) : string {
+    let url = customUrl;
     if (urlParams) {
       console.log("url before replacmeent: ", url);
       Object.entries(urlParams).forEach(([name, value]) => {

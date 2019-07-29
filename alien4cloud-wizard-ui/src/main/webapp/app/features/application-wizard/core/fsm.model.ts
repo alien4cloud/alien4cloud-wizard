@@ -1,4 +1,4 @@
-import { Environment } from '@app/core';
+import { Environment, EnvironmentLocation } from '@app/core';
 
 /**
  * Specify the schema of our state machine configuration.
@@ -15,8 +15,10 @@ export interface ApplicationWizardMachineSchema {
     environmentSearching: {};
     environmentSelectionForm: {};
     environmentSelected: {};
+    deploymentTopologyFetching:{};
+    //deploymentTopologyFetched:{};
     targetSelectionForm: {};
-    targetSelecting: {};
+    targetSearching: {};
     targetSelected: {};
     deploymentForm: {};
     deploymentSubmitting:{},
@@ -47,11 +49,11 @@ export interface ApplicationWizardMachineContext {
    */
   applicationId: string;
   environments: Environment[];
-  targetId: string;
+  deploymentTopologyId: string;
   errorMessage: string;
-  // errors: string[];
-  environmentId: string ;
+  environmentId: string;
   //locationId: [];
   locationId: string;
+  locations: EnvironmentLocation[];
   orchestratorId: string;
 }

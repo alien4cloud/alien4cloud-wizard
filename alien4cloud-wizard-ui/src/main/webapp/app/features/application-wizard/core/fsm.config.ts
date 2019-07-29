@@ -18,11 +18,12 @@ export const context: ApplicationWizardMachineContext = {
   applicationDescription: undefined,
   applicationId: undefined,
   environments: undefined,
-  targetId: undefined,
+  deploymentTopologyId: undefined,
   environmentId: undefined,
   locationId: undefined,
   orchestratorId: undefined,
-  errorMessage: undefined
+  errorMessage: undefined,
+  locations: undefined
 };
 
 /**
@@ -146,16 +147,16 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         DO_SELECT_ENVIRONMENT: {
           target: 'environmentSelected',
-          actions: ['assignEnvironmentId']
+          actions: ['assignEnvironmentId', 'getDeploymentTopology']
           // actions: ['assignUser', 'loginSuccess']
         }
       }
     },
-    environmentSelected: {
+    environmentSelected: {   
       on: {
         '': [
           {
-            target: 'targetSelectionForm',
+            target: 'deploymentTopologyFetching',
             actions: log(
               (context, event) => `environmentSelected: ${JSON.stringify(context)}`,
               'applicationWizard'
@@ -164,36 +165,54 @@ export const applicationWizardMachineConfig: MachineConfig<
         ]
       }
     },
-    targetSelectionForm: {
+    deploymentTopologyFetching: {
+      invoke: {
+        id: 'fetchDeploymentTopology',
+        src: 'fetchDeploymentTopology'
+      },
       on: {
-        DO_SELECT_TARGET: {
-          target: 'targetSelecting',
-          actions: ['assignTargetId']
+        ON_DEPLOYMENT_TOPOLOGY_FETCHED: {
+          target: 'targetSearching',
+          actions: ['assignDeploymentTopologyId']
           // actions: ['assignUser', 'loginSuccess']
         }
       }
     },
-    targetSelecting: {
+    targetSearching: {
       invoke: {
-        id: 'selectLocation',
-        src: 'selectLocation'
+        id: 'searchLocations',
+        src: 'searchLocations'
       },
       on: {
-        ON_TARGET_SELECTED: {
+        DO_SELECT_TARGET: {
           target: 'targetSelected',
           actions: ['assignLocationId']
           //actions: ['assignLocation']
           // actions: ['assignUser', 'loginSuccess']
+        },
+        ON_TARGET_FETCHED: {
+          target: 'targetSelectionForm',
+          actions: ['assignLocation']
         }
       }
     },
+    targetSelectionForm: {
+      on: {
+        DO_SELECT_TARGET: {
+          target: 'targetSelected',
+          actions: ['assignLocationId']
+          // actions: ['assignUser', 'loginSuccess']
+        }
+      }
+    },
+
     targetSelected: {
       on: {
         '': [
           {
             target: 'deploymentForm',
             actions: log(
-              (context, event) => `targetSelected: ${JSON.stringify(context)}`,
+              (context, event) => `locationSelected: ${JSON.stringify(context)}`,
               'applicationWizard'
             )
           }
