@@ -12,7 +12,7 @@
     <mat-expansion-panel *ngFor="let topology of topologyTemplates; let isOpenned = false"
                          (opened)="openDetails(topology.id); isOpenned = true"
                          (closed)="isOpenned = false"
-                         [ngClass]="isOpenned? 'mat-elevation-z2': 'mat-elevation-z2'">
+                         [ngClass]="{'mat-elevation-z14': isOpenned}">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center" >

@@ -15,7 +15,8 @@
     <mat-expansion-panel
       *ngFor="let application of applications; let isOpenned = false"
       (opened)="openDetails(application.id); isOpenned = true"
-      (closed)="isOpenned = false">
+      (closed)="isOpenned = false"
+      [ngClass]="{'mat-elevation-z14': isOpenned}">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center" >
@@ -29,7 +30,7 @@
             </div>
             <div fxFlex="30%">{{ application.name }}</div>
             <div fxFlex="65%">
-              <span *ngIf="!isOpenned">
+              <span *ngIf="!isOpenned" class="mat-expansion-panel-header-description">
                 {{ lodash.truncate(application.description, {'length': 100, 'separator': ' '}) }}
               </span>
             </div>

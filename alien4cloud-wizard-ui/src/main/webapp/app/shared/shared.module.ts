@@ -7,6 +7,7 @@ import {A4cMaterialModule} from './a4c-material.module';
 import {SvgNodeTypeImageSourceDirective} from './directives';
 import {ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, TrimNamePipe} from './pipes';
 import {
+  LoginComponent,
   TopologyOverviewComponent
 } from './components';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
@@ -18,6 +19,7 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
 @NgModule({
   declarations: [
     TopologyOverviewComponent,
+    LoginComponent,
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
     ToscaIdArchiveExtractorPipe,
@@ -40,6 +42,7 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
     FormsModule,
     ReactiveFormsModule,
     TopologyOverviewComponent,
+    LoginComponent,
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
     ToscaIdArchiveExtractorPipe,

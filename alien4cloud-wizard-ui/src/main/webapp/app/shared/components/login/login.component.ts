@@ -1,16 +1,14 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import {Component, OnInit, Renderer, ElementRef, AfterViewInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { FormControl } from '@angular/forms';
+import {LoginService} from "@app/core";
 
-import { LoginService } from '../core/services/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
@@ -30,11 +28,6 @@ export class LoginComponent implements OnInit {
 
   login() : void {
     this.loginService.login({username: this.username, password: this.password});
-    // if (this.username == 'admin' && this.password == 'admin') {
-    //   this.router.navigate(["applications"]);
-    // } else {
-    //   alert("Invalid credentials");
-    // }
   }
 
 }

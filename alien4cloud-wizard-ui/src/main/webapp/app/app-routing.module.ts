@@ -8,7 +8,7 @@ import {
   HeaderComponent
 } from '@app/layouts';
 import { HomeComponent } from '@app/shared';
-import { LoginComponent } from './login/login.component';
+import {LoginComponent} from "@app/shared/components";
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },

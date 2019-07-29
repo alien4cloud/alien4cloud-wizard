@@ -1,0 +1,43 @@
+// [[ A4C status color set : this should not be theme dependant
+$text-success: #468847;
+$text-muted: #999999;
+$text-warning: #c09853;
+// $text-danger: #953b39;
+$text-danger: rgb(197, 25, 25);
+$text-primary: #428bca;
+.w4c-deployment-status-DEPLOYED {
+  color: $text-success;
+}
+.w4c-deployment-status-UPDATED {
+  color: $text-success;
+}
+.w4c-deployment-status-UNDEPLOYED {
+  color: $text-muted;
+}
+.w4c-deployment-status-WARNING {
+  color: $text-warning;
+}
+.w4c-deployment-status-UPDATE_FAILURE {
+  color: $text-warning;
+}
+.w4c-deployment-status-FAILURE {
+  color: $text-danger;
+}
+.w4c-deployment-status-UNKNOWN {
+  color: black;
+}
+.w4c-deployment-status-DEPLOYMENT_IN_PROGRESS {
+  color: $text-primary;
+}
+.w4c-deployment-status-INIT_DEPLOYMENT {
+  color: $text-primary;
+}
+.w4c-deployment-status-UNDEPLOYMENT_IN_PROGRESS {
+  color: $text-primary;
+}
+// ]] A4C color set for status
+
+.fill-space {
+  flex: 1 1 auto;
+}
+

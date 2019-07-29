@@ -24,8 +24,29 @@
               "src/main/webapp/assets"
             ],
             "styles": [
-              "src/main/webapp/content/scss/a4c-theme.scss",
-              "src/main/webapp/content/css/styles.css"
+              {
+                "input": "src/main/webapp/assets/styles/main.scss"
+              },
+              {
+                "input": "src/main/webapp/assets/styles/built/pink-bluegrey.css",
+                "lazy": true,
+                "bundleName": "pink-bluegrey"
+              },
+              {
+                "input": "src/main/webapp/assets/styles/built/deeppurple-amber.css",
+                "lazy": true,
+                "bundleName": "deeppurple-amber"
+              },
+              {
+                "input": "src/main/webapp/assets/styles/built/indigo-pink.css",
+                "lazy": true,
+                "bundleName": "indigo-pink"
+              },
+              {
+                "input": "src/main/webapp/assets/styles/built/purple-green.css",
+                "lazy": true,
+                "bundleName": "purple-green"
+              }
             ],
             "scripts": [],
             "lazyModules": [
@@ -89,8 +110,29 @@
               "src/main/webapp/assets"
             ],
             "styles": [
-              "src/main/webapp/content/scss/theme.scss",
-              "src/main/webapp/content/css/styles.css"
+              {
+                "input": "src/main/webapp/assets/main.scss"
+              },
+              {
+                "input": "src/main/webapp/assets/pink-bluegrey.css",
+                "lazy": true,
+                "bundleName": "pink-bluegrey"
+              },
+              {
+                "input": "src/main/webapp/assets/deeppurple-amber.css",
+                "lazy": true,
+                "bundleName": "deeppurple-amber"
+              },
+              {
+                "input": "src/main/webapp/assets/indigo-pink.css",
+                "lazy": true,
+                "bundleName": "indigo-pink"
+              },
+              {
+                "input": "src/main/webapp/assets/purple-green.css",
+                "lazy": true,
+                "bundleName": "purple-green"
+              }
             ],
             "scripts": []
           }

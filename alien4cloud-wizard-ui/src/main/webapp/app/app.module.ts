@@ -17,7 +17,6 @@ import {
   HomeComponent,
   SharedModule
 } from './shared';
-import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import {A4cMaterialModule} from '@app/shared';
@@ -28,6 +27,7 @@ import { AppRoutingModule,routingComponents} from './app-routing.module';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AuthInterceptor } from '@app/core';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
+import {ThemePickerModule} from "@app/modules/theme-picker";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,7 +43,6 @@ export function createTranslateLoader(http: HttpClient) {
     HeaderComponent,
     MainComponent,
     routingComponents,
-    LoginComponent,
     ApplicationDetailsComponent,
     CreationApplicationComponent
   ],
@@ -67,7 +66,8 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    HeroLoaderModule
+    HeroLoaderModule,
+    ThemePickerModule
   ],
   exports: [
     A4cMaterialModule,

@@ -1,22 +1,22 @@
 <div *ngIf="overview; else loadingOverview" fxLayout="row" fxFlex="100%">
   <div fxFlex="50%" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="space-between center">
-      <span class="title">Description</span>
+      <span class="w4c-title title">Description</span>
       <button mat-button (click)="switchGraphView()" color="primary">
         <mat-icon *ngIf="!displayGraph">photo</mat-icon>
         <mat-icon *ngIf="displayGraph">format_align_justify</mat-icon>
       </button>
     </div>
-    <div *ngIf="!displayGraph" class="desciption" fxFlex="100%">
+    <div *ngIf="!displayGraph" class="desciption w4c-borders mat-app-background" fxFlex="100%">
       <span>{{ overview.description }}</span>
     </div>
-    <div *ngIf="displayGraph" class="desciption" fxFlex="100%">
+    <div *ngIf="displayGraph" class="desciption w4c-borders" fxFlex="100%">
       <hero-loader moduleName="src/main/webapp/app/features/topology-graph/topology-graph.module#TopologyGraphModule"></hero-loader>
     </div>
   </div>
   <div fxFlex="50%" fxLayout="column">
-    <span class="title">Meta-properties</span>
-    <div class="metaproperties">
+    <span class="w4c-title title">Meta-properties</span>
+    <div class="metaproperties w4c-borders mat-app-background">
       <mat-chip-list>
         <ng-container *ngFor="let namedMetaProperty of overview.namedMetaProperties;">
           <mat-chip
@@ -27,8 +27,8 @@
         </ng-container>
       </mat-chip-list>
     </div>
-    <span class="title">Modules</span>
-    <div class="modules">
+    <span class="w4c-title title">Modules</span>
+    <div class="modules w4c-borders mat-app-background">
       <table mat-table [dataSource]="overview.modules" fxFlex>
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
