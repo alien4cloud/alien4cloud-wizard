@@ -21,21 +21,11 @@ export class V2ApplicationService extends V2GenericService<Application> {
   }
 
   createApplication(payload: AppCreationTopoPayload): Observable<string> {
-    console.log("topologyTemplateVersionId  :", payload.topologyTemplateVersionId)
-    return this.http.post(this.getUrl(), payload, {
+    return this.handleResult<string>(this.http.post(this.getUrl(), payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       }),
-    }).pipe(
-      tap(data => console.log("==============>" + JSON.stringify(data))),
-      map(data => {
-        if (data['error']) {
-          throw new Error(this.translate.instant("ERRORS." + data['error']['code']));
-        } else {
-          return data['data'];
-        }
-      })
-    );
+    }));
   }
 
   getDeploymentTopology(applicationId: string, environmentId: String): Observable<DeploymentTopologyDTO> {

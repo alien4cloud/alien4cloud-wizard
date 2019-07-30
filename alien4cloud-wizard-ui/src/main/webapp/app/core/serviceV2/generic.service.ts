@@ -37,22 +37,16 @@ export abstract class V2GenericService<T> {
     }
     let data = {"from": from, "size": size, "query": query};
     // TODO: use option to replace @{stuffs}
-    return this.http.post(this.getUrl(urlParams) + "/search", data, {
+    return this.handleResult<MultipleDataResult<T>>(this.http.post(this.getUrl(urlParams) + "/search", data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
         'A4C-Agent': 'Wizard_UI'
       }),
-    }).pipe(map(data => {
-      if (data['error']) {
-        throw new Error(this.translate.instant("ERRORS." + data['error']['code']));
-      } else {
-        return <MultipleDataResult<T>> data['data'];
-      }
     }));
   }
 
   /**
-   * Replace all occurences of params in the endpoint url by the corresponding entry in the urlParams.
+   * Replace all occurrences of params in the endpoint url by the corresponding entry in the urlParams.
    * For example, is the endpoint url is <code>/shops/@{shopId}/employees</code>, and the urlParams is <code>{shopId: "123"}</code>,
    * then the returned url will be : <code>/shops/123/employees</code>.
    *
@@ -77,21 +71,31 @@ export abstract class V2GenericService<T> {
     return url;
   }
 
+  /**
+   * Manage the result of a REST api call :
+   * <ul>
+   *   <li>If an error is detected, throws a translated error.
+   *   <li>Cast the returned data into the expected type.
+   * </ul>
+   * @param requestResult
+   */
+  protected handleResult<R>(requestResult: Observable<{}>) : Observable<R> {
+    return requestResult.pipe(map(data => {
+      if (data['error']) {
+        throw new Error(this.translate.instant("ERRORS." + data['error']['code']));
+      } else {
+        return <R>data['data'];
+      }
+    }));
+  }
+
   getById(id: string, urlParams?: any): Observable<T> {
-    return this.http.get(this.getUrl(urlParams) + "/" + id, {
+    return this.handleResult<T>(this.http.get(this.getUrl(urlParams) + "/" + id, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
         'A4C-Agent': 'Wizard_UI'
       })
-    }).pipe(map(data => {
-      if (data['error']) {
-        throw new Error(this.translate.instant("ERRORS." + data['error']['code']));
-      } else {
-        return <T>data['data'];
-      }
-      }
-     )
-    );
+    }));
   }
 
 }

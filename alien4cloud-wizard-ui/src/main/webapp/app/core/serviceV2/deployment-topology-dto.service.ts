@@ -4,7 +4,7 @@ import {ApplicationOverview, MultipleDataResult} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
 import {Observable} from "rxjs";
 import {V2GenericService} from "@app/core/serviceV2/generic.service";
-import { DeploymentTopologyDTO } from '../models/deployment-topology-DTO.model';
+import { DeploymentTopologyDTO } from '../models/deployment-topology-dto.model';
 
 
 @Injectable({
