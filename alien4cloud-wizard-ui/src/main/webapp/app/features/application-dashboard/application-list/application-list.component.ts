@@ -43,18 +43,18 @@ export class ApplicationListComponent implements OnInit {
   private isLoading: boolean = false;
 
   ngOnInit() {
-    //this.loadApplications(0);
+    this.loadApplications(0);
 
     // add a debounceTimed suscription to avoid bakend mass attack
     this.searchField.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(term => {
         this.query = term;
-        //this.loadApplications(0);
+        this.loadApplications(0);
       });
   }
 
-  /*
+
   private loadApplications(from: number) {
     this.isLoading = true;
     this.applicationService.search(from, this.pageSize, this.query).subscribe((data) => {
@@ -63,13 +63,13 @@ export class ApplicationListComponent implements OnInit {
       this.isLoading = false;
     });
   }
-*/
+
   /**
    * This is trigerred when something is changed about pagination options.
    */
   private handlePage(e: any) {
     this.pageSize = e.pageSize;
-    //this.loadApplications(e.pageIndex);
+    this.loadApplications(e.pageIndex);
   }
 
   /**
