@@ -1,0 +1,10 @@
+<div *ngIf="deployed; else deploying" fxLayout="row" fxFlex="100%">
+  <h2>Application deployed</h2>
+</div>
+
+<ng-template #deploying>
+  <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center">
+    <h2>Deploy in progress ...</h2>
+    <mat-spinner [diameter]="150"></mat-spinner>
+  </div>
+</ng-template>

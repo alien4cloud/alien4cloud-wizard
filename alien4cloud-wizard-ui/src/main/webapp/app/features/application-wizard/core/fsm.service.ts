@@ -10,8 +10,6 @@ import {
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
-import { TopologyTemplateService } from "@app/core";
 import {
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema
@@ -28,6 +26,7 @@ import { V2ApplicationService } from "@app/core/serviceV2/application.service";
 import { V2ApplicationEnvironmentService } from "@app/core/serviceV2/application-environment.service";
 import { ApplicationDeploymentService } from '@app/core/serviceV2/application-deployment.service';
 import { ApplicationLocationService } from '@app/core/serviceV2/application-location.service';
+import { V2TopologyTemplateService } from '@app/core/serviceV2/topology-template.service';
 
 /**
  * Manages the machine initialization.
@@ -37,10 +36,10 @@ export class AppplicationWizardMachineService {
 
   constructor(
     private applicationService: V2ApplicationService,
-    private topologyTemplateService: TopologyTemplateService,
+    private topologyTemplateService: V2TopologyTemplateService,
     private applicationEnvironmentService: V2ApplicationEnvironmentService,
     private applicationDeploymentService: ApplicationDeploymentService,
-    private applicationLocationService : ApplicationLocationService,
+    private applicationLocationService: ApplicationLocationService,
     private router: Router
   ) { }
 
@@ -77,32 +76,34 @@ export class AppplicationWizardMachineService {
             }
           })
         ),
-        fetchDeploymentTopology: (_, event) =>
+      fetchDeploymentTopology: (_, event) =>
         this.applicationService.getDeploymentTopology(
           _.applicationId,
           _.environmentId
         ).pipe(
-          map(dto =>  new OnDeploymentTopologyFetched(dto))
+          map(dto => new OnDeploymentTopologyFetched(dto))
         ),
-      searchLocations :(_, event) =>
-        this.applicationLocationService.getEnvLocations(_.deploymentTopologyId, _.environmentId)
-        .pipe(
-          map(locations => {
-            if (locations.length == 1) {
-              console.log("Only one location exists :"+locations[0].location.id)
-              return new DoSelectTarget(locations[0].location.id);
-            } else {
-              console.log("Several locations exist :"+locations.length)
-              return new OnTargetFetched(locations);
-              
-            }
-          })
-        ),
+        
+      searchLocations: (_, event) =>
+        this.applicationLocationService.getLocationRedirections(_.deploymentTopologyId, _.environmentId)
+          .pipe(
+            map(locations => {
+              if (locations.length == 1) {
+                console.log("Only one location exists :" + locations[0].location.id)
+                return new DoSelectTarget(locations[0].location.id,locations[0].location.name, locations[0].orchestrator.id );
+              } else {
+                console.log("Several locations exist :" + locations.length)
+                return new OnTargetFetched(locations);
+
+              }
+            })
+          ), 
+          /*
       selectLocation: (_, event) =>
         this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .pipe(
             map(data => new OnTargetFetched(data['data'])))
-      ,
+      ,*/
       deployApplication: (_, event) =>
         this.applicationDeploymentService.deployApplication(
           _.applicationId, _.environmentId
@@ -132,8 +133,18 @@ export class AppplicationWizardMachineService {
         errorMessage: event.message
       })),
       assignLocationId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
-         locationId: event.locationId
+        locationId: event.locationId, locationName: event.locationName,  orchestratorId: event.orchestratorId
       })),
+      assignLocationPolicies: (_) => {
+        //setTimeout(() => {
+          this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
+          .subscribe((data: {}) => {
+            console.log("Monitored Deployment :", data);
+          });
+       // },
+       //   5000);
+      
+      },
       assignLocation: assign<ApplicationWizardMachineContext, OnTargetFetched>((_, event) => ({
         locations: event.locations
       })),
@@ -141,7 +152,21 @@ export class AppplicationWizardMachineService {
       assignDeploymentTopologyId: assign<ApplicationWizardMachineContext, OnDeploymentTopologyFetched>((_, event) => ({
         deploymentTopologyId: event.deploymentTopology.topology.id
       })),
+
+      assignDeploymentId: (_) => {
+        //setTimeout(() => {
+          this.applicationService.getMonitoredDeploymentDTO(
+            _.applicationId,
+            _.environmentId
+          ).subscribe((data: {}) => {
+            console.log("Monitored Deployment :", data);
+          });
+       // },
+       //   5000);
+      
+      }
     }
+
   };
 
   private _applicationWizardMachine = Machine<ApplicationWizardMachineContext, ApplicationWizardMachineSchema, ApplicationWizardMachineEvents>(
@@ -208,5 +233,6 @@ export class AppplicationWizardMachineService {
     console.log("graph: " + JSON.stringify(graph));
     return graph;
   }
+
 
 }

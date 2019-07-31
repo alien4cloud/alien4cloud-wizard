@@ -2,7 +2,7 @@
  * The event types our FSM will manage to trigger transition between states.
  */
 import {Environment, EnvironmentLocation} from "@app/core";
-import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology-DTO.model';
+import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology-dto.model';
 
 export type ApplicationWizardMachineEvents =
   Init |
@@ -15,10 +15,10 @@ export type ApplicationWizardMachineEvents =
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   DoSelectTarget |
-  ///OnTargetSelected|
   OnTargetFetched|
   DoSubmitDeployment|
-  OnDeploymentSubmitting
+  OnDeploymentSubmitting |
+  onActiveDeploymentCheck
 ;
 
 export class Init {
@@ -53,15 +53,8 @@ export class OnDeploymentTopologyFetched {
 
 export class DoSelectTarget {
   readonly type = 'DO_SELECT_TARGET';
-  constructor(public locationId: string) {}
+  constructor(public locationId: string,public locationName: string,public orchestratorId: string) {}
 }
-/*
-export class OnTargetSelected {
-  readonly type = 'ON_TARGET_SELECTED';
-  constructor(public targetId: string) {}
-}
-*/
-
 
 export class OnTargetFetched {
   readonly type = 'ON_TARGET_FETCHED';
@@ -86,6 +79,11 @@ export class OnApplicationCreateSucess {
 
 export class DoSubmitDeployment{
   readonly type = 'DO_SUBMIT_DEPLOYMENT';
+  constructor() {}
+}
+
+export class onActiveDeploymentCheck{
+  readonly type = 'ON_ACTIVE_DEPLOYMENT_CHECK';
   constructor() {}
 }
 

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TopologyTemplateService, AppCreationTopoPayload } from '@app/core/services/topology-template.service';
+//import { TopologyTemplateService } from '@app/core/services/topology-template.service';
 import { TopologyTemplate } from '@app/core/models/topology-template.model';
 import { TopologyTemplateComponent } from '../topology-template/topology-template.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApplicationDescriptionComponent } from '../application-description/application-description.component';
-import { GenericsService, Environment, EnvironmentLocation, DeploymentPropertyCheck, DefinitionIdValues } from '@app/core';
+import { Environment, EnvironmentLocation, DeploymentPropertyCheck, DefinitionIdValues } from '@app/core';
 
 @Component({
   selector: 'app-application-create',
@@ -38,13 +38,13 @@ export class ApplicationCreateComponent implements OnInit {
   public environmentLocation: EnvironmentLocation[];
   public selectedTopoArchiveName: string;
   public selectedTopoDescription: string;
-  public createAppByTopoPayload: AppCreationTopoPayload;
+  //public createAppByTopoPayload: AppCreationTopoPayload;
   public appEnvironments: Environment[];
 
   constructor(
     private _formBuilder: FormBuilder,
-    private topologyTemplateService: TopologyTemplateService,
-    private genericsService: GenericsService
+    //private topologyTemplateService: TopologyTemplateService,
+    //private genericsService: GenericsService
 
   ) { }
 
@@ -63,6 +63,7 @@ export class ApplicationCreateComponent implements OnInit {
   }
 
 
+  /*
   private createAppByTopo() {
     this.createAppByTopoPayload = { "name": this.applicationDescriptionComponent.displayArchiveName, "archiveName": this.genericsService.trimName(this.applicationDescriptionComponent.displayArchiveName), "description": this.applicationDescriptionComponent.displayDescription, "topologyTemplateVersionId": this.selectedTopology.id };
     console.log("Trimed archive name" + this.genericsService.trimName(this.applicationDescriptionComponent.displayArchiveName))
@@ -75,21 +76,24 @@ export class ApplicationCreateComponent implements OnInit {
       }
 
       //test func 
-      this.getAppEnvironments(0);
+      //this.getAppEnvironments(0);
       this.isLoading = false;
     });
     //getting selected topology from child
   }
+  */
 
 
+  /*
   public getSelectedTopologyFromChild() {
     this.selectedTopology = this.topologyTemplateComponent.selectedTopology;
     console.log("topology from child after:" + this.selectedTopology.archiveName)
     this.selectedTopoArchiveName = this.topologyTemplateComponent.selectedTopology.archiveName;
     this.selectedTopoDescription = this.topologyTemplateComponent.selectedTopology.description;
   }
+*/
 
-
+  /*
   getLocation(environmentId: string, ) {
     this.topologyTemplateService.getTopologyById(environmentId).
       subscribe((data: {}) => {
@@ -98,7 +102,8 @@ export class ApplicationCreateComponent implements OnInit {
       })
   }
 
-
+  */
+/*
   getAppEnvironments(from: number) {
     let getTopoUrl = `/rest/latest/applications/${this.genericsService.trimName(this.applicationDescriptionComponent.displayArchiveName)}` + `/environments/search`;
     console.log("url env app :" + getTopoUrl);
@@ -109,28 +114,29 @@ export class ApplicationCreateComponent implements OnInit {
       if (this.length > 0) {
         console.log("environment id  :" + this.appEnvironments[0].id);
 
-        //test func 
-        this.getEnvDeploymentTopology();
+     
+        //this.getEnvDeploymentTopology();
       } else {
         console.warn("THERE IS NO ENVIRONMENT");
       }
       this.isLoading = false;
     })
   }
+*/
 
-
+  /*
   public getEnvDeploymentTopology() {
 
     this.topologyTemplateService.getEnvDeploymentTopology(this.genericsService.trimName(this.applicationDescriptionComponent.displayArchiveName), this.appEnvironments[0].id).
       subscribe((data: {}) => {
         this.deploymentTopology = data['data']['topology'] as TopologyTemplate;
         console.log("The deployment topology :", this.deploymentTopology.archiveName);
-        //testEnvLocations
-        //this.postLocationPolicies()
-        this.getEnvironmentLocations()
+   
+        //this.getEnvironmentLocations()
       })
-  }
+  }*/
 
+  /*
   public postLocationPolicies() {
     this.topologyTemplateService.postLocationPolicies(this.applicationDescriptionComponent.displayArchiveName, this.appEnvironments[0].id, this.environmentLocation[0].orchestrator.id, this.environmentLocation[0].location.name).
       subscribe((data: {}) => {
@@ -140,6 +146,7 @@ export class ApplicationCreateComponent implements OnInit {
         //this.getEnvironmentLocations() ;
       })
   }
+  */
 
   /*
     public postLocationPolicies() {
@@ -153,7 +160,7 @@ export class ApplicationCreateComponent implements OnInit {
     }
     */
 
-
+/*
   public getEnvironmentLocations() {
 
     this.topologyTemplateService.getEnvLocations(this.createAppByTopoPayload.topologyTemplateVersionId, this.appEnvironments[0].id).
@@ -170,8 +177,10 @@ export class ApplicationCreateComponent implements OnInit {
 
       })
   }
+  */
 
 
+  /*
   public deploymentPropertyCheck(definitionId: DefinitionIdValues, value: string) {
     let payload = { "definitionId": definitionId, "value": value }
     this.topologyTemplateService.deploymentPropCheck(payload, this.environmentLocation[0].orchestrator.id).
@@ -180,8 +189,8 @@ export class ApplicationCreateComponent implements OnInit {
       })
 
 
-  }
-
+  }*/
+/*
 
   public deployApplication() {
     this.topologyTemplateService.deployApplication(this.appEnvironments[0].applicationId, this.appEnvironments[0].id).
@@ -190,7 +199,7 @@ export class ApplicationCreateComponent implements OnInit {
       })
 
   }
-
+*/
   /*
     private async createAppByTopoAsync(createAppByTopoPayload:AppCreationTopoPayload) {
       this.isLoading = true;

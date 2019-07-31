@@ -5,6 +5,7 @@ import {TemplateSelectionComponent} from "@app/features/application-wizard/wizar
 import {ApplicationCreateComponent} from "@app/features/application-wizard/wizard-forms/application-create/application-create.component";
 import {TargetSelectionComponent} from "@app/features/application-wizard/wizard-forms/target-selection/target-selection.component";
 import {ApplicationDeploymentComponent} from "@app/features/application-wizard/wizard-forms/application-deployment/application-deployment.component";
+import { ActiveDeploymentComponent } from '../wizard-forms/active-deployment/active-deployment.component';
 /**
  * This is the configuration of our wizard. The step order is the same that this array order.
  *
@@ -16,7 +17,8 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
   {stepLabel: "Fill the app form", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
   {stepLabel: "Select Target", component: TargetSelectionComponent, fsmStateName: "targetSelectionForm"},
-  {stepLabel: "Deploy app", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm"}
+  {stepLabel: "Deploy app", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm"},
+  {stepLabel: "Active Deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"}
 ];
 
 @Injectable({

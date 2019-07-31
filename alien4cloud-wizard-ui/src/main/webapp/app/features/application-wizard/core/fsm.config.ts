@@ -21,9 +21,11 @@ export const context: ApplicationWizardMachineContext = {
   deploymentTopologyId: undefined,
   environmentId: undefined,
   locationId: undefined,
+  locationName: undefined,
   orchestratorId: undefined,
   errorMessage: undefined,
-  locations: undefined
+  locations: undefined,
+  deploymentId : undefined
 };
 
 /**
@@ -147,7 +149,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         DO_SELECT_ENVIRONMENT: {
           target: 'environmentSelected',
-          actions: ['assignEnvironmentId', 'getDeploymentTopology']
+          actions: ['assignEnvironmentId']
           // actions: ['assignUser', 'loginSuccess']
         }
       }
@@ -211,10 +213,13 @@ export const applicationWizardMachineConfig: MachineConfig<
         '': [
           {
             target: 'deploymentForm',
+            actions: ['assignLocationPolicies']
+           /*
             actions: log(
               (context, event) => `locationSelected: ${JSON.stringify(context)}`,
               'applicationWizard'
             )
+            */
           }
         ]
       }
@@ -237,22 +242,19 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         ON_DEPLOYMENT_SUBMITTED: {
-          target: 'deployInProgress',
+          target: 'activeDeploymentForm',
           //actions: ['assignLocationId']
-          //actions: ['assignLocation']
+          actions: ['assignLocation']
           // actions: ['assignUser', 'loginSuccess']
         }
       }
     },
-    deployInProgress: {
+    activeDeploymentForm: {
       on: {
-        '': [
+        ON_ACTIVE_DEPLOYMENT_CHECK: [
           {
             target: 'applicationDeployed',
-            actions: log(
-              (context, event) => `applicationDeployed: ${JSON.stringify(context)}`,
-              'applicationWizard'
-            )
+            actions: ['deploymentStatusCheck']
           }
         ]
       }
@@ -261,6 +263,4 @@ export const applicationWizardMachineConfig: MachineConfig<
       type: 'final'
     }
   },
-
-
 };

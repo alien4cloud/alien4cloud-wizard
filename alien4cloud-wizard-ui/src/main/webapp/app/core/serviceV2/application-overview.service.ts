@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ApplicationOverview, GenericsService, MultipleDataResult} from "@app/core";
+import {ApplicationOverview, MultipleDataResult} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
 import {Observable} from "rxjs";
 import {V2GenericService} from "@app/core/serviceV2/generic.service";

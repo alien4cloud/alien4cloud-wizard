@@ -22,7 +22,7 @@ export interface ApplicationWizardMachineSchema {
     targetSelected: {};
     deploymentForm: {};
     deploymentSubmitting:{},
-    deployInProgress:{},
+    activeDeploymentForm:{},
     applicationDeployed:{}
 
   };
@@ -54,6 +54,8 @@ export interface ApplicationWizardMachineContext {
   environmentId: string;
   //locationId: [];
   locationId: string;
+  locationName: string;
   locations: EnvironmentLocation[];
   orchestratorId: string;
+  deploymentId : string
 }

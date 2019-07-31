@@ -23,11 +23,14 @@ export class DeploymentTopologyDtoService extends V2GenericService<DeploymentTop
     throw new Error("Not implemented !");
   }
 
+  /*
   getEnvLocations(applicationId: string, environmentId: String): Observable<MultipleDataResult<DeploymentTopologyDTO>> {
     let urlParams  = {applicationId: applicationId , environmentId: environmentId}
-    return this.http.get(this.getUrl(urlParams))
-      //if api returns any data
-      .pipe(data => data['data']);
-  }
+    return this.handleResult<MultipleDataResult<DeploymentTopologyDTO>>(this.http.get(this.getUrl(urlParams)));
+    
+    //return this.http.get(this.getUrl(urlParams)).pipe(data => data['data']);
+      
+  } */
+  
 
 }

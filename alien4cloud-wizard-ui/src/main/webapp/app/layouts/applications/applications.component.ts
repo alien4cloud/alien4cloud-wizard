@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild ,Input } from '@angular/core';
-import { Application, ApplicationsService, MetapropertyService, Metaproperty} from "@app/core";
+import { Application, MetapropertyService, Metaproperty} from "@app/core";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -54,14 +54,14 @@ export class ApplicationsComponent implements OnInit {
 
 
   constructor(
-    private restApi: ApplicationsService,
+    //private restApi: ApplicationsService,
     private metapropertiesService: MetapropertyService
     ) {
-    restApi: ApplicationsService
+   // restApi: ApplicationsService
   }
 
   ngOnInit() {
-    this.loadApplications();
+   // this.loadApplications();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     //this.loadStatus();
@@ -85,12 +85,14 @@ export class ApplicationsComponent implements OnInit {
   */
 
   // Get applications list
+  /*
   loadApplications() {
     return this.restApi.getApplications().subscribe((data: {}) => {
       this.apps = data['data']['data'];
       this.dataSource.data = data['data']['data'] as Application[];
     })
   }
+  */
 
     // Get applications metaproperties
     loadMetaproperties(metas:string[]) {

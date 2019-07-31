@@ -1,7 +1,3 @@
-export enum Deployment {
-}
-
-
 export enum ApplicationStatus {
   DEPLOYED,
   UNDEPLOYED

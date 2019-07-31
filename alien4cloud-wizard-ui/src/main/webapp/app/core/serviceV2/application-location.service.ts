@@ -19,12 +19,16 @@ export class ApplicationLocationService extends V2GenericService<EnvironmentLoca
   }
 
 
-  getEnvLocations(templateId: string, environmentId: String): Observable<EnvironmentLocation[]> {
+  getLocationRedirections(templateId: string, environmentId: String): Observable<EnvironmentLocation[]> {
     const url =  V2GenericService.baseUrl + "/topologies/@{templateId}/locations?environmentId=@{environmentId}"
     let urlParams  = {templateId: templateId , environmentId: environmentId}
+    return this.handleResult<EnvironmentLocation[]>(this.http.get(this.getCustomUrl(url,urlParams)));
+    /*
     return this.http.get(this.getCustomUrl(url,urlParams))
       //if api returns any data
       .pipe(map(data => <EnvironmentLocation[]>data['data']));
+      */
   }
+
 
 }

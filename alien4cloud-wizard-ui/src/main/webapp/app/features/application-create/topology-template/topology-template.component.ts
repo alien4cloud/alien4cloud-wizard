@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
-import { TopologyTemplateService} from '@app/core/services/topology-template.service';
+//import { TopologyTemplateService} from '@app/core/services/topology-template.service';
 import { TopologyTemplate } from '@app/core/models/topology-template.model';
 import { PageEvent } from '@angular/material';
 import { debounceTime } from 'rxjs/operators';
@@ -46,22 +46,23 @@ export class TopologyTemplateComponent implements OnInit {
   @Output() selectedTopologyChanged = new EventEmitter();
 
   constructor(
-    private topologyTemplateService: TopologyTemplateService
+   // private topologyTemplateService: TopologyTemplateService
   ) { }
 
   ngOnInit() {
 
-    this.loadTopologies(0);
+    //this.loadTopologies(0);
     // add a debounceTimed suscription to avoid bakend mass attack
     this.searchField.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(term => {
         this.query = term;
-        this.loadTopologies(0);
+       // this.loadTopologies(0);
       });
   }
 
 
+  /*
   private loadTopologies(from: number) {
     this.isLoading = true;
     this.topologyTemplateService.getTopologies(from, this.pageSize, this.query).subscribe((data: {}) => {
@@ -70,13 +71,14 @@ export class TopologyTemplateComponent implements OnInit {
       this.isLoading = false;
     })
   }
+  */
 
   /**
    * This is trigerred when something is changed about pagination options.
    */
   private handlePage(e: any) {
     this.pageSize = e.pageSize;
-    this.loadTopologies(e.pageIndex);
+    //this.loadTopologies(e.pageIndex);
   }
 
   private openDetails(applicationId: string) {
@@ -90,6 +92,7 @@ export class TopologyTemplateComponent implements OnInit {
     this.panelOpenState = false;
     console.log("closing ", applicationId);
   }
+  /*
 
   getSelectedTopology(archiveName: string) {
     this.topologyTemplateService.getTopologyById(archiveName).
@@ -98,5 +101,6 @@ export class TopologyTemplateComponent implements OnInit {
         this.selectedTopologyChanged.emit();
       })
   }
+  */
 
 }
