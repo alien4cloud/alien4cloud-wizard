@@ -98,8 +98,4 @@ export abstract class V2GenericService<T> {
     }));
   }
 
-  public trimName( name : string ) : string {
-    return name.replace(/\s/g, "")
-  }
-
 }
