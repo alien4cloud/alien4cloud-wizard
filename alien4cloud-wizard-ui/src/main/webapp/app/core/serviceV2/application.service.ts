@@ -8,6 +8,7 @@ import {map, tap} from "rxjs/operators";
 import { DeploymentTopologyDTO } from '../models/deployment-topology-dto.model';
 import { Deployment } from '../models/deployment.model';
 import { AppCreationTopoPayload } from '../models';
+import { Execution } from '../models/execution.model';
 
 
 @Injectable({
@@ -44,10 +45,13 @@ export class V2ApplicationService extends V2GenericService<Application> {
   getMonitoredDeploymentDTO(applicationId: string, environmentId: String): Observable<Deployment> { 
     const url =  V2GenericService.baseUrl + "/applications/@{applicationId}/environments/@{environmentId}/active-deployment-monitored"
     let urlParams  = {applicationId: applicationId , environmentId: environmentId}
-    return this.handleResult<Application>(this.http.get(this.getCustomUrl(url,urlParams)));
+    return this.handleResult<Deployment>(this.http.get(this.getCustomUrl(url,urlParams)));
    
   }
 
-  //  /applications/@{applicationId}/environments/@{environmentId}/active-deployment-monitored
-
+  checkdeploymentStatus (deploymentId :string) {
+    const url =  V2GenericService.baseUrl + "/workflow_execution/s/@{deploymentId}";
+    let urlParams  = {deploymentId: deploymentId};
+    return this.handleResult<Execution>(this.http.get(this.getCustomUrl(url,urlParams)));
+  }
 }

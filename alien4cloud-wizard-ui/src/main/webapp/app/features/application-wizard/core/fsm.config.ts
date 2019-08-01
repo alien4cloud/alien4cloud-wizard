@@ -244,7 +244,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         ON_DEPLOYMENT_SUBMITTED: {
           target: 'activeDeploymentForm',
           //actions: ['assignLocationId']
-          actions: ['assignLocation']
+          actions: ['assignDeploymentId']
           // actions: ['assignUser', 'loginSuccess']
         }
       }

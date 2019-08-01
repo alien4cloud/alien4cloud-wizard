@@ -24,7 +24,8 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
   ) { }
 
   ngOnInit() {
-    this.getEnvironmentLocations();
+   // this.getEnvironmentLocations();
+    this.environmentLocation =  this.fsmContext.locations;
   }
 
   selectLocation(locationId: string, locationName :string, orchestratorId : string) {
@@ -46,6 +47,7 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
   }*/
 
 
+  /*
   public getEnvironmentLocations() {
     this.topologyTemplateService.getEnvLocations(this.fsmContext.templateId, this.fsmContext.environmentId).
       subscribe(data => {
@@ -53,4 +55,5 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
         console.log("First Location The deployment topology :", this.environmentLocation[0].location.name);
       })
   }
+  */
 }

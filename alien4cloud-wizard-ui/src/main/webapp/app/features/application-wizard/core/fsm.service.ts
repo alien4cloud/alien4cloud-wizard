@@ -27,6 +27,8 @@ import { V2ApplicationEnvironmentService } from "@app/core/serviceV2/application
 import { ApplicationDeploymentService } from '@app/core/serviceV2/application-deployment.service';
 import { ApplicationLocationService } from '@app/core/serviceV2/application-location.service';
 import { V2TopologyTemplateService } from '@app/core/serviceV2/topology-template.service';
+import { Deployment } from '@app/core/models/deployment.model';
+import { Execution } from '@app/core/models/execution.model';
 
 /**
  * Manages the machine initialization.
@@ -136,14 +138,10 @@ export class AppplicationWizardMachineService {
         locationId: event.locationId, locationName: event.locationName,  orchestratorId: event.orchestratorId
       })),
       assignLocationPolicies: (_) => {
-        //setTimeout(() => {
           this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .subscribe((data: {}) => {
-            console.log("Monitored Deployment :", data);
-          });
-       // },
-       //   5000);
-      
+            console.log("LOCATION POLICIES :", data);
+          });   
       },
       assignLocation: assign<ApplicationWizardMachineContext, OnTargetFetched>((_, event) => ({
         locations: event.locations
@@ -154,17 +152,21 @@ export class AppplicationWizardMachineService {
       })),
 
       assignDeploymentId: (_) => {
-        //setTimeout(() => {
           this.applicationService.getMonitoredDeploymentDTO(
             _.applicationId,
             _.environmentId
-          ).subscribe((data: {}) => {
-            console.log("Monitored Deployment :", data);
-          });
-       // },
-       //   5000);
-      
-      }
+          ).subscribe((deployment: Deployment) => {
+            console.log("Monitored Deployment ID :", deployment.id);
+            _.deploymentId = deployment.id ; 
+          });     
+      },
+
+      deploymentStatusCheck : (_) => {
+        this.applicationService.checkdeploymentStatus(
+          _.deploymentId
+        ).subscribe((execution: Execution) => {
+          console.log("Execution Status :", execution.status);
+      })}   
     }
 
   };
