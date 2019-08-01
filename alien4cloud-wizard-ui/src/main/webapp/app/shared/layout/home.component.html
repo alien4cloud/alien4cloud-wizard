@@ -3,7 +3,7 @@
 <mat-divider></mat-divider>
 <div layout="row">
   <button
-    mat-flat-button [routerLink]="['/applications']">
+    mat-flat-button [routerLink]="['/application-dashboard']">
     <mat-icon>dashboard</mat-icon>
     Applications dashboard
   </button>
@@ -11,23 +11,6 @@
   </span>
 </div>
 <mat-divider></mat-divider>
-<div layout="row">
-  <button
-    mat-flat-button [routerLink]="['/application-dashboard']">
-    <mat-icon>dashboard</mat-icon>
-    Applications dashboard (Alt)
-  </button>
-  <span class="desc">List all applications, view deployment status, view meta-data, view applications' modules ...
-  </span>
-</div>
-<mat-divider></mat-divider>
-<div layout="row">
-  <button mat-flat-button [routerLink]="['/create-application']">
-    <mat-icon>create_new_folder</mat-icon>
-    Create New Application
-  </button>
-  <span class="desc">Create a new application from a template</span>
-</div>
 <div layout="row">
   <button mat-flat-button [routerLink]="['/application-wizard']">
     <mat-icon>create_new_folder</mat-icon>

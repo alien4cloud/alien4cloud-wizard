@@ -20,7 +20,6 @@ import {
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import {A4cMaterialModule} from '@app/shared';
-import { HeaderComponent,MainComponent,ApplicationDetailsComponent,CreationApplicationComponent} from '@app/layouts';
 import { A4cThemeService, MetapropertyService} from '@app/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { AppRoutingModule,routingComponents} from './app-routing.module';
@@ -40,11 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
     FooterComponent,
     HomeComponent,
    // StatusComponent,
-    HeaderComponent,
-    MainComponent,
-    routingComponents,
-    ApplicationDetailsComponent,
-    CreationApplicationComponent
+    routingComponents
   ],
   imports: [
     BrowserModule,

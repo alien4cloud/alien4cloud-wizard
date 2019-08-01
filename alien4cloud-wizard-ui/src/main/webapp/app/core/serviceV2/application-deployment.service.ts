@@ -16,7 +16,7 @@ export class ApplicationDeploymentService extends GenericService<Deployment> {
 
   deploy(applicationId: String, applicationEnvironmentId: String) {
     let payload = {"applicationId": applicationId, "applicationEnvironmentId": applicationEnvironmentId};
-    return this.handleResult<{}>(this.http.post("/applications/deployment", payload, {
+    return this.handleResult<{}>(this.http.post(GenericService.baseUrl+"/applications/deployment", payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       })

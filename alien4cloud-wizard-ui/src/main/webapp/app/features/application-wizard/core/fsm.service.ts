@@ -101,7 +101,7 @@ export class AppplicationWizardMachineService {
           .pipe(
             map(data => new OnTargetFetched(data['data'])))
       ,*/
-      deployApplication: (_, event) =>
+      deploy: (_, event) =>
         this.applicationDeploymentService.deploy(
           _.applicationId, _.environmentId
         ).pipe(
