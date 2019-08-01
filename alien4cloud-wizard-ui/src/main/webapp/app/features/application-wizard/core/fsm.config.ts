@@ -4,7 +4,7 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import { ApplicationWizardMachineEvents } from "@app/features/application-wizard/core/fsm.events";
-import { Environment } from '@app/core';
+import { ApplicationEnvironment } from '@app/core';
 
 const { log } = actions;
 
@@ -237,8 +237,8 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     deploymentSubmitting: {
       invoke: {
-        id: 'deployApplication',
-        src: 'deployApplication'
+        id: 'deploy',
+        src: 'deploy'
       },
       on: {
         ON_DEPLOYMENT_SUBMITTED: {

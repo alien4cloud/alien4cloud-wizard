@@ -13,3 +13,13 @@ export class Application {
   metaProperties: any[];
   userRoles: []
 }
+
+export class ApplicationEnvironment {
+  id: string;
+  name: string;
+  applicationId: string;
+  topologyVersion: string;
+  environmentType: string;
+  currentVersionName: string;
+  userRoles: {};
+}

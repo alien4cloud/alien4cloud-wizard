@@ -2,19 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Application} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
-import {V2GenericService} from "@app/core/serviceV2/generic.service";
 import {Observable} from "rxjs";
-import {map, tap} from "rxjs/operators";
-import { DeploymentTopologyDTO } from '../models/deployment-topology-dto.model';
-import { Deployment } from '../models/deployment.model';
-import { AppCreationTopoPayload } from '../models';
-import { Execution } from '../models/execution.model';
-
+import {Execution} from '../models/execution.model';
+import {GenericResourceService} from "@app/core/serviceV2/generic-resource.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class V2ApplicationService extends V2GenericService<Application> {
+export class ApplicationService extends GenericResourceService<Application> {
 
   constructor(
     http: HttpClient,
@@ -23,35 +18,25 @@ export class V2ApplicationService extends V2GenericService<Application> {
     super(http, translate, "/applications")
   }
 
-  createApplication(payload: AppCreationTopoPayload): Observable<string> {
-    return this.handleResult<string>(this.http.post(this.getUrl(), payload, {
+  createApplication(name: string, archiveName: string, topologyTemplateVersionId: string, description: string): Observable<string> {
+    let payload = {
+      name: name,
+      archiveName: archiveName,
+      topologyTemplateVersionId: topologyTemplateVersionId,
+      description: description
+    };
+    return this.handleResult<string>(this.http.post(this.endpointUrl, payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       }),
     }));
   }
 
-  getDeploymentTopology(applicationId: string, environmentId: String): Observable<DeploymentTopologyDTO> {
-    const url =  V2GenericService.baseUrl + "/applications/@{applicationId}/environments/@{environmentId}/deployment-topology"
-    let urlParams  = {applicationId: applicationId , environmentId: environmentId}
-    return this.handleResult<DeploymentTopologyDTO>(this.http.get(this.getCustomUrl(url,urlParams)));
-    /*
-    return this.http.get(this.getCustomUrl(url,urlParams)) 
-      //if api returns any data
-      .pipe( map(data => <DeploymentTopologyDTO>data['data']));
-      */
-  }
 
-  getMonitoredDeploymentDTO(applicationId: string, environmentId: String): Observable<Deployment> { 
-    const url =  V2GenericService.baseUrl + "/applications/@{applicationId}/environments/@{environmentId}/active-deployment-monitored"
-    let urlParams  = {applicationId: applicationId , environmentId: environmentId}
-    return this.handleResult<Deployment>(this.http.get(this.getCustomUrl(url,urlParams)));
-   
-  }
 
-  checkdeploymentStatus (deploymentId :string) {
-    const url =  V2GenericService.baseUrl + "/workflow_execution/s/@{deploymentId}";
-    let urlParams  = {deploymentId: deploymentId};
-    return this.handleResult<Execution>(this.http.get(this.getCustomUrl(url,urlParams)));
+  checkdeploymentStatus(deploymentId: string) {
+    const url = GenericResourceService.baseUrl + "/workflow_execution/s/@{deploymentId}";
+    let urlParams = {deploymentId: deploymentId};
+    return this.handleResult<Execution>(this.http.get(this.getParametrizedUrl(url, urlParams)));
   }
 }

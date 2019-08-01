@@ -1,7 +1,7 @@
-import { TopologyTemplate } from './topology-template.model';
+import { Topology } from './topology.model';
 
 export class DeploymentTopologyDTO {
-  topology : TopologyTemplate ;
+  topology : Topology ;
 }
 
 

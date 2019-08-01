@@ -1,4 +1,4 @@
-import { Environment, EnvironmentLocation } from '@app/core';
+import { ApplicationEnvironment, LocationMatch } from '@app/core';
 
 /**
  * Specify the schema of our state machine configuration.
@@ -24,7 +24,6 @@ export interface ApplicationWizardMachineSchema {
     deploymentSubmitting:{},
     activeDeploymentForm:{},
     applicationDeployed:{}
-
   };
 }
 
@@ -48,14 +47,14 @@ export interface ApplicationWizardMachineContext {
    * application has not been yet created.
    */
   applicationId: string;
-  environments: Environment[];
+  environments: ApplicationEnvironment[];
   deploymentTopologyId: string;
   errorMessage: string;
   environmentId: string;
   //locationId: [];
   locationId: string;
   locationName: string;
-  locations: EnvironmentLocation[];
+  locations: LocationMatch[];
   orchestratorId: string;
   deploymentId : string
 }

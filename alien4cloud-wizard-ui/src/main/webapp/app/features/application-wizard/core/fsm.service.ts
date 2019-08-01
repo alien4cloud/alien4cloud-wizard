@@ -22,11 +22,11 @@ import {
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
 import * as _ from "lodash";
-import { V2ApplicationService } from "@app/core/serviceV2/application.service";
-import { V2ApplicationEnvironmentService } from "@app/core/serviceV2/application-environment.service";
+import { ApplicationService } from "@app/core/serviceV2/application.service";
+import { ApplicationEnvironmentService } from "@app/core/serviceV2/application-environment.service";
 import { ApplicationDeploymentService } from '@app/core/serviceV2/application-deployment.service';
-import { ApplicationLocationService } from '@app/core/serviceV2/application-location.service';
-import { V2TopologyTemplateService } from '@app/core/serviceV2/topology-template.service';
+import { LocationMatchingService } from '@app/core/serviceV2/location-matching.service';
+import { TopologyService } from '@app/core/serviceV2/topology.service';
 import { Deployment } from '@app/core/models/deployment.model';
 import { Execution } from '@app/core/models/execution.model';
 
@@ -37,11 +37,11 @@ import { Execution } from '@app/core/models/execution.model';
 export class AppplicationWizardMachineService {
 
   constructor(
-    private applicationService: V2ApplicationService,
-    private topologyTemplateService: V2TopologyTemplateService,
-    private applicationEnvironmentService: V2ApplicationEnvironmentService,
+    private applicationService: ApplicationService,
+    private topologyTemplateService: TopologyService,
+    private applicationEnvironmentService: ApplicationEnvironmentService,
     private applicationDeploymentService: ApplicationDeploymentService,
-    private applicationLocationService: ApplicationLocationService,
+    private applicationLocationService: LocationMatchingService,
     private router: Router
   ) { }
 
@@ -49,12 +49,7 @@ export class AppplicationWizardMachineService {
     services: {
       createApplication: (_, event) =>
         this.applicationService
-          .createApplication({
-            name: _.applicationName,
-            archiveName: _.applicationName,
-            topologyTemplateVersionId: _.templateId,
-            description: _.applicationDescription
-          })
+          .createApplication( _.applicationName, _.applicationName, _.templateId, _.applicationDescription)
           .pipe(
             map(applicationId => new OnApplicationCreateSucess(applicationId)),
             catchError(err => {
@@ -79,7 +74,7 @@ export class AppplicationWizardMachineService {
           })
         ),
       fetchDeploymentTopology: (_, event) =>
-        this.applicationService.getDeploymentTopology(
+        this.applicationEnvironmentService.getDeploymentTopology(
           _.applicationId,
           _.environmentId
         ).pipe(
@@ -87,7 +82,7 @@ export class AppplicationWizardMachineService {
         ),
         
       searchLocations: (_, event) =>
-        this.applicationLocationService.getLocationRedirections(_.deploymentTopologyId, _.environmentId)
+        this.applicationLocationService.match(_.deploymentTopologyId, _.environmentId)
           .pipe(
             map(locations => {
               if (locations.length == 1) {
@@ -102,12 +97,12 @@ export class AppplicationWizardMachineService {
           ), 
           /*
       selectLocation: (_, event) =>
-        this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
+        this.topologyTemplateService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .pipe(
             map(data => new OnTargetFetched(data['data'])))
       ,*/
       deployApplication: (_, event) =>
-        this.applicationDeploymentService.deployApplication(
+        this.applicationDeploymentService.deploy(
           _.applicationId, _.environmentId
         ).pipe(
           map(data => new OnDeploymentSubmitting()))
@@ -138,7 +133,7 @@ export class AppplicationWizardMachineService {
         locationId: event.locationId, locationName: event.locationName,  orchestratorId: event.orchestratorId
       })),
       assignLocationPolicies: (_) => {
-          this.topologyTemplateService.postLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
+          this.applicationEnvironmentService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .subscribe((data: {}) => {
             console.log("LOCATION POLICIES :", data);
           });   
@@ -152,7 +147,7 @@ export class AppplicationWizardMachineService {
       })),
 
       assignDeploymentId: (_) => {
-          this.applicationService.getMonitoredDeploymentDTO(
+          this.applicationEnvironmentService.getMonitoredDeploymentDTO(
             _.applicationId,
             _.environmentId
           ).subscribe((deployment: Deployment) => {

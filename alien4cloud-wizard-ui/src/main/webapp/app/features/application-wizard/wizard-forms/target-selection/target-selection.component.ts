@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApplicationWizardMachineContext } from "@app/features/application-wizard/core/fsm.model";
 import { WizardFormComponent } from "@app/features/application-wizard/wizard-main/wizard-main.model";
-import {EnvironmentLocation, TopologyTemplate} from '@app/core';
+import {LocationMatch, Topology} from '@app/core';
 import { AppplicationWizardMachineService } from '../../core/fsm.service';
 import { DoSelectTarget } from '../../core/fsm.events';
-import { V2TopologyTemplateService } from '@app/core/serviceV2/topology-template.service';
+import { TopologyService } from '@app/core/serviceV2/topology.service';
 
 @Component({
   selector: 'w4c-target-selection',
@@ -14,12 +14,12 @@ import { V2TopologyTemplateService } from '@app/core/serviceV2/topology-template
 export class TargetSelectionComponent implements OnInit, WizardFormComponent {
 
 
-  environmentLocation: EnvironmentLocation[];
-  locationPolicies : TopologyTemplate;
+  environmentLocation: LocationMatch[];
+  locationPolicies : Topology;
   @Input() fsmContext: ApplicationWizardMachineContext;
 
   constructor(
-    private topologyTemplateService: V2TopologyTemplateService,
+    private topologyTemplateService: TopologyService,
     private fsm: AppplicationWizardMachineService
   ) { }
 
@@ -37,10 +37,10 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
 
 
   /*
-  public postLocationPolicies() {
-    this.topologyTemplateService.postLocationPolicies(this.fsmContext.templateId,  this.fsmContext.environmentId,this.environmentLocation[0].orchestrator.id,this.environmentLocation[0].location.name).
+  public setLocationPolicies() {
+    this.topologyTemplateService.setLocationPolicies(this.fsmContext.templateId,  this.fsmContext.environmentId,this.environmentLocation[0].orchestrator.id,this.environmentLocation[0].location.name).
       subscribe((data: {}) => {
-        this.locationPolicies = data['data']['topology'] as TopologyTemplate;
+        this.locationPolicies = data['data']['topology'] as Topology;
         console.log("The Location Policyes  post response :", this.locationPolicies.archiveName);
         //this.getEnvironmentLocations();
       })
@@ -51,7 +51,7 @@ export class TargetSelectionComponent implements OnInit, WizardFormComponent {
   public getEnvironmentLocations() {
     this.topologyTemplateService.getEnvLocations(this.fsmContext.templateId, this.fsmContext.environmentId).
       subscribe(data => {
-        this.environmentLocation = data as EnvironmentLocation[];
+        this.environmentLocation = data as LocationMatch[];
         console.log("First Location The deployment topology :", this.environmentLocation[0].location.name);
       })
   }

@@ -14,7 +14,6 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  // { path: '', component:  HeaderComponent, outlet:'header'},
   {
     path: 'applications',
     children: [
@@ -27,18 +26,12 @@ const routes: Routes = [
     loadChildren: () => import('./features/application-dashboard/application-dashboard.module').then(mod => mod.ApplicationDashboardModule)
   },
   {
-    // path: 'topology-graph',
     path: 'topology-graph/:topologyId/:topologyVersion',
     loadChildren: () => import('./features/topology-graph/topology-graph.module').then(mod => mod.TopologyGraphModule)
   },
   {
     path: 'application-wizard',
     loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
-  },
-  // { path: 'topology-graph/:topologyId/:topologyVersion', component: TopologyGraphContainerComponent },
-  {
-    path: 'create-application',
-    loadChildren: () => import('./features/application-create/application-create.module').then(mod => mod.ApplicationCreateModule)
   },
   { path: 'creationapplication', component: CreationApplicationComponent },
   { path: 'imports', component: ImportsComponent },

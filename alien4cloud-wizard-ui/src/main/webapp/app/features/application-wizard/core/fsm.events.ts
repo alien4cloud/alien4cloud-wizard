@@ -1,7 +1,7 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-import {Environment, EnvironmentLocation} from "@app/core";
+import {ApplicationEnvironment, LocationMatch} from "@app/core";
 import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology-dto.model';
 
 export type ApplicationWizardMachineEvents =
@@ -36,7 +36,7 @@ export class DoCreateApplication {
 
 export class OnEnvironmentsFetched {
   readonly type = 'ON_ENVIRONMENTS_FETCHED';
-  constructor(public environments: Environment[]) {}
+  constructor(public environments: ApplicationEnvironment[]) {}
 }
 
 export class DoSelectEnvironment {
@@ -58,7 +58,7 @@ export class DoSelectTarget {
 
 export class OnTargetFetched {
   readonly type = 'ON_TARGET_FETCHED';
-  constructor(public locations: EnvironmentLocation[]) {}
+  constructor(public locations: LocationMatch[]) {}
 }
 
 

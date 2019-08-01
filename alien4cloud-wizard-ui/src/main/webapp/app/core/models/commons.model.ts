@@ -18,3 +18,16 @@ export class MetaProperty {
   value: string;
 }
 
+export class CSARDependency {
+  name: string;
+  version: string;
+  hash: string;
+}
+
+export class Version {
+  majorVersion: number;
+  minorVersion: number;
+  incrementalVersion: number;
+  buildNumber: number;
+  qualifier : string ;
+}

@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ApplicationOverview, MultipleDataResult, TopologyOverview} from "@app/core";
+import {MultipleDataResult, TopologyOverview} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
 import {Observable} from "rxjs";
-import {V2GenericService} from "@app/core/serviceV2/generic.service";
+import {GenericResourceService} from "@app/core/serviceV2/generic-resource.service";
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class V2TopologyOverviewService extends V2GenericService<TopologyOverview> {
+export class TopologyOverviewService extends GenericResourceService<TopologyOverview> {
 
   constructor(
     http: HttpClient,

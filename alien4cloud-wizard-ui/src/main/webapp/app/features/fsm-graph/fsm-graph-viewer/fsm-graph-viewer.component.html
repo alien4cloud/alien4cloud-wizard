@@ -43,7 +43,7 @@
           [attr.width]="node.dimension.width"
           [attr.height]="node.dimension.height"
           [attr.fill]="(node.active) ? 'lightgreen' : ((node.activated) ? 'lightblue' : 'white')"
-          stroke="#7f7f7f"
+          [attr.stroke]="(node.active) ? 'green' : ((node.activated) ? 'blue' : '#7f7f7f')"
           rx="5"
           ry="5"
         />

@@ -4,12 +4,12 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {DoSelectTemplate} from "@app/features/application-wizard/core/fsm.events";
 import {PageEvent} from "@angular/material";
 import {FormControl} from "@angular/forms";
-import {TopologyOverview, TopologyTemplate} from "@app/core";
+import {TopologyOverview, Topology} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
-import {V2TopologyTemplateService} from "@app/core/serviceV2/topology-template.service";
-import {V2TopologyOverviewService} from "@app/core/serviceV2/topology-overview.service";
+import {TopologyService} from "@app/core/serviceV2/topology.service";
+import {TopologyOverviewService} from "@app/core/serviceV2/topology-overview.service";
 
 @Component({
   selector: 'w4c-template-selection',
@@ -37,13 +37,13 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   searchField: FormControl = new FormControl();
 
 
-  private topologyTemplates: TopologyTemplate[];
+  private topologyTemplates: Topology[];
   private overview: TopologyOverview;
 
   constructor(
     private fsm: AppplicationWizardMachineService,
-    private topologyTemplateService: V2TopologyTemplateService,
-    private topologyOverviewService: V2TopologyOverviewService
+    private topologyTemplateService: TopologyService,
+    private topologyOverviewService: TopologyOverviewService
   ) { }
 
   @Input() fsmContext: ApplicationWizardMachineContext;

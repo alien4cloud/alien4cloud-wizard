@@ -1,37 +1,26 @@
-import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { V2GenericService } from './generic.service';
-import { MultipleDataResult } from '../models';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Deployment } from '../models/deployment.model';
+import {Injectable} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Deployment} from '../models/deployment.model';
+import {GenericService} from "@app/core/serviceV2/generic.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApplicationDeploymentService extends V2GenericService<Deployment> {
+export class ApplicationDeploymentService extends GenericService<Deployment> {
 
   constructor(
     http: HttpClient,
     translate: TranslateService
-  ) {
-    super(http, translate, "/applications/deployment")
-  }
+  ) { super(http, translate) }
 
-
-  deployApplication(applicationId: String, applicationEnvironmentId: String) {
-    let payload = { "applicationId": applicationId, "applicationEnvironmentId": applicationEnvironmentId };
-    return this.handleResult<{}>(this.http.post(this.getUrl(),payload, {
+  deploy(applicationId: String, applicationEnvironmentId: String) {
+    let payload = {"applicationId": applicationId, "applicationEnvironmentId": applicationEnvironmentId};
+    return this.handleResult<{}>(this.http.post("/applications/deployment", payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
-      }) 
+      })
     }));
-      /*
-    return this.http.post(this.getUrl(), payload, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8',
-      }),
-    }).pipe(
-      data => data); */
   }
+
 }

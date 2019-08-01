@@ -5,8 +5,8 @@ import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import {Application, ApplicationOverview} from "@app/core";
-import {V2ApplicationOverviewService} from "@app/core/serviceV2/application-overview.service";
-import {V2ApplicationService} from "@app/core/serviceV2/application.service";
+import {ApplicationOverviewService} from "@app/core/serviceV2/application-overview.service";
+import {ApplicationService} from "@app/core/serviceV2/application.service";
 
 @Component({
   selector: 'app-application-list',
@@ -16,8 +16,8 @@ import {V2ApplicationService} from "@app/core/serviceV2/application.service";
 export class ApplicationListComponent implements OnInit {
 
   constructor(
-    private applicationService: V2ApplicationService,
-    private applicationOverviewService: V2ApplicationOverviewService
+    private applicationService: ApplicationService,
+    private applicationOverviewService: ApplicationOverviewService
   ) {
   }
 
