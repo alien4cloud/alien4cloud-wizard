@@ -3,8 +3,8 @@ import { LocationMatch } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {GenericService} from "@app/core/serviceV2/generic.service";
-import {GenericResourceService} from "@app/core/serviceV2/generic-resource.service";
+import {GenericService} from "@app/core/services/generic.service";
+import {GenericResourceService} from "@app/core/services/generic-resource.service";
 
 @Injectable({
   providedIn: 'root'

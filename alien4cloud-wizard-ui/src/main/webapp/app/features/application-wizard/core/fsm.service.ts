@@ -22,13 +22,14 @@ import {
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
 import * as _ from "lodash";
-import { ApplicationService } from "@app/core/service/application.service";
-import { ApplicationEnvironmentService } from "@app/core/service/application-environment.service";
-import { ApplicationDeploymentService } from '@app/core/service/application-deployment.service';
-import { LocationMatchingService } from '@app/core/service/location-matching.service';
-import { TopologyService } from '@app/core/service/topology.service';
-import { Deployment } from '@app/core/models/deployment.model';
-import { Execution } from '@app/core/models/execution.model';
+import {
+  ApplicationService,
+  ApplicationEnvironmentService,
+  ApplicationDeploymentService,
+  LocationMatchingService,
+  TopologyService,
+  Deployment,
+  Execution} from "@app/core";
 
 /**
  * Manages the machine initialization.

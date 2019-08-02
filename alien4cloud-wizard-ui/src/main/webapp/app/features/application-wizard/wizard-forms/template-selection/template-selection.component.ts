@@ -4,12 +4,10 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {DoSelectTemplate} from "@app/features/application-wizard/core/fsm.events";
 import {PageEvent} from "@angular/material";
 import {FormControl} from "@angular/forms";
-import {TopologyOverview, Topology} from "@app/core";
+import {TopologyOverview, Topology, TopologyService, TopologyOverviewService} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
-import {TopologyService} from "@app/core/service/topology.service";
-import {TopologyOverviewService} from "@app/core/service/topology-overview.service";
 
 @Component({
   selector: 'w4c-template-selection',
@@ -42,7 +40,7 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
 
   constructor(
     private fsm: AppplicationWizardMachineService,
-    private topologyTemplateService: TopologyService,
+    private topologyService: TopologyService,
     private topologyOverviewService: TopologyOverviewService
   ) { }
 
@@ -66,7 +64,7 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
 
   private loadTopologies(from: number) {
     this.isLoading = true;
-    this.topologyTemplateService.search(from, this.pageSize, this.query).subscribe((data) => {
+    this.topologyService.search(from, this.pageSize, this.query).subscribe((data) => {
       this.topologyTemplates = data.data;
       this.length = data.totalResults;
       this.isLoading = false;

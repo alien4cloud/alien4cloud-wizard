@@ -4,9 +4,7 @@ import {PageEvent} from '@angular/material/paginator';
 import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import {Application, ApplicationOverview} from "@app/core";
-import {ApplicationOverviewService} from "@app/core/service/application-overview.service";
-import {ApplicationService} from "@app/core/service/application.service";
+import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService} from "@app/core";
 
 @Component({
   selector: 'app-application-list',

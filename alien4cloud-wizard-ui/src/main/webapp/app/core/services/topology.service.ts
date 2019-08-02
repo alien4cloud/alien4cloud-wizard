@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Topology} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
 import {Observable} from 'rxjs';
-import {GenericResourceService} from "@app/core/serviceV2/generic-resource.service";
+import {GenericResourceService} from "@app/core/services/generic-resource.service";
 
 
 export class AppCreationTopoPayload {

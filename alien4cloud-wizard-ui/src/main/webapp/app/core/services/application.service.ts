@@ -4,7 +4,7 @@ import {Application} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
 import {Observable} from "rxjs";
 import {Execution} from '../models/execution.model';
-import {GenericResourceService} from "@app/core/serviceV2/generic-resource.service";
+import {GenericResourceService} from "@app/core/services/generic-resource.service";
 
 @Injectable({
   providedIn: 'root'

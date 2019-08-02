@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Deployment} from '../models/deployment.model';
-import {GenericService} from "@app/core/serviceV2/generic.service";
+import {GenericService} from "@app/core/services/generic.service";
 
 @Injectable({
   providedIn: 'root'

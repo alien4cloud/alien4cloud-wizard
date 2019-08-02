@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ApplicationWizardMachineContext } from "@app/features/application-wizard/core/fsm.model";
-import { WizardFormComponent } from "@app/features/application-wizard/wizard-main/wizard-main.model";
-import {LocationMatch, Topology} from '@app/core';
-import { AppplicationWizardMachineService } from '../../core/fsm.service';
-import { DoSelectTarget } from '../../core/fsm.events';
-import { TopologyService } from '@app/core/service/topology.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
+import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
+import {LocationMatch, TopologyService} from '@app/core';
+import {AppplicationWizardMachineService} from '@app/features/application-wizard/core/fsm.service';
+import {DoSelectTarget} from '@app/features/application-wizard/core/fsm.events';
 
 @Component({
   selector: 'w4c-target-selection',
@@ -13,47 +12,22 @@ import { TopologyService } from '@app/core/service/topology.service';
 })
 export class TargetSelectionComponent implements OnInit, WizardFormComponent {
 
-
   environmentLocation: LocationMatch[];
-  locationPolicies : Topology;
   @Input() fsmContext: ApplicationWizardMachineContext;
 
   constructor(
-    private topologyTemplateService: TopologyService,
+    private topologyService: TopologyService,
     private fsm: AppplicationWizardMachineService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-   // this.getEnvironmentLocations();
-    this.environmentLocation =  this.fsmContext.locations;
+    this.environmentLocation = this.fsmContext.locations;
   }
 
-  selectLocation(locationId: string, locationName :string, orchestratorId : string) {
-    //this.fsmContext.orchestratorId = orchestratorId ;
-    //this.fsmContext.locationId = locationId
+  selectLocation(locationId: string, locationName: string, orchestratorId: string) {
     console.log(`Selected template: id=${locationId}`);
-    this.fsm.send(new DoSelectTarget(locationId,locationName, orchestratorId));
+    this.fsm.send(new DoSelectTarget(locationId, locationName, orchestratorId));
   }
 
-
-  /*
-  public setLocationPolicies() {
-    this.topologyTemplateService.setLocationPolicies(this.fsmContext.templateId,  this.fsmContext.environmentId,this.environmentLocation[0].orchestrator.id,this.environmentLocation[0].location.name).
-      subscribe((data: {}) => {
-        this.locationPolicies = data['data']['topology'] as Topology;
-        console.log("The Location Policyes  post response :", this.locationPolicies.archiveName);
-        //this.getEnvironmentLocations();
-      })
-  }*/
-
-
-  /*
-  public getEnvironmentLocations() {
-    this.topologyTemplateService.getEnvLocations(this.fsmContext.templateId, this.fsmContext.environmentId).
-      subscribe(data => {
-        this.environmentLocation = data as LocationMatch[];
-        console.log("First Location The deployment topology :", this.environmentLocation[0].location.name);
-      })
-  }
-  */
 }

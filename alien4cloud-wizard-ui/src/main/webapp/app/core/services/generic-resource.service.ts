@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TranslateService} from "@ngx-translate/core";
 import {MultipleDataResult} from "@app/core";
-import {GenericService} from "@app/core/serviceV2/generic.service";
+import {GenericService} from "@app/core/services/generic.service";
 
 export abstract class GenericResourceService<T> extends GenericService<T> {
 

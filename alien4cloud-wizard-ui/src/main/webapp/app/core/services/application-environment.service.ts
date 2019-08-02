@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ApplicationEnvironment} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
-import {GenericResourceService} from "@app/core/serviceV2/generic-resource.service";
+import {GenericResourceService} from "@app/core/services/generic-resource.service";
 import {Observable} from "rxjs";
-import {DeploymentTopologyDTO} from "@app/core/models/deployment-topology-dto.model";
+import {DeploymentTopologyDTO} from "@app/core/models/deployment-topology.model";
 import {Deployment} from "@app/core/models/deployment.model";
 
 

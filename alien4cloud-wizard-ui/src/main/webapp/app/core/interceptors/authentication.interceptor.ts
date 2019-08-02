@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError, tap } from 'rxjs/operators';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent } from '@angular/common/http';
-import { LoginService } from '../service/login.service';
+import { LoginService } from '../services/login.service';
 
 /**
  * Intercept all http calls (except jwtauth endpoint) and add auth token to Authorization header.
