@@ -198,7 +198,7 @@ export const applicationWizardMachineConfig: MachineConfig<
           //actions: ['assignLocation']
           // actions: ['assignUser', 'loginSuccess']
         },
-        ON_TARGET_FETCHED: {
+        ON_LOCATION_FETCHED: {
           target: 'locationSelectionForm',
           actions: ['assignLocation']
         }
@@ -220,7 +220,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'setLocationPolicies'
       },
       on: {
-        'ON_SELECT_TARGET_SUCESSS': [
+        'ON_SELECT_LOCATION_SUCESSS': [
           {
             target: 'deploymentForm'
           }

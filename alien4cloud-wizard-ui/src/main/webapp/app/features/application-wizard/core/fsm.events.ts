@@ -16,12 +16,12 @@ export type ApplicationWizardMachineEvents =
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   DoSelectLocation |
-  OnSelectTargetSucesss |
-  OnTargetFetched|
+  OnSelectLocationSucesss |
+  OnLocationFetched|
   DoSubmitDeployment|
   OnDeploymentSubmitSucess |
   OnDeploymentSubmitError |
-  onActiveDeploymentCheck
+  OnActiveDeploymentCheck
 ;
 
 export class Init {
@@ -65,14 +65,14 @@ export class DoSelectLocation {
   constructor(public locationId: string,public locationName: string,public orchestratorId: string) {}
 }
 
-export class OnSelectTargetSucesss {
-  readonly type = 'ON_SELECT_TARGET_SUCESSS';
+export class OnSelectLocationSucesss {
+  readonly type = 'ON_SELECT_LOCATION_SUCESSS';
   // TODO: use deployment topology that is returned
   constructor() {}
 }
 
-export class OnTargetFetched {
-  readonly type = 'ON_TARGET_FETCHED';
+export class OnLocationFetched {
+  readonly type = 'ON_LOCATION_FETCHED';
   constructor(public locations: LocationMatch[]) {}
 }
 
@@ -97,7 +97,8 @@ export class DoSubmitDeployment{
   constructor() {}
 }
 
-export class onActiveDeploymentCheck{
+// FIXME: useless ?
+export class OnActiveDeploymentCheck{
   readonly type = 'ON_ACTIVE_DEPLOYMENT_CHECK';
   constructor() {}
 }

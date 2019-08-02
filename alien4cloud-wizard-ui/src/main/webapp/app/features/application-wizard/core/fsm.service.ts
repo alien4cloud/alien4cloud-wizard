@@ -25,9 +25,11 @@ import {
   OnEnvironmentsFetched,
   DoSelectEnvironment,
   OnDeploymentSubmitSucess,
-  OnTargetFetched,
+  OnLocationFetched,
   OnDeploymentTopologyFetched,
-  OnDeploymentSubmitError, OnSelectTargetSucesss, OnApplicationInitSuccess, InitApplicationEnvironment
+  OnDeploymentSubmitError,
+  OnSelectLocationSucesss,
+  InitApplicationEnvironment
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
@@ -101,7 +103,7 @@ export class AppplicationWizardMachineService {
                 return new DoSelectLocation(locations[0].location.id,locations[0].location.name, locations[0].orchestrator.id );
               } else {
                 console.log("Several locations exist :" + locations.length)
-                return new OnTargetFetched(locations);
+                return new OnLocationFetched(locations);
               }
             })
           ),
@@ -109,7 +111,7 @@ export class AppplicationWizardMachineService {
         this.applicationEnvironmentService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .pipe(map(data => {
             console.log("setLocation result ", JSON.stringify(data));
-            return new OnSelectTargetSucesss();
+            return new OnSelectLocationSucesss();
           }))
       ,
       deploy: (_, event) =>
@@ -151,7 +153,7 @@ export class AppplicationWizardMachineService {
       assignLocationId: assign<ApplicationWizardMachineContext, DoSelectLocation>((_, event) => ({
         locationId: event.locationId, locationName: event.locationName,  orchestratorId: event.orchestratorId
       })),
-      assignLocation: assign<ApplicationWizardMachineContext, OnTargetFetched>((_, event) => ({
+      assignLocation: assign<ApplicationWizardMachineContext, OnLocationFetched>((_, event) => ({
         locations: event.locations
       })),
       clearError: assign<ApplicationWizardMachineContext, any>((_, event) => ({
