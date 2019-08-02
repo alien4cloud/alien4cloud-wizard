@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Deployment} from '../models/deployment.model';
+import {Deployment} from '@app/core/models';
 import {GenericService} from "@app/core/services/generic.service";
 
 @Injectable({

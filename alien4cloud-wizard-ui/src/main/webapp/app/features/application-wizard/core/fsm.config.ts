@@ -119,7 +119,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         ON_APPLICATION_CREATE_SUCCESS: {
           target: 'applicationCreated',
-          actions: ['assignAppId']
+          actions: ['assignAppId', 'clearError']
           // actions: ['assignUser', 'loginSuccess']
         },
         ON_APPLICATION_CREATE_ERROR: {
@@ -242,9 +242,11 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         ON_DEPLOYMENT_SUBMITTED: {
           target: 'activeDeploymentForm',
-          //actions: ['assignLocationId']
           actions: ['assignDeploymentId']
-          // actions: ['assignUser', 'loginSuccess']
+        },
+        ON_DEPLOYMENT_SUBMIT_ERROR: {
+          target: 'deploymentForm',
+          actions: ['assignError']
         }
       }
     },

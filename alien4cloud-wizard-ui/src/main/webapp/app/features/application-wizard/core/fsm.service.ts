@@ -15,9 +15,19 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import {
-  ApplicationWizardMachineEvents, DoCreateApplication, DoSelectTemplate, OnApplicationCreateError,
+  ApplicationWizardMachineEvents,
+  DoCreateApplication,
+  DoSelectTemplate,
+  OnApplicationCreateError,
   OnApplicationCreateSucess,
-  DoSelectTarget, OnError, OnEnvironmentsFetched, DoSelectEnvironment, OnDeploymentSubmitting, OnTargetFetched, OnDeploymentTopologyFetched
+  DoSelectTarget,
+  OnError,
+  OnEnvironmentsFetched,
+  DoSelectEnvironment,
+  OnDeploymentSubmitting,
+  OnTargetFetched,
+  OnDeploymentTopologyFetched,
+  OnDeploymentSubmitError
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
@@ -105,7 +115,12 @@ export class AppplicationWizardMachineService {
         this.applicationDeploymentService.deploy(
           _.applicationId, _.environmentId
         ).pipe(
-          map(data => new OnDeploymentSubmitting()))
+          map(data => new OnDeploymentSubmitting()),
+          catchError(err => {
+            console.log("------------ Error catch by service : " + err);
+            return of(new OnDeploymentSubmitError(err.message));
+          })
+        )
     },
     guards: {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')
@@ -136,10 +151,13 @@ export class AppplicationWizardMachineService {
           this.applicationEnvironmentService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .subscribe((data: {}) => {
             console.log("LOCATION POLICIES :", data);
-          });   
+          });
       },
       assignLocation: assign<ApplicationWizardMachineContext, OnTargetFetched>((_, event) => ({
         locations: event.locations
+      })),
+      clearError: assign<ApplicationWizardMachineContext, any>((_, event) => ({
+        errorMessage: undefined
       })),
 
       assignDeploymentTopologyId: assign<ApplicationWizardMachineContext, OnDeploymentTopologyFetched>((_, event) => ({
