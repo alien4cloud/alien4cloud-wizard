@@ -1,4 +1,4 @@
-import {MetaProperty, NodeType, TopologyGraph} from "@app/core/models";
+import {Application, ApplicationEnvironment, MetaProperty, NodeType, TopologyGraph} from "@app/core/models";
 
 export class TopologyOverview {
   description: string;
@@ -9,9 +9,9 @@ export class TopologyOverview {
 }
 
 export class ApplicationOverview extends TopologyOverview {
-  // application: Application; // not used for the moment
+  application: Application;
   deploymentStatus: string;
-  topologyGraph: TopologyGraph;
+  applicationEnvironment: ApplicationEnvironment;
 }
 
 export class ApplicationModule {

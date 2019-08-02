@@ -50,6 +50,13 @@ export const applicationWizardMachineConfig: MachineConfig<
               'applicationWizard'
             )
           }
+        ],
+        'INIT_APPLICATION_ENVIRONMENT': [
+          {
+            target: 'environmentSelected',
+            actions: ['assignAppInitInfo']
+          }
+
         ]
       }
     },
@@ -157,11 +164,11 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         '': [
           {
-            target: 'deploymentTopologyFetching',
-            actions: log(
-              (context, event) => `environmentSelected: ${JSON.stringify(context)}`,
-              'applicationWizard'
-            )
+            target: 'deploymentTopologyFetching'
+            // ,actions: log(
+            //   (context, event) => `environmentSelected: ${JSON.stringify(context)}`,
+            //   'applicationWizard'
+            // )
           }
         ]
       }

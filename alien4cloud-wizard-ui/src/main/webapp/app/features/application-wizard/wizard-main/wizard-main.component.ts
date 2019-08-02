@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {MatStepper} from "@angular/material";
 import {WizardFormStep} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {WizardStepContainerComponent} from "@app/features/application-wizard/wizard-step-container/wizard-step-container.component";
@@ -6,6 +6,8 @@ import {AppplicationWizardMachineService} from "@app/features/application-wizard
 import {WizardService} from "@app/features/application-wizard/core/wizard.service";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import * as _ from "lodash";
+import {ActivatedRoute, ActivatedRouteSnapshot} from "@angular/router";
+import {InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
 
 /**
  * This main component knows:
@@ -19,7 +21,7 @@ import * as _ from "lodash";
   templateUrl: './wizard-main.component.html',
   styleUrls: ['./wizard-main.component.css']
 })
-export class WizardMainComponent implements OnInit {
+export class WizardMainComponent implements OnInit, OnDestroy {
 
   @ViewChild('applicationWizardStepper', {static: true}) stepper: MatStepper;
 
@@ -36,12 +38,18 @@ export class WizardMainComponent implements OnInit {
 
   constructor(
     private fsm: AppplicationWizardMachineService,
-    private mainService : WizardService
+    private mainService : WizardService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-
-    console.log("WizardMainComponent.ngOnInit()");
+    this.fsm.start();
+    this.route.params.subscribe( params => {
+      console.log("Route param: " + JSON.stringify(params));
+      if (params['applicationId'] && params['environmentId']) {
+        this.fsm.send(new InitApplicationEnvironment(params['applicationId'], params['environmentId']));
+      }
+    });
 
     // get the wizard form steps definitions
     this.steps = this.mainService.getSteps();
@@ -101,6 +109,18 @@ export class WizardMainComponent implements OnInit {
     this.currentStepIndex = 0;
     this.stepFormContainer.renderStepForm(this.steps[this.currentStepIndex], this.currentFsmContext);
 
+    // if we have params, this means that we are entering an existing application wizard
+    // if (this.appId && this.envId) {
+    //   // let's init the machine with the applicationId and environmentId
+    //   this.fsm.send(new InitApplicationEnvironment(this.appId, this.envId));
+    // }
+
   }
+
+  ngOnDestroy(): void {
+    this.fsm.stop();
+  }
+
+
 
 }

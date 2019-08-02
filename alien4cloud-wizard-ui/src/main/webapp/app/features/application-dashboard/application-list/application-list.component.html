@@ -46,7 +46,7 @@
           *ngIf="overview"
           [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
           matTooltip="{{overview.deploymentStatus}}">lens</mat-icon>
-        <button mat-button>Deploy / Undeploy</button>
+        <button mat-button (click)="openWizard()">Deploy / Undeploy</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

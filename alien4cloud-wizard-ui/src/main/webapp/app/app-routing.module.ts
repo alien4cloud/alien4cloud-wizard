@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'application-wizard',
     loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
+  },
+  {
+    path: 'appWizard/:applicationId/:environmentId',
+    loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
   }
 ];
 @NgModule({

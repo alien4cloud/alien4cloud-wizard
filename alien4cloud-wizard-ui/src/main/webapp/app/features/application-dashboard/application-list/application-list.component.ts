@@ -5,6 +5,7 @@ import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService} from "@app/core";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-application-list',
@@ -15,7 +16,8 @@ export class ApplicationListComponent implements OnInit {
 
   constructor(
     private applicationService: ApplicationService,
-    private applicationOverviewService: ApplicationOverviewService
+    private applicationOverviewService: ApplicationOverviewService,
+    private router: Router
   ) {
   }
 
@@ -79,6 +81,12 @@ export class ApplicationListComponent implements OnInit {
     this.applicationOverviewService.getById(applicationId).subscribe((data) => {
       this.overview = data;
     });
+  }
+
+  private openWizard() {
+    let routeUrl = `/appWizard/${this.overview.application.id}/${this.overview.applicationEnvironment.id}`;
+    console.log("Routing to :", routeUrl)
+    this.router.navigateByUrl(routeUrl);
   }
 
 }

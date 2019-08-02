@@ -22,19 +22,20 @@ export class ApplicationEnvironmentService extends GenericResourceService<Applic
     super(http, translate, "/applications/@{applicationId}/environments")
   }
 
-  getDeploymentTopology(applicationId: string, environmentId: String): Observable<DeploymentTopologyDTO> {
+  getDeploymentTopology(applicationId: string, environmentId: string): Observable<DeploymentTopologyDTO> {
+    console.log(`getDeploymentTopology: applicationId:${applicationId}, environmentId:${environmentId}`);
     const url = this.getUrl("/@{environmentId}/deployment-topology");
     let urlParams = {applicationId: applicationId, environmentId: environmentId};
     return this.handleResult<DeploymentTopologyDTO>(this.http.get(this.getParametrizedUrl(url, urlParams)));
   }
 
-  getMonitoredDeploymentDTO(applicationId: string, environmentId: String): Observable<Deployment> {
+  getMonitoredDeploymentDTO(applicationId: string, environmentId: string): Observable<Deployment> {
     const url = this.getUrl("/@{environmentId}/active-deployment-monitored");
     let urlParams = {applicationId: applicationId, environmentId: environmentId};
     return this.handleResult<Deployment>(this.http.get(this.getParametrizedUrl(url, urlParams)));
   }
 
-  setLocationPolicies(applicationId: String, envId: String, orchestratorId: string, locationId: string): Observable<{}> {
+  setLocationPolicies(applicationId: string, envId: string, orchestratorId: string, locationId: string): Observable<{}> {
     console.log("======= setLocationPolicies");
     let urlParams = {applicationId: applicationId, environmentId: envId};
     let url = this.getUrl("/@{environmentId}/deployment-topology/location-policies", urlParams);

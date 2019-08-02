@@ -6,6 +6,7 @@ import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.mode
 
 export type ApplicationWizardMachineEvents =
   Init |
+  InitApplicationEnvironment |
   DoSelectTemplate |
   GoBack |
   DoCreateApplication |
@@ -26,6 +27,12 @@ export type ApplicationWizardMachineEvents =
 export class Init {
   readonly type = 'INIT';
 }
+
+export class InitApplicationEnvironment {
+  readonly type = 'INIT_APPLICATION_ENVIRONMENT';
+  constructor(public applicationId: string , public environmentId: string) {}
+}
+
 export class DoSelectTemplate {
   readonly type = 'DO_SELECT_TEMPLATE';
   constructor(public templateId: string, public templateDescription: string) {}
