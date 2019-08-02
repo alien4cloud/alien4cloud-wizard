@@ -1,30 +1,29 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 // Forms module
-import { FormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {FormsModule} from '@angular/forms';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {
   FooterComponent,
   LHeaderComponent,
   HomeComponent,
   SharedModule
 } from './shared';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ReactiveFormsModule} from '@angular/forms';
 import {A4cMaterialModule} from '@app/shared';
-import { A4cThemeService, MetapropertyService} from '@app/core';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { AppRoutingModule,routingComponents} from './app-routing.module';
-import { NgxWebstorageModule } from 'ngx-webstorage';
-import { AuthInterceptor } from '@app/core';
+import {OverlayContainer} from '@angular/cdk/overlay';
+import {AppRoutingModule, routingComponents} from './app-routing.module';
+import {NgxWebstorageModule} from 'ngx-webstorage';
+import {AuthInterceptor} from '@app/core';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
 import {ThemePickerModule} from "@app/modules/theme-picker";
 
@@ -38,7 +37,7 @@ export function createTranslateLoader(http: HttpClient) {
     LHeaderComponent,
     FooterComponent,
     HomeComponent,
-   // StatusComponent,
+    // StatusComponent,
     routingComponents
   ],
   imports: [
@@ -49,11 +48,11 @@ export function createTranslateLoader(http: HttpClient) {
     FlexLayoutModule,
     A4cMaterialModule,
     BrowserAnimationsModule,
-  //  NoopAnimationsModule,
+    //  NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule.forRoot(),
-    NgxWebstorageModule.forRoot({ prefix: 'w4c', separator: '-' }),
+    NgxWebstorageModule.forRoot({prefix: 'w4c', separator: '-'}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -70,9 +69,7 @@ export function createTranslateLoader(http: HttpClient) {
     HeroLoaderModule
   ],
   providers: [
-    A4cThemeService,
     OverlayContainer,
-    MetapropertyService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

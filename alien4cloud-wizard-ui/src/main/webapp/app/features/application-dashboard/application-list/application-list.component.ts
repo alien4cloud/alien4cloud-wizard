@@ -5,8 +5,8 @@ import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import {Application, ApplicationOverview} from "@app/core";
-import {ApplicationOverviewService} from "@app/core/serviceV2/application-overview.service";
-import {ApplicationService} from "@app/core/serviceV2/application.service";
+import {ApplicationOverviewService} from "@app/core/service/application-overview.service";
+import {ApplicationService} from "@app/core/service/application.service";
 
 @Component({
   selector: 'app-application-list',

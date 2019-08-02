@@ -8,8 +8,8 @@ import {TopologyOverview, Topology} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
-import {TopologyService} from "@app/core/serviceV2/topology.service";
-import {TopologyOverviewService} from "@app/core/serviceV2/topology-overview.service";
+import {TopologyService} from "@app/core/service/topology.service";
+import {TopologyOverviewService} from "@app/core/service/topology-overview.service";
 
 @Component({
   selector: 'w4c-template-selection',

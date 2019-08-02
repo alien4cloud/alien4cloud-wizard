@@ -16,7 +16,7 @@ import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {map, filter} from 'rxjs/operators';
-import {StyleManager} from "@app/core/services/style-manager";
+import {StyleManager} from "@app/core/service/style-manager";
 
 
 @Component({

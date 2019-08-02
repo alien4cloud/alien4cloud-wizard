@@ -2,7 +2,7 @@
  * The event types our FSM will manage to trigger transition between states.
  */
 import {ApplicationEnvironment, LocationMatch} from "@app/core";
-import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology-dto.model';
+import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.model';
 
 export type ApplicationWizardMachineEvents =
   Init |

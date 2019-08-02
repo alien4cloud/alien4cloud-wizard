@@ -8,4 +8,6 @@ export * from './topology-graph.model';
 export * from './wrappers.model';
 export * from './properties.model';
 export * from './rest.model';
-
+export * from './deployment-topology.model';
+export * from './deployment.model';
+export * from './execution.model';

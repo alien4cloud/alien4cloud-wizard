@@ -4,7 +4,6 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import { ApplicationWizardMachineEvents } from "@app/features/application-wizard/core/fsm.events";
-import { ApplicationEnvironment } from '@app/core';
 
 const { log } = actions;
 

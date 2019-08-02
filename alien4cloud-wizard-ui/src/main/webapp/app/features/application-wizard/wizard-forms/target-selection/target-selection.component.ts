@@ -4,7 +4,7 @@ import { WizardFormComponent } from "@app/features/application-wizard/wizard-mai
 import {LocationMatch, Topology} from '@app/core';
 import { AppplicationWizardMachineService } from '../../core/fsm.service';
 import { DoSelectTarget } from '../../core/fsm.events';
-import { TopologyService } from '@app/core/serviceV2/topology.service';
+import { TopologyService } from '@app/core/service/topology.service';
 
 @Component({
   selector: 'w4c-target-selection',

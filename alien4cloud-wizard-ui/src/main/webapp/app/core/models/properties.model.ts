@@ -1,3 +1,4 @@
+
 export interface IValue {
   definition: boolean;
 }
@@ -24,4 +25,12 @@ export abstract class AbstractPropertyValue implements IValue {
 
 export abstract class PropertyValue<T> extends AbstractPropertyValue {
   value: T;
+}
+
+export class MetaPropConfiguration extends PropertyDefinition {
+  id: string;
+  name: string;
+  target: string;
+  defaultValue: PropertyValue<any>;
+  filtered: boolean;
 }

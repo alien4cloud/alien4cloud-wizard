@@ -22,11 +22,11 @@ import {
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
 import * as _ from "lodash";
-import { ApplicationService } from "@app/core/serviceV2/application.service";
-import { ApplicationEnvironmentService } from "@app/core/serviceV2/application-environment.service";
-import { ApplicationDeploymentService } from '@app/core/serviceV2/application-deployment.service';
-import { LocationMatchingService } from '@app/core/serviceV2/location-matching.service';
-import { TopologyService } from '@app/core/serviceV2/topology.service';
+import { ApplicationService } from "@app/core/service/application.service";
+import { ApplicationEnvironmentService } from "@app/core/service/application-environment.service";
+import { ApplicationDeploymentService } from '@app/core/service/application-deployment.service';
+import { LocationMatchingService } from '@app/core/service/location-matching.service';
+import { TopologyService } from '@app/core/service/topology.service';
 import { Deployment } from '@app/core/models/deployment.model';
 import { Execution } from '@app/core/models/execution.model';
 
@@ -38,10 +38,10 @@ export class AppplicationWizardMachineService {
 
   constructor(
     private applicationService: ApplicationService,
-    private topologyTemplateService: TopologyService,
+    private topologyService: TopologyService,
     private applicationEnvironmentService: ApplicationEnvironmentService,
     private applicationDeploymentService: ApplicationDeploymentService,
-    private applicationLocationService: LocationMatchingService,
+    private locationMatchingService: LocationMatchingService,
     private router: Router
   ) { }
 
@@ -82,7 +82,7 @@ export class AppplicationWizardMachineService {
         ),
         
       searchLocations: (_, event) =>
-        this.applicationLocationService.match(_.deploymentTopologyId, _.environmentId)
+        this.locationMatchingService.match(_.deploymentTopologyId, _.environmentId)
           .pipe(
             map(locations => {
               if (locations.length == 1) {
@@ -91,7 +91,6 @@ export class AppplicationWizardMachineService {
               } else {
                 console.log("Several locations exist :" + locations.length)
                 return new OnTargetFetched(locations);
-
               }
             })
           ), 
