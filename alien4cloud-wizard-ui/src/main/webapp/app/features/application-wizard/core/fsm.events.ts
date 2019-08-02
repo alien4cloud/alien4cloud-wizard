@@ -17,7 +17,7 @@ export type ApplicationWizardMachineEvents =
   DoSelectTarget |
   OnTargetFetched|
   DoSubmitDeployment|
-  OnDeploymentSubmitting |
+  OnDeploymentSubmitSucess |
   OnDeploymentSubmitError |
   onActiveDeploymentCheck
 ;
@@ -88,8 +88,8 @@ export class onActiveDeploymentCheck{
   constructor() {}
 }
 
-export class OnDeploymentSubmitting {
-  readonly type = 'ON_DEPLOYMENT_SUBMITTED';
+export class OnDeploymentSubmitSucess {
+  readonly type = 'ON_DEPLOYMENT_SUBMIT_SUCCESS';
   constructor() {}
 }
 

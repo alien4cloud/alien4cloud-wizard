@@ -24,7 +24,7 @@ import {
   OnError,
   OnEnvironmentsFetched,
   DoSelectEnvironment,
-  OnDeploymentSubmitting,
+  OnDeploymentSubmitSucess,
   OnTargetFetched,
   OnDeploymentTopologyFetched,
   OnDeploymentSubmitError
@@ -115,7 +115,7 @@ export class AppplicationWizardMachineService {
         this.applicationDeploymentService.deploy(
           _.applicationId, _.environmentId
         ).pipe(
-          map(data => new OnDeploymentSubmitting()),
+          map(data => new OnDeploymentSubmitSucess()),
           catchError(err => {
             console.log("------------ Error catch by service : " + err);
             return of(new OnDeploymentSubmitError(err.message));
@@ -147,9 +147,12 @@ export class AppplicationWizardMachineService {
       assignLocationId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
         locationId: event.locationId, locationName: event.locationName,  orchestratorId: event.orchestratorId
       })),
+      // TODO: move in an invocation
       assignLocationPolicies: (_) => {
           this.applicationEnvironmentService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .subscribe((data: {}) => {
+            // TODO: here we retrieve the updated deploymentTopologyDTO
+            // maybe we should store it in context
             console.log("LOCATION POLICIES :", data);
           });
       },
@@ -159,11 +162,10 @@ export class AppplicationWizardMachineService {
       clearError: assign<ApplicationWizardMachineContext, any>((_, event) => ({
         errorMessage: undefined
       })),
-
       assignDeploymentTopologyId: assign<ApplicationWizardMachineContext, OnDeploymentTopologyFetched>((_, event) => ({
         deploymentTopologyId: event.deploymentTopology.topology.id
       })),
-
+      // TODO: remove
       assignDeploymentId: (_) => {
           this.applicationEnvironmentService.getMonitoredDeploymentDTO(
             _.applicationId,
@@ -173,7 +175,7 @@ export class AppplicationWizardMachineService {
             _.deploymentId = deployment.id ; 
           });     
       },
-
+      // TODO: remove
       deploymentStatusCheck : (_) => {
         this.applicationService.checkdeploymentStatus(
           _.deploymentId

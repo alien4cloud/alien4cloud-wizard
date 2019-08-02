@@ -240,9 +240,8 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'deploy'
       },
       on: {
-        ON_DEPLOYMENT_SUBMITTED: {
-          target: 'activeDeploymentForm',
-          actions: ['assignDeploymentId']
+        ON_DEPLOYMENT_SUBMIT_SUCCESS: {
+          target: 'activeDeploymentForm'
         },
         ON_DEPLOYMENT_SUBMIT_ERROR: {
           target: 'deploymentForm',
@@ -254,8 +253,8 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         ON_ACTIVE_DEPLOYMENT_CHECK: [
           {
-            target: 'applicationDeployed',
-            actions: ['deploymentStatusCheck']
+            target: 'applicationDeployed'
+            // ,actions: ['deploymentStatusCheck']
           }
         ]
       }
