@@ -8,7 +8,7 @@ import {WizardStepContainerComponent} from "@app/features/application-wizard/wiz
 import {WelcomeComponent} from "@app/features/application-wizard/wizard-forms/welcome/welcome.component";
 import {ApplicationWizardRoutingModule} from "@app/features/application-wizard/application-wizard-routing.module";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
-import {TargetSelectionComponent} from './wizard-forms/target-selection/target-selection.component';
+import {LocationSelectionComponent} from './wizard-forms/location-selection/location-selection.component';
 import {NgxGraphModule} from "@swimlane/ngx-graph";
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
@@ -23,7 +23,7 @@ import { ActiveDeploymentComponent } from './wizard-forms/active-deployment/acti
     StepComponentDirective,
     WizardStepContainerComponent,
     WelcomeComponent,
-    TargetSelectionComponent,
+    LocationSelectionComponent,
     ApplicationDeploymentComponent,
     ActiveDeploymentComponent
   ],
@@ -39,7 +39,7 @@ import { ActiveDeploymentComponent } from './wizard-forms/active-deployment/acti
     WelcomeComponent,
     TemplateSelectionComponent,
     ApplicationCreateComponent,
-    TargetSelectionComponent,
+    LocationSelectionComponent,
     ApplicationDeploymentComponent,
     ActiveDeploymentComponent]
 })

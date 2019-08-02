@@ -3,7 +3,7 @@ import {WizardFormStep} from "@app/features/application-wizard/wizard-main/wizar
 import {WelcomeComponent} from "@app/features/application-wizard/wizard-forms/welcome/welcome.component";
 import {TemplateSelectionComponent} from "@app/features/application-wizard/wizard-forms/template-selection/template-selection.component";
 import {ApplicationCreateComponent} from "@app/features/application-wizard/wizard-forms/application-create/application-create.component";
-import {TargetSelectionComponent} from "@app/features/application-wizard/wizard-forms/target-selection/target-selection.component";
+import {LocationSelectionComponent} from "@app/features/application-wizard/wizard-forms/location-selection/location-selection.component";
 import {ApplicationDeploymentComponent} from "@app/features/application-wizard/wizard-forms/application-deployment/application-deployment.component";
 import { ActiveDeploymentComponent } from '../wizard-forms/active-deployment/active-deployment.component';
 /**
@@ -16,7 +16,7 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Welcome", component: WelcomeComponent, fsmStateName: ""},
   {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
   {stepLabel: "Fill the app form", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
-  {stepLabel: "Select Target", component: TargetSelectionComponent, fsmStateName: "targetSelectionForm"},
+  {stepLabel: "Select Target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm"},
   {stepLabel: "Deploy app", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm"},
   {stepLabel: "Active Deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"}
 ];

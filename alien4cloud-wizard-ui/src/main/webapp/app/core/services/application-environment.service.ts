@@ -45,7 +45,7 @@ export class ApplicationEnvironmentService extends GenericResourceService<Applic
       })
     }));
     return obs;
-    // // FIXME: here we simulate on long running backend operation
+    // FIXME: here we simulate on long running backend operation
     // return timer(10000).pipe(concatMap(value => {
     //   console.log("Time expired");
     //   return obs;

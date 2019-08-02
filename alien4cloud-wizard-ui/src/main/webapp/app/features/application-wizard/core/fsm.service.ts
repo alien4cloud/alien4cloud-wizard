@@ -20,14 +20,14 @@ import {
   DoSelectTemplate,
   OnApplicationCreateError,
   OnApplicationCreateSucess,
-  DoSelectTarget,
+  DoSelectLocation,
   OnError,
   OnEnvironmentsFetched,
   DoSelectEnvironment,
   OnDeploymentSubmitSucess,
   OnTargetFetched,
   OnDeploymentTopologyFetched,
-  OnDeploymentSubmitError
+  OnDeploymentSubmitError, OnSelectTargetSucesss
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
@@ -98,19 +98,20 @@ export class AppplicationWizardMachineService {
             map(locations => {
               if (locations.length == 1) {
                 console.log("Only one location exists :" + locations[0].location.id)
-                return new DoSelectTarget(locations[0].location.id,locations[0].location.name, locations[0].orchestrator.id );
+                return new DoSelectLocation(locations[0].location.id,locations[0].location.name, locations[0].orchestrator.id );
               } else {
                 console.log("Several locations exist :" + locations.length)
                 return new OnTargetFetched(locations);
               }
             })
-          ), 
-          /*
-      selectLocation: (_, event) =>
-        this.topologyTemplateService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
-          .pipe(
-            map(data => new OnTargetFetched(data['data'])))
-      ,*/
+          ),
+      setLocationPolicies: (_, event) =>
+        this.applicationEnvironmentService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
+          .pipe(map(data => {
+            console.log("setLocation result ", JSON.stringify(data));
+            return new OnSelectTargetSucesss();
+          }))
+      ,
       deploy: (_, event) =>
         this.applicationDeploymentService.deploy(
           _.applicationId, _.environmentId
@@ -144,18 +145,9 @@ export class AppplicationWizardMachineService {
       assignError: assign<ApplicationWizardMachineContext, OnError>((_, event) => ({
         errorMessage: event.message
       })),
-      assignLocationId: assign<ApplicationWizardMachineContext, DoSelectTarget>((_, event) => ({
+      assignLocationId: assign<ApplicationWizardMachineContext, DoSelectLocation>((_, event) => ({
         locationId: event.locationId, locationName: event.locationName,  orchestratorId: event.orchestratorId
       })),
-      // TODO: move in an invocation
-      assignLocationPolicies: (_) => {
-          this.applicationEnvironmentService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
-          .subscribe((data: {}) => {
-            // TODO: here we retrieve the updated deploymentTopologyDTO
-            // maybe we should store it in context
-            console.log("LOCATION POLICIES :", data);
-          });
-      },
       assignLocation: assign<ApplicationWizardMachineContext, OnTargetFetched>((_, event) => ({
         locations: event.locations
       })),

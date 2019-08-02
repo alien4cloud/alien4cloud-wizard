@@ -14,7 +14,8 @@ export type ApplicationWizardMachineEvents =
   OnDeploymentTopologyFetched|
   OnApplicationCreateError |
   OnApplicationCreateSucess |
-  DoSelectTarget |
+  DoSelectLocation |
+  OnSelectTargetSucesss |
   OnTargetFetched|
   DoSubmitDeployment|
   OnDeploymentSubmitSucess |
@@ -52,9 +53,15 @@ export class OnDeploymentTopologyFetched {
 }
 
 
-export class DoSelectTarget {
-  readonly type = 'DO_SELECT_TARGET';
+export class DoSelectLocation {
+  readonly type = 'DO_SELECT_LOCATION';
   constructor(public locationId: string,public locationName: string,public orchestratorId: string) {}
+}
+
+export class OnSelectTargetSucesss {
+  readonly type = 'ON_SELECT_TARGET_SUCESSS';
+  // TODO: use deployment topology that is returned
+  constructor() {}
 }
 
 export class OnTargetFetched {

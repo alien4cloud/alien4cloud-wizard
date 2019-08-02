@@ -173,52 +173,49 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         ON_DEPLOYMENT_TOPOLOGY_FETCHED: {
-          target: 'targetSearching',
+          target: 'locationSearching',
           actions: ['assignDeploymentTopologyId']
           // actions: ['assignUser', 'loginSuccess']
         }
       }
     },
-    targetSearching: {
+    locationSearching: {
       invoke: {
         id: 'searchLocations',
         src: 'searchLocations'
       },
       on: {
-        DO_SELECT_TARGET: {
-          target: 'targetSelected',
+        DO_SELECT_LOCATION: {
+          target: 'locationSelected',
           actions: ['assignLocationId']
           //actions: ['assignLocation']
           // actions: ['assignUser', 'loginSuccess']
         },
         ON_TARGET_FETCHED: {
-          target: 'targetSelectionForm',
+          target: 'locationSelectionForm',
           actions: ['assignLocation']
         }
       }
     },
-    targetSelectionForm: {
+    locationSelectionForm: {
       on: {
-        DO_SELECT_TARGET: {
-          target: 'targetSelected',
+        DO_SELECT_LOCATION: {
+          target: 'locationSelected',
           actions: ['assignLocationId']
           // actions: ['assignUser', 'loginSuccess']
         }
       }
     },
 
-    targetSelected: {
+    locationSelected: {
+      invoke: {
+        id: 'setLocationPolicies',
+        src: 'setLocationPolicies'
+      },
       on: {
-        '': [
+        'ON_SELECT_TARGET_SUCESSS': [
           {
-            target: 'deploymentForm',
-            actions: ['assignLocationPolicies']
-           /*
-            actions: log(
-              (context, event) => `locationSelected: ${JSON.stringify(context)}`,
-              'applicationWizard'
-            )
-            */
+            target: 'deploymentForm'
           }
         ]
       }
