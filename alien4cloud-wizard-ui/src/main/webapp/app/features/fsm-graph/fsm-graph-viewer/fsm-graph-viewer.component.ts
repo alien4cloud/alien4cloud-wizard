@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FsmGraph} from "@app/features/application-wizard/core/fsm-graph.model";
+import {FsmGraph, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
 import {Subject} from "rxjs";
 import * as _ from "lodash";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
@@ -14,6 +14,7 @@ export class FsmGraphViewerComponent implements OnInit {
   private fsmGraph: FsmGraph;
   private zoomToFit$: Subject<boolean> = new Subject();
   private center$: Subject<boolean> = new Subject();
+  private panToNode$: Subject<string> = new Subject();
 
   // make lodash usable from template
   private lodash = _;
@@ -23,8 +24,8 @@ export class FsmGraphViewerComponent implements OnInit {
   ngOnInit() {
     // get the graph so display it
     this.fsmGraph = this.fsm.getGraph();
-    this.zoomToFit$.next(true);
-    this.center$.next(true);
+    // this.zoomToFit$.next(true);
+    // this.center$.next(true);
 
     // listen to FSM state change events
     this.fsm.applicationWizardState$.subscribe(data => {
@@ -32,6 +33,8 @@ export class FsmGraphViewerComponent implements OnInit {
       this.fsmGraph.nodes.forEach(n => n.active = false);
       // find the node corresponding to the current state
       const graphNode = _.find(this.fsmGraph.nodes, node => node.id == data.value);
+      // move the node at the center of the screen
+      this.panToNode$.next(graphNode.id);
       // flag it as active && activated
       graphNode.active = true;
       graphNode.activated = true;
