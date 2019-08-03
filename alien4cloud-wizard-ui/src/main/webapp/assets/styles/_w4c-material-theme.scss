@@ -14,8 +14,12 @@
     border: 1px solid;
   }
 
+  // FIXME: use w4c-primary-text-A200 for example
   .w4c-title {
     color: mat-color($primary, A200);
   }
 
+  .w4c-primary-text-A200 {
+    color: mat-color($primary, A200);
+  }
 }

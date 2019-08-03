@@ -9,10 +9,10 @@
     (mouseover)="feature.active = true"
     (mouseout)="feature.active = false">
     <mat-card class="home-component-feature-list-card">
-      <mat-card-header>
-        <mat-icon *ngIf="feature.active && feature.allowed" color="primary">{{feature.iconName}}</mat-icon>
-        <mat-icon *ngIf="!(feature.active && feature.allowed)">{{feature.iconName}}</mat-icon>
-        <mat-card-title>{{feature.name}}</mat-card-title>
+      <mat-card-header fxLayoutAlign="space-between center" class="home-component-feature-list-header">
+        <mat-icon *ngIf="feature.active && feature.allowed" color="primary" flex class="featureIcon">{{feature.iconName}}</mat-icon>
+        <mat-icon *ngIf="!(feature.active && feature.allowed)" flex class="featureIcon">{{feature.iconName}}</mat-icon>
+        <mat-card-title [ngClass]="{'w4c-primary-text-A200': feature.active && feature.allowed}" flex>{{feature.name}}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="home-component-feature-list-card-summary">{{feature.description}}</mat-card-content>
     </mat-card>
