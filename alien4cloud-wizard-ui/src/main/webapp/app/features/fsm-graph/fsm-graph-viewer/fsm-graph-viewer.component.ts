@@ -3,6 +3,7 @@ import {FsmGraph, FsmGraphNode} from "@app/features/application-wizard/core/fsm-
 import {Subject} from "rxjs";
 import * as _ from "lodash";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
+import {LocalStorageService} from "ngx-webstorage";
 
 @Component({
   selector: 'w4c-fsm-graph-viewer',
@@ -12,20 +13,29 @@ import {AppplicationWizardMachineService} from "@app/features/application-wizard
 export class FsmGraphViewerComponent implements OnInit {
 
   private fsmGraph: FsmGraph;
-  private zoomToFit$: Subject<boolean> = new Subject();
-  private center$: Subject<boolean> = new Subject();
   private panToNode$: Subject<string> = new Subject();
 
   // make lodash usable from template
   private lodash = _;
 
-  constructor(private fsm: AppplicationWizardMachineService) { }
+  private static STORAGE_ZOOM_LEVEL: string = "fsm-zoom-level";
+  private zoomLevel: number;
+
+  constructor(
+    private fsm: AppplicationWizardMachineService,
+    private localStorage: LocalStorageService
+  ) {
+    this.zoomLevel = 1;
+    // if found, use the prefered user setting for zoom level
+    let storedZoomLevel = this.localStorage.retrieve(FsmGraphViewerComponent.STORAGE_ZOOM_LEVEL);
+    if (storedZoomLevel) {
+      this.zoomLevel = storedZoomLevel;
+    }
+  }
 
   ngOnInit() {
     // get the graph so display it
     this.fsmGraph = this.fsm.getGraph();
-    // this.zoomToFit$.next(true);
-    // this.center$.next(true);
 
     // listen to FSM state change events
     this.fsm.applicationWizardState$.subscribe(data => {
@@ -45,6 +55,18 @@ export class FsmGraphViewerComponent implements OnInit {
       // flag it as active
       graphEdge.data['active'] = true;
     });
+
+
+  }
+
+  /**
+   * React to the zoom change event and store the zoom level in local storage.
+   * TODO: it would be better to observe via rxjs and add a debounce time
+   * @param event
+   */
+  zoomChangedHandler(zoomLevel) {
+    // the zoom has changed, let's store it (event is zoom level)
+    this.localStorage.store(FsmGraphViewerComponent.STORAGE_ZOOM_LEVEL, zoomLevel);
   }
 
 }

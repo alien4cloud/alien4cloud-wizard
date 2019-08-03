@@ -4,14 +4,14 @@
              class="chart-container"
              layout="dagre"
              [curve]="curve"
-             [autoCenter]="true"
-             [autoZoom]="true"
+             [autoCenter]="false"
+             [autoZoom]="false"
+             [zoomLevel]="zoomLevel"
              [links]="fsmGraph.edges"
              [nodes]="fsmGraph.nodes"
-             [zoomToFit$]="zoomToFit$"
              [panToNode$]="panToNode$"
-             [center$]="center$"
              [nodeWidth]=200
+             (zoomChange)="zoomChangedHandler($event)"
   >
 
     <ng-template #defsTemplate>
