@@ -16,11 +16,11 @@ const routes: Routes = [
     loadChildren: () => import('./features/topology-graph/topology-graph.module').then(mod => mod.TopologyGraphModule)
   },
   {
-    path: 'application-wizard',
+    path: 'new-wizard',
     loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
   },
   {
-    path: 'appWizard/:applicationId/:environmentId',
+    path: 'app-wizard/:applicationId/:environmentId',
     loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
   }
 ];

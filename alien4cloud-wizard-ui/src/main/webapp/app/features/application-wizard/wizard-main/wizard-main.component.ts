@@ -7,7 +7,7 @@ import {WizardService} from "@app/features/application-wizard/core/wizard.servic
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import * as _ from "lodash";
 import {ActivatedRoute, ActivatedRouteSnapshot} from "@angular/router";
-import {InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
+import {Init, InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
 
 /**
  * This main component knows:
@@ -44,11 +44,21 @@ export class WizardMainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fsm.start();
+    // we have a timeout here in order to 1. let the view being displayed 2. let the listener bellow to be up
+    // FIXME: find a better approach
     this.route.params.subscribe( params => {
       console.log("Route param: " + JSON.stringify(params));
-      if (params['applicationId'] && params['environmentId']) {
-        this.fsm.send(new InitApplicationEnvironment(params['applicationId'], params['environmentId']));
-      }
+      setTimeout(() => {
+        if (params['applicationId'] && params['environmentId']) {
+          console.log("Start a wizard on an existing app");
+          this.fsm.send(new InitApplicationEnvironment(params['applicationId'], params['environmentId']));
+        } else {
+          console.log("Start a new wizard by sending and Init event");
+          // if we don't send this event, the welcome panel will be displayed
+          // FIXME: do we still use this welcome panel ?
+          this.fsm.send(new Init());
+        }
+      }, 500);
     });
 
     // get the wizard form steps definitions
@@ -106,8 +116,8 @@ export class WizardMainComponent implements OnInit, OnDestroy {
     });
 
     // let's init the wizard
-    this.currentStepIndex = 0;
-    this.stepFormContainer.renderStepForm(this.steps[this.currentStepIndex], this.currentFsmContext);
+    // this.currentStepIndex = 0;
+    // this.stepFormContainer.renderStepForm(this.steps[this.currentStepIndex], this.currentFsmContext);
 
     // if we have params, this means that we are entering an existing application wizard
     // if (this.appId && this.envId) {

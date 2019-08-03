@@ -84,7 +84,7 @@ export class ApplicationListComponent implements OnInit {
   }
 
   private openWizard() {
-    let routeUrl = `/appWizard/${this.overview.application.id}/${this.overview.applicationEnvironment.id}`;
+    let routeUrl = `/app-wizard/${this.overview.application.id}/${this.overview.applicationEnvironment.id}`;
     console.log("Routing to :", routeUrl)
     this.router.navigateByUrl(routeUrl);
   }

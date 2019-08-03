@@ -1,29 +1,20 @@
-<h3 class="title">{{ 'Home.WelcomeTitle'|translate }}</h3>
-<p class="title">{{ 'Home.WelcomeText'|translate }}</p>
-<mat-divider></mat-divider>
-<div layout="row">
-  <button
-    mat-flat-button [routerLink]="['/application-dashboard']">
-    <mat-icon>dashboard</mat-icon>
-    Applications dashboard
-  </button>
-  <span class="desc">List all applications, view deployment status, view meta-data, view applications' modules ...
-  </span>
+<h3>
+  <div class="home-component-feature-list-summary">{{ 'Home.WelcomeTitle'|translate }} {{ 'Home.WelcomeText'|translate }}</div>
+</h3>
+<div class="home-component-feature-list">
+  <a *ngFor="let feature of features"
+    class="home-component-feature-list-item"
+    [ngClass]="{'home-component-feature-list-item-disabled': !feature.allowed}"
+    [routerLink]="[feature.activationLink]"
+    (mouseover)="feature.active = true"
+    (mouseout)="feature.active = false">
+    <mat-card class="home-component-feature-list-card">
+      <mat-card-header>
+        <mat-icon *ngIf="feature.active && feature.allowed" color="primary">{{feature.iconName}}</mat-icon>
+        <mat-icon *ngIf="!(feature.active && feature.allowed)">{{feature.iconName}}</mat-icon>
+        <mat-card-title>{{feature.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="home-component-feature-list-card-summary">{{feature.description}}</mat-card-content>
+    </mat-card>
+  </a>
 </div>
-<mat-divider></mat-divider>
-<div layout="row">
-  <button mat-flat-button [routerLink]="['/application-wizard']">
-    <mat-icon>create_new_folder</mat-icon>
-    Application Wizard
-  </button>
-  <span class="desc">Create a new application from a template</span>
-</div>
-<mat-divider></mat-divider>
-<div layout="row">
-  <button mat-flat-button [routerLink]="['/modules']">
-    <mat-icon>view_module</mat-icon>
-    Modules
-  </button>
-  <span class="desc">Browse plateforme modules</span>
-</div>
-<mat-divider></mat-divider>

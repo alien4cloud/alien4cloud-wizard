@@ -1,4 +1,3 @@
-
 export enum OrchestratorState {
   DISABLED,
   CONNECTING,
@@ -7,10 +6,10 @@ export enum OrchestratorState {
 }
 
 export class Orchestrator {
-    id: string;
-    name: string;
-    pluginId: string;
-    pluginBean: string;
-    deploymentNamePattern: string;
-    state: OrchestratorState ;
+  id: string;
+  name: string;
+  pluginId: string;
+  pluginBean: string;
+  deploymentNamePattern: string;
+  state: OrchestratorState;
 }
