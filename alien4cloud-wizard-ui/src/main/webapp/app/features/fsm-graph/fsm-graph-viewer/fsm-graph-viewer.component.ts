@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FsmGraph, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
 import {Subject} from "rxjs";
 import * as _ from "lodash";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {LocalStorageService} from "ngx-webstorage";
+import {MatStepper} from "@angular/material";
+import {GraphComponent} from "@swimlane/ngx-graph";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'w4c-fsm-graph-viewer',
@@ -36,7 +39,6 @@ export class FsmGraphViewerComponent implements OnInit {
   ngOnInit() {
     // get the graph so display it
     this.fsmGraph = this.fsm.getGraph();
-
     // listen to FSM state change events
     this.fsm.applicationWizardState$.subscribe(data => {
       // flag all nodes as inactive
@@ -55,8 +57,6 @@ export class FsmGraphViewerComponent implements OnInit {
       // flag it as active
       graphEdge.data['active'] = true;
     });
-
-
   }
 
   /**

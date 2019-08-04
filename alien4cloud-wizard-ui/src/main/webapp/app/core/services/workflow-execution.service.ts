@@ -3,7 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {ExecutionStatus, WorkflowExecutionDTO} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
 import {GenericResourceService} from "@app/core/services/generic-resource.service";
-import {Observable, ReplaySubject} from "rxjs";
+import {Observable, ReplaySubject, timer} from "rxjs";
+import {concatMap, filter, map, take, tap} from "rxjs/operators";
 
 
 @Injectable({
@@ -21,7 +22,12 @@ export class DeploymentWorkflowExecutionService extends GenericResourceService<W
     super(http, translate, "/workflow_execution")
   }
 
-  monitorWorkflowExecution(deploymentId: string) {
+  /**
+   * This is a deprecated programmatic solution for our polling.
+   *
+   * @param deploymentId
+   */
+  _monitorWorkflowExecution(deploymentId: string) {
     this.getById(deploymentId).subscribe(dto => {
       // FIXME: find a better solution using rxjs
       if (dto.execution && dto.execution.status.toString() !== "RUNNING") {
@@ -40,6 +46,40 @@ export class DeploymentWorkflowExecutionService extends GenericResourceService<W
         }, 1000);
       }
     })
+  }
+
+  /**
+   * After a given delay (5 sec) start polling the /workflow_execution endpoint.
+   * Then continue polling each 2 sec.
+   * Each response should be broadcast to the subject.
+   * If the execution is not in a pending status, then stop the polling and complete the subject.
+   *
+   *  @param deploymentId
+   */
+  monitorWorkflowExecution(deploymentId: string): Observable<WorkflowExecutionDTO> {
+
+    let deploymentSubject = new ReplaySubject<WorkflowExecutionDTO>(1);
+
+    timer(5000, 2000).pipe(
+      concatMap(value => this.getById(deploymentId))
+    ).pipe(
+      map(x => {
+        deploymentSubject.next(x);
+        return x;
+      })
+    ).pipe(
+      filter(dto =>
+        dto.execution
+        && dto.execution.status.toString() !== "RUNNING"
+        && dto.execution.status.toString() !== "SCHEDULED")
+    ).pipe(
+      take(1)
+    ).subscribe(value => {
+      deploymentSubject.complete();
+    });
+
+    return deploymentSubject.asObservable();
+
   }
 
 }

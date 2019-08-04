@@ -1,6 +1,6 @@
-import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
-import {WizardService} from "@app/features/application-wizard/core/wizard.service";
-
+/**
+ * A FsmGraph is a set of nodes and edges. It is just used to render the FSM as an oriented graph.
+ */
 export class FsmGraph {
   nodes: FsmGraphNode[] = [];
   edges: FsmGraphEdge[] = [];
@@ -11,7 +11,7 @@ export class FsmGraphNode {
   label: string;
   /** Indicates that this state has already been activated. */
   public activated: boolean;
-  /** Indicates that this state is currently activated. */
+  /** Indicates that this state is currently active. */
   public active: boolean;
   constructor(
     id: string,
@@ -23,8 +23,6 @@ export class FsmGraphNode {
 }
 
 export class FsmGraphEdge {
-  /** Indicates that this transition is the last one. */
-
   constructor(
     public id: string,
     public source: string,

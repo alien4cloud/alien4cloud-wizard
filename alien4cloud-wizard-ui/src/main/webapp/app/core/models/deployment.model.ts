@@ -4,5 +4,5 @@ export class Deployment {
 
 export class MonitoredDeploymentDTO {
   deployment: Deployment;
-  workflowExpectedStepInstanceCount: any;
+  workflowExpectedStepInstanceCount: Map<string, number>;
 }
