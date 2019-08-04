@@ -4,8 +4,8 @@
 
 <ng-template #deploying>
   <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center">
-    <h2 *ngIf="isDeploying">Deploy in progress ...</h2>
-    <h2 *ngIf="!isDeploying">Deploy done (but maybe with error !)</h2>
+    <h2 *ngIf="isDeploying">Workflow in progress ...</h2>
+    <h2 *ngIf="!isDeploying">Workflow executed (but maybe with error !)</h2>
     <mat-progress-bar *ngIf="isDeploying && !progessBarData" mode="indeterminate"></mat-progress-bar>
     <mat-progress-bar *ngIf="progessBarData" mode="determinate" value="{{ progessBarData.progress }}" [color]="(progessBarData.status && progessBarData.status.toString() == 'FAILED') ? 'warn' : 'primary'"></mat-progress-bar>
     <span *ngIf="progessBarData">Wf: {{ progessBarData.workflowName }} - status: {{ progessBarData.status }} - progess: {{ progessBarData.progress }}</span>

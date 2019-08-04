@@ -1,12 +1,13 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-import {ApplicationEnvironment, LocationMatch} from "@app/core";
+import {ApplicationEnvironment, Deployment, LocationMatch} from "@app/core";
 import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.model';
 
 export type ApplicationWizardMachineEvents =
   Init |
   InitApplicationEnvironment |
+  OnActiveDeploymentFound |
   DoSelectTemplate |
   GoBack |
   DoCreateApplication |
@@ -31,6 +32,11 @@ export class Init {
 export class InitApplicationEnvironment {
   readonly type = 'INIT_APPLICATION_ENVIRONMENT';
   constructor(public applicationId: string , public environmentId: string) {}
+}
+
+export class OnActiveDeploymentFound {
+  readonly type = 'ON_ACTIVE_DEPLOYMENT_FOUND';
+  constructor(public deployment: Deployment) {}
 }
 
 export class DoSelectTemplate {

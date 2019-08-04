@@ -49,7 +49,7 @@ export class DeploymentWorkflowExecutionService extends GenericResourceService<W
   }
 
   /**
-   * After a given delay (5 sec) start polling the /workflow_execution endpoint.
+   * After a given delay (500 ms) start polling the /workflow_execution endpoint.
    * Then continue polling each 2 sec.
    * Each response should be broadcast to the subject.
    * If the execution is not in a pending status, then stop the polling and complete the subject.
@@ -60,7 +60,7 @@ export class DeploymentWorkflowExecutionService extends GenericResourceService<W
 
     let deploymentSubject = new ReplaySubject<WorkflowExecutionDTO>(1);
 
-    timer(5000, 2000).pipe(
+    timer(500, 2000).pipe(
       concatMap(value => this.getById(deploymentId))
     ).pipe(
       map(x => {

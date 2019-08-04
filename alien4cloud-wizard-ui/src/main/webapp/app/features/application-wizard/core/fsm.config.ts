@@ -53,11 +53,26 @@ export const applicationWizardMachineConfig: MachineConfig<
         ],
         'INIT_APPLICATION_ENVIRONMENT': [
           {
-            target: 'environmentSelected',
+            target: 'applicationEnvironmentInitializing',
             actions: ['assignAppInitInfo']
           }
 
         ]
+      }
+    },
+    applicationEnvironmentInitializing: {
+      invoke: {
+        id: 'getActiveDeployment',
+        src: 'getActiveDeployment'
+      },
+      on: {
+        ON_ACTIVE_DEPLOYMENT_FOUND: {
+          target: 'activeDeploymentForm'
+          // TODO: assign deployment ?
+        },
+        DO_SELECT_ENVIRONMENT: {
+          target: 'environmentSelected'
+        }
       }
     },
     templateSelectionForm: {

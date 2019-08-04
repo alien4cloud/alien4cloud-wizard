@@ -29,7 +29,7 @@ import {
   OnDeploymentTopologyFetched,
   OnDeploymentSubmitError,
   OnSelectLocationSucesss,
-  InitApplicationEnvironment
+  InitApplicationEnvironment, OnActiveDeploymentFound
 } from "@app/features/application-wizard/core/fsm.events";
 import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
 import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
@@ -68,6 +68,24 @@ export class AppplicationWizardMachineService {
             catchError(err => {
               console.log("------------ Error catch by service : " + err);
               return of(new OnApplicationCreateError(err.message));
+            })
+          ),
+      getActiveDeployment: (_, event) =>
+        this.applicationDeploymentService
+          .getActiveDeployment(_.applicationId, _.environmentId)
+          .pipe(
+            map(deployment => {
+              if (deployment) {
+                return new OnActiveDeploymentFound(deployment);
+              } else {
+                return new DoSelectEnvironment(_.environmentId);
+              }
+            }),
+            catchError(err => {
+              console.log("------------ Error catch by service : " + err);
+              // return new DoSelectEnvironment(_.environmentId);
+              // FIXME
+              return undefined;
             })
           ),
       searchEnvironments: (_, event) =>

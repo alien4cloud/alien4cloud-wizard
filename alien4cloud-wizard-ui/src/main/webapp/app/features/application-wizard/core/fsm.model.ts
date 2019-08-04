@@ -6,6 +6,7 @@ import { ApplicationEnvironment, LocationMatch } from '@app/core';
 export interface ApplicationWizardMachineSchema {
   states: {
     boot: {};
+    applicationEnvironmentInitializing: {}
     templateSelectionForm: {};
     templateSelected: {};
     applicationCreateForm: {};
@@ -22,6 +23,7 @@ export interface ApplicationWizardMachineSchema {
     deploymentForm: {};
     deploymentSubmitting:{},
     activeDeploymentForm:{},
+    // TODO: remove : maybe we won't use this state
     applicationDeployed:{}
   };
 }
