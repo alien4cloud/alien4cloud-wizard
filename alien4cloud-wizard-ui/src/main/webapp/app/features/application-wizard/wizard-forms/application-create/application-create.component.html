@@ -12,7 +12,8 @@
   </form>
 
   <div fxLayout="row" fxLayoutAlign="center center">
-    <button mat-stroked-button (click)="back()" type="button">Back</button>
+    <w4c-wizard-button (click)="back()" enableOnGuard="backToTemplateSelectionIsPossible" [fsmContext]="fsmContext" label="Back"></w4c-wizard-button>
+    <!--    <button mat-stroked-button (click)="back()" type="button">Back</button>-->
     <button mat-stroked-button (click)="createApp()" type="button">Create</button>
   </div>
 </div>

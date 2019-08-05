@@ -24,6 +24,8 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent {
               private trimName: TrimNamePipe) { }
 
   ngOnInit() {
+    // console.log("is back possible ? ", this.fsm.machineOptions.guards['backIsPossible'].call(this.fsmContext));
+
     if (this.fsmContext) {
       if (this.fsmContext.applicationName) {
         this.applicationName = this.fsmContext.applicationName;
@@ -45,6 +47,7 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent {
   }
 
   back() {
+
     this.fsm.send(new GoBack());
   }
 

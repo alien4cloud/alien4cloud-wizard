@@ -14,6 +14,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
 import { ApplicationDeploymentComponent } from './wizard-forms/application-deployment/application-deployment.component';
 import { ActiveDeploymentComponent } from './wizard-forms/active-deployment/active-deployment.component';
+import { WizardButtonComponent } from './wizard-button/wizard-button.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ActiveDeploymentComponent } from './wizard-forms/active-deployment/acti
     WelcomeComponent,
     LocationSelectionComponent,
     ApplicationDeploymentComponent,
-    ActiveDeploymentComponent
+    ActiveDeploymentComponent,
+    WizardButtonComponent
   ],
   imports: [
     SharedModule,
