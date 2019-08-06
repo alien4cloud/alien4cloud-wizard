@@ -17,9 +17,19 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 export class WizardButtonComponent implements OnInit {
 
   @Input() fsmContext: ApplicationWizardMachineContext;
+
+  /**
+   * The name of the guard we want to use to activate this button or not.
+   */
   @Input() enableOnGuard: string;
+
+  /**
+   * The label of the button.
+   */
   @Input() label: string;
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
+
+  private enabled: boolean
 
   constructor(public fsm: AppplicationWizardMachineService) { }
 
@@ -35,6 +45,8 @@ export class WizardButtonComponent implements OnInit {
   }
 
   ngOnInit() {
+    // to avoid too much invcation on the guard function, we cache enabled boolean.
+    this.enabled = this.isEnabled();
   }
 
 }
