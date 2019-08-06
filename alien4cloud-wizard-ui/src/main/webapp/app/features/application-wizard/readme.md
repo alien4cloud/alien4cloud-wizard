@@ -29,6 +29,15 @@ We store here data that have a meaning concerning the wizard (it not a _fourre t
 
 If you need to implement something new in the wizard, you'll probably need to add some states, events, and configure somme transitions in the FSM.
 
+For better understanding of our system, the name of our states should follow the following convention:
+* states related to a form have a name terminating by `...Form`.
+* states that perfom an invocation should have a name terminating by `...ing`, since thay are do**ing** something.
+* transient states that are often the consequence of an action should have a name terminating by `...ed`.
+
+Events follow the following convention:
+* events that are triggered by a user (often through a button click) should start with `Do...`.
+* events that occur after an invocation should have a name starting by `On...` since they are triggered by an external event. We often have 2 kind of event after an invocation : `On...Sucess` when the invocation result is a success and `On...Error`when it has thrown an error. 
+
 You must have a clear idea of what you need. If not, draw your state chart on a paper or whatever you want. Then :
 
 1. declare your states in ``ApplicationWizardMachineSchema`` ([core/fsm.model.ts](src/main/webapp/app/features/application-wizard/core/fsm.model.ts)).
