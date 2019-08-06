@@ -28,27 +28,23 @@ export class ActiveDeploymentComponent implements OnInit,WizardFormComponent {
   ) { }
 
   ngOnInit() {
-    this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.applicationId, this.fsmContext.environmentId).subscribe(value => {
-      console.log("deploymentID is : " + value.deployment.id);
-      let deploymentId = value.deployment.id;
-      console.log("Motitored deployement: ", JSON.stringify(value));
-      this.monitoredDeployment = value;
+    // FIXME : we should no use this timeout here.
+    setTimeout( () =>
+      this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.applicationId, this.fsmContext.environmentId).subscribe(value => {
+        console.log("deploymentID is : " + value.deployment.id);
+        let deploymentId = value.deployment.id;
+        console.log("Motitored deployement: ", JSON.stringify(value));
+        this.monitoredDeployment = value;
 
-      // now poll the deployment
-      this.deploymentWorkflowExecutionService.monitorWorkflowExecution(deploymentId).subscribe(dto => {
-        console.log("Returned execution: ", JSON.stringify(dto));
-        //TODO: update progess information;
-        this.updateProgessData(dto);
-      }, error => {}, () => {
-        this.isDeploying = false;
-      });
-      // this.deploymentWorkflowExecutionService.isDeployed.subscribe(deployed => {
-      //   console.log("deployed: ", deployed)
-      //   if (deployed) {
-      //     this.isDeploying = false;
-      //   }
-      // })
-    });
+        // now poll the deployment
+        this.deploymentWorkflowExecutionService.monitorWorkflowExecution(deploymentId).subscribe(dto => {
+          console.log("Returned execution: ", JSON.stringify(dto));
+          //TODO: update progess information;
+          this.updateProgessData(dto);
+        }, error => {}, () => {
+          this.isDeploying = false;
+        });
+      }), 2000);
   }
 
   // FIXME: this logic should probably move to a service
