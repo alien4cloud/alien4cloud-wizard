@@ -28,6 +28,8 @@ import {
   OnLocationFetched,
   OnDeploymentTopologyFetched,
   OnDeploymentSubmitError,
+  OnUndeploymentSubmitError,
+  OnUndeploymentSubmitSucess,
   OnSelectLocationSucesss,
   InitApplicationEnvironment, OnActiveDeploymentFound
 } from "@app/features/application-wizard/core/fsm.events";
@@ -41,7 +43,8 @@ import {
   LocationMatchingService,
   TopologyService,
   Deployment,
-  Execution} from "@app/core";
+  Execution,
+  ApplicationStatus} from "@app/core";
 
 /**
  * Manages the machine initialization.
@@ -141,12 +144,22 @@ export class AppplicationWizardMachineService {
             console.log("------------ Error catch by service : " + err);
             return of(new OnDeploymentSubmitError(err.message));
           })
+        ),
+        undeploy: (_, event) =>
+        this.applicationDeploymentService.undeploy(
+          _.applicationId, _.environmentId
+        ).pipe(
+          map(data => new OnUndeploymentSubmitSucess()),
+          catchError(err => {
+            return of(new OnUndeploymentSubmitError(err.message));
+          })
         )
     },
     guards: {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')
       // FIXME: this is just for the example of using the guard to enable buttons
-      backToTemplateSelectionIsPossible: (context) => !context.applicationId
+      backToTemplateSelectionIsPossible: (context) => !context.applicationId ,
+      submitUndeploymentPossible: context => context.deploymentStatus === ApplicationStatus.DEPLOYED
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({

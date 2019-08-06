@@ -7,6 +7,7 @@ import {MonitorDeploymentService} from "@app/core/services/monitor-deployment.se
 import {map} from "rxjs/operators";
 import {DeploymentWorkflowExecutionService} from "@app/core/services/workflow-execution.service";
 import {ExecutionStatus, MonitoredDeploymentDTO, Task, WorkflowExecutionDTO} from "@app/core";
+import { DoSubmitUndeployment } from '../../core/fsm.events';
 
 @Component({
   selector: 'w4c-active-deployment',
@@ -74,6 +75,12 @@ export class ActiveDeploymentComponent implements OnInit,WizardFormComponent {
       }
     }
     this.progessBarData.progress = progress;
+  }
+
+
+  undeployApp(){
+    console.log("About to Undeploy with deployment status : ===>"+this.fsmContext.deploymentStatus);
+    this.fsm.send(new DoSubmitUndeployment());   
   }
 
 }

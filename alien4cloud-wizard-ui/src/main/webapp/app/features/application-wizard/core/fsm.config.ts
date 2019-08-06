@@ -24,7 +24,8 @@ export const context: ApplicationWizardMachineContext = {
   orchestratorId: undefined,
   errorMessage: undefined,
   locations: undefined,
-  deploymentId : undefined
+  deploymentId: undefined,
+  deploymentStatus: undefined
 };
 
 /**
@@ -58,6 +59,15 @@ export const applicationWizardMachineConfig: MachineConfig<
           }
 
         ]
+        /*
+        ,
+        'INIT_APPLICATION_UNDEPLOYMENT': [
+          {
+            target: 'undeploymentSubmitting',
+            // actions: ['assignAppInitInfo']
+          }
+
+        ],*/
       }
     },
     applicationEnvironmentInitializing: {
@@ -176,7 +186,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         }
       }
     },
-    environmentSelected: {   
+    environmentSelected: {
       on: {
         '': [
           {
@@ -269,6 +279,22 @@ export const applicationWizardMachineConfig: MachineConfig<
         }
       }
     },
+
+    undeploymentSubmitting: {
+      invoke: {
+        id: 'undeploy',
+        src: 'undeploy'
+      },
+      on: {
+        ON_UNDEPLOYMENT_SUBMIT_SUCCESS: {
+          target: 'activeDeploymentForm'
+        },
+        ON_UNDEPLOYMENT_SUBMIT_ERROR: {
+          target: 'activeDeploymentForm',
+          actions: ['assignError']
+        }
+      }
+    },
     activeDeploymentForm: {
       on: {
         ON_ACTIVE_DEPLOYMENT_CHECK: [
@@ -276,7 +302,12 @@ export const applicationWizardMachineConfig: MachineConfig<
             target: 'applicationDeployed'
             // ,actions: ['deploymentStatusCheck']
           }
-        ]
+        ],
+        DO_SUBMIT_UNDEPLOYMENT: {
+          target: 'undeploymentSubmitting',
+          //actions: ['assignTargetId']
+          // actions: ['assignUser', 'loginSuccess']
+        }
       }
     },
     applicationDeployed: {

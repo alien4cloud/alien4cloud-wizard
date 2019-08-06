@@ -22,4 +22,12 @@ export class ApplicationOverviewService extends GenericResourceService<Applicati
     throw new Error("Not implemented !");
   }
 
+
+  /*
+  getEnvironmentApplications(): Observable<{}> {
+    const url = GenericResourceService.baseUrl + "/applications/environments";
+    return this.handleResult<{}>(this.http.get(url));
+  }
+  */
+
 }

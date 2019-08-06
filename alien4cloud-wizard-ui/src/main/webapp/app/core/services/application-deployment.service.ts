@@ -33,4 +33,13 @@ export class ApplicationDeploymentService extends GenericService<Deployment> {
     }));
   }
 
+  undeploy(applicationId: String, environmentId: String): Observable<Deployment> {
+    let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
+    return this.handleResult<Deployment>(this.http.put(GenericService.baseUrl+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/deployment", params), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      })
+    }));
+  }
+
 }

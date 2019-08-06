@@ -1,6 +1,6 @@
 export enum ApplicationStatus {
-  DEPLOYED,
-  UNDEPLOYED
+  DEPLOYED = "DEPLOYED" ,
+  UNDEPLOYED = "UNDEPLOYED"
 }
 
 export class Application {

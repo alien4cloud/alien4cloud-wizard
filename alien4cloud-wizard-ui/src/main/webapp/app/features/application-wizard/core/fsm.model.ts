@@ -24,6 +24,7 @@ export interface ApplicationWizardMachineSchema {
     deploymentSubmitting:{},
     activeDeploymentForm:{},
     // TODO: remove : maybe we won't use this state
+    undeploymentSubmitting:{},
     applicationDeployed:{}
   };
 }
@@ -58,4 +59,5 @@ export interface ApplicationWizardMachineContext {
   locations: LocationMatch[];
   orchestratorId: string;
   deploymentId : string
+  deploymentStatus :String ;
 }
