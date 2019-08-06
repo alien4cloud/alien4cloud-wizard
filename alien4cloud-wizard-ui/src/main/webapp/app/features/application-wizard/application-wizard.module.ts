@@ -15,6 +15,7 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
 import { ApplicationDeploymentComponent } from './wizard-forms/application-deployment/application-deployment.component';
 import { ActiveDeploymentComponent } from './wizard-forms/active-deployment/active-deployment.component';
 import { WizardButtonComponent } from './wizard-button/wizard-button.component';
+import { WizardSpinnerComponent } from './wizard-forms/wizard-spinner/wizard-spinner.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { WizardButtonComponent } from './wizard-button/wizard-button.component';
     LocationSelectionComponent,
     ApplicationDeploymentComponent,
     ActiveDeploymentComponent,
-    WizardButtonComponent
+    WizardButtonComponent,
+    WizardSpinnerComponent
   ],
   imports: [
     SharedModule,
@@ -43,7 +45,8 @@ import { WizardButtonComponent } from './wizard-button/wizard-button.component';
     ApplicationCreateComponent,
     LocationSelectionComponent,
     ApplicationDeploymentComponent,
-    ActiveDeploymentComponent]
+    ActiveDeploymentComponent,
+    WizardSpinnerComponent]
 })
 
 export class ApplicationWizardModule {

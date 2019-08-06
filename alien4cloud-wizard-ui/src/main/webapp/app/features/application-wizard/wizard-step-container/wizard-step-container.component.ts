@@ -1,10 +1,11 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, Type, ViewChild} from '@angular/core';
 import {
   WizardFormStep,
   WizardFormComponent
 } from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {StepComponentDirective} from "@app/features/application-wizard/wizard-step-container/step-component.directive";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
+import {WizardSpinnerComponent} from "@app/features/application-wizard/wizard-forms/wizard-spinner/wizard-spinner.component";
 
 /**
  * This component is responsible of rendering the WizardFormComponent that must be shown at a given state.
@@ -27,23 +28,26 @@ export class WizardStepContainerComponent implements OnInit {
   ngOnInit() {
   }
 
+  renderSpinner() {
+    this.renderForm(WizardSpinnerComponent);
+  }
+
   renderStepForm(step: WizardFormStep, context: ApplicationWizardMachineContext) {
-    // get the factory
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(step.component);
-
-    // get the view reference
-    const viewContainerRef = this.stepComponent.viewContainerRef;
-
-    // clear the view
-    viewContainerRef.clear();
-
-    // create the form component into the view
-    const componentRef = viewContainerRef.createComponent(componentFactory);
-
-    this.wizardForm = <WizardFormComponent>componentRef.instance;
-
+    this.renderForm(step.component);
     // give the context to the form component
     this.setContext(context);
+  }
+
+  private renderForm(component: Type<any>) {
+    // get the factory
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    // get the view reference
+    const viewContainerRef = this.stepComponent.viewContainerRef;
+    // clear the view
+    viewContainerRef.clear();
+    // create the form component into the view
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+    this.wizardForm = <WizardFormComponent>componentRef.instance;
   }
 
   setContext(fsmContext: ApplicationWizardMachineContext) {

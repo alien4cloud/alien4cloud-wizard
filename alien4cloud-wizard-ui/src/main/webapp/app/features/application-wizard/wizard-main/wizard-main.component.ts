@@ -68,9 +68,7 @@ export class WizardMainComponent implements OnInit, OnDestroy {
     this.stepper.selectionChange.subscribe(data => {
       console.log(data);
       console.log("Current step is : " + data.selectedIndex);
-      const currentWizardFormStep = this.steps[data.selectedIndex];
-      // render the form this step concerns
-      this.stepFormContainer.renderStepForm(currentWizardFormStep, this.currentFsmContext);
+      this.renderStateForm(data.selectedIndex);
     });
 
     // let's suscribe to FSM state change events
@@ -107,11 +105,13 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         } else {
           // the step index has not changed (can occur when error is thrown)
           // we have to set the fsmContext to the current form
-          this.stepFormContainer.setContext(this.currentFsmContext);
+          this.renderStateForm(this.currentStepIndex);
+          // this.stepFormContainer.setContext(this.currentFsmContext);
         }
       } else {
         // nothing to do here: a state is not always a form state.
         console.log(`${data.value} is not a form state !`);
+        this.stepFormContainer.renderSpinner();
       }
     });
 
@@ -125,6 +125,12 @@ export class WizardMainComponent implements OnInit, OnDestroy {
     //   this.fsm.send(new InitApplicationEnvironment(this.appId, this.envId));
     // }
 
+  }
+
+  private renderStateForm(index: number) {
+    const currentWizardFormStep = this.steps[index];
+    // render the form this step concerns
+    this.stepFormContainer.renderStepForm(currentWizardFormStep, this.currentFsmContext);
   }
 
   ngOnDestroy(): void {
