@@ -1,8 +1,3 @@
-export enum ApplicationStatus {
-  DEPLOYED = "DEPLOYED" ,
-  UNDEPLOYED = "UNDEPLOYED"
-}
-
 export class Application {
   id: string;
   name: string;

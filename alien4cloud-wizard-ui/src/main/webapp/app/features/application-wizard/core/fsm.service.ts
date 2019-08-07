@@ -44,7 +44,7 @@ import {
   TopologyService,
   Deployment,
   Execution,
-  ApplicationStatus} from "@app/core";
+  DeploymentStatus} from "@app/core";
 
 /**
  * Manages the machine initialization.
@@ -159,7 +159,7 @@ export class AppplicationWizardMachineService {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')
       // FIXME: this is just for the example of using the guard to enable buttons
       backToTemplateSelectionIsPossible: (context) => !context.applicationId ,
-      submitUndeploymentPossible: context => context.deploymentStatus === ApplicationStatus.DEPLOYED
+      submitUndeploymentPossible: context => context.deploymentStatus === DeploymentStatus.DEPLOYED
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
