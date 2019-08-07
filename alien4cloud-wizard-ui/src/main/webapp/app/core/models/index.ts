@@ -11,3 +11,4 @@ export * from './rest.model';
 export * from './deployment-topology.model';
 export * from './deployment.model';
 export * from './execution.model';
+export * from './deployment-status.enum';

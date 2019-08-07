@@ -42,6 +42,9 @@ export class ApplicationListComponent implements OnInit {
   // indicates data loading
   private isLoading: boolean = false;
 
+  // Label button deployment status
+  private label ;
+
   ngOnInit() {
     this.loadApplications(0);
 
@@ -80,6 +83,7 @@ export class ApplicationListComponent implements OnInit {
     this.overview = undefined;
     this.applicationOverviewService.getById(applicationId).subscribe((data) => {
       this.overview = data;
+      this.label =  this.overview.deploymentStatus ;
     });
   }
 
