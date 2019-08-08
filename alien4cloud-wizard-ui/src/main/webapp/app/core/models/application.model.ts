@@ -24,18 +24,8 @@ export class ApplicationEnvironment {
   groupRoles: Map<string, Set<string>>;
 }
 
-
-export class ApplicationEnvironmentDTO {
-  id: string;
+export class ApplicationEnvironmentDTO extends ApplicationEnvironment {
   status: DeploymentStatus;
-  name: string;
-  description : string;
-  applicationId: string;
-  environmentType : EnvironmentType ;
-  currentVersionName : string;
-  deployedVersion : string;
-  userRoles : Map<string, Set<string>> ;
-  groupRoles: Map<string, Set<string>>
+  deployedVersion: string;
+  currentVersionName: string;
 }
-
-

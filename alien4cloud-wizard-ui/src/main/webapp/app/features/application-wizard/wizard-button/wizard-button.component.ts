@@ -29,7 +29,7 @@ export class WizardButtonComponent implements OnInit {
   @Input() label: string;
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
 
-  private enabled: boolean
+  // private enabled: boolean
 
   constructor(public fsm: AppplicationWizardMachineService) { }
 
@@ -46,7 +46,7 @@ export class WizardButtonComponent implements OnInit {
 
   ngOnInit() {
     // to avoid too much invcation on the guard function, we cache enabled boolean.
-    this.enabled = this.isEnabled();
+    // this.enabled = this.isEnabled();
   }
 
 }

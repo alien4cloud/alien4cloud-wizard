@@ -6,6 +6,9 @@ import * as _ from 'lodash';
 
 import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService, ApplicationEnvironmentService, ApplicationEnvironmentDTO} from "@app/core";
 import {Router} from "@angular/router";
+import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
+import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-application-list',
@@ -18,7 +21,8 @@ export class ApplicationListComponent implements OnInit {
     private applicationService: ApplicationService,
     private applicationOverviewService: ApplicationOverviewService,
     private applicationEnvironmentService: ApplicationEnvironmentService,
-    private router: Router
+    private router: Router,
+    private websocketService: WebsocketSubscriptionManager
   ) {
   }
 
@@ -45,6 +49,8 @@ export class ApplicationListComponent implements OnInit {
 
   // indicates data loading
   private isLoading: boolean = false;
+
+  private statusMonitorEventSubscription: Subscription;
 
   ngOnInit() {
     this.loadApplications(0);
@@ -84,10 +90,18 @@ export class ApplicationListComponent implements OnInit {
     console.log("Openning ", applicationId);
     this.overview = undefined;
     this.applicationOverviewService.getById(applicationId).subscribe((data) => {
+      // FIXME; TODO unsuscribe
+       this.statusMonitorEventSubscription = this.websocketService.registerEnvironmentStatusChannel(data.applicationEnvironment.id).subscribe(e => {
+        console.log("DeploymentStatus has changed : ", e.deploymentStatus);
+        this.overview.deploymentStatus = e.deploymentStatus;
+      });
       this.overview = data;
     });
   }
 
+  closeDetails() {
+    this.statusMonitorEventSubscription.unsubscribe();
+  }
 
   private openWizard() {
     let routeUrl = `/app-wizard/${this.overview.application.id}/${this.overview.applicationEnvironment.id}`;

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ApplicationEnvironment} from "@app/core";
+import {ApplicationEnvironment, ApplicationEnvironmentDTO, DeploymentStatus} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
 import {GenericResourceService} from "@app/core/services/generic-resource.service";
 import {forkJoin, from, Observable, of, timer} from "rxjs";
@@ -8,8 +8,6 @@ import {DeploymentTopologyDTO} from "@app/core/models/deployment-topology.model"
 import {Deployment} from "@app/core/models/deployment.model";
 import {concatMap, delay} from 'rxjs/operators';
 import {concat} from 'rxjs';
-import { ApplicationEnvironmentDTO } from '../models';
-
 
 @Injectable({
   providedIn: 'root'
@@ -54,12 +52,21 @@ export class ApplicationEnvironmentService extends GenericResourceService<Applic
     // }));
   }
 
-
   getEnvironmentApplications(applicationIds: String[]): Observable<ApplicationEnvironmentDTO[]> {
     const url = GenericResourceService.baseUrl + "/applications/environments";
     return this.handleResult<ApplicationEnvironmentDTO[]>(this.http.post(url,applicationIds));
   }
   
+  getApplicationEnvironmentStatus(applicationId: string, environmentId: string): Observable<DeploymentStatus> {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId};
+    let url = this.getUrl("/@{environmentId}/status", urlParams);
+    return this.handleResult<DeploymentStatus>(this.http.get(url));
+  }
 
+  getApplicationEnvironmentDTO(applicationId: string, environmentId: string): Observable<ApplicationEnvironmentDTO> {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId};
+    let url = this.getUrl("/@{environmentId}", urlParams);
+    return this.handleResult<ApplicationEnvironmentDTO>(this.http.get(url));
+  }
 
 }

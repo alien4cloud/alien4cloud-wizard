@@ -1,4 +1,4 @@
-import { ApplicationEnvironment, LocationMatch } from '@app/core';
+import {ApplicationEnvironment, DeploymentStatus, LocationMatch} from '@app/core';
 
 /**
  * Specify the schema of our state machine configuration.
@@ -23,9 +23,7 @@ export interface ApplicationWizardMachineSchema {
     deploymentForm: {};
     deploymentSubmitting:{},
     activeDeploymentForm:{},
-    // TODO: remove : maybe we won't use this state
-    undeploymentSubmitting:{},
-    applicationDeployed:{}
+    undeploymentSubmitting:{}
   };
 }
 
@@ -58,6 +56,6 @@ export interface ApplicationWizardMachineContext {
   locationName: string;
   locations: LocationMatch[];
   orchestratorId: string;
-  deploymentId : string
-  deploymentStatus :String ;
+  deploymentId: string;
+  deploymentStatus: DeploymentStatus;
 }

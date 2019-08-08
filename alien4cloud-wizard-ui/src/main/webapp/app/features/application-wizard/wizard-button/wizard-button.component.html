@@ -1,3 +1,3 @@
-<button mat-stroked-button [disabled]="!enabled" (click)="click.emit($event)">
+<button mat-stroked-button [disabled]="!isEnabled()" (click)="click.emit($event)">
   {{ label }}
 </button>

@@ -11,17 +11,17 @@ export class Execution {
 }
 
 export enum ExecutionStatus {
-  SCHEDULED,
-  RUNNING,
-  SUCCEEDED,
-  CANCELLED,
-  FAILED
+  SCHEDULED = "SCHEDULED",
+  RUNNING = "RUNNING",
+  SUCCEEDED = "SUCCEEDED",
+  CANCELLED = "CANCELLED",
+  FAILED = "FAILED"
 }
 
 export enum WorkflowExecutionStepStatus {
-  STARTED,
-  COMPLETED_SUCCESSFULL,
-  COMPLETED_WITH_ERROR
+  STARTED = "STARTED",
+  COMPLETED_SUCCESSFULL = "COMPLETED_SUCCESSFULL",
+  COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR"
 }
 
 export class Task {
@@ -38,11 +38,11 @@ export class Task {
 }
 
 export enum TaskStatus {
-  SCHEDULED,
-  CANCELLED,
-  STARTED,
-  SUCCEEDED,
-  FAILED
+  SCHEDULED = "SCHEDULED",
+  CANCELLED = "CANCELLED",
+  STARTED = "STARTED",
+  SUCCEEDED = "SUCCEEDED",
+  FAILED = "FAILED"
 }
 
 export class WorkflowExecutionDTO {

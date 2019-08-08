@@ -1,15 +1,8 @@
-import { fromEventPattern, of } from 'rxjs';
-import {
-  interpret,
-  Machine,
-  MachineOptions,
-  State,
-  assign,
-  EventObject
-} from 'xstate';
-import { Injectable } from '@angular/core';
-import { map, catchError } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import {fromEventPattern, of} from 'rxjs';
+import {assign, EventObject, interpret, Machine, MachineOptions, State} from 'xstate';
+import {Injectable} from '@angular/core';
+import {catchError, map, mergeMap} from 'rxjs/operators';
+import {Router} from '@angular/router';
 import {
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema
@@ -17,34 +10,35 @@ import {
 import {
   ApplicationWizardMachineEvents,
   DoCreateApplication,
+  DoSelectEnvironment,
+  DoSelectLocation,
   DoSelectTemplate,
+  InitApplicationEnvironment,
+  OnActiveDeploymentFound,
   OnApplicationCreateError,
   OnApplicationCreateSucess,
-  DoSelectLocation,
-  OnError,
-  OnEnvironmentsFetched,
-  DoSelectEnvironment,
-  OnDeploymentSubmitSucess,
-  OnLocationFetched,
-  OnDeploymentTopologyFetched,
   OnDeploymentSubmitError,
-  OnUndeploymentSubmitError,
-  OnUndeploymentSubmitSucess,
+  OnDeploymentSubmitSucess,
+  OnDeploymentTopologyFetched,
+  OnEnvironmentsFetched,
+  OnError,
+  OnLocationFetched,
   OnSelectLocationSucesss,
-  InitApplicationEnvironment, OnActiveDeploymentFound
+  OnUndeploymentSubmitError,
+  OnUndeploymentSubmitSucess
 } from "@app/features/application-wizard/core/fsm.events";
-import { applicationWizardMachineConfig } from "@app/features/application-wizard/core/fsm.config";
-import { FsmGraph, FsmGraphEdge, FsmGraphNode } from "@app/features/application-wizard/core/fsm-graph.model";
-import * as _ from "lodash";
+import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
+import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
 import {
-  ApplicationService,
-  ApplicationEnvironmentService,
   ApplicationDeploymentService,
-  LocationMatchingService,
-  TopologyService,
+  ApplicationEnvironmentService,
+  ApplicationService,
   Deployment,
+  DeploymentStatus,
   Execution,
-  DeploymentStatus} from "@app/core";
+  LocationMatchingService,
+  TopologyService
+} from "@app/core";
 
 /**
  * Manages the machine initialization.
@@ -77,20 +71,22 @@ export class AppplicationWizardMachineService {
         this.applicationDeploymentService
           .getActiveDeployment(_.applicationId, _.environmentId)
           .pipe(
-            map(deployment => {
-              if (deployment) {
-                return new OnActiveDeploymentFound(deployment);
-              } else {
-                return new DoSelectEnvironment(_.environmentId);
-              }
-            }),
+            mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.applicationId, _.environmentId)
+            .pipe(
+              map(status => {
+                if (deployment) {
+                  return new OnActiveDeploymentFound(deployment, status);
+                } else {
+                  return new DoSelectEnvironment(_.environmentId);
+                }
+              }),
             catchError(err => {
               console.log("------------ Error catch by service : " + err);
               // return new DoSelectEnvironment(_.environmentId);
               // FIXME
               return undefined;
             })
-          ),
+          ))),
       searchEnvironments: (_, event) =>
         this.applicationEnvironmentService.search(
           0,
@@ -159,7 +155,12 @@ export class AppplicationWizardMachineService {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')
       // FIXME: this is just for the example of using the guard to enable buttons
       backToTemplateSelectionIsPossible: (context) => !context.applicationId ,
-      submitUndeploymentPossible: context => context.deploymentStatus === DeploymentStatus.DEPLOYED
+      canUndeploy: context => context.deploymentId && (
+        context.deploymentStatus === DeploymentStatus.DEPLOYED
+        || context.deploymentStatus === DeploymentStatus.FAILURE
+        || context.deploymentStatus === DeploymentStatus.UPDATE_FAILURE
+        || context.deploymentStatus === DeploymentStatus.DEPLOYMENT_IN_PROGRESS),
+      canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
@@ -170,6 +171,10 @@ export class AppplicationWizardMachineService {
       })),
       assignAppId: assign<ApplicationWizardMachineContext, OnApplicationCreateSucess>((_, event) => ({
         applicationId: event.applicationId
+      })),
+      assignDeployment: assign<ApplicationWizardMachineContext, OnActiveDeploymentFound>((_, event) => ({
+        deploymentId: event.deployment.id,
+        deploymentStatus : event.deploymentStatus
       })),
       assignAppInitInfo: assign<ApplicationWizardMachineContext, InitApplicationEnvironment>((_, event) => ({
         applicationId: event.applicationId, environmentId: event.environmentId

@@ -1,15 +1,17 @@
 <div fxLayout="column">
 
-  <div *ngIf="deployed; else deploying" fxLayout="row" fxFlex="100%">
-    <h2>Application deployed</h2>
+  <span>Deployment status : {{ fsmContext.deploymentStatus }}</span>
+
+  <div *ngIf="!isWorkflowInProgress; else deploying" fxLayout="row" fxFlex="100%">
+    <h2>No workflow in progress</h2>
   </div>
 
 
   <ng-template #deploying>
     <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center">
-      <h2 *ngIf="isDeploying">Workflow in progress ...</h2>
-      <h2 *ngIf="!isDeploying">Workflow executed (but maybe with error !)</h2>
-      <mat-progress-bar *ngIf="isDeploying && !progessBarData" mode="indeterminate"></mat-progress-bar>
+      <h2 *ngIf="isWorkflowInProgress">Workflow in progress ...</h2>
+      <h2 *ngIf="!isWorkflowInProgress">Workflow executed (but maybe with error !)</h2>
+      <mat-progress-bar *ngIf="isWorkflowInProgress && !progessBarData" mode="indeterminate"></mat-progress-bar>
       <mat-progress-bar *ngIf="progessBarData" mode="determinate" value="{{ progessBarData.progress }}"
         [color]="(progessBarData.status && progessBarData.status.toString() == 'FAILED') ? 'warn' : 'primary'">
       </mat-progress-bar>
@@ -23,9 +25,7 @@
   <mat-divider></mat-divider>
   <br>
   <div fxLayout="row" fxLayoutAlign="center center">
-    <button mat-stroked-button (click)="undeployApp()">undeploy</button>
-        <!--
-    <w4c-wizard-button mat-stroked-button enableOnGuard="submitUndeploymentPossible" [fsmContext]="fsmContext"
-      (click)="undeployApp()" label="undeploy"></w4c-wizard-button> -->
+    <w4c-wizard-button enableOnGuard="canUndeploy" [fsmContext]="fsmContext" (click)="doUndeploy()" label="Undeploy"></w4c-wizard-button>
+    <w4c-wizard-button enableOnGuard="canDeploy" [fsmContext]="fsmContext" (click)="doDeploy()" label="Deploy"></w4c-wizard-button>
   </div>
 </div>

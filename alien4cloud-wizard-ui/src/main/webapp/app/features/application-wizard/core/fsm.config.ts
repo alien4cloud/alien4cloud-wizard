@@ -59,15 +59,6 @@ export const applicationWizardMachineConfig: MachineConfig<
           }
 
         ]
-        /*
-        ,
-        'INIT_APPLICATION_UNDEPLOYMENT': [
-          {
-            target: 'undeploymentSubmitting',
-            // actions: ['assignAppInitInfo']
-          }
-
-        ],*/
       }
     },
     applicationEnvironmentInitializing: {
@@ -77,8 +68,8 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         ON_ACTIVE_DEPLOYMENT_FOUND: {
-          target: 'activeDeploymentForm'
-          // TODO: assign deployment ?
+          target: 'activeDeploymentForm',
+          actions: ['assignDeployment']
         },
         DO_SELECT_ENVIRONMENT: {
           target: 'environmentSelected'
@@ -298,21 +289,17 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     activeDeploymentForm: {
       on: {
-        ON_ACTIVE_DEPLOYMENT_CHECK: [
-          {
-            target: 'applicationDeployed'
-            // ,actions: ['deploymentStatusCheck']
-          }
-        ],
         DO_SUBMIT_UNDEPLOYMENT: {
           target: 'undeploymentSubmitting',
+          cond: 'canUndeploy'
           //actions: ['assignTargetId']
           // actions: ['assignUser', 'loginSuccess']
+        },
+        DO_SUBMIT_DEPLOYMENT: {
+          target: 'deploymentSubmitting',
+          cond: 'canDeploy'
         }
       }
-    },
-    applicationDeployed: {
-      type: 'final'
     }
   },
 };

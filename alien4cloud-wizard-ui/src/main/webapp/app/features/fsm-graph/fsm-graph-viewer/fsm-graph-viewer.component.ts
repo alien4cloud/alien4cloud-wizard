@@ -55,7 +55,12 @@ export class FsmGraphViewerComponent implements OnInit {
       // the edge concerned by the current state transition
       const graphEdge = _.find(this.fsmGraph.edges, edge => (edge.source == data.history.value && edge.label == data.event.type));
       // flag it as active
-      graphEdge.data['active'] = true;
+      if (graphEdge) {
+        graphEdge.data['active'] = true;
+      } else {
+        // FIXME : why sometimes the edge is not found
+        console.error("Edge not found FIXME")
+      }
     });
   }
 

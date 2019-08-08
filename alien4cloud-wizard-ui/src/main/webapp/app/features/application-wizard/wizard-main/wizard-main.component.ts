@@ -105,13 +105,13 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         } else {
           // the step index has not changed (can occur when error is thrown)
           // we have to set the fsmContext to the current form
-          this.renderStateForm(this.currentStepIndex);
-          // this.stepFormContainer.setContext(this.currentFsmContext);
+          // this.renderStateForm(this.currentStepIndex);
+          this.stepFormContainer.setContext(this.currentFsmContext);
         }
       } else {
         // nothing to do here: a state is not always a form state.
         console.log(`${data.value} is not a form state !`);
-        this.stepFormContainer.renderSpinner();
+        // this.stepFormContainer.renderSpinner();
       }
     });
 

@@ -54,6 +54,8 @@ export class DeploymentWorkflowExecutionService extends GenericResourceService<W
    * Each response should be broadcast to the subject.
    * If the execution is not in a pending status, then stop the polling and complete the subject.
    *
+   * FIXME: why unsusbscribe to this does'nt stop the polling ?
+   *
    *  @param deploymentId
    */
   monitorWorkflowExecution(deploymentId: string): Observable<WorkflowExecutionDTO> {
@@ -70,8 +72,8 @@ export class DeploymentWorkflowExecutionService extends GenericResourceService<W
     ).pipe(
       filter(dto =>
         dto.execution
-        && dto.execution.status.toString() !== "RUNNING"
-        && dto.execution.status.toString() !== "SCHEDULED")
+        && dto.execution.status !== ExecutionStatus.RUNNING
+        && dto.execution.status !== ExecutionStatus.SCHEDULED)
     ).pipe(
       take(1)
     ).subscribe(value => {

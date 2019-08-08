@@ -1,7 +1,7 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-import {ApplicationEnvironment, Deployment, LocationMatch} from "@app/core";
+import {ApplicationEnvironment, Deployment, DeploymentStatus, LocationMatch} from "@app/core";
 import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.model';
 
 export type ApplicationWizardMachineEvents =
@@ -24,8 +24,7 @@ export type ApplicationWizardMachineEvents =
   DoSubmitUndeployment|
   OnUndeploymentSubmitSucess |
   OnUndeploymentSubmitError |
-  OnDeploymentSubmitError |
-  OnActiveDeploymentCheck
+  OnDeploymentSubmitError
 ;
 
 export class Init {
@@ -39,7 +38,7 @@ export class InitApplicationEnvironment {
 
 export class OnActiveDeploymentFound {
   readonly type = 'ON_ACTIVE_DEPLOYMENT_FOUND';
-  constructor(public deployment: Deployment) {}
+  constructor(public deployment: Deployment, public deploymentStatus: DeploymentStatus) {}
 }
 
 export class DoSelectTemplate {
@@ -62,12 +61,10 @@ export class DoSelectEnvironment {
   constructor(public environmentId: string) {}
 }
 
-
 export class OnDeploymentTopologyFetched {
   readonly type = 'ON_DEPLOYMENT_TOPOLOGY_FETCHED';
   constructor(public deploymentTopology: DeploymentTopologyDTO) {}
 }
-
 
 export class DoSelectLocation {
   readonly type = 'DO_SELECT_LOCATION';
@@ -102,12 +99,6 @@ export class OnApplicationCreateSucess {
 
 export class DoSubmitDeployment{
   readonly type = 'DO_SUBMIT_DEPLOYMENT';
-  constructor() {}
-}
-
-// FIXME: useless ?
-export class OnActiveDeploymentCheck{
-  readonly type = 'ON_ACTIVE_DEPLOYMENT_CHECK';
   constructor() {}
 }
 

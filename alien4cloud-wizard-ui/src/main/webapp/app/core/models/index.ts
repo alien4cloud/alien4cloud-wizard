@@ -12,3 +12,5 @@ export * from './deployment-topology.model';
 export * from './deployment.model';
 export * from './execution.model';
 export * from './deployment-status.enum';
+export * from './environment-type.enum';
+export * from './monitor-event.model';
