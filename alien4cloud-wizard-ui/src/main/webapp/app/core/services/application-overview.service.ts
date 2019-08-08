@@ -21,13 +21,4 @@ export class ApplicationOverviewService extends GenericResourceService<Applicati
   search(from?: number, size?: number, query?: string, options?: any): Observable<MultipleDataResult<ApplicationOverview>> {
     throw new Error("Not implemented !");
   }
-
-
-  /*
-  getEnvironmentApplications(): Observable<{}> {
-    const url = GenericResourceService.baseUrl + "/applications/environments";
-    return this.handleResult<{}>(this.http.get(url));
-  }
-  */
-
 }

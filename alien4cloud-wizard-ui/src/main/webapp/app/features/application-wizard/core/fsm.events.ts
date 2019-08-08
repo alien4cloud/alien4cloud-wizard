@@ -7,7 +7,6 @@ import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.mode
 export type ApplicationWizardMachineEvents =
   Init |
   InitApplicationEnvironment |
-  InitApplicationUndeploymment|
   OnActiveDeploymentFound |
   DoSelectTemplate |
   GoBack |
@@ -37,12 +36,6 @@ export class InitApplicationEnvironment {
   readonly type = 'INIT_APPLICATION_ENVIRONMENT';
   constructor(public applicationId: string , public environmentId: string) {}
 }
-
-export class InitApplicationUndeploymment {
-  readonly type = 'INIT_APPLICATION_UNDEPLOYMENT';
-  constructor(public applicationId: string , public environmentId: string) {}
-}
-
 
 export class OnActiveDeploymentFound {
   readonly type = 'ON_ACTIVE_DEPLOYMENT_FOUND';

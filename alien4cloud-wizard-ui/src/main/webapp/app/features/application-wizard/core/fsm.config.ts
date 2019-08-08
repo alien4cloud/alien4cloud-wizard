@@ -287,7 +287,8 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         ON_UNDEPLOYMENT_SUBMIT_SUCCESS: {
-          target: 'activeDeploymentForm'
+          target: 'activeDeploymentForm',
+          actions: ['clearError']
         },
         ON_UNDEPLOYMENT_SUBMIT_ERROR: {
           target: 'activeDeploymentForm',
