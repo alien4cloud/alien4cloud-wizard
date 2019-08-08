@@ -4,7 +4,7 @@ import {PageEvent} from '@angular/material/paginator';
 import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService} from "@app/core";
+import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService, ApplicationEnvironmentService, ApplicationEnvironmentDTO} from "@app/core";
 import {Router} from "@angular/router";
 
 @Component({
@@ -17,6 +17,7 @@ export class ApplicationListComponent implements OnInit {
   constructor(
     private applicationService: ApplicationService,
     private applicationOverviewService: ApplicationOverviewService,
+    private applicationEnvironmentService: ApplicationEnvironmentService,
     private router: Router
   ) {
   }
@@ -26,6 +27,9 @@ export class ApplicationListComponent implements OnInit {
 
   private applications: Application[];
   private overview: ApplicationOverview;
+  private applicationEnvironments: ApplicationEnvironmentDTO[];
+  private applicationIds: Array<String> = [];
+
 
   // Paginator config
   private length = 100;
@@ -41,9 +45,6 @@ export class ApplicationListComponent implements OnInit {
 
   // indicates data loading
   private isLoading: boolean = false;
-
-  // Label button deployment status
-  private label ;
 
   ngOnInit() {
     this.loadApplications(0);
@@ -63,6 +64,7 @@ export class ApplicationListComponent implements OnInit {
     this.applicationService.search(from, this.pageSize, this.query).subscribe((data) => {
       this.applications = data.data;
       this.length = data.totalResults;
+      this.getApplicationEnvironments();
       this.isLoading = false;
     });
   }
@@ -83,9 +85,9 @@ export class ApplicationListComponent implements OnInit {
     this.overview = undefined;
     this.applicationOverviewService.getById(applicationId).subscribe((data) => {
       this.overview = data;
-      this.label =  this.overview.deploymentStatus ;
     });
   }
+
 
   private openWizard() {
     let routeUrl = `/app-wizard/${this.overview.application.id}/${this.overview.applicationEnvironment.id}`;
@@ -93,4 +95,10 @@ export class ApplicationListComponent implements OnInit {
     this.router.navigateByUrl(routeUrl);
   }
 
+  private getApplicationEnvironments() {
+    this.applications.map(item => this.applicationIds.push(item.id));
+    this.applicationEnvironmentService.getEnvironmentApplications(this.applicationIds).subscribe((data) => {
+      this.applicationEnvironments = data;
+    });
+  }
 }

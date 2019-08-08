@@ -5,7 +5,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
 import {A4cMaterialModule} from './a4c-material.module';
 import {SvgNodeTypeImageSourceDirective} from './directives';
-import {ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, TrimNamePipe, ButtonLabelPipe} from './pipes';
+import {ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, TrimNamePipe, DeploymentStatusButtonLabel} from './pipes';
 import {
   LoginComponent,
   TopologyOverviewComponent
@@ -25,7 +25,7 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
     ToscaIdArchiveExtractorPipe,
     SvgNodeTypeImageSourceDirective,
     TrimNamePipe,
-    ButtonLabelPipe
+    DeploymentStatusButtonLabel
   ],
   imports: [
     A4cMaterialModule,
@@ -49,10 +49,10 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
     ToscaIdArchiveExtractorPipe,
     SvgNodeTypeImageSourceDirective,
     TrimNamePipe,
-    ButtonLabelPipe
+    DeploymentStatusButtonLabel
   ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA]
-  providers: [ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe, ButtonLabelPipe],
+  providers: [ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe, DeploymentStatusButtonLabel],
 })
 export class SharedModule {
   static forRoot() {

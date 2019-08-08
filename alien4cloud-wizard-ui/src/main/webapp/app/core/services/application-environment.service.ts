@@ -8,6 +8,7 @@ import {DeploymentTopologyDTO} from "@app/core/models/deployment-topology.model"
 import {Deployment} from "@app/core/models/deployment.model";
 import {concatMap, delay} from 'rxjs/operators';
 import {concat} from 'rxjs';
+import { ApplicationEnvironmentDTO } from '../models';
 
 
 @Injectable({
@@ -52,5 +53,13 @@ export class ApplicationEnvironmentService extends GenericResourceService<Applic
     //   return obs;
     // }));
   }
+
+
+  getEnvironmentApplications(applicationIds: String[]): Observable<ApplicationEnvironmentDTO[]> {
+    const url = GenericResourceService.baseUrl + "/applications/environments";
+    return this.handleResult<ApplicationEnvironmentDTO[]>(this.http.post(url,applicationIds));
+  }
+  
+
 
 }

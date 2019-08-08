@@ -2,19 +2,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ApplicationOverview, DeploymentStatus } from '@app/core';
 
 @Pipe({
-  name: 'buttonLabel'
+  name: 'w4cDeploymentStatusButtonLabel'
 })
-export class ButtonLabelPipe implements PipeTransform {
+export class DeploymentStatusButtonLabel implements PipeTransform {
 
   transform(value: String): any {
 
     switch (value) {
       case DeploymentStatus.UNDEPLOYED: {
         return "Deploy";
-        break;
-      }
-      case DeploymentStatus.DEPLOYED: {
-        return "Undeploy";
         break;
       }
       default: {
