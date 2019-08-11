@@ -4,7 +4,7 @@ import {map} from "rxjs/operators";
 import {TranslateService} from "@ngx-translate/core";
 import * as _ from "lodash";
 
-export abstract class GenericService<T> {
+export abstract class GenericService {
 
   protected static baseUrl = '/api/rest/latest';
 

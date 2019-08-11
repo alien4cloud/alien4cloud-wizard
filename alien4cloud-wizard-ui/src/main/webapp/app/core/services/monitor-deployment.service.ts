@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class MonitorDeploymentService extends GenericService<MonitoredDeploymentDTO> {
+export class MonitorDeploymentService extends GenericService {
 
   constructor(
     http: HttpClient,

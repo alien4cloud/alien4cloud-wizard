@@ -7,6 +7,7 @@ import {LocationSelectionComponent} from "@app/features/application-wizard/wizar
 import {ApplicationDeploymentComponent} from "@app/features/application-wizard/wizard-forms/application-deployment/application-deployment.component";
 import { ActiveDeploymentComponent } from '../wizard-forms/active-deployment/active-deployment.component';
 import {DeploymentInputsComponent} from "@app/features/application-wizard/wizard-forms/deployment-inputs/deployment-inputs.component";
+import {ApplicationMetapropertiesComponent} from "@app/features/application-wizard/wizard-forms/application-metaproperties/application-metaproperties.component";
 /**
  * This is the configuration of our wizard. The step order is the same that this array order.
  *
@@ -18,6 +19,7 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
   {stepLabel: "Fill the app form", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
   {stepLabel: "Fill Inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm"},
+  {stepLabel: "Fill Metaproperties", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm"},
   {stepLabel: "Select Target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm"},
   {stepLabel: "Deploy app", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm"},
   {stepLabel: "Active Deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"}

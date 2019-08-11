@@ -6,11 +6,14 @@ import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.mode
 
 export type ApplicationWizardMachineEvents =
   Init |
+  OnFormCompleted |
   InitApplicationEnvironment |
   OnActiveDeploymentFound |
   DoSelectTemplate |
   GoBack |
   DoCreateApplication |
+  OnApplicationMetapropertiesNotFound |
+  OnApplicationMetapropertiesFound |
   OnEnvironmentsFetched |
   DoSelectEnvironment |
   DoSearchLocation|
@@ -32,6 +35,11 @@ export class Init {
   readonly type = 'INIT';
 }
 
+export class OnFormCompleted {
+  readonly type = 'OnFormCompleted';
+  constructor() {}
+}
+
 export class InitApplicationEnvironment {
   readonly type = 'INIT_APPLICATION_ENVIRONMENT';
   constructor(public applicationId: string , public environmentId: string) {}
@@ -50,6 +58,16 @@ export class DoSelectTemplate {
 export class DoCreateApplication {
   readonly type = 'DO_CREATE_APPLICATION';
   constructor(public name: string , public description: string) {}
+}
+
+export class OnApplicationMetapropertiesNotFound {
+  readonly type = 'OnApplicationMetapropertiesNotFound';
+  constructor() {}
+}
+
+export class OnApplicationMetapropertiesFound {
+  readonly type = 'OnApplicationMetapropertiesFound';
+  constructor() {}
 }
 
 export class OnEnvironmentsFetched {

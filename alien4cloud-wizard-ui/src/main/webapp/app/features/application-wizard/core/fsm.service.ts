@@ -25,7 +25,7 @@ import {
   OnLocationFetched,
   OnSelectLocationSucesss,
   OnUndeploymentSubmitError,
-  OnUndeploymentSubmitSucess
+  OnUndeploymentSubmitSucess, OnApplicationMetapropertiesFound, OnApplicationMetapropertiesNotFound
 } from "@app/features/application-wizard/core/fsm.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
@@ -36,7 +36,7 @@ import {
   Deployment,
   DeploymentStatus, DeploymentTopologyService,
   Execution,
-  LocationMatchingService,
+  LocationMatchingService, MetaPropertiesService,
   TopologyService
 } from "@app/core";
 import * as lodash from 'lodash';
@@ -54,6 +54,7 @@ export class AppplicationWizardMachineService {
     private applicationDeploymentService: ApplicationDeploymentService,
     private locationMatchingService: LocationMatchingService,
     private deploymentTopologyService: DeploymentTopologyService,
+    private metaPropertiesService: MetaPropertiesService,
     private router: Router
   ) { }
 
@@ -67,6 +68,19 @@ export class AppplicationWizardMachineService {
             catchError(err => {
               console.log("------------ Error catch by service : " + err);
               return of(new OnApplicationCreateError(err.message));
+            })
+          ),
+      searchApplicationMetaproperties: (_, event) =>
+        this.metaPropertiesService.search(0, 1000, "", {"target":["application"]})
+          .pipe(
+            map(metaprops => {
+              if (metaprops.totalResults > 0) {
+                // assign the meta properties config in the context
+                _.applicationMetapropertiesConfiguration = metaprops.data;
+                return new OnApplicationMetapropertiesFound();
+              } else {
+                return new OnApplicationMetapropertiesNotFound();
+              }
             })
           ),
       getActiveDeployment: (_, event) =>
@@ -94,6 +108,7 @@ export class AppplicationWizardMachineService {
           0,
           50,
           "",
+          {},
           { applicationId: _.applicationId }
         ).pipe(
           map(environments => {

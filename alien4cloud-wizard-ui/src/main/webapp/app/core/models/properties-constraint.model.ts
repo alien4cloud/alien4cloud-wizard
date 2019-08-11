@@ -18,9 +18,8 @@ export namespace PropertyConstraintUtils {
     let result: ValidValuesConstraint = undefined;
     if (pd.constraints) {
       pd.constraints.forEach(constraint => {
-        let converted = constraint as ValidValuesConstraint;
-        if (converted !== undefined) {
-          result = converted;
+        if (constraint.hasOwnProperty('validValues')) {
+          result = constraint as ValidValuesConstraint;
         }
       });
     }

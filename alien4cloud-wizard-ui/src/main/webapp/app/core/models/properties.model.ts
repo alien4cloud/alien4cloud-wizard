@@ -28,6 +28,10 @@ export interface MetaPropConfiguration extends PropertyDefinition {
   id: string;
   name: string;
   target: string;
-  defaultValue: PropertyValue<any>;
   filtered: boolean;
+}
+
+export interface PropertyRequest {
+  value: string;
+  definitionId: string;
 }

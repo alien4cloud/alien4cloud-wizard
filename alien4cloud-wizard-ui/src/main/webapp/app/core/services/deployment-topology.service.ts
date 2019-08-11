@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {GenericResourceService} from "@app/core/services/generic-resource.service";
 import {
+  ConstraintError,
+  ConstraintInformation,
   DeploymentTopologyDTO
 } from "@app/core/models";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -68,19 +70,3 @@ export class UpdateDeploymentTopologyRequest {
   inputProperties: {};
 }
 
-/**
- * In case of error, returned by PUT on /applications/@{applicationId}/environments/@{environmentId}/deployment-topology
- */
-export class ConstraintInformation {
-  name: string;
-  path: string;
-  reference: any;
-  value: string;
-  type: string;
-}
-
-export class ConstraintError extends Error {
-  constructor(public code: string, message: string, public constraintInformation: ConstraintInformation) {
-    super(message);
-  }
-}

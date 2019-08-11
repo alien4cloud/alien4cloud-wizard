@@ -16,3 +16,5 @@ export * from './monitor-deployment.service';
 export * from './websocket-client.service';
 export * from './websocket-subscription-manager.service';
 export * from './workflow-execution.service';
+export * from './meta-properties.service';
+export * from './application-meta-property.service';

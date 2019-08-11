@@ -17,10 +17,9 @@ export class ApplicationDeploymentComponent implements OnInit , WizardFormCompon
 
   @Input() fsmContext: ApplicationWizardMachineContext;
   
-
   constructor(
     private fsm: AppplicationWizardMachineService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.application = this.fsmContext.applicationName;

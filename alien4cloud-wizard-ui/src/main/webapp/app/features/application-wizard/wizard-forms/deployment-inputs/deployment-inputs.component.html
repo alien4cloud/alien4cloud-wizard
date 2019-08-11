@@ -1,41 +1,14 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <form class="inputs-form">
-    <mat-form-field class="full-width" *ngFor="let pfd of propertieFormDefitions;">
-      <!-- Standard input -->
-      <input *ngIf="pfd.formType == 'INPUT'" matInput placeholder="{{ pfd.label }}"
-             [formControl]="pfd.formControl"
-             [required]="pfd.definition.required"
-             [type]="pfd.inputType" />
-      <!-- Checkbox for boolean property -->
-      <input *ngIf="pfd.formType == 'CHEKBOX'" matInput style="display: none" [formControl]="pfd.formControl">
-      <mat-checkbox *ngIf="pfd.formType == 'CHEKBOX'"
-                    [required]="pfd.definition.required"
-                    [checked]="pfd.displayableValue == 'true'"
-                    (change)="pfd.formControl.setValue(($event.checked)?'true':'false')">
-        {{ pfd.label }}
-      </mat-checkbox>
-      <!-- Select for validValues constrained property -->
-      <mat-select *ngIf="pfd.formType == 'SELECT'"
-                  placeholder="{{ pfd.label }}"
-                  [formControl]="pfd.formControl"
-                  [required]="pfd.definition.required">
-        <mat-option *ngFor="let validValue of pfd.validValues" [value]="validValue">
-          {{validValue}}
-        </mat-option>
-      </mat-select>
-      <!-- Display error coming from backend -->
-      <mat-error *ngIf="pfd.formControl.hasError('constraint')">
-        {{ pfd.formControl.getError('constraint') }}
-      </mat-error>
-      <button disabled="true" mat-button matSuffix mat-icon-button (click)="resetValue()">
-        <mat-icon>refresh</mat-icon>
-      </button>
-      <button [disabled]="!pfd.definition.description" mat-button matSuffix mat-icon-button
-              (click)="displayDescription()"
-              matTooltip="{{ pfd.definition.description }}">
-        <mat-icon>help_outline</mat-icon>
-      </button>
-    </mat-form-field>
+    <w4c-property-editor
+      *ngFor="let pfd of propertieFormDefitions;"
+      [propertyDefinition]="pfd.definition"
+      [formGroup]="inputsForm"
+      [id]="pfd.inputName"
+      [label]="pfd.inputName"
+      [value]="pfd.value"
+      (valueChange)="inputValueChanged(pfd.inputName, $event)">
+    </w4c-property-editor>
   </form>
 </div>
 

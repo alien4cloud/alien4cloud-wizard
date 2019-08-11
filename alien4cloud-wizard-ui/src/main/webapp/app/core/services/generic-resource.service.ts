@@ -4,7 +4,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {MultipleDataResult} from "@app/core";
 import {GenericService} from "@app/core/services/generic.service";
 
-export abstract class GenericResourceService<T> extends GenericService<T> {
+export abstract class GenericResourceService<T> extends GenericService {
 
   protected endpointUrl : string;
 
@@ -36,7 +36,7 @@ export abstract class GenericResourceService<T> extends GenericService<T> {
    * @param query
    * @param urlParams must be passed if the url provided by the implementation contains '@{stuff}'.
    */
-  search(from?: number, size?: number, query?: string, urlParams?: any): Observable<MultipleDataResult<T>> {
+  search(from?: number, size?: number, query?: string, filters?: any, urlParams?: any): Observable<MultipleDataResult<T>> {
     if (!from) {
       from = 0;
     }
@@ -46,7 +46,10 @@ export abstract class GenericResourceService<T> extends GenericService<T> {
     if (!query) {
       query = "";
     }
-    let data = {"from": from, "size": size, "query": query};
+    if (!filters) {
+      filters = {};
+    }
+    let data = {"from": from, "size": size, "query": query, "filters": filters};
     // TODO: use option to replace @{stuffs}
     return this.handleResult<MultipleDataResult<T>>(this.http.post(this.getUrl("", urlParams) + "/search", data, {
       headers: new HttpHeaders({

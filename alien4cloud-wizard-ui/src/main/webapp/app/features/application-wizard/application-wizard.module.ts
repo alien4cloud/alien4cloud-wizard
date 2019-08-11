@@ -17,6 +17,7 @@ import { ActiveDeploymentComponent } from './wizard-forms/active-deployment/acti
 import { WizardButtonComponent } from './wizard-button/wizard-button.component';
 import { WizardSpinnerComponent } from './wizard-forms/wizard-spinner/wizard-spinner.component';
 import { DeploymentInputsComponent } from './wizard-forms/deployment-inputs/deployment-inputs.component';
+import { ApplicationMetapropertiesComponent } from './wizard-forms/application-metaproperties/application-metaproperties.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DeploymentInputsComponent } from './wizard-forms/deployment-inputs/depl
     ActiveDeploymentComponent,
     WizardButtonComponent,
     WizardSpinnerComponent,
-    DeploymentInputsComponent
+    DeploymentInputsComponent,
+    ApplicationMetapropertiesComponent
   ],
   imports: [
     SharedModule,
@@ -45,6 +47,7 @@ import { DeploymentInputsComponent } from './wizard-forms/deployment-inputs/depl
     WelcomeComponent,
     TemplateSelectionComponent,
     ApplicationCreateComponent,
+    ApplicationMetapropertiesComponent,
     DeploymentInputsComponent,
     LocationSelectionComponent,
     ApplicationDeploymentComponent,

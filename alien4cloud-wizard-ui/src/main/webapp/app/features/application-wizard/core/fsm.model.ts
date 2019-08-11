@@ -1,4 +1,10 @@
-import {ApplicationEnvironment, DeploymentStatus, DeploymentTopologyDTO, LocationMatch} from '@app/core';
+import {
+  ApplicationEnvironment,
+  DeploymentStatus,
+  DeploymentTopologyDTO,
+  LocationMatch,
+  MetaPropConfiguration
+} from '@app/core';
 
 /**
  * Specify the schema of our state machine configuration.
@@ -11,7 +17,8 @@ export interface ApplicationWizardMachineSchema {
     templateSelected: {};
     applicationCreateForm: {};
     applicationCreating: {};
-    applicationCreated: {};
+    applicationMetapropertiesSearching: {};
+    applicationMetapropertiesForm: {};
     applicationCreationError: {};
     environmentSearching: {};
     environmentSelectionForm: {};
@@ -43,6 +50,8 @@ export interface ApplicationWizardMachineContext {
   templateDescription: string;
   applicationName: string;
   applicationDescription: string;
+
+  applicationMetapropertiesConfiguration: MetaPropConfiguration[];
   /**
    * The id of the created application : if this is undefined, it means that the
    * application has not been yet created.

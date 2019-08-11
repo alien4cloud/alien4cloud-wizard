@@ -3,16 +3,14 @@ import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {
-  AbstractPropertyValue, ConstraintError,
-  DeploymentTopologyService, PropertyConstraintUtils,
+  AbstractPropertyValue, ConstraintError, DeploymentTopologyService,
   PropertyDefinition,
-  PropertyValue,
   UpdateDeploymentTopologyRequest
 } from "@app/core";
 import * as _ from 'lodash';
 import {DoSearchLocation} from "@app/features/application-wizard/core/fsm.events";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {catchError, debounceTime} from "rxjs/operators";
+import {FormGroup} from "@angular/forms";
+import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
 
 @Component({
@@ -41,59 +39,25 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
     // FIXME: Should the backend directly manage such default values on deployment topology creation ?
     this.propertieFormDefitions.forEach(pfd => {
       if (pfd.value == undefined && pfd.definition.default) {
-        pfd.formControl.setValue(pfd.definition.default.value);
+        this.inputsForm.get(pfd.inputName).setValue(pfd.definition.default.value);
       }
     });
   }
 
   ngOnInit() {
     let topology = this.fsmContext.deploymentTopology.topology;
-
+    // FIXME: we do this because our object are not well typed
+    // if we could .forEach on inputs, we could iterate directly in the html
     for (const [key, pd] of Object.entries(topology.inputs)) {
       let pfd = new PropertyFormDefinition();
-      pfd.label = key;
+      pfd.inputName = key;
       pfd.definition = pd;
       if (topology.deployerInputProperties) {
         let property_value = <AbstractPropertyValue>_.get(topology.deployerInputProperties, key);
         pfd.value = property_value;
-        if (property_value && !property_value.definition) {
-          pfd.displayableValue = (<PropertyValue<any>>property_value).value;
-        } else {
-          pfd.displayableValue = JSON.stringify(property_value);
-        }
       }
-      let formControl = new FormControl(pfd.displayableValue);
-      if (pfd.definition.required) {
-        formControl.setValidators([Validators.required]);
-      }
-      pfd.formControl = formControl;
-      this.inputsForm.addControl(key, formControl);
-
-      pfd.formType = PropertyFormType.INPUT;
-      if (pd.type == "integer" || pd.type == "float") {
-        pfd.inputType = "number";
-      } else if (pd.type == "boolean") {
-        pfd.formType = PropertyFormType.CHEKBOX;
-      } else {
-        pfd.inputType = "text";
-        // manage SELECT
-        let validValuesConstraint = PropertyConstraintUtils.getValidValuesConstraint(pd);
-        if (validValuesConstraint) {
-          pfd.validValues = validValuesConstraint.validValues;
-          pfd.formType = PropertyFormType.SELECT;
-        }
-      }
-
       this.propertieFormDefitions.push(pfd);
     }
-
-    // listen for each formControl change events using a debounce time
-    this.propertieFormDefitions.forEach((pfd, key) => {
-      pfd.formControl.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
-        this.onValueChange(pfd, value);
-      });
-    });
-
   }
 
   /**
@@ -102,17 +66,19 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
    * @param pfd
    * @param value
    */
-  onValueChange(pfd: PropertyFormDefinition, value: any) {
-    console.log(`Form value changed for ${pfd.label}, value is :`, JSON.stringify(value));
+  inputValueChanged(inputName: string, value: any) {
+    console.log(`Form value changed for ${inputName}, value is :`, JSON.stringify(value));
     let request = new UpdateDeploymentTopologyRequest();
     request.inputProperties = new Object();
-    request.inputProperties[pfd.label] = value;
+    request.inputProperties[inputName] = value;
+    // this.inputsForm.get(inputName).markAsPending();
+    // this.inputsForm.markAsPending();
     this.deploymentTopologyService.updateDeploymentSetup(this.fsmContext.applicationId, this.fsmContext.environmentId, request)
       .pipe(catchError(err => {
         if (err instanceof ConstraintError) {
           let constraintInformation = (<ConstraintError>err).constraintInformation;
           console.log(`An error occured for ${constraintInformation.name}, code was: ${err.code}, message was: ${err.message}, full information was: `, JSON.stringify(constraintInformation));
-          pfd.formControl.setErrors({"constraint": err.message});
+          this.inputsForm.get(inputName).setErrors({"constraint": err.message});
         }
         // FIXME: take ?
         return new Observable(undefined);
@@ -130,25 +96,11 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
   }
 }
 
-export enum PropertyFormType {
-  INPUT = "INPUT", CHEKBOX = "CHEKBOX", SELECT = "SELECT"
-}
-
 export class PropertyFormDefinition {
   /** The input name. */
-  label: string;
+  inputName: string;
    /** The property definition. */
   definition: PropertyDefinition;
   /** The raw value. */
   value: AbstractPropertyValue;
-  /** The value to display. */
-  displayableValue: string;
-  /** When we have a constraint of type valid_values, this is used to fill the drop box. */
-  validValues: string[];
-  /** Define the type of component that will be displayed to fill the property. */
-  formType: PropertyFormType;
-  /** The angular form control itself. */
-  formControl: FormControl;
-  // input type managed by angular : https://material.angular.io/components/input/overview
-  inputType: string;
 }
