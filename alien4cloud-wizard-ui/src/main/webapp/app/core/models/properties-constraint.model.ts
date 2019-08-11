@@ -1,28 +1,26 @@
 import {PropertyDefinition} from "./properties.model";
 
 export interface PropertyConstraint {
-
 }
 
-export abstract class AbstractPropertyConstraint implements PropertyConstraint {
-
+export interface AbstractPropertyConstraint extends PropertyConstraint {
 }
 
-export class ValidValuesConstraint extends AbstractPropertyConstraint {
+export interface ValidValuesConstraint extends AbstractPropertyConstraint {
   validValues: string[];
 }
 
 export namespace PropertyConstraintUtils {
   /**
-   * Indicates that the status is a changing status, a "doing something" status.
+   * If a property has a valid_values constraint, return the first one found.
    */
   export function getValidValuesConstraint(pd: PropertyDefinition): ValidValuesConstraint {
-    let result: ValidValuesConstraint;
+    let result: ValidValuesConstraint = undefined;
     if (pd.constraints) {
       pd.constraints.forEach(constraint => {
-        // FIXME: why can't I just check if instanceof ValidValuesConstraint ?
-        if (constraint.hasOwnProperty('validValues')) {
-          result = constraint as ValidValuesConstraint;
+        let converted = constraint as ValidValuesConstraint;
+        if (converted !== undefined) {
+          result = converted;
         }
       });
     }

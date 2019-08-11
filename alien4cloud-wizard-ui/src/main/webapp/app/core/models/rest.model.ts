@@ -1,5 +1,5 @@
 
-export class MultipleDataResult<T> {
+export interface MultipleDataResult<T> {
   data: T[];
   totalResults: number;
 }

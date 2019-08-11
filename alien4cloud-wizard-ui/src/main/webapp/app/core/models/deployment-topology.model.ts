@@ -1,7 +1,7 @@
 import { Topology } from './topology.model';
 import {AbstractPropertyValue, CSARDependency, NodeType} from "@app/core";
 
-export abstract class AbstractTopologyDTO<T extends Topology> {
+export interface AbstractTopologyDTO<T extends Topology> {
   topology : T ;
   nodeTypes: Map<string, NodeType>;
   // FIXME: create classes
@@ -11,7 +11,7 @@ export abstract class AbstractTopologyDTO<T extends Topology> {
   // policyTypes: Map<string, PolicyType>;
 }
 
-export class DeploymentTopologyDTO extends AbstractTopologyDTO<DeploymentTopology> {
+export interface DeploymentTopologyDTO extends AbstractTopologyDTO<DeploymentTopology> {
   locationPolicies: Map<string, string>;
   // validation: TopologyValidationResult;
   // locationResourceTemplates: Map<string, LocationResourceTemplate>;
@@ -20,7 +20,7 @@ export class DeploymentTopologyDTO extends AbstractTopologyDTO<DeploymentTopolog
   // secretCredentialInfos: SecretCredentialInfo[];
 }
 
-export class DeploymentTopology extends Topology {
+export interface DeploymentTopology extends Topology {
   id: string;
   isDeployed: boolean;
   versionId: string;

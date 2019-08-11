@@ -1,6 +1,6 @@
 import {CSARDependency, HasTags, PropertyDefinition, Tag, Version} from '@app/core/models';
 
-export class Topology implements HasTags {
+export interface Topology extends HasTags {
   archiveName: string;
   archiveVersion: string;
   nestedVersion: Version;
@@ -21,7 +21,6 @@ export class Topology implements HasTags {
   // substitutionMapping: SubstitutionMapping;
   // workflows: Map<string, Workflow>;
   // unprocessedWorkflows: Map<string, Workflow>;
-  tags: Tag[];
   empty: boolean;
   id: string;
   metaProperties: Map<string, string>;

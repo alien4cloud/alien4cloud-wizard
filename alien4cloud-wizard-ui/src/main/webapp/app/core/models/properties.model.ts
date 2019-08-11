@@ -1,10 +1,10 @@
-import {PropertyConstraint, ValidValuesConstraint} from "./properties-constraint.model";
+import {PropertyConstraint} from "./properties-constraint.model";
 
 export interface IValue {
   definition: boolean;
 }
 
-export class PropertyDefinition implements IValue {
+export interface PropertyDefinition extends IValue {
   type: string;
   entrySchema : PropertyDefinition;
   required: boolean;
@@ -16,15 +16,15 @@ export class PropertyDefinition implements IValue {
   isPassword: boolean;
 }
 
-export abstract class AbstractPropertyValue implements IValue {
+export interface AbstractPropertyValue extends IValue {
   definition: boolean;
 }
 
-export abstract class PropertyValue<T> extends AbstractPropertyValue {
+export interface PropertyValue<T> extends AbstractPropertyValue {
   value: T;
 }
 
-export class MetaPropConfiguration extends PropertyDefinition {
+export interface MetaPropConfiguration extends PropertyDefinition {
   id: string;
   name: string;
   target: string;

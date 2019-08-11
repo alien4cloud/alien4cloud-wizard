@@ -1,4 +1,4 @@
-export class Tag {
+export interface Tag {
   name: string;
   value : string;
 }
@@ -7,24 +7,24 @@ export interface HasTags {
   tags: Tag[];
 }
 
-export class MetaPropertyConfiguration {
+export interface MetaPropertyConfiguration {
   id: string;
   name: string;
   description: string;
 }
 
-export class MetaProperty {
+export interface MetaProperty {
   configuration: MetaPropertyConfiguration;
   value: string;
 }
 
-export class CSARDependency {
+export interface CSARDependency {
   name: string;
   version: string;
   hash: string;
 }
 
-export class Version {
+export interface Version {
   majorVersion: number;
   minorVersion: number;
   incrementalVersion: number;
