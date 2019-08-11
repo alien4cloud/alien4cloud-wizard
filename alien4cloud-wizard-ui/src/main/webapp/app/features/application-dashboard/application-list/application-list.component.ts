@@ -40,6 +40,7 @@ export class ApplicationListComponent implements OnInit {
   private pageSize = 10;
   private pageSizeOptions: number[] = [5, 10, 25, 100];
   private query = null;
+  private pageIndex = 0;
 
   // MatPaginator Output
   private pageEvent: PageEvent;
@@ -60,6 +61,7 @@ export class ApplicationListComponent implements OnInit {
       .pipe(debounceTime(1000))
       .subscribe(term => {
         this.query = term;
+        this.pageIndex = 0;
         this.loadApplications(0);
       });
   }
@@ -80,7 +82,8 @@ export class ApplicationListComponent implements OnInit {
    */
   private handlePage(e: any) {
     this.pageSize = e.pageSize;
-    this.loadApplications(e.pageIndex);
+    this.pageIndex = e.pageIndex;
+    this.loadApplications(this.pageSize * e.pageIndex);
   }
 
   /**
