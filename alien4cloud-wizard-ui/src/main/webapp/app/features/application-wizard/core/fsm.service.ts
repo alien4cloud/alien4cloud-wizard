@@ -62,7 +62,7 @@ export class AppplicationWizardMachineService {
     services: {
       createApplication: (_, event) =>
         this.applicationService
-          .createApplication( _.applicationName, _.applicationName, _.templateId, _.applicationDescription)
+          .createApplication( _.applicationName, _.applicationArchiveName, _.topologyTemplate.id, _.applicationDescription)
           .pipe(
             map(applicationId => new OnApplicationCreateSucess(applicationId)),
             catchError(err => {
@@ -188,10 +188,12 @@ export class AppplicationWizardMachineService {
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
-        templateId: event.templateId, templateDescription: event.templateDescription
+        topologyTemplate: event.topology
       })),
       assignAppInfo: assign<ApplicationWizardMachineContext, DoCreateApplication>((_, event) => ({
-        applicationName: event.name, applicationDescription: event.description
+        applicationName: event.name,
+        applicationDescription: event.description,
+        applicationArchiveName: event.archiveName
       })),
       assignAppId: assign<ApplicationWizardMachineContext, OnApplicationCreateSucess>((_, event) => ({
         applicationId: event.applicationId

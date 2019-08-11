@@ -3,7 +3,7 @@ import {
   DeploymentStatus,
   DeploymentTopologyDTO,
   LocationMatch,
-  MetaPropConfiguration
+  MetaPropConfiguration, Topology
 } from '@app/core';
 
 /**
@@ -41,15 +41,12 @@ export interface ApplicationWizardMachineSchema {
  */
 export interface ApplicationWizardMachineContext {
   /**
-   * The topology template id that have been chosen.
+   * The topology template that have been chosen.
    */
-  templateId: string;
-  /**
-   * The deccsription of the chosen topology template.
-   */
-  templateDescription: string;
+  topologyTemplate: Topology;
   applicationName: string;
   applicationDescription: string;
+  applicationArchiveName: string;
 
   applicationMetapropertiesConfiguration: MetaPropConfiguration[];
   /**

@@ -14,14 +14,13 @@ const { log } = actions;
  * The initial machine context.
  */
 export const context: ApplicationWizardMachineContext = {
-  templateId: undefined,
-  templateDescription: undefined,
+  topologyTemplate: undefined,
   applicationMetapropertiesConfiguration: undefined,
   applicationName: undefined,
   applicationDescription: undefined,
+  applicationArchiveName: undefined,
   applicationId: undefined,
   environments: undefined,
-  // deploymentTopologyId: undefined,
   deploymentTopology: undefined,
   environmentId: undefined,
   locationId: undefined,

@@ -1,8 +1,8 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-import {ApplicationEnvironment, Deployment, DeploymentStatus, LocationMatch} from "@app/core";
-import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.model';
+import {ApplicationEnvironment, Deployment, DeploymentStatus, LocationMatch, Topology} from "@app/core";
+import {DeploymentTopologyDTO} from '@app/core/models/deployment-topology.model';
 
 export type ApplicationWizardMachineEvents =
   Init |
@@ -52,12 +52,12 @@ export class OnActiveDeploymentFound {
 
 export class DoSelectTemplate {
   readonly type = 'DO_SELECT_TEMPLATE';
-  constructor(public templateId: string, public templateDescription: string) {}
+  constructor(public topology: Topology) {}
 }
 
 export class DoCreateApplication {
   readonly type = 'DO_CREATE_APPLICATION';
-  constructor(public name: string , public description: string) {}
+  constructor(public name: string, public description: string, public archiveName: string) {}
 }
 
 export class OnApplicationMetapropertiesNotFound {
