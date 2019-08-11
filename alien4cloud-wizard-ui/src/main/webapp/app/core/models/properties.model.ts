@@ -1,4 +1,4 @@
-import {CSARDependency} from "@app/core";
+import {PropertyConstraint, ValidValuesConstraint} from "./properties-constraint.model";
 
 export interface IValue {
   definition: boolean;
@@ -10,7 +10,7 @@ export class PropertyDefinition implements IValue {
   required: boolean;
   description: string;
   suggestionId: string;
-  // constraints: PropertyConstraint[];
+  constraints: PropertyConstraint[];
   default: PropertyValue<any>;
   definition: boolean;
   isPassword: boolean;

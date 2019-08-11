@@ -4,7 +4,7 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {
   AbstractPropertyValue, ConstraintError,
-  DeploymentTopologyService,
+  DeploymentTopologyService, PropertyConstraintUtils,
   PropertyDefinition,
   PropertyValue,
   UpdateDeploymentTopologyRequest
@@ -49,10 +49,10 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
   ngOnInit() {
     let topology = this.fsmContext.deploymentTopology.topology;
 
-    for (const [key, propertyDefinition] of Object.entries(topology.inputs)) {
+    for (const [key, pd] of Object.entries(topology.inputs)) {
       let pfd = new PropertyFormDefinition();
       pfd.label = key;
-      pfd.definition = propertyDefinition;
+      pfd.definition = pd;
       if (topology.deployerInputProperties) {
         let property_value = <AbstractPropertyValue>_.get(topology.deployerInputProperties, key);
         pfd.value = property_value;
@@ -70,13 +70,18 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
       this.inputsForm.addControl(key, formControl);
 
       pfd.formType = PropertyFormType.INPUT;
-      if (propertyDefinition.type == "integer" || propertyDefinition.type == "float") {
+      if (pd.type == "integer" || pd.type == "float") {
         pfd.inputType = "number";
-      } else if (propertyDefinition.type == "boolean") {
+      } else if (pd.type == "boolean") {
         pfd.formType = PropertyFormType.CHEKBOX;
       } else {
         pfd.inputType = "text";
         // manage SELECT
+        let validValuesConstraint = PropertyConstraintUtils.getValidValuesConstraint(pd);
+        if (validValuesConstraint) {
+          pfd.validValues = validValuesConstraint.validValues;
+          pfd.formType = PropertyFormType.SELECT;
+        }
       }
 
       this.propertieFormDefitions.push(pfd);
