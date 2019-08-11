@@ -8,7 +8,7 @@ import {
   UpdateDeploymentTopologyRequest
 } from "@app/core";
 import * as _ from 'lodash';
-import {DoSearchLocation} from "@app/features/application-wizard/core/fsm.events";
+import {DoSearchLocation, OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
 import {FormGroup} from "@angular/forms";
 import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
@@ -92,7 +92,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
 
 
   doSearchLocation() {
-    this.fsm.send(new DoSearchLocation(this.fsmContext.deploymentTopology));
+    this.fsm.send(new OnFormCompleted());
   }
 }
 

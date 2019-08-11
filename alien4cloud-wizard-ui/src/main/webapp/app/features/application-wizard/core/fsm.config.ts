@@ -4,8 +4,7 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import {
-  ApplicationWizardMachineEvents,
-  OnApplicationMetapropertiesFound
+  ApplicationWizardMachineEvents
 } from "@app/features/application-wizard/core/fsm.events";
 
 const { log } = actions;
@@ -224,7 +223,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     deploymentInputsForm: {
       on: {
         // fixme : replace with a OnFormCompleted event (a form shouldn't be aware of the FSM logic)
-        DO_SEARCH_LOCATION: {
+        OnFormCompleted: {
           target: 'locationSearching'
         }
       }
