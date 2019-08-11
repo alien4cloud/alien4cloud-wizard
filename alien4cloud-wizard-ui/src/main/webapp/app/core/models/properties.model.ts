@@ -1,10 +1,7 @@
+import {CSARDependency} from "@app/core";
 
 export interface IValue {
   definition: boolean;
-}
-
-export interface PropertyConstraint {
-
 }
 
 export class PropertyDefinition implements IValue {
@@ -13,8 +10,8 @@ export class PropertyDefinition implements IValue {
   required: boolean;
   description: string;
   suggestionId: string;
-  constraints: PropertyConstraint[] ;
-  defaultValue: PropertyValue<any>;
+  // constraints: PropertyConstraint[];
+  default: PropertyValue<any>;
   definition: boolean;
   isPassword: boolean;
 }

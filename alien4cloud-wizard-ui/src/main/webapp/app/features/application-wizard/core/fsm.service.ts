@@ -16,10 +16,10 @@ import {
   InitApplicationEnvironment,
   OnActiveDeploymentFound,
   OnApplicationCreateError,
-  OnApplicationCreateSucess,
+  OnApplicationCreateSucess, OnDeploymentInputsRequired,
   OnDeploymentSubmitError,
   OnDeploymentSubmitSucess,
-  OnDeploymentTopologyFetched,
+  DoSearchLocation,
   OnEnvironmentsFetched,
   OnError,
   OnLocationFetched,
@@ -34,11 +34,12 @@ import {
   ApplicationEnvironmentService,
   ApplicationService,
   Deployment,
-  DeploymentStatus,
+  DeploymentStatus, DeploymentTopologyService,
   Execution,
   LocationMatchingService,
   TopologyService
 } from "@app/core";
+import * as lodash from 'lodash';
 
 /**
  * Manages the machine initialization.
@@ -52,6 +53,7 @@ export class AppplicationWizardMachineService {
     private applicationEnvironmentService: ApplicationEnvironmentService,
     private applicationDeploymentService: ApplicationDeploymentService,
     private locationMatchingService: LocationMatchingService,
+    private deploymentTopologyService: DeploymentTopologyService,
     private router: Router
   ) { }
 
@@ -104,15 +106,22 @@ export class AppplicationWizardMachineService {
           })
         ),
       fetchDeploymentTopology: (_, event) =>
-        this.applicationEnvironmentService.getDeploymentTopology(
+        this.deploymentTopologyService.getDeploymentTopology(
           _.applicationId,
           _.environmentId
         ).pipe(
-          map(dto => new OnDeploymentTopologyFetched(dto))
+          map(dto => {
+            // assign the deployment topology
+            _.deploymentTopology = dto;
+            if (dto.topology.inputs && lodash.size(dto.topology.inputs) > 0) {
+              return new OnDeploymentInputsRequired();
+            } else {
+              return new DoSearchLocation(dto);
+            }
+          })
         ),
-        
       searchLocations: (_, event) =>
-        this.locationMatchingService.match(_.deploymentTopologyId, _.environmentId)
+        this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environmentId)
           .pipe(
             map(locations => {
               if (locations.length == 1) {
@@ -125,7 +134,7 @@ export class AppplicationWizardMachineService {
             })
           ),
       setLocationPolicies: (_, event) =>
-        this.applicationEnvironmentService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
+        this.deploymentTopologyService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
           .pipe(map(data => {
             console.log("setLocation result ", JSON.stringify(data));
             return new OnSelectLocationSucesss();
@@ -197,9 +206,9 @@ export class AppplicationWizardMachineService {
       clearError: assign<ApplicationWizardMachineContext, any>((_, event) => ({
         errorMessage: undefined
       })),
-      assignDeploymentTopologyId: assign<ApplicationWizardMachineContext, OnDeploymentTopologyFetched>((_, event) => ({
-        deploymentTopologyId: event.deploymentTopology.topology.id
-      })),
+      // assignDeploymentTopologyId: assign<ApplicationWizardMachineContext, DoSearchLocation>((_, event) => ({
+      //   deploymentTopologyId: event.deploymentTopology.topology.id
+      // })),
       // TODO: remove
       assignDeploymentId: (_) => {
           this.applicationEnvironmentService.getMonitoredDeploymentDTO(

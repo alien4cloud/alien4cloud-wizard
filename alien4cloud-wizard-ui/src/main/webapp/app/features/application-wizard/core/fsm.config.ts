@@ -17,7 +17,8 @@ export const context: ApplicationWizardMachineContext = {
   applicationDescription: undefined,
   applicationId: undefined,
   environments: undefined,
-  deploymentTopologyId: undefined,
+  // deploymentTopologyId: undefined,
+  deploymentTopology: undefined,
   environmentId: undefined,
   locationId: undefined,
   locationName: undefined,
@@ -196,10 +197,20 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'fetchDeploymentTopology'
       },
       on: {
-        ON_DEPLOYMENT_TOPOLOGY_FETCHED: {
-          target: 'locationSearching',
-          actions: ['assignDeploymentTopologyId']
-          // actions: ['assignUser', 'loginSuccess']
+        // TODO: here, if the deployment topology has inputs, then branch to InputForm
+        ON_DEPLOYMENT_INPUTS_REQUIRED: {
+          target: 'deploymentInputsForm'
+        },
+        DO_SEARCH_LOCATION: {
+          target: 'locationSearching'
+          // actions: ['assignDeploymentTopologyId']
+        }
+      }
+    },
+    deploymentInputsForm: {
+      on: {
+        DO_SEARCH_LOCATION: {
+          target: 'locationSearching'
         }
       }
     },

@@ -1,0 +1,25 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <form class="inputs-form">
+    <mat-form-field class="full-width" *ngFor="let pfd of propertieFormDefitions;">
+      <input *ngIf="pfd.formType == 'INPUT'" matInput placeholder="{{ pfd.label }}" [formControl]="pfd.formControl" [required]="pfd.definition.required" [type]="pfd.inputType" />
+      <input *ngIf="pfd.formType == 'CHEKBOX'" matInput style="display: none" [formControl]="pfd.formControl">
+      <mat-checkbox *ngIf="pfd.formType == 'CHEKBOX'" [checked]="pfd.displayableValue == 'true'" (change)="pfd.formControl.setValue(($event.checked)?'true':'false')">{{ pfd.label }}</mat-checkbox>
+      <mat-error *ngIf="pfd.formControl.hasError('constraint')">
+        {{ pfd.formControl.getError('constraint') }}
+      </mat-error>
+      <button disabled="true" mat-button matSuffix mat-icon-button (click)="resetValue()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button [disabled]="!pfd.definition.description" mat-button matSuffix mat-icon-button (click)="displayDescription()" matTooltip="{{ pfd.definition.description }}">
+        <mat-icon>help_outline</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button mat-stroked-button [disabled]="inputsForm.invalid" (click)="doSearchLocation()">Next</button>
+</div>
+
+
+

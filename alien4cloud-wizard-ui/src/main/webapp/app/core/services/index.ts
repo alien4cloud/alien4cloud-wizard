@@ -11,3 +11,8 @@ export * from './style-manager';
 export * from './topology-graph.service';
 export * from './topology-overview.service';
 export * from './topology.service';
+export * from './deployment-topology.service';
+export * from './monitor-deployment.service';
+export * from './websocket-client.service';
+export * from './websocket-subscription-manager.service';
+export * from './workflow-execution.service';

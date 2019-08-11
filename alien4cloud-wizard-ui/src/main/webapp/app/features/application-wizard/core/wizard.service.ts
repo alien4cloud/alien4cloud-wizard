@@ -6,6 +6,7 @@ import {ApplicationCreateComponent} from "@app/features/application-wizard/wizar
 import {LocationSelectionComponent} from "@app/features/application-wizard/wizard-forms/location-selection/location-selection.component";
 import {ApplicationDeploymentComponent} from "@app/features/application-wizard/wizard-forms/application-deployment/application-deployment.component";
 import { ActiveDeploymentComponent } from '../wizard-forms/active-deployment/active-deployment.component';
+import {DeploymentInputsComponent} from "@app/features/application-wizard/wizard-forms/deployment-inputs/deployment-inputs.component";
 /**
  * This is the configuration of our wizard. The step order is the same that this array order.
  *
@@ -16,6 +17,7 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Welcome", component: WelcomeComponent, fsmStateName: ""},
   {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
   {stepLabel: "Fill the app form", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
+  {stepLabel: "Fill Inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm"},
   {stepLabel: "Select Target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm"},
   {stepLabel: "Deploy app", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm"},
   {stepLabel: "Active Deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"}

@@ -1,4 +1,4 @@
-import {ApplicationEnvironment, DeploymentStatus, LocationMatch} from '@app/core';
+import {ApplicationEnvironment, DeploymentStatus, DeploymentTopologyDTO, LocationMatch} from '@app/core';
 
 /**
  * Specify the schema of our state machine configuration.
@@ -17,6 +17,7 @@ export interface ApplicationWizardMachineSchema {
     environmentSelectionForm: {};
     environmentSelected: {};
     deploymentTopologyFetching:{};
+    deploymentInputsForm:{};
     locationSelectionForm: {};
     locationSearching: {};
     locationSelected: {};
@@ -48,7 +49,8 @@ export interface ApplicationWizardMachineContext {
    */
   applicationId: string;
   environments: ApplicationEnvironment[];
-  deploymentTopologyId: string;
+  // deploymentTopologyId: string;
+  deploymentTopology: DeploymentTopologyDTO;
   errorMessage: string;
   environmentId: string;
   //locationId: [];

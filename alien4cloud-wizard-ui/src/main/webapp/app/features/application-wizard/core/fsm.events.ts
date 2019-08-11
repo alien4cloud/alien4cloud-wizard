@@ -13,7 +13,8 @@ export type ApplicationWizardMachineEvents =
   DoCreateApplication |
   OnEnvironmentsFetched |
   DoSelectEnvironment |
-  OnDeploymentTopologyFetched|
+  DoSearchLocation|
+  OnDeploymentInputsRequired |
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   DoSelectLocation |
@@ -61,9 +62,14 @@ export class DoSelectEnvironment {
   constructor(public environmentId: string) {}
 }
 
-export class OnDeploymentTopologyFetched {
-  readonly type = 'ON_DEPLOYMENT_TOPOLOGY_FETCHED';
+export class DoSearchLocation {
+  readonly type = 'DO_SEARCH_LOCATION';
   constructor(public deploymentTopology: DeploymentTopologyDTO) {}
+}
+
+export class OnDeploymentInputsRequired {
+  readonly type = 'ON_DEPLOYMENT_INPUTS_REQUIRED';
+  constructor() {}
 }
 
 export class DoSelectLocation {
