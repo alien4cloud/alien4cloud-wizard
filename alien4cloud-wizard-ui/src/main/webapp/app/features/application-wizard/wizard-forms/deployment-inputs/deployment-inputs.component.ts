@@ -4,7 +4,7 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {
   AbstractPropertyValue, ConstraintError, DeploymentTopologyService,
-  PropertyDefinition,
+  PropertyDefinition, PropertyValue,
   UpdateDeploymentTopologyRequest
 } from "@app/core";
 import * as _ from 'lodash';

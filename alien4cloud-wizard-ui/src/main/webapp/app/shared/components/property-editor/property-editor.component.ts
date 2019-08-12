@@ -45,7 +45,7 @@ export class PropertyEditorComponent implements OnInit {
     this.pfd = new PropertyFormDefinition();
     this.pfd.label = this.label;
     this.pfd.definition = this.propertyDefinition;
-    let formControl = new FormControl(this.value);
+    let formControl = new FormControl();
     if (this.pfd.definition.required) {
       formControl.setValidators([Validators.required]);
     }
@@ -53,7 +53,10 @@ export class PropertyEditorComponent implements OnInit {
     if (this.formGroup) {
       this.formGroup.addControl(this.id, formControl);
     }
-
+    if (this.value && this.value.hasOwnProperty('value')) {
+      this.pfd.displayableValue = this.value['value'];
+      this.pfd.formControl.setValue(this.pfd.displayableValue);
+    }
     this.pfd.formType = PropertyFormType.INPUT;
     if (this.propertyDefinition.type == "integer" || this.propertyDefinition.type == "float") {
       this.pfd.inputType = "number";
