@@ -25,6 +25,8 @@ export class PropertyEditorComponent implements OnInit {
 
   private pfd: PropertyFormDefinition;
 
+  private isLongText: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
