@@ -4,14 +4,13 @@
          [formControl]="pfd.formControl"
          [required]="pfd.definition.required"
          [type]="pfd.inputType" />
-  <!-- Text input in long text  -->
+  <!-- Text input in long text mode -->
   <textarea *ngIf="pfd.formType == 'INPUT' && isLongText"
             matInput
             placeholder="{{ pfd.label }}"
             [formControl]="pfd.formControl"
             [required]="pfd.definition.required"
-            matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=20
-  >
+            matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=20>
   </textarea>
   <!-- Checkbox for boolean property -->
   <input *ngIf="pfd.formType == 'CHEKBOX'" matInput style="display: none" [formControl]="pfd.formControl">
@@ -34,13 +33,17 @@
   <mat-error *ngIf="pfd.formControl.hasError('constraint')">
     {{ pfd.formControl.getError('constraint') }}
   </mat-error>
+  <!-- Switch to long text mode button -->
   <button *ngIf="pfd.formType == 'INPUT' && pfd.inputType == 'text'" mat-button matSuffix mat-icon-button (click)="isLongText = !isLongText">
     <mat-icon *ngIf="!isLongText">zoom_out_map</mat-icon>
     <mat-icon *ngIf="isLongText">fullscreen_exit</mat-icon>
   </button>
-  <button disabled="true" mat-button matSuffix mat-icon-button (click)="resetValue()">
+  <!-- Switch to default value button -->
+  <button [disabled]="!pfd.definition.default" mat-button matSuffix mat-icon-button (click)="resetDefault()">
     <mat-icon>refresh</mat-icon>
   </button>
+  <!-- Description icon (it's also a button to have the same size than others) -->
+  <!-- TODO: display description in a modal or something more readable on click -->
   <button [disabled]="!pfd.definition.description" mat-button matSuffix mat-icon-button
           (click)="displayDescription()"
           matTooltip="{{ pfd.definition.description }}">

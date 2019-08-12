@@ -4,6 +4,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import * as _ from "lodash";
 import {debounceTime} from "rxjs/operators";
 
+/**
+ * A component to edit something that is related to a PropertyDefinition.
+ */
 @Component({
   selector: 'w4c-property-editor',
   templateUrl: './property-editor.component.html',
@@ -13,12 +16,21 @@ export class PropertyEditorComponent implements OnInit {
 
   @Input() propertyDefinition: PropertyDefinition;
 
+  /**
+   * The id used to register to the FormGroup.
+   */
   @Input() id: string;
 
+  /**
+   * The label that will be displayed.
+   */
   @Input() label: string;
 
   @Input() value: any;
 
+  /**
+   * If provided, add the created FormControl to this FormGroup.
+   */
   @Input() formGroup: FormGroup;
 
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
@@ -30,7 +42,6 @@ export class PropertyEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    let pd = this.propertyDefinition;
     this.pfd = new PropertyFormDefinition();
     this.pfd.label = this.label;
     this.pfd.definition = this.propertyDefinition;
@@ -39,26 +50,36 @@ export class PropertyEditorComponent implements OnInit {
       formControl.setValidators([Validators.required]);
     }
     this.pfd.formControl = formControl;
-    this.formGroup.addControl(this.id, formControl);
+    if (this.formGroup) {
+      this.formGroup.addControl(this.id, formControl);
+    }
 
     this.pfd.formType = PropertyFormType.INPUT;
-    if (pd.type == "integer" || pd.type == "float") {
+    if (this.propertyDefinition.type == "integer" || this.propertyDefinition.type == "float") {
       this.pfd.inputType = "number";
-    } else if (pd.type == "boolean") {
+    } else if (this.propertyDefinition.type == "boolean") {
       this.pfd.formType = PropertyFormType.CHEKBOX;
     } else {
       this.pfd.inputType = "text";
       // manage SELECT
-      let validValuesConstraint = PropertyConstraintUtils.getValidValuesConstraint(pd);
+      let validValuesConstraint = PropertyConstraintUtils.getValidValuesConstraint(this.propertyDefinition);
       if (validValuesConstraint) {
         this.pfd.validValues = validValuesConstraint.validValues;
         this.pfd.formType = PropertyFormType.SELECT;
       }
     }
+    // subscribe to FormControl changes and emit the value to observer.
     this.pfd.formControl.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
       console.log("Form value changes : ", JSON.stringify(value));
       this.valueChange.emit(value);
     });
+  }
+
+  /**
+   * Reset to default value.
+   */
+  resetDefault() {
+    this.pfd.formControl.setValue(this.pfd.definition.default.value);
   }
 
 }
@@ -67,6 +88,9 @@ export enum PropertyFormType {
   INPUT = "INPUT", CHEKBOX = "CHEKBOX", SELECT = "SELECT"
 }
 
+/**
+ * A local class that stores configuration related to input.
+ */
 export class PropertyFormDefinition {
   /** The input name. */
   label: string;
