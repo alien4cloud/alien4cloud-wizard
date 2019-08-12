@@ -3,35 +3,37 @@
   <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
     <mat-icon>search</mat-icon>
     <mat-form-field fxFlex="50%">
-      <input matInput
-      placeholder="{{ (isLoading)?'Searching for ...':'Search for ...'}}"
-      [formControl]="searchField"
-      id="applicationDashboardSearchInput">
+      <input matInput placeholder="{{ (isLoading)?'Searching for ...':'Search for ...'}}" [formControl]="searchField"
+        id="applicationDashboardSearchInput">
     </mat-form-field>
     <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
   </div>
 
   <mat-accordion>
-    <mat-expansion-panel
-      *ngFor="let application of applications; let isOpenned = false"
-      (opened)="isOpenned = true; openDetails(application.id);"
-      (closed)="isOpenned = false; closeDetails()"
+    <mat-expansion-panel *ngFor="let application of applications; let isOpenned = false"
+      (opened)="isOpenned = true; openDetails(application.id);" (closed)="isOpenned = false; closeDetails()"
       [ngClass]="{'mat-elevation-z14': isOpenned}">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center" >
+          <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center">
             <div fxFlex="5%">
               <img *ngIf="application.imageId; else defaultIcon"
-                    src="api/img?id={{ application.imageId }}&quality=QUALITY_64"
-                    style="max-height:46px; max-width:46px; height:auto; width:auto;">
+                src="api/img?id={{ application.imageId }}&quality=QUALITY_64"
+                style="max-height:46px; max-width:46px; height:auto; width:auto;">
               <ng-template #defaultIcon>
                 <mat-icon>airplay</mat-icon>
               </ng-template>
             </div>
-            <div fxFlex="30%">{{ application.name }}</div>
-            <div fxFlex="65%">
+            <div fxFlex="25%">{{ application.name }}</div>
+            <div fxFlex="60%">
               <span *ngIf="!isOpenned" class="mat-expansion-panel-header-description">
                 {{ lodash.truncate(application.description, {'length': 100, 'separator': ' '}) }}
+              </span>
+            </div>
+            <div fxFlex="5%">
+              <span *ngIf="applicationEnvironments && !isOpenned">
+                <w4c-deployment-status-piechart [applicationEnvironmentDTO]="applicationEnvironments[application.id]">
+                </w4c-deployment-status-piechart>
               </span>
             </div>
           </div>
@@ -42,11 +44,10 @@
       <!-- end of TopologyOverviewComponent -->
       <mat-action-row fxLayout="row" fxLayoutAlign="end center">
         <!-- TODO: translate status -->
-        <mat-icon
-          *ngIf="overview"
-          [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
+        <mat-icon *ngIf="overview" [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
           matTooltip="{{overview.deploymentStatus}}">lens</mat-icon>
-        <button mat-button (click)="openWizard()">{{ (overview) ? (overview.deploymentStatus | w4cDeploymentStatusButtonLabel) : '' }}</button>
+        <button mat-button
+          (click)="openWizard()">{{ (overview) ? (overview.deploymentStatus | w4cDeploymentStatusButtonLabel) : '' }}</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
