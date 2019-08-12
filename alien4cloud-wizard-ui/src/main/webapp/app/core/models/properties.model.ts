@@ -13,7 +13,7 @@ export interface PropertyDefinition extends IValue {
   constraints: PropertyConstraint[];
   default: PropertyValue<any>;
   definition: boolean;
-  isPassword: boolean;
+  password: boolean;
 }
 
 export interface AbstractPropertyValue extends IValue {

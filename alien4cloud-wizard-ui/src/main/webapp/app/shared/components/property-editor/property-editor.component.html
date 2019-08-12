@@ -33,10 +33,12 @@
   <mat-error *ngIf="pfd.formControl.hasError('constraint')">
     {{ pfd.formControl.getError('constraint') }}
   </mat-error>
+  <button *ngIf="pfd.definition.password" mat-button matPrefix mat-icon-button (click)="switchPasswordVisibility()">
+    <mat-icon>{{pfd.inputType == 'password' ? 'visibility_off' : 'visibility'}}</mat-icon>
+  </button>
   <!-- Switch to long text mode button -->
   <button *ngIf="pfd.formType == 'INPUT' && pfd.inputType == 'text'" mat-button matSuffix mat-icon-button (click)="isLongText = !isLongText">
-    <mat-icon *ngIf="!isLongText">zoom_out_map</mat-icon>
-    <mat-icon *ngIf="isLongText">fullscreen_exit</mat-icon>
+    <mat-icon *ngIf="isLongText">(isLongText) : 'fullscreen_exit' : 'zoom_out_map'</mat-icon>
   </button>
   <!-- Switch to default value button -->
   <button [disabled]="!pfd.definition.default" mat-button matSuffix mat-icon-button (click)="resetDefault()">

@@ -67,6 +67,9 @@ export class PropertyEditorComponent implements OnInit {
         this.pfd.validValues = validValuesConstraint.validValues;
         this.pfd.formType = PropertyFormType.SELECT;
       }
+      if (this.pfd.definition.password) {
+        this.pfd.inputType = "password";
+      }
     }
     // subscribe to FormControl changes and emit the value to observer.
     this.pfd.formControl.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
@@ -82,6 +85,13 @@ export class PropertyEditorComponent implements OnInit {
     this.pfd.formControl.setValue(this.pfd.definition.default.value);
   }
 
+  switchPasswordVisibility() {
+    if (this.pfd.inputType == 'password') {
+      this.pfd.inputType = 'text';
+    } else if (this.pfd.inputType == 'text') {
+      this.pfd.inputType = 'password';
+    }
+  }
 }
 
 export enum PropertyFormType {
