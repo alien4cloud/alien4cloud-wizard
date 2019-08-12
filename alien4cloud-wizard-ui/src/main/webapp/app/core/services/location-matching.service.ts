@@ -9,7 +9,7 @@ import {GenericResourceService} from "@app/core/services/generic-resource.servic
 @Injectable({
   providedIn: 'root'
 })
-export class LocationMatchingService extends GenericService<LocationMatch>  {
+export class LocationMatchingService extends GenericService  {
 
   constructor(
     http: HttpClient,

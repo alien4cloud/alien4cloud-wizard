@@ -1,36 +1,37 @@
+import {PropertyConstraint} from "./properties-constraint.model";
 
 export interface IValue {
   definition: boolean;
 }
 
-export interface PropertyConstraint {
-
-}
-
-export class PropertyDefinition implements IValue {
+export interface PropertyDefinition extends IValue {
   type: string;
   entrySchema : PropertyDefinition;
   required: boolean;
   description: string;
   suggestionId: string;
-  constraints: PropertyConstraint[] ;
-  defaultValue: PropertyValue<any>;
+  constraints: PropertyConstraint[];
+  default: PropertyValue<any>;
   definition: boolean;
-  isPassword: boolean;
+  password: boolean;
 }
 
-export abstract class AbstractPropertyValue implements IValue {
+export interface AbstractPropertyValue extends IValue {
   definition: boolean;
 }
 
-export abstract class PropertyValue<T> extends AbstractPropertyValue {
+export interface PropertyValue<T> extends AbstractPropertyValue {
   value: T;
 }
 
-export class MetaPropConfiguration extends PropertyDefinition {
+export interface MetaPropConfiguration extends PropertyDefinition {
   id: string;
   name: string;
   target: string;
-  defaultValue: PropertyValue<any>;
   filtered: boolean;
+}
+
+export interface PropertyRequest {
+  value: string;
+  definitionId: string;
 }

@@ -1,9 +1,8 @@
-export class Deployment {
+export interface Deployment {
   id:string;
-
 }
 
-export class MonitoredDeploymentDTO {
+export interface MonitoredDeploymentDTO {
   deployment: Deployment;
   workflowExpectedStepInstanceCount: Map<string, number>;
 }

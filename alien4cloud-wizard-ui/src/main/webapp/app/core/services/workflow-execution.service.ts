@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ExecutionStatus, WorkflowExecutionDTO} from "@app/core";
+import {ExecutionStatus, WorkflowExecutionDTO} from "@app/core/models";
 import {TranslateService} from "@ngx-translate/core";
 import {GenericResourceService} from "@app/core/services/generic-resource.service";
 import {Observable, ReplaySubject, timer} from "rxjs";
-import {concatMap, filter, map, take, tap} from "rxjs/operators";
+import {concatMap, filter, map, take} from "rxjs/operators";
 
 
 @Injectable({
