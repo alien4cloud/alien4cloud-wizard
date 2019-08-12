@@ -31,7 +31,9 @@ export class ApplicationListComponent implements OnInit {
 
   private applications: Application[];
   private overview: ApplicationOverview;
-  private applicationEnvironments: ApplicationEnvironmentDTO[];
+  
+  //Not exactly an array of ApplicationEnvironmentDTO
+  private applicationEnvironments: {};
   private applicationIds: Array<String> = [];
 
 

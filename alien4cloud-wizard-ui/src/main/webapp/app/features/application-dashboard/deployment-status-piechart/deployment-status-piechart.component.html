@@ -1,0 +1,8 @@
+<ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="environments" [gradient]="gradient"
+  [arcWidth]="0.70">
+  <ng-template #tooltipTemplate let-model="model">
+    <div class="tooltip" style="white-space: pre-line;">
+      {{model.name }}
+    </div>
+  </ng-template>
+</ngx-charts-pie-chart>
