@@ -4,7 +4,7 @@ import {PageEvent} from '@angular/material/paginator';
 import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService, ApplicationEnvironmentService, ApplicationEnvironmentDTO} from "@app/core";
+import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService, ApplicationEnvironmentService, ApplicationEnvironmentDTO, ApplicationEnvironment} from "@app/core";
 import {Router} from "@angular/router";
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
@@ -31,7 +31,9 @@ export class ApplicationListComponent implements OnInit {
 
   private applications: Application[];
   private overview: ApplicationOverview;
-  private applicationEnvironments: ApplicationEnvironmentDTO[];
+  
+  //Not exactly an array of ApplicationEnvironmentDTO
+  private applicationEnvironments: Map<string, ApplicationEnvironmentDTO[]>;
   private applicationIds: Array<String> = [];
 
 
