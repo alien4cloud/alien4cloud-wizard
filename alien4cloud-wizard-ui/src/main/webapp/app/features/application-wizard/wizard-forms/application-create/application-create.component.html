@@ -3,10 +3,7 @@
   <form class="example-form">
 
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Application name" [formControl]="applicationNameFormCtrl" name="applicationName" required>
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Application archive name" [(ngModel)]="archiveName" name="archiveName" required>
+      <input matInput placeholder="Application name" [(ngModel)]="applicationName" name="applicationName" required>
     </mat-form-field>
     <mat-form-field class="example-full-width" floatLabel="never">
       <textarea matInput placeholder="Application description" rows="4" [(ngModel)]="applicationDescription"

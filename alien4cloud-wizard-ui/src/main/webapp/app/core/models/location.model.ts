@@ -1,6 +1,6 @@
 import {CSARDependency, Orchestrator} from "@app/core";
 
-export interface Location {
+export class Location {
   id: string;
   name: string;
   orchestratorId: string;
@@ -11,7 +11,7 @@ export interface Location {
   lastUpdateDate: number;
 }
 
-export interface LocationMatch {
+export class LocationMatch {
   location: Location;
   orchestrator: Orchestrator;
   reasons: string;

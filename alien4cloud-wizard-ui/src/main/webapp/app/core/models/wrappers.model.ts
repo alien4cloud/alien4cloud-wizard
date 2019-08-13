@@ -1,6 +1,6 @@
 import {Application, ApplicationEnvironment, MetaProperty, NodeType, TopologyGraph} from "@app/core/models";
 
-export interface TopologyOverview {
+export class TopologyOverview {
   description: string;
   namedMetaProperties: MetaProperty[];
   modules: ApplicationModule[];
@@ -8,13 +8,13 @@ export interface TopologyOverview {
   topologyVersion: string;
 }
 
-export interface ApplicationOverview extends TopologyOverview {
+export class ApplicationOverview extends TopologyOverview {
   application: Application;
   deploymentStatus: string;
   applicationEnvironment: ApplicationEnvironment;
 }
 
-export interface ApplicationModule {
+export class ApplicationModule {
   nodeType: NodeType;
   namedMetaProperties: MetaProperty[];
 }

@@ -1,4 +1,4 @@
-export interface Execution {
+export class Execution {
   id : string;
   deploymentId: string;
   workflowId: string;
@@ -24,7 +24,7 @@ export enum WorkflowExecutionStepStatus {
   COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR"
 }
 
-export interface Task {
+export class Task {
   id: string;
   deploymentId: string;
   executionId: string;
@@ -45,7 +45,7 @@ export enum TaskStatus {
   FAILED = "FAILED"
 }
 
-export interface WorkflowExecutionDTO {
+export class WorkflowExecutionDTO {
   execution: Execution;
   actualKnownStepInstanceCount: number;
   lastKnownExecutingTask: Task;

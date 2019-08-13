@@ -1,7 +1,7 @@
 import { DeploymentStatus } from './deployment-status.enum';
 import { EnvironmentType } from './environment-type.enum';
 
-export interface Application {
+export class Application {
   id: string;
   name: string;
   description: string;
@@ -12,7 +12,7 @@ export interface Application {
   userRoles: []
 }
 
-export interface ApplicationEnvironment {
+export class ApplicationEnvironment {
   id: string;
   name: string;
   description:   string ;
@@ -24,7 +24,7 @@ export interface ApplicationEnvironment {
   groupRoles: Map<string, Set<string>>;
 }
 
-export interface ApplicationEnvironmentDTO extends ApplicationEnvironment {
+export class ApplicationEnvironmentDTO extends ApplicationEnvironment {
   status: DeploymentStatus;
   deployedVersion: string;
   currentVersionName: string;

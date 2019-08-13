@@ -1,20 +1,21 @@
 import {HasTags, Tag} from "@app/core/models";
 
-export interface AbstractToscaType extends HasTags {
+export class AbstractToscaType implements HasTags {
   archiveName: string;
   archiveVersion: string;
   elementId: string;
   description: string;
+  tags: Tag[];
 }
 
-export interface AbstractInheritableToscaType extends AbstractToscaType {
-
-}
-
-export interface AbstractInstantiableToscaType extends AbstractInheritableToscaType {
+export class AbstractInheritableToscaType extends AbstractToscaType {
 
 }
 
-export interface NodeType extends AbstractInstantiableToscaType {
+export class AbstractInstantiableToscaType extends AbstractInheritableToscaType {
+
+}
+
+export class NodeType extends AbstractInstantiableToscaType {
 
 }

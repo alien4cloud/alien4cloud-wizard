@@ -36,7 +36,7 @@
       </mat-expansion-panel-header>
       <w4c-topology-overview *ngIf="isOpenned" [overview]="overview"></w4c-topology-overview>
       <mat-action-row>
-        <button mat-button (click)="selectTemplate(topology)">Select</button>
+        <button mat-button (click)="selectTemplate(topology.id, topology.description)">Select</button>
       </mat-action-row>
 
     </mat-expansion-panel>

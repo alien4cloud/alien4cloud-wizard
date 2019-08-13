@@ -11,7 +11,6 @@ import {
   TopologyOverviewComponent
 } from './components';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
-import {PropertyEditorComponent} from "@app/shared/components/property-editor/property-editor.component";
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -20,7 +19,6 @@ import {PropertyEditorComponent} from "@app/shared/components/property-editor/pr
 @NgModule({
   declarations: [
     TopologyOverviewComponent,
-    PropertyEditorComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
@@ -45,7 +43,6 @@ import {PropertyEditorComponent} from "@app/shared/components/property-editor/pr
     FormsModule,
     ReactiveFormsModule,
     TopologyOverviewComponent,
-    PropertyEditorComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,

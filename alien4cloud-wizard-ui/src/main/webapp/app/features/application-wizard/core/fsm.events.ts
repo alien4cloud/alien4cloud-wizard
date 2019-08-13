@@ -1,23 +1,19 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-import {ApplicationEnvironment, Deployment, DeploymentStatus, LocationMatch, Topology} from "@app/core";
-import {DeploymentTopologyDTO} from '@app/core/models/deployment-topology.model';
+import {ApplicationEnvironment, Deployment, DeploymentStatus, LocationMatch} from "@app/core";
+import { DeploymentTopologyDTO } from '@app/core/models/deployment-topology.model';
 
 export type ApplicationWizardMachineEvents =
   Init |
-  OnFormCompleted |
   InitApplicationEnvironment |
   OnActiveDeploymentFound |
   DoSelectTemplate |
   GoBack |
   DoCreateApplication |
-  OnApplicationMetapropertiesNotFound |
-  OnApplicationMetapropertiesFound |
   OnEnvironmentsFetched |
   DoSelectEnvironment |
-  DoSearchLocation|
-  OnDeploymentInputsRequired |
+  OnDeploymentTopologyFetched|
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   DoSelectLocation |
@@ -35,11 +31,6 @@ export class Init {
   readonly type = 'INIT';
 }
 
-export class OnFormCompleted {
-  readonly type = 'OnFormCompleted';
-  constructor() {}
-}
-
 export class InitApplicationEnvironment {
   readonly type = 'INIT_APPLICATION_ENVIRONMENT';
   constructor(public applicationId: string , public environmentId: string) {}
@@ -52,22 +43,12 @@ export class OnActiveDeploymentFound {
 
 export class DoSelectTemplate {
   readonly type = 'DO_SELECT_TEMPLATE';
-  constructor(public topology: Topology) {}
+  constructor(public templateId: string, public templateDescription: string) {}
 }
 
 export class DoCreateApplication {
   readonly type = 'DO_CREATE_APPLICATION';
-  constructor(public name: string, public description: string, public archiveName: string) {}
-}
-
-export class OnApplicationMetapropertiesNotFound {
-  readonly type = 'OnApplicationMetapropertiesNotFound';
-  constructor() {}
-}
-
-export class OnApplicationMetapropertiesFound {
-  readonly type = 'OnApplicationMetapropertiesFound';
-  constructor() {}
+  constructor(public name: string , public description: string) {}
 }
 
 export class OnEnvironmentsFetched {
@@ -80,14 +61,9 @@ export class DoSelectEnvironment {
   constructor(public environmentId: string) {}
 }
 
-export class DoSearchLocation {
-  readonly type = 'DO_SEARCH_LOCATION';
+export class OnDeploymentTopologyFetched {
+  readonly type = 'ON_DEPLOYMENT_TOPOLOGY_FETCHED';
   constructor(public deploymentTopology: DeploymentTopologyDTO) {}
-}
-
-export class OnDeploymentInputsRequired {
-  readonly type = 'ON_DEPLOYMENT_INPUTS_REQUIRED';
-  constructor() {}
 }
 
 export class DoSelectLocation {

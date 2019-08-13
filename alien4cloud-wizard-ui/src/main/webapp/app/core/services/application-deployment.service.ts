@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class ApplicationDeploymentService extends GenericService {
+export class ApplicationDeploymentService extends GenericService<Deployment> {
 
   constructor(
     http: HttpClient,

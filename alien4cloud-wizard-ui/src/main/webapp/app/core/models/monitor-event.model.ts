@@ -1,12 +1,12 @@
 import {DeploymentStatus} from "@app/core";
 
-export interface AbstractMonitorEvent {
+export class AbstractMonitorEvent {
   eventType: string;
   deploymentId: string;
   orchestratorId: string;
   date: number;
 }
 
-export interface PaaSDeploymentStatusMonitorEvent extends AbstractMonitorEvent {
+export class PaaSDeploymentStatusMonitorEvent extends AbstractMonitorEvent {
   deploymentStatus: DeploymentStatus;
 }

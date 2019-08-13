@@ -91,9 +91,9 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
     });
   }
 
-  selectTemplate(topology: Topology) {
-    console.log(`Selected template: id=${topology.id}`);
-    this.fsm.send(new DoSelectTemplate(topology));
+  selectTemplate(topologyId: string, topologyDescription: string) {
+    console.log(`Selected template: id=${topologyId}`);
+    this.fsm.send(new DoSelectTemplate(topologyId, topologyDescription));
   }
 
 }

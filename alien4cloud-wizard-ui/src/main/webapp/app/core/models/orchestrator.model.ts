@@ -5,7 +5,7 @@ export enum OrchestratorState {
   DISCONNECTED
 }
 
-export interface Orchestrator {
+export class Orchestrator {
   id: string;
   name: string;
   pluginId: string;

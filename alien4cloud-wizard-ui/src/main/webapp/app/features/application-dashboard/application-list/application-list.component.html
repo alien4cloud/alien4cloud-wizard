@@ -52,10 +52,7 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <mat-paginator [length]="length"
-                [pageSize]="pageSize"
-                [pageIndex]="pageIndex"
-                [pageSizeOptions]="pageSizeOptions"
-                (page)="handlePage($event)">
+  <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    (page)="handlePage($event)">
   </mat-paginator>
 </div>

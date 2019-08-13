@@ -1,14 +1,19 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {GenericService} from "@app/core/services/generic.service";
-import {MonitoredDeploymentDTO} from "@app/core/models";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ApplicationEnvironment, GenericService, MonitoredDeploymentDTO} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs";
+import {GenericResourceService} from "@app/core/services/generic-resource.service";
+import {forkJoin, from, Observable, of, timer} from "rxjs";
+import {DeploymentTopologyDTO} from "@app/core/models/deployment-topology.model";
+import {Deployment} from "@app/core/models/deployment.model";
+import {concatMap, delay} from 'rxjs/operators';
+import {concat} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class MonitorDeploymentService extends GenericService {
+export class MonitorDeploymentService extends GenericService<MonitoredDeploymentDTO> {
 
   constructor(
     http: HttpClient,

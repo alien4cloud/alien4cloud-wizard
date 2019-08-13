@@ -3,9 +3,7 @@ import {
   ApplicationWizardMachineContext,
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
-import {
-  ApplicationWizardMachineEvents
-} from "@app/features/application-wizard/core/fsm.events";
+import { ApplicationWizardMachineEvents } from "@app/features/application-wizard/core/fsm.events";
 
 const { log } = actions;
 
@@ -13,14 +11,13 @@ const { log } = actions;
  * The initial machine context.
  */
 export const context: ApplicationWizardMachineContext = {
-  topologyTemplate: undefined,
-  applicationMetapropertiesConfiguration: undefined,
+  templateId: undefined,
+  templateDescription: undefined,
   applicationName: undefined,
   applicationDescription: undefined,
-  applicationArchiveName: undefined,
   applicationId: undefined,
   environments: undefined,
-  deploymentTopology: undefined,
+  deploymentTopologyId: undefined,
   environmentId: undefined,
   locationId: undefined,
   locationName: undefined,
@@ -115,29 +112,18 @@ export const applicationWizardMachineConfig: MachineConfig<
         }
       }
     },
-    applicationMetapropertiesSearching: {
-      invoke: {
-        id: 'searchApplicationMetaproperties',
-        src: 'searchApplicationMetaproperties'
-      },
+    applicationCreated: {
+      // type: 'final'
       on: {
-        OnApplicationMetapropertiesFound: [
+        '': [
           {
-            target: 'applicationMetapropertiesForm'
+            target: 'environmentSearching',
+            actions: log(
+              (context, event) => `applicationCreated: ${JSON.stringify(context)}`,
+              'applicationWizard'
+            )
           }
-        ],
-        OnApplicationMetapropertiesNotFound: [
-          {
-            target: 'environmentSearching'
-          }
-        ],
-      }
-    },
-    applicationMetapropertiesForm: {
-      on: {
-        OnFormCompleted: {
-          target: 'environmentSearching'
-        }
+        ]
       }
     },
     applicationCreationError: {
@@ -156,7 +142,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         ON_APPLICATION_CREATE_SUCCESS: {
-          target: 'applicationMetapropertiesSearching',
+          target: 'applicationCreated',
           actions: ['assignAppId', 'clearError']
           // actions: ['assignUser', 'loginSuccess']
         },
@@ -210,21 +196,10 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'fetchDeploymentTopology'
       },
       on: {
-        // if the deployment topology has inputs, then branch to InputForm
-        ON_DEPLOYMENT_INPUTS_REQUIRED: {
-          target: 'deploymentInputsForm'
-        },
-        DO_SEARCH_LOCATION: {
-          target: 'locationSearching'
-          // actions: ['assignDeploymentTopologyId']
-        }
-      }
-    },
-    deploymentInputsForm: {
-      on: {
-        // fixme : replace with a OnFormCompleted event (a form shouldn't be aware of the FSM logic)
-        OnFormCompleted: {
-          target: 'locationSearching'
+        ON_DEPLOYMENT_TOPOLOGY_FETCHED: {
+          target: 'locationSearching',
+          actions: ['assignDeploymentTopologyId']
+          // actions: ['assignUser', 'loginSuccess']
         }
       }
     },
