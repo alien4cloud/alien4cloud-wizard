@@ -24,9 +24,9 @@ export class ApplicationEnvironmentService extends GenericResourceService<Applic
     return this.handleResult<Deployment>(this.http.get(this.getParametrizedUrl(url, urlParams)));
   }
 
-  getEnvironmentApplications(applicationIds: String[]): Observable<Map<string, ApplicationEnvironment[]>> {
+  getEnvironmentApplications(applicationIds: String[]): Observable<Map<string, ApplicationEnvironmentDTO[]>> {
     const url = GenericResourceService.baseUrl + "/applications/environments";
-    return this.handleResult<Map<string, ApplicationEnvironment[]>>(this.http.post(url,applicationIds));
+    return this.handleResult<Map<string, ApplicationEnvironmentDTO[]>>(this.http.post(url,applicationIds));
   }
   
   getApplicationEnvironmentStatus(applicationId: string, environmentId: string): Observable<DeploymentStatus> {
