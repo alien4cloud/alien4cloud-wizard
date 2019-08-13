@@ -1,3 +1,5 @@
+import {AbstractPropertyValue} from "@app/core";
+
 export interface Tag {
   name: string;
   value : string;
@@ -5,6 +7,10 @@ export interface Tag {
 
 export interface HasTags {
   tags: Tag[];
+}
+
+export interface HasProperties {
+  properties: Map<string, AbstractPropertyValue>;
 }
 
 export interface MetaPropertyConfiguration {

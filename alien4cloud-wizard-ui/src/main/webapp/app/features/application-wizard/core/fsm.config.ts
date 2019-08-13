@@ -264,21 +264,33 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         'ON_SELECT_LOCATION_SUCESSS': [
           {
-            target: 'deploymentForm'
+            target: 'nodeMatchingForm',
+            actions: ['assignDeploymentTopology'],
+            cond: 'shouldAskForMatching'
+          },
+          {
+            target: 'deploymentForm',
+            actions: ['assignDeploymentTopology']
           }
         ]
       }
 
     },
+    nodeMatchingForm: {
+      on: {
+        'ON_MATCHING_COMPLETED': {
+          target: 'deploymentForm',
+          actions: ['assignDeploymentTopology']
+        }
+      }
+    },
     deploymentForm: {
       on: {
         DO_SUBMIT_DEPLOYMENT: {
           target: 'deploymentSubmitting',
-          //actions: ['assignTargetId']
-          // actions: ['assignUser', 'loginSuccess']
+          cond: 'canSubmitDeployment'
         }
       }
-      //
     },
     deploymentSubmitting: {
       invoke: {

@@ -28,6 +28,7 @@ export interface ApplicationWizardMachineSchema {
     locationSelectionForm: {};
     locationSearching: {};
     locationSelected: {};
+    nodeMatchingForm: {};
     deploymentForm: {};
     deploymentSubmitting:{},
     activeDeploymentForm:{},

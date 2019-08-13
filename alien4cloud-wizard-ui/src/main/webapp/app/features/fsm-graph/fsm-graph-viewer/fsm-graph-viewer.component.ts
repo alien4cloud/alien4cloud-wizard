@@ -53,7 +53,7 @@ export class FsmGraphViewerComponent implements OnInit {
       // flag all edges as inactive
       this.fsmGraph.edges.forEach(e => e.data['active'] = false);
       // the edge concerned by the current state transition
-      const graphEdge = _.find(this.fsmGraph.edges, edge => (edge.source == data.history.value && edge.label == data.event.type));
+      const graphEdge = _.find(this.fsmGraph.edges, edge => (edge.source == data.history.value && edge.label == data.event.type && edge.target == data.value));
       // flag it as active
       if (graphEdge) {
         graphEdge.data['active'] = true;

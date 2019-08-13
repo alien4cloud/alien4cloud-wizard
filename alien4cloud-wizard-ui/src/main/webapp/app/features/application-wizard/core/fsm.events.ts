@@ -3,6 +3,7 @@
  */
 import {ApplicationEnvironment, Deployment, DeploymentStatus, LocationMatch, Topology} from "@app/core";
 import {DeploymentTopologyDTO} from '@app/core/models/deployment-topology.model';
+import {EventObject} from "xstate";
 
 export type ApplicationWizardMachineEvents =
   Init |
@@ -23,6 +24,7 @@ export type ApplicationWizardMachineEvents =
   DoSelectLocation |
   OnSelectLocationSucesss |
   OnLocationFetched|
+  OnMatchingCompleted |
   DoSubmitDeployment|
   OnDeploymentSubmitSucess |
   DoSubmitUndeployment|
@@ -97,8 +99,12 @@ export class DoSelectLocation {
 
 export class OnSelectLocationSucesss {
   readonly type = 'ON_SELECT_LOCATION_SUCESSS';
-  // TODO: use deployment topology that is returned
-  constructor() {}
+  constructor(public deploymentTopologyDTO: DeploymentTopologyDTO) {}
+}
+
+export class OnMatchingCompleted {
+  readonly type = 'ON_MATCHING_COMPLETED';
+  constructor(public deploymentTopologyDTO: DeploymentTopologyDTO) {}
 }
 
 export class OnLocationFetched {

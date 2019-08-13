@@ -8,8 +8,8 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="center center">
-  <button mat-stroked-button (click)="back()" type="button">Back</button>
-  <button mat-stroked-button (click)="cancel()" type="button">Cancel</button>
-  <button mat-stroked-button (click)="leave()" type="button">leave application undeployed</button>
-  <button mat-stroked-button (click)="deployApp()" type="button">Deploy application</button>
+  <button mat-stroked-button disabled="true" (click)="back()" type="button">Back</button>
+  <button mat-stroked-button disabled="true" (click)="cancel()" type="button">Cancel</button>
+<!--  <button mat-stroked-button (click)="deployApp()" type="button">Deploy application</button>-->
+  <w4c-wizard-button enableOnGuard="canSubmitDeployment" [fsmContext]="fsmContext" (click)="deployApp()" label="Deploy"></w4c-wizard-button>
 </div>

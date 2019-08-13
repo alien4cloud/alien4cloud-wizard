@@ -15,3 +15,4 @@ export * from './execution.model';
 export * from './deployment-status.enum';
 export * from './environment-type.enum';
 export * from './monitor-event.model';
+export * from './location-resource-template.model';

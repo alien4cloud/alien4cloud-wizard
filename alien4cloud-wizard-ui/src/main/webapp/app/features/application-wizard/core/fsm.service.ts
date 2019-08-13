@@ -16,7 +16,8 @@ import {
   InitApplicationEnvironment,
   OnActiveDeploymentFound,
   OnApplicationCreateError,
-  OnApplicationCreateSucess, OnDeploymentInputsRequired,
+  OnApplicationCreateSucess,
+  OnDeploymentInputsRequired,
   OnDeploymentSubmitError,
   OnDeploymentSubmitSucess,
   DoSearchLocation,
@@ -25,7 +26,10 @@ import {
   OnLocationFetched,
   OnSelectLocationSucesss,
   OnUndeploymentSubmitError,
-  OnUndeploymentSubmitSucess, OnApplicationMetapropertiesFound, OnApplicationMetapropertiesNotFound
+  OnUndeploymentSubmitSucess,
+  OnApplicationMetapropertiesFound,
+  OnApplicationMetapropertiesNotFound,
+  OnMatchingCompleted
 } from "@app/features/application-wizard/core/fsm.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
@@ -150,9 +154,12 @@ export class AppplicationWizardMachineService {
           ),
       setLocationPolicies: (_, event) =>
         this.deploymentTopologyService.setLocationPolicies(_.applicationId, _.environmentId, _.orchestratorId, _.locationId)
-          .pipe(map(data => {
-            console.log("setLocation result ", JSON.stringify(data));
-            return new OnSelectLocationSucesss();
+          .pipe(map(deploymentTopologyDTO => {
+            // assign the deployment topology
+            // we have an assignation in the FSM config but we are not guaranteed that this assignation was done before the guard was called
+            // that's why we assign directly here
+            _.deploymentTopology = deploymentTopologyDTO;
+            return new OnSelectLocationSucesss(deploymentTopologyDTO);
           }))
       ,
       deploy: (_, event) =>
@@ -178,13 +185,15 @@ export class AppplicationWizardMachineService {
     guards: {
       // isLoggedOut: () => !localStorage.getItem('jwtToken')
       // FIXME: this is just for the example of using the guard to enable buttons
-      backToTemplateSelectionIsPossible: (context) => !context.applicationId ,
+      backToTemplateSelectionIsPossible: (context) => !context.applicationId,
+      shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology),
       canUndeploy: context => context.deploymentId && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED
         || context.deploymentStatus === DeploymentStatus.FAILURE
         || context.deploymentStatus === DeploymentStatus.UPDATE_FAILURE
         || context.deploymentStatus === DeploymentStatus.DEPLOYMENT_IN_PROGRESS),
-      canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED
+      canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
+      canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
@@ -223,9 +232,10 @@ export class AppplicationWizardMachineService {
       clearError: assign<ApplicationWizardMachineContext, any>((_, event) => ({
         errorMessage: undefined
       })),
-      // assignDeploymentTopologyId: assign<ApplicationWizardMachineContext, DoSearchLocation>((_, event) => ({
-      //   deploymentTopologyId: event.deploymentTopology.topology.id
-      // })),
+      // FIXME: remove since it's useless ? (assignation is done in setLocationPolicies)
+      assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSucesss | OnMatchingCompleted>((_, event) => ({
+        deploymentTopology: event.deploymentTopologyDTO
+      })),
       // TODO: remove
       assignDeploymentId: (_) => {
           this.applicationEnvironmentService.getMonitoredDeploymentDTO(
@@ -291,26 +301,42 @@ export class AppplicationWizardMachineService {
       if (value.on) {
         Object.entries(value.on).forEach(([eventType, transitions]) => {
           // console.log("transitions: " + transitions);
-          // console.log("eventType: " + eventType);
-          // console.log("transitions: " + JSON.stringify(transitions));
+          console.log("eventType: " + eventType);
+          console.log("transitions: " + JSON.stringify(transitions));
           let target = undefined;
-          if (transitions[0]) {
-            target = transitions[0]['target'];
-          } else if (transitions['target']) {
-            target = transitions['target'];
-          }
-          // console.log("target: " + target);
-          if (eventType == '' || !eventType) {
-            graph.edges.push(new FsmGraphEdge(state + "-On", state, target, "", []));
+          console.log("isArray ? ", lodash.isArray(transitions));
+          if (lodash.isArray(transitions)) {
+            // we have several transitions from here
+            lodash.forEach(transitions, (transition) => {
+              console.log("==> ", transition);
+              target = transition['target'];
+              if (eventType == '' || !eventType) {
+                graph.edges.push(new FsmGraphEdge(state + "-On", state, target, "", []));
+              } else {
+                graph.edges.push(new FsmGraphEdge(state + "-" + eventType + "-" + target, state, target, eventType, []));
+              }
+            });
           } else {
-            // push event as a node
-            // graph.nodes.push(new FsmGraphNode(eventType.toString()));
-            // // add a edge between the state node and it
-            // graph.edges.push(new FsmGraphEdge(state + ":On:" + eventType, state, eventType));
-            // add a edge between the event and target
-            // console.log(`Add a edge <${eventType}> from ${state} to ${target}`);
-            graph.edges.push(new FsmGraphEdge(state + "-" + eventType + "-" + target, state, target, eventType, []));
+            target = transitions['target'];
+            // console.log("target: " + target);
+            if (eventType == '' || !eventType) {
+              graph.edges.push(new FsmGraphEdge(state + "-On", state, target, "", []));
+            } else {
+              // push event as a node
+              // graph.nodes.push(new FsmGraphNode(eventType.toString()));
+              // // add a edge between the state node and it
+              // graph.edges.push(new FsmGraphEdge(state + ":On:" + eventType, state, eventType));
+              // add a edge between the event and target
+              // console.log(`Add a edge <${eventType}> from ${state} to ${target}`);
+              graph.edges.push(new FsmGraphEdge(state + "-" + eventType + "-" + target, state, target, eventType, []));
+            }
           }
+          // if (transitions[0]) {
+          //   target = transitions[0]['target'];
+          // } else if (transitions['target']) {
+          //   target = transitions['target'];
+          // }
+
         });
       }
     });

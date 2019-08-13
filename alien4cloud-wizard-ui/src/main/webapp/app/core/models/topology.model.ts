@@ -1,4 +1,11 @@
-import {CSARDependency, HasTags, PropertyDefinition, Tag, Version} from '@app/core/models';
+import {
+  CSARDependency,
+  HasTags,
+  NodeTemplate,
+  PolicyTemplate,
+  PropertyDefinition,
+  Version
+} from '@app/core/models';
 
 export interface Topology extends HasTags {
   archiveName: string;
@@ -9,9 +16,9 @@ export interface Topology extends HasTags {
   creationDate: number;
   lastUpdateDate: number;
   dependencies: CSARDependency[];
-  // nodeTemplates: Map<string, NodeTemplate>;
-  // unprocessedNodeTemplates: Map<string, NodeTemplate>;
-  // policies: Map<string, PolicyTemplate>;
+  nodeTemplates: Map<string, NodeTemplate>;
+  unprocessedNodeTemplates: Map<string, NodeTemplate>;
+  policies: Map<string, PolicyTemplate>;
   inputs: Map<string, PropertyDefinition>;
   outputProperties: Map<string, Set<string>>;
   outputCapabilityProperties: Map<string, Map<string, Set<string>>>;

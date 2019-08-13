@@ -1,5 +1,10 @@
-import { Topology } from './topology.model';
+import {Topology} from './topology.model';
 import {AbstractPropertyValue, CSARDependency, NodeType} from "@app/core";
+import {
+  DeploymentSubstitutionConfiguration,
+  LocationResourceTemplate,
+  PolicyLocationResourceTemplate
+} from "./location-resource-template.model";
 
 export interface AbstractTopologyDTO<T extends Topology> {
   topology : T ;
@@ -13,10 +18,10 @@ export interface AbstractTopologyDTO<T extends Topology> {
 
 export interface DeploymentTopologyDTO extends AbstractTopologyDTO<DeploymentTopology> {
   locationPolicies: Map<string, string>;
-  // validation: TopologyValidationResult;
-  // locationResourceTemplates: Map<string, LocationResourceTemplate>;
-  // policyLocationResourceTemplates: Map<string, PolicyLocationResourceTemplate>;
-  // availableSubstitutions: DeploymentSubstitutionConfiguration;
+  validation: TopologyValidationResult;
+  locationResourceTemplates: Map<string, LocationResourceTemplate>;
+  policyLocationResourceTemplates: Map<string, PolicyLocationResourceTemplate>;
+  availableSubstitutions: DeploymentSubstitutionConfiguration;
   // secretCredentialInfos: SecretCredentialInfo[];
 }
 
@@ -41,4 +46,57 @@ export interface DeploymentTopology extends Topology {
   // originalPolicies: Map<string, PolicyTemplate>;
 }
 
+export interface TopologyValidationResult {
+  valid: boolean;
+  taskList: AbstractTask[];
+  warningList: AbstractTask[];
+  infoList: AbstractTask[];
+}
 
+export interface AbstractTask {
+  code: TaskCode;
+  source: string;
+}
+
+export enum TaskCode {
+  /* This code is to be used when a task is actually just there to dispatch a log message. */
+  LOG,
+
+  /** Topology validation codes */
+  EMPTY,
+  IMPLEMENT_RELATIONSHIP,
+  SATISFY_LOWER_BOUND,
+  PROPERTIES,
+  SCALABLE_CAPABILITY_INVALID,
+  NODE_FILTER_INVALID,
+  WORKFLOW_INVALID,
+  ARTIFACT_INVALID,
+  DEPRECATED_NODE,
+
+  /** Inputs codes */
+  MISSING_VARIABLES,
+  UNRESOLVABLE_PREDEFINED_INPUTS,
+  PREDEFINED_INPUTS_CONSTRAINT_VIOLATION,
+  PREDEFINED_INPUTS_TYPE_VIOLATION,
+  INPUT_PROPERTY,
+  INPUT_ARTIFACT_INVALID,
+
+  /* Location policies */
+  LOCATION_POLICY,
+  LOCATION_UNAUTHORIZED,
+  LOCATION_DISABLED,
+
+  /* No matching node found on location for criterias */
+  NO_NODE_MATCHES,
+  NODE_NOT_SUBSTITUTED,
+  FORBIDDEN_OPERATION,
+
+  /** Post matching errors. */
+  IMPLEMENT,
+  REPLACE,
+
+  ORCHESTRATOR_PROPERTY,
+
+  /** Specific code for cloudify */
+  CFY_MULTI_RELATIONS
+}

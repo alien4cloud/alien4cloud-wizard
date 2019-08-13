@@ -8,6 +8,7 @@ import {ApplicationDeploymentComponent} from "@app/features/application-wizard/w
 import { ActiveDeploymentComponent } from '../wizard-forms/active-deployment/active-deployment.component';
 import {DeploymentInputsComponent} from "@app/features/application-wizard/wizard-forms/deployment-inputs/deployment-inputs.component";
 import {ApplicationMetapropertiesComponent} from "@app/features/application-wizard/wizard-forms/application-metaproperties/application-metaproperties.component";
+import {NodesMatchingComponent} from "@app/features/application-wizard/wizard-forms/nodes-matching/nodes-matching.component";
 /**
  * This is the configuration of our wizard. The step order is the same that this array order.
  *
@@ -21,6 +22,7 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Fill Inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm"},
   {stepLabel: "Fill Metaproperties", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm"},
   {stepLabel: "Select Target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm"},
+  {stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm"},
   {stepLabel: "Deploy app", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm"},
   {stepLabel: "Active Deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"}
 ];

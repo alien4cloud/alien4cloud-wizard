@@ -9,6 +9,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import * as _ from "lodash";
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +30,14 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
     return this.handleResult<DeploymentTopologyDTO>(this.http.get(url));
   }
 
-  setLocationPolicies(applicationId: string, environmentId: string, orchestratorId: string, locationId: string): Observable<{}> {
+  /**
+   * This endpoint is called when a location is selected.
+   */
+  setLocationPolicies(applicationId: string, environmentId: string, orchestratorId: string, locationId: string): Observable<DeploymentTopologyDTO> {
     let urlParams = {applicationId: applicationId, environmentId: environmentId};
     let url = this.getUrl("/location-policies", urlParams);
     let payload = {"orchestratorId": orchestratorId, "groupsToLocations": {"_A4C_ALL": locationId}}
-    const obs: Observable<{}> = this.handleResult<{}>(this.http.post(url, payload, {
+    const obs: Observable<DeploymentTopologyDTO> = this.handleResult<DeploymentTopologyDTO>(this.http.post(url, payload, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       })
@@ -60,6 +64,22 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
     }));
   }
 
+  /**
+   * Given a DeploymentTopologyDTO, return true if at least 1 node has several available substitution.
+   * @param deploymentTopology
+   */
+  hasMultipleAvailableSubstitutions(deploymentTopology: DeploymentTopologyDTO): boolean {
+    let result: boolean = false;
+    // FIXME: more efficient way to do this in a functionnal way ?
+    _.forEach(deploymentTopology.availableSubstitutions.availableSubstitutions, (proposals, nodeName) => {
+      console.log("Exploring substitutions for node : ", nodeName);
+      if (_.isArray(proposals) && _.size(proposals) > 1) {
+        console.log("More than 1 substitution available for node", nodeName);
+        result = true;
+      }
+    });
+    return result;
+  }
 }
 
 /**
