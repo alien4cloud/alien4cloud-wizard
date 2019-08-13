@@ -4,15 +4,14 @@
 <div class="home-component-feature-list">
   <a *ngFor="let feature of features"
     class="home-component-feature-list-item"
-    [ngClass]="{'home-component-feature-list-item-disabled': !feature.allowed}"
+    [ngClass]="{'home-component-feature-list-item-disabled': !(feature.allowed && isConnected)}"
     [routerLink]="[feature.activationLink]"
-    (mouseover)="feature.active = true"
+    (mouseover)="feature.active = isConnected && feature.allowed && true"
     (mouseout)="feature.active = false">
     <mat-card class="home-component-feature-list-card">
       <mat-card-header fxLayoutAlign="space-between center" class="home-component-feature-list-header">
-        <mat-icon *ngIf="feature.active && feature.allowed" color="primary" flex class="featureIcon">{{feature.iconName}}</mat-icon>
-        <mat-icon *ngIf="!(feature.active && feature.allowed)" flex class="featureIcon">{{feature.iconName}}</mat-icon>
-        <mat-card-title [ngClass]="{'w4c-primary-text-A200': feature.active && feature.allowed}" flex>{{feature.name}}</mat-card-title>
+        <mat-icon *ngIf="feature.active || true" [color]="(feature.active) ? 'primary' : ''" flex class="featureIcon">{{feature.iconName}}</mat-icon>
+        <mat-card-title [ngClass]="{'w4c-primary-text-A200': feature.active}" flex>{{feature.name}}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="home-component-feature-list-card-summary">{{feature.description}}</mat-card-content>
     </mat-card>
