@@ -80,6 +80,13 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
     });
     return result;
   }
+
+  updateSubstitution(applicationId: string, environmentId: string, nodeId: string, locationResourceTemplateId: string): Observable<DeploymentTopologyDTO> {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId, nodeId: nodeId};
+    let url = this.getUrl("/substitutions/@{nodeId}", urlParams);
+    let params = {"locationResourceTemplateId": locationResourceTemplateId};
+    return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, {}, {params}));
+  }
 }
 
 /**
