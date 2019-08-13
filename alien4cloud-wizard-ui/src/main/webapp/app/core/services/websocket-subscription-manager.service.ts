@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import * as SockJS from 'sockjs-client';
-import {Observable} from "rxjs";
+import {Observable, ReplaySubject} from "rxjs";
 import {Stomp, StompHeaders} from '@stomp/stompjs';
 import {LocalStorageService} from "ngx-webstorage";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
+import {DeploymentStatusChangeEvent} from "@app/core/models/internal-event.model";
 
 /**
  * Manage subscriptions to A4C websocket channels.
@@ -14,6 +15,9 @@ import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.m
   providedIn: 'root'
 })
 export class WebsocketSubscriptionManager {
+
+  private deployementStatusChangeSubject = new ReplaySubject<DeploymentStatusChangeEvent>(1);
+  public deployementStatusChange = this.deployementStatusChangeSubject.asObservable();
 
   private static stompChannelBaseUrl: string = "/api/rest/w4cAlienEndPoint";
 
@@ -43,6 +47,7 @@ export class WebsocketSubscriptionManager {
           let paaSDeploymentStatusMonitorEvent = <PaaSDeploymentStatusMonitorEvent>event;
           if (paaSDeploymentStatusMonitorEvent) {
             observer.next(paaSDeploymentStatusMonitorEvent);
+            this.deployementStatusChangeSubject.next(new DeploymentStatusChangeEvent(environmentId, paaSDeploymentStatusMonitorEvent.deploymentStatus));
           } else {
             console.error("event is not a PaaSDeploymentStatusMonitorEvent : TODO manage !");
           }
