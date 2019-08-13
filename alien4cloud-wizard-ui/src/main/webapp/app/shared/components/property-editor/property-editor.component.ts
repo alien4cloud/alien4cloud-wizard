@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {AbstractPropertyValue, PropertyConstraintUtils, PropertyDefinition, PropertyValue} from "@app/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import * as _ from "lodash";
@@ -26,7 +26,14 @@ export class PropertyEditorComponent implements OnInit {
    */
   @Input() label: string;
 
-  @Input() value: any;
+  private rawValue: AbstractPropertyValue;
+
+  @Input() public set value(value: AbstractPropertyValue) {
+    this.rawValue = value;
+    if (this.initialiazed) {
+      this.initValue();
+    }
+  }
 
   /**
    * If provided, add the created FormControl to this FormGroup.
@@ -38,6 +45,11 @@ export class PropertyEditorComponent implements OnInit {
   private pfd: PropertyFormDefinition;
 
   private isLongText: boolean = false;
+
+  /**
+   * This boolean is used to know if the component has already been initialized.
+   */
+  private initialiazed = false;
 
   constructor() { }
 
@@ -53,46 +65,112 @@ export class PropertyEditorComponent implements OnInit {
     if (this.formGroup) {
       this.formGroup.addControl(this.id, formControl);
     }
-    if (this.value && this.value.hasOwnProperty('value')) {
-      this.pfd.displayableValue = this.value['value'];
-      this.pfd.formControl.setValue(this.pfd.displayableValue);
-    }
+
     this.pfd.formType = PropertyFormType.INPUT;
-    if (this.propertyDefinition.type == "integer" || this.propertyDefinition.type == "float") {
-      this.pfd.inputType = "number";
-    } else if (this.propertyDefinition.type == "boolean") {
-      this.pfd.formType = PropertyFormType.CHEKBOX;
-    } else {
-      this.pfd.inputType = "text";
-      // manage SELECT
-      let validValuesConstraint = PropertyConstraintUtils.getValidValuesConstraint(this.propertyDefinition);
-      if (validValuesConstraint) {
-        this.pfd.validValues = validValuesConstraint.validValues;
-        this.pfd.formType = PropertyFormType.SELECT;
+    switch(this.propertyDefinition.type) {
+      case "integer":
+      case "float": {
+        this.pfd.inputType = "number";
+        break;
       }
-      if (this.pfd.definition.password) {
-        this.pfd.inputType = "password";
+      case "boolean": {
+        this.pfd.formType = PropertyFormType.CHEKBOX;
+        break;
+      }
+      case "scalar-unit.size": {
+        this.initScalarUnits(['B', 'KB', 'KIB', 'MB', 'MIB', 'GB', 'GIB', 'TB', 'TIB']);
+        break;
+      }
+      case "scalar-unit.time": {
+        this.initScalarUnits(['d', 'h', 'm', 's', 'ms', 'us', 'ns']);
+        break;
+      }
+      case "scalar-unit.frequency": {
+        this.initScalarUnits(['Hz', 'KHz', 'MHz', 'GHz']);
+        break;
+      }
+      default: {
+        this.pfd.inputType = "text";
+        // manage SELECT
+        let validValuesConstraint = PropertyConstraintUtils.getValidValuesConstraint(this.propertyDefinition);
+        if (validValuesConstraint) {
+          this.pfd.validValues = validValuesConstraint.validValues;
+          this.pfd.formType = PropertyFormType.SELECT;
+        }
+        if (this.pfd.definition.password) {
+          this.pfd.inputType = "password";
+        }
       }
     }
+
+    // init the value before listening to changes.
+    this.initValue();
+
     // subscribe to FormControl changes and emit the value to observer.
     this.pfd.formControl.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
       console.log("Form value changes : ", JSON.stringify(value));
-      this.valueChange.emit(value);
+      if (this.pfd.units) {
+        // in case of scalar units we need to suffixe with the unit
+        this.valueChange.emit(value + " " + this.pfd.unit);
+      } else {
+        this.valueChange.emit(value);
+      }
     });
+
+    this.initialiazed = true;
+  }
+
+  private initValue() {
+    console.log("initValue called, this.rawValue:", this.rawValue);
+    if (this.rawValue && this.rawValue.hasOwnProperty('value')) {
+      this.setDisplayableValue(this.rawValue['value']);
+    } else {
+      // TODO: manage functions
+    }
+  }
+
+  private initScalarUnits(units: string[]) {
+    this.pfd.inputType = "number";
+    this.pfd.units = units;
+    this.pfd.unit = this.pfd.units[0];
   }
 
   /**
    * Reset to default value.
    */
-  resetDefault() {
-    this.pfd.formControl.setValue(this.pfd.definition.default.value);
+  private resetDefault() {
+    if (this.pfd.definition.default) {
+      this.rawValue = this.pfd.definition.default;
+      this.initValue();
+    }
   }
 
-  switchPasswordVisibility() {
+  private switchPasswordVisibility() {
     if (this.pfd.inputType == 'password') {
       this.pfd.inputType = 'text';
     } else if (this.pfd.inputType == 'text') {
       this.pfd.inputType = 'password';
+    }
+  }
+
+  private setDisplayableValue(value: any) {
+    if (this.pfd.units) {
+      let splitted = _.split(value, /\s+/);
+      this.pfd.displayableValue = splitted[0];
+      this.pfd.formControl.setValue(this.pfd.displayableValue);
+      this.pfd.unit = splitted[1];
+    } else {
+      this.pfd.displayableValue = value;
+      this.pfd.formControl.setValue(this.pfd.displayableValue);
+    }
+  }
+
+  private changeScalarUnit(unit: any) {
+    // trigger change if something is in text box
+    this.pfd.unit = unit;
+    if (this.pfd.formControl.value) {
+      // will trigger a change event on eventual observers
+      this.valueChange.emit(this.pfd.formControl.value + " " + this.pfd.unit);
     }
   }
 }
@@ -109,8 +187,6 @@ export class PropertyFormDefinition {
   label: string;
   /** The property definition. */
   definition: PropertyDefinition;
-  /** The raw value. */
-  value: AbstractPropertyValue;
   /** The value to display. */
   displayableValue: string;
   /** When we have a constraint of type valid_values, this is used to fill the drop box. */
@@ -119,6 +195,10 @@ export class PropertyFormDefinition {
   formType: PropertyFormType;
   /** The angular form control itself. */
   formControl: FormControl;
-  // input type managed by angular : https://material.angular.io/components/input/overview
+  /** input type managed by angular : https://material.angular.io/components/input/overview */
   inputType: string;
+  /** when the type is scalar-unit, we have to display the units. If this is defined, it means that we are managing a scalar-unit property. */
+  units: string[];
+  /** the currently selected unit for a scalar-unit. */
+  unit: string;
 }
