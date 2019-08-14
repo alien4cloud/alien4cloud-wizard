@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
+import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
+import {DoCancelWizard} from "@app/features/application-wizard/core/fsm.events";
 
 /**
  * A control panel for the wizard.
@@ -37,20 +39,27 @@ export class WizardControlComponent implements OnInit {
   @Input()
   public forwardEnabledFn: Function;
 
-  constructor() { }
+  @Input()
+  public cancelEnabledFn: Function;
+
+  constructor(private fsm: AppplicationWizardMachineService) { }
 
   ngOnInit() {
   }
 
-  public _backward() {
+  _backward() {
     this.backwardFn.call(this);
   }
 
-  public _forward() {
+  cancel() {
+    this.fsm.send(new DoCancelWizard());
+  }
+
+  _forward() {
     this.forwardFn.call(this);
   }
 
-  public _forwardEnabled(): boolean {
+  _forwardEnabled(): boolean {
     if (this.forwardEnabledFn) {
       return this.forwardEnabledFn.call(this);
     } else {
@@ -58,7 +67,15 @@ export class WizardControlComponent implements OnInit {
     }
   }
 
-  public _backwardEnabled(): boolean {
+  _cancelEnabled(): boolean {
+    if (this.cancelEnabledFn) {
+      return this.cancelEnabledFn.call(this);
+    } else {
+      return true;
+    }
+  }
+
+  _backwardEnabled(): boolean {
     if (this.backwardEnabledFn) {
       return this.backwardEnabledFn.call(this);
     } else {

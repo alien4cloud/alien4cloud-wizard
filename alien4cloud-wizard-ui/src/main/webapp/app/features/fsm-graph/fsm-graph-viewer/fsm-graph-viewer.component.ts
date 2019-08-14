@@ -15,11 +15,11 @@ import {map} from "rxjs/operators";
 })
 export class FsmGraphViewerComponent implements OnInit {
 
-  public fsmGraph: FsmGraph;
-  private panToNode$: Subject<string> = new Subject();
+  fsmGraph: FsmGraph;
+  panToNode$: Subject<string> = new Subject();
 
   // make lodash usable from template
-  private lodash = _;
+  lodash = _;
 
   private static STORAGE_ZOOM_LEVEL: string = "fsm-zoom-level";
   private zoomLevel: number;

@@ -9,10 +9,10 @@ import {HealthService} from "@app/core";
 })
 export class HomeComponent implements OnInit {
 
-  public features: Feature[] = [];
+  features: Feature[] = [];
 
   // indicates if the A4C webapp is reachable
-  private isConnected: boolean;
+  isConnected: boolean;
 
   constructor(
     healthService: HealthService

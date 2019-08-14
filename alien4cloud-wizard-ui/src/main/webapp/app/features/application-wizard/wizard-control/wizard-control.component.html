@@ -8,6 +8,13 @@
   >
   </w4c-wizard-button>
   <!-- TODO: here put something to insert buttons ? -->
+  <w4c-wizard-button (click)="cancel()"
+                     enableOnGuard="canCancel"
+                     [enabledFn]="_cancelEnabled.bind(this)"
+                     [fsmContext]="fsmContext"
+                     label="Cancel"
+                     matIconName="stop">
+  </w4c-wizard-button>
   <w4c-wizard-button (click)="_forward()"
                      [enableOnGuard]="forwardGuard"
                      [enabledFn]="_forwardEnabled.bind(this)"

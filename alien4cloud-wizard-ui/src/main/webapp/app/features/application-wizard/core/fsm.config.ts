@@ -4,7 +4,7 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import {
-  ApplicationWizardMachineEvents
+  ApplicationWizardMachineEvents, DoDeleteApplication
 } from "@app/features/application-wizard/core/fsm.events";
 
 const { log } = actions;
@@ -334,8 +334,32 @@ export const applicationWizardMachineConfig: MachineConfig<
         DO_SUBMIT_DEPLOYMENT: {
           target: 'deploymentSubmitting',
           cond: 'canDeploy'
+        },
+        DoCancelWizard: {
+          target: 'deleteApplicationForm'
         }
       }
+    },
+    deleteApplicationForm: {
+      on: {
+        DoDeleteApplication: {
+          target: 'applicationDeleting'
+          // TODO: add cond
+        }
+      }
+    },
+    applicationDeleting: {
+      // TODO: invoke delete on backend
+      on: {
+        OnApplicationDeleteSucsess: {
+          target: 'thisIsTheEnd'
+        },
+        OnApplicationDeleteError: {
+          target: 'deleteApplicationForm'
+        }
+      }
+    },
+    thisIsTheEnd: {
     }
   },
 };

@@ -32,7 +32,10 @@ export interface ApplicationWizardMachineSchema {
     deploymentForm: {};
     deploymentSubmitting:{},
     activeDeploymentForm:{},
-    undeploymentSubmitting:{}
+    undeploymentSubmitting:{},
+    deleteApplicationForm:{},
+    applicationDeleting:{},
+    thisIsTheEnd:{},
   };
 }
 

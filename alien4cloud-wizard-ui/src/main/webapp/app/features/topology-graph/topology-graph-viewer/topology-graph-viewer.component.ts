@@ -11,7 +11,7 @@ import * as _ from "lodash";
 export class TopologyGraphViewerComponent implements OnInit, AfterContentInit, AfterViewInit, AfterViewChecked, OnDestroy {
 
   // make lodash usable from template
-  private lodash = _;
+  lodash = _;
 
   zoomToFit$: Subject<boolean> = new Subject();
   center$: Subject<boolean> = new Subject();

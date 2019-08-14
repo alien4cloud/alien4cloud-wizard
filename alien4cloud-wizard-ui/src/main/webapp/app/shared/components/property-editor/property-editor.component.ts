@@ -42,9 +42,9 @@ export class PropertyEditorComponent implements OnInit {
 
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-  public pfd: PropertyFormDefinition;
+  pfd: PropertyFormDefinition;
 
-  public isLongText: boolean = false;
+  isLongText: boolean = false;
   
   /**
    * This boolean is used to know if the component has already been initialized.
@@ -138,7 +138,7 @@ export class PropertyEditorComponent implements OnInit {
   /**
    * Reset to default value.
    */
-  public resetDefault() {
+  resetDefault() {
     if (this.pfd.definition.default) {
       this.rawValue = this.pfd.definition.default;
       this.initValue();
@@ -153,9 +153,9 @@ export class PropertyEditorComponent implements OnInit {
     }
   }
 
-   public displayDescription() : string {
-     return "";
-   }
+  displayDescription(): string {
+    return "";
+  }
 	
   private setDisplayableValue(value: any) {
     if (this.pfd.units) {
@@ -169,7 +169,7 @@ export class PropertyEditorComponent implements OnInit {
     }
   }
 
-  private changeScalarUnit(unit: any) {
+  changeScalarUnit(unit: any) {
     // trigger change if something is in text box
     this.pfd.unit = unit;
     if (this.pfd.formControl.value) {

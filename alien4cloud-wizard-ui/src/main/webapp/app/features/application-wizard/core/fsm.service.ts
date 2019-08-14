@@ -190,7 +190,8 @@ export class AppplicationWizardMachineService {
         || context.deploymentStatus === DeploymentStatus.UPDATE_FAILURE
         || context.deploymentStatus === DeploymentStatus.DEPLOYMENT_IN_PROGRESS),
       canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
-      canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid
+      canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
+      canCancel: context => false
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({

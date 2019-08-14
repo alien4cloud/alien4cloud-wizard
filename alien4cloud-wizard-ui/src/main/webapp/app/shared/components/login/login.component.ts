@@ -10,7 +10,7 @@ import {LoginService} from "@app/core";
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
-  public showSpinner: boolean = false;
+  showSpinner: boolean = false;
   
   constructor(
     private router: Router,

@@ -49,7 +49,7 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
 
   }
 
-  private progessBarData: ProgessBarData;
+  progessBarData: ProgessBarData;
 
   ngOnDestroy(): void {
     if (this.workflowMonitoringSubscription && !this.workflowMonitoringSubscription.closed)  {

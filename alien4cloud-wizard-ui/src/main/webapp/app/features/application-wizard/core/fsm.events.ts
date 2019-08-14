@@ -30,7 +30,11 @@ export type ApplicationWizardMachineEvents =
   DoSubmitUndeployment|
   OnUndeploymentSubmitSucess |
   OnUndeploymentSubmitError |
-  OnDeploymentSubmitError
+  OnDeploymentSubmitError |
+  DoCancelWizard |
+  DoDeleteApplication |
+  OnApplicationDeleteSucsess |
+  OnApplicationDeleteError
 ;
 
 export class Init {
@@ -162,6 +166,27 @@ export class GoBack {
   readonly type = 'GO_BACK';
   constructor() {}
 }
+
+export class DoCancelWizard {
+  readonly type = 'DoCancelWizard';
+  constructor() {}
+}
+
+export class DoDeleteApplication {
+  readonly type = 'DoDeleteApplication';
+  constructor() {}
+}
+
+export class OnApplicationDeleteSucsess {
+  readonly type = 'OnApplicationDeleteSucsess';
+  constructor() {}
+}
+
+export class OnApplicationDeleteError {
+  readonly type = 'OnApplicationDeleteError';
+  constructor() {}
+}
+
 
 export interface Errors {
   [key: string]: string;

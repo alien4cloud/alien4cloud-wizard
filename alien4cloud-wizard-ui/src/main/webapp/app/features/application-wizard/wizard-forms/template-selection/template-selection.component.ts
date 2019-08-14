@@ -17,7 +17,7 @@ import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/
 export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
 
   // make lodash usable from template
-  private lodash = _;
+  lodash = _;
 
   // indicates data loading
   isLoading: boolean = false;
@@ -36,7 +36,7 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
 
 
   public topologyTemplates: Topology[];
-  private overview: TopologyOverview;
+  overview: TopologyOverview;
 
   constructor(
     private fsm: AppplicationWizardMachineService,
@@ -74,7 +74,7 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   /**
    * This is trigerred when something is changed about pagination options.
    */
-  public handlePage(e: any) {
+  handlePage(e: any) {
     this.pageSize = e.pageSize;
     this.loadTopologies(e.pageIndex * e.pageSize);
   }
@@ -82,7 +82,7 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   /**
    * Trigered when the panel is expanded.
    */
-  private openDetails(topologyId: string) {
+  openDetails(topologyId: string) {
     // TODO: query plugin endpoint to retrieve details
     console.log("Openning ", topologyId);
     this.overview = undefined;
