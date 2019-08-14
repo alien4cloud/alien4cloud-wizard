@@ -31,6 +31,11 @@ export class NodesMatchingComponent implements OnInit, WizardFormComponent {
       );
   }
 
+  goBack() {
+    // TODO: send the appropriate event to go back
+    console.log("TODO: send the appropriate event to go back");
+  }
+
   doCompleteMatching() {
     this.fsm.send(new OnMatchingCompleted(this.fsmContext.deploymentTopology));
   }

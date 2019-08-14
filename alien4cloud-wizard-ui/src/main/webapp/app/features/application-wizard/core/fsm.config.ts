@@ -110,8 +110,7 @@ export const applicationWizardMachineConfig: MachineConfig<
           // actions: ['assignUser', 'loginSuccess']
         },
         GO_BACK: {
-          target: 'templateSelectionForm',
-          cond: 'backToTemplateSelectionIsPossible'
+          target: 'templateSelectionForm'
         }
       }
     },

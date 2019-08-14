@@ -92,6 +92,14 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
       );
   }
 
+  goBack() {
+    // TODO: send the appropriate event to go back
+    console.log("TODO: send the appropriate event to go back");
+  }
+
+  formIsValid() {
+    return !this.inputsForm.invalid;
+  }
 
   doSearchLocation() {
     this.fsm.send(new OnFormCompleted());
