@@ -19,6 +19,7 @@ import { WizardSpinnerComponent } from './wizard-forms/wizard-spinner/wizard-spi
 import { DeploymentInputsComponent } from './wizard-forms/deployment-inputs/deployment-inputs.component';
 import { ApplicationMetapropertiesComponent } from './wizard-forms/application-metaproperties/application-metaproperties.component';
 import { NodesMatchingComponent } from './wizard-forms/nodes-matching/nodes-matching.component';
+import { WizardControlComponent } from './wizard-control/wizard-control.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NodesMatchingComponent } from './wizard-forms/nodes-matching/nodes-matc
     WizardSpinnerComponent,
     DeploymentInputsComponent,
     ApplicationMetapropertiesComponent,
-    NodesMatchingComponent
+    NodesMatchingComponent,
+    WizardControlComponent
   ],
   imports: [
     SharedModule,
