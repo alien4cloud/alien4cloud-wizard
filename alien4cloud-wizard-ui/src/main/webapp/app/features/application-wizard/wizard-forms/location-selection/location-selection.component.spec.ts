@@ -22,4 +22,5 @@ describe('LocationSelectionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
+} );
+ 
