@@ -16,9 +16,9 @@ import * as _ from "lodash";
 export class ApplicationCreateComponent implements OnInit, WizardFormComponent, AfterContentInit {
 
   // applicationName: string;
-  private applicationNameFormCtrl: FormControl = new FormControl();
-  private archiveName: string;
-  private applicationDescription: string;
+  public applicationNameFormCtrl: FormControl = new FormControl();
+  public archiveName: string;
+  public applicationDescription: string;
 
 
   @Input() fsmContext: ApplicationWizardMachineContext;

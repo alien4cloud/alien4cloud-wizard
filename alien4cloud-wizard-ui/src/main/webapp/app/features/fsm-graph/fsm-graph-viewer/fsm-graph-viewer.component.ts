@@ -15,7 +15,7 @@ import {map} from "rxjs/operators";
 })
 export class FsmGraphViewerComponent implements OnInit {
 
-  private fsmGraph: FsmGraph;
+  public fsmGraph: FsmGraph;
   private panToNode$: Subject<string> = new Subject();
 
   // make lodash usable from template

@@ -40,7 +40,7 @@ export class WizardButtonComponent implements OnInit {
 
   constructor(public fsm: AppplicationWizardMachineService) { }
 
-  private isEnabled() : boolean {
+  public isEnabled() : boolean {
     let enabledFnResult = true;
     if (this.enabledFn) {
       enabledFnResult = this.enabledFn.call(this);

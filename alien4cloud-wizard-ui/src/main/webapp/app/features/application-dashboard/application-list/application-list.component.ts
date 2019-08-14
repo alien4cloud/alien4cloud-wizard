@@ -30,7 +30,7 @@ export class ApplicationListComponent implements OnInit {
   // make lodash usable from template
   private lodash = _;
 
-  private applications: Application[];
+  public applications: Application[];
   private overview: ApplicationOverview;
   
   //Not exactly an array of ApplicationEnvironmentDTO
@@ -39,20 +39,20 @@ export class ApplicationListComponent implements OnInit {
 
 
   // Paginator config
-  private length = 100;
-  private pageSize = 10;
-  private pageSizeOptions: number[] = [5, 10, 25, 100];
+  public length = 100;
+  public pageSize = 10;
+  public pageSizeOptions: number[] = [5, 10, 25, 100];
   private query = null;
-  private pageIndex = 0;
+  public pageIndex = 0;
 
   // MatPaginator Output
   private pageEvent: PageEvent;
 
   // a form control to bind to search input
-  private searchField: FormControl = new FormControl();
+  public searchField: FormControl = new FormControl();
 
   // indicates data loading
-  private isLoading: boolean = false;
+  public isLoading: boolean = false;
 
   private statusMonitorEventSubscription: Subscription;
 
@@ -98,7 +98,7 @@ export class ApplicationListComponent implements OnInit {
   /**
    * This is trigerred when something is changed about pagination options.
    */
-  private handlePage(e: any) {
+  public handlePage(e: any) {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     this.loadApplications(this.pageSize * e.pageIndex);

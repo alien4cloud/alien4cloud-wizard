@@ -35,7 +35,7 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   searchField: FormControl = new FormControl();
 
 
-  private topologyTemplates: Topology[];
+  public topologyTemplates: Topology[];
   private overview: TopologyOverview;
 
   constructor(
@@ -74,7 +74,7 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   /**
    * This is trigerred when something is changed about pagination options.
    */
-  private handlePage(e: any) {
+  public handlePage(e: any) {
     this.pageSize = e.pageSize;
     this.loadTopologies(e.pageIndex * e.pageSize);
   }

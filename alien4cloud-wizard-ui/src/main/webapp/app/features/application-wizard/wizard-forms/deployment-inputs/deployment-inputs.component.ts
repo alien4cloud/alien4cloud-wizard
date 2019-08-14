@@ -22,7 +22,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
 
   @Input() fsmContext: ApplicationWizardMachineContext;
 
-  private propertieFormDefitions: PropertyFormDefinition[] = new Array<PropertyFormDefinition>();
+  public propertieFormDefitions: PropertyFormDefinition[] = new Array<PropertyFormDefinition>();
 
   /** The form. */
   private inputsForm = new FormGroup({});

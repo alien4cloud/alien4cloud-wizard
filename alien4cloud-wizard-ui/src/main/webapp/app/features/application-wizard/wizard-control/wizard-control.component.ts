@@ -42,15 +42,15 @@ export class WizardControlComponent implements OnInit {
   ngOnInit() {
   }
 
-  private _backward() {
+  public _backward() {
     this.backwardFn.call(this);
   }
 
-  private _forward() {
+  public _forward() {
     this.forwardFn.call(this);
   }
 
-  private _forwardEnabled(): boolean {
+  public _forwardEnabled(): boolean {
     if (this.forwardEnabledFn) {
       return this.forwardEnabledFn.call(this);
     } else {
@@ -58,7 +58,7 @@ export class WizardControlComponent implements OnInit {
     }
   }
 
-  private _backwardEnabled(): boolean {
+  public _backwardEnabled(): boolean {
     if (this.backwardEnabledFn) {
       return this.backwardEnabledFn.call(this);
     } else {

@@ -19,7 +19,7 @@ import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.m
 export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormComponent {
 
   @Input() fsmContext: ApplicationWizardMachineContext;
-  private isWorkflowInProgress: boolean = false;
+  public isWorkflowInProgress: boolean = false;
   private monitoredDeployment: MonitoredDeploymentDTO;
 
   private wsSubscription: Subscription;
