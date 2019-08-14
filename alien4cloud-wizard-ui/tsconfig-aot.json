@@ -15,14 +15,16 @@
     "typeRoots": ["node_modules/@types"],
     "baseUrl": "./",
     "paths": {
-      "app/*": ["src/main/webapp/app/*"]
+      "@app/*": ["src/main/webapp/app/*"],
+      "@env/*": ["src/main/webapp/environments/*"],
+      "@cont/*": ["src/main/webapp/content/*"]
     },
     "importHelpers": true
   },
   "angularCompilerOptions": {
     "genDir": "target/classes/aot",
     "skipMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
+    "fullTemplateTypeCheck": false,
     "preserveWhitespaces": true
   }
 }

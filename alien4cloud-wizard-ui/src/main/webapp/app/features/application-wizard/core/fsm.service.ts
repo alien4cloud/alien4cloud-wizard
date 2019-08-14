@@ -48,6 +48,7 @@ import * as lodash from 'lodash';
 /**
  * Manages the machine initialization.
  */
+//@Injectable()
 export class AppplicationWizardMachineService {
 
   constructor(
