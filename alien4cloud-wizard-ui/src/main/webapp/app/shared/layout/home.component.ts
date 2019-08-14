@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {HealthService} from "@app/core";
 
 @Component({
   selector: 'app-home',
@@ -10,8 +11,18 @@ export class HomeComponent implements OnInit {
 
   private features: Feature[] = [];
 
+  // indicates if the A4C webapp is reachable
+  private isConnected: boolean;
+
   constructor(
-  ) { }
+    healthService: HealthService
+  ) {
+    healthService.isConnected.subscribe(
+      (connected) => {
+        this.isConnected = connected;
+      }
+    )
+  }
 
   ngOnInit() {
     // this list will probably partially come from backend

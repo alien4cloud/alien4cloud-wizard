@@ -32,18 +32,6 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
     private deploymentTopologyService: DeploymentTopologyService
   ) { }
 
-
-  ngAfterViewInit(): void {
-    // if default values exist and no value is already set, fill the form with the default.
-    // this will update the deployment setup by calling the backend.
-    // FIXME: Should the backend directly manage such default values on deployment topology creation ?
-    this.propertieFormDefitions.forEach(pfd => {
-      if (pfd.value == undefined && pfd.definition.default) {
-        this.inputsForm.get(pfd.inputName).setValue(pfd.definition.default.value);
-      }
-    });
-  }
-
   ngOnInit() {
     let topology = this.fsmContext.deploymentTopology.topology;
     // FIXME: we do this because our object are not well typed
@@ -58,6 +46,20 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
       }
       this.propertieFormDefitions.push(pfd);
     }
+
+  }
+
+  ngAfterViewInit(): void {
+    // if default values exist and no value is already set, fill the form with the default.
+    // this will update the deployment setup by calling the backend.
+    // FIXME: Should the backend directly manage such default values on deployment topology creation ?
+    this.propertieFormDefitions.forEach(pfd => {
+      if (!pfd.value && pfd.definition.default) {
+        // we have a pb here, we shouldn't set the value directly on the formControl
+        pfd.value = pfd.definition.default;
+        //this.inputsForm.get(pfd.inputName).setValue(pfd.definition.default.value);
+      }
+    });
   }
 
   /**
@@ -90,6 +92,14 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
       );
   }
 
+  goBack() {
+    // TODO: send the appropriate event to go back
+    console.log("TODO: send the appropriate event to go back");
+  }
+
+  formIsValid() {
+    return !this.inputsForm.invalid;
+  }
 
   doSearchLocation() {
     this.fsm.send(new OnFormCompleted());

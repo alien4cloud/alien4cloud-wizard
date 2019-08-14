@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
 import {Observable, Subscription} from "rxjs";
+import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 
 @Component({
   selector: 'app-application-list',
@@ -66,6 +67,21 @@ export class ApplicationListComponent implements OnInit {
         this.pageIndex = 0;
         this.loadApplications(0);
       });
+
+    this.websocketService.deployementStatusChange.subscribe(e => {
+      console.log(`Status changed to ${e.status} for deployment ${e.environmentId}`);
+      // TODO: here a good lodash filter + take should do the job more efficiently
+      // FIXME : why can't we iterate over objects ? do we have a map deserialization issue ?
+      if (this.applicationEnvironments) {
+        Object.entries(this.applicationEnvironments).forEach(([appName, envs]) => {
+          _.forEach(envs, env => {
+            if (env["id"] === e.environmentId) {
+              env["status"] = e.status;
+            }
+          });
+        });
+      }
+    });
   }
 
 

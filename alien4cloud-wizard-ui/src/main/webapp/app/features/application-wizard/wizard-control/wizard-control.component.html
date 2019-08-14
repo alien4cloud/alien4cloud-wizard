@@ -1,0 +1,19 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <w4c-wizard-button (click)="_backward()"
+                     [enableOnGuard]="backwardGuard"
+                     [enabledFn]="_backwardEnabled.bind(this)"
+                     [fsmContext]="fsmContext"
+                     [label]="(backwardAltLabel) ? 'Back: ' + backwardAltLabel : 'Back'"
+                     matIconName="fast_rewind"
+  >
+  </w4c-wizard-button>
+  <!-- TODO: here put something to insert buttons ? -->
+  <w4c-wizard-button (click)="_forward()"
+                     [enableOnGuard]="forwardGuard"
+                     [enabledFn]="_forwardEnabled.bind(this)"
+                     [fsmContext]="fsmContext"
+                     [label]="(forwardAltLabel) ? 'Next: ' + forwardAltLabel : 'Next'"
+                     matIconName="fast_forward"
+                     [matIconAtEnd]="true">
+  </w4c-wizard-button>
+</div>

@@ -7,9 +7,9 @@
   </div> 
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center center">
-  <button mat-stroked-button disabled="true" (click)="back()" type="button">Back</button>
-  <button mat-stroked-button disabled="true" (click)="cancel()" type="button">Cancel</button>
-<!--  <button mat-stroked-button (click)="deployApp()" type="button">Deploy application</button>-->
-  <w4c-wizard-button enableOnGuard="canSubmitDeployment" [fsmContext]="fsmContext" (click)="deployApp()" label="Deploy"></w4c-wizard-button>
-</div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [backwardFn]="goBack.bind(this)"
+                    [forwardFn]="deployApp.bind(this)"
+                    forwardAltLabel="deploy !"
+                    forwardGuard="canSubmitDeployment"
+></w4c-wizard-control>

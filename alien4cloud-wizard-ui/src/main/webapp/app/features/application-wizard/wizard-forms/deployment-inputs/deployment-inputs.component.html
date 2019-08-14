@@ -12,9 +12,11 @@
   </form>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="center center">
-  <button mat-stroked-button [disabled]="inputsForm.invalid" (click)="doSearchLocation()">Next</button>
-</div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [backwardFn]="goBack.bind(this)"
+                    [forwardFn]="doSearchLocation.bind(this)"
+                    [forwardEnabledFn]="formIsValid.bind(this)"
+></w4c-wizard-control>
 
 
 

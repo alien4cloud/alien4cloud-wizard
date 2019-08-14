@@ -8,7 +8,7 @@ import { ApplicationEnvironmentDTO } from '@app/core';
 })
 export class DeploymentStatusPiechartComponent implements OnInit {
 
-  private map: Map<string, string> = new Map();
+  private colorsByStatus: Map<string, string>;
   // Data
   @Input("applicationEnvironmentDTO") applicationEnvironmentDTO: ApplicationEnvironmentDTO[];
 
@@ -16,33 +16,29 @@ export class DeploymentStatusPiechartComponent implements OnInit {
 
   // options
   gradient = false;
-  showLegend = true;
-  showYAxisLabel = true;
   colorScheme = {domain: [] };
   environments: Array<any> = [];
 
-  constructor() {}
+  constructor() {
+    // FIXME : we should be able to use our CSS instead
+    this.colorsByStatus = new Map<string, string>();
+    this.colorsByStatus.set("DEPLOYED", '#468847');
+    this.colorsByStatus.set("UNDEPLOYED", '#999999');
+    this.colorsByStatus.set("UPDATED", '#468847');
+    this.colorsByStatus.set("DEPLOYMENT_IN_PROGRESS",'#428bca');
+    this.colorsByStatus.set("INIT_DEPLOYMENT",'#428bca');
+    this.colorsByStatus.set("UNDEPLOYMENT_IN_PROGRESS",'#428bca');
+    this.colorsByStatus.set("UNKNOWN",'#000000');
+    this.colorsByStatus.set("FAILURE",'#C51919');
+    this.colorsByStatus.set("UPDATE_FAILURE",'#c09853');
+    this.colorsByStatus.set("WARNING",'#c09853');
+  }
 
   ngOnInit() {
-    //Map color initialization
-    this.getDeploymentStatusColors() 
-
     this.applicationEnvironmentDTO.map(item => {
       this.environments.push({ "name": item.name+" \n "+item.status, "value": 1})
-      this.colorScheme.domain.push(this.map.get(item.status));
+      this.colorScheme.domain.push(this.colorsByStatus.get(item.status));
     });
   }
 
-  getDeploymentStatusColors() {
-    this.map.set("DEPLOYED", '#468847');
-    this.map.set("UNDEPLOYED", '#999999');
-    this.map.set("UPDATED", '#468847');
-    this.map.set("DEPLOYMENT_IN_PROGRESS",'#428bca');
-    this.map.set("INIT_DEPLOYMENT",'#428bca');
-    this.map.set("UNDEPLOYMENT_IN_PROGRESS",'#428bca');
-    this.map.set("UNKNOWN",'#000000');
-    this.map.set("FAILURE",'#C51919');
-    this.map.set("UPDATE_FAILURE",'#c09853');
-    this.map.set("WARNING",'#c09853');    
- }
 }

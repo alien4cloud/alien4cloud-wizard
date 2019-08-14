@@ -183,9 +183,6 @@ export class AppplicationWizardMachineService {
         )
     },
     guards: {
-      // isLoggedOut: () => !localStorage.getItem('jwtToken')
-      // FIXME: this is just for the example of using the guard to enable buttons
-      backToTemplateSelectionIsPossible: (context) => !context.applicationId,
       shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology),
       canUndeploy: context => context.deploymentId && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED

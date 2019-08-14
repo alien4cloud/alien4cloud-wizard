@@ -23,30 +23,45 @@ export class WizardButtonComponent implements OnInit {
    */
   @Input() enableOnGuard: string;
 
+  @Input() enabledFn: Function;
+
   /**
    * The label of the button.
    */
   @Input() label: string;
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
 
-  // private enabled: boolean
+  @Input() matIconName: string;
+
+  /**
+   * If true, the optional mat-icon will be at the right of the button, otherwise (default) at the left.
+   */
+  @Input() matIconAtEnd:  boolean;
 
   constructor(public fsm: AppplicationWizardMachineService) { }
 
   private isEnabled() : boolean {
-    try {
-      if (this.fsmContext && this.fsm.machineOptions && this.fsm.machineOptions.guards && this.fsm.machineOptions.guards[this.enableOnGuard]) {
-        return this.fsm.machineOptions.guards[this.enableOnGuard].call(this, this.fsmContext);
-      }
-    } catch (e) {
-      console.error(e);
+    let enabledFnResult = true;
+    if (this.enabledFn) {
+      enabledFnResult = this.enabledFn.call(this);
     }
-    return false;
+    if (!enabledFnResult) {
+      return false;
+    }
+    let guardResult = true;
+    if (this.enableOnGuard) {
+      try {
+        if (this.fsmContext && this.fsm.machineOptions && this.fsm.machineOptions.guards && this.fsm.machineOptions.guards[this.enableOnGuard]) {
+          guardResult = this.fsm.machineOptions.guards[this.enableOnGuard].call(this, this.fsmContext);
+        }
+      } catch (e) {
+        console.error("Error occurred while using guard to enable/disable the button", e);
+      }
+    }
+    return guardResult;
   }
 
   ngOnInit() {
-    // to avoid too much invcation on the guard function, we cache enabled boolean.
-    // this.enabled = this.isEnabled();
   }
 
 }

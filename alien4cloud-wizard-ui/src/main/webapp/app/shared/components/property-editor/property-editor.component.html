@@ -40,10 +40,16 @@
   <button *ngIf="pfd.formType == 'INPUT' && pfd.inputType == 'text'" mat-button matSuffix mat-icon-button (click)="isLongText = !isLongText">
     <mat-icon *ngIf="isLongText">(isLongText) : 'fullscreen_exit' : 'zoom_out_map'</mat-icon>
   </button>
+  <button *ngIf="pfd.units" mat-button matSuffix [matMenuTriggerFor]="menuUnit">{{ (pfd.unit) ? pfd.unit : pfd.units[0] }}</button>
+  <mat-menu #menuUnit="matMenu" xPosition="before">
+    <button mat-menu-item *ngFor="let unit of pfd.units;" (click)="changeScalarUnit(unit)">{{ unit }}</button>
+  </mat-menu>
+
   <!-- Switch to default value button -->
   <button [disabled]="!pfd.definition.default" mat-button matSuffix mat-icon-button (click)="resetDefault()">
     <mat-icon>refresh</mat-icon>
   </button>
+
   <!-- Description icon (it's also a button to have the same size than others) -->
   <!-- TODO: display description in a modal or something more readable on click -->
   <button [disabled]="!pfd.definition.description" mat-button matSuffix mat-icon-button

@@ -15,7 +15,10 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-<div fxLayout="row" fxLayoutAlign="center center">
-  <button mat-stroked-button [disabled]="'false'" (click)="doCompleteMatching()">Next</button>
-</div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [backwardFn]="goBack.bind(this)"
+                    [forwardFn]="doCompleteMatching.bind(this)"
+>
+</w4c-wizard-control>
+
 
