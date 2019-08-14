@@ -17,9 +17,9 @@
         <mat-panel-title>
           <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center">
             <div fxFlex="5%">
-              <img *ngIf="application.imageId; else defaultIcon"
-                src="api/img?id={{ application.imageId }}&quality=QUALITY_64"
-                style="max-height:46px; max-width:46px; height:auto; width:auto;">
+<!--              <img *ngIf="application.imageId; else defaultIcon"-->
+<!--                src="api/img?id={{ application.imageId }}&quality=QUALITY_64"-->
+<!--                style="max-height:46px; max-width:46px; height:auto; width:auto;">-->
               <ng-template #defaultIcon>
                 <mat-icon>airplay</mat-icon>
               </ng-template>
