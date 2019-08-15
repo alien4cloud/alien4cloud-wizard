@@ -1,10 +1,10 @@
-<div class="fsmGraphViewer">
+<div class="fsmGraphViewer" [ngStyle]="{'height': fsmGraphHeight + 'px'}">
 
   <ngx-graph *ngIf="fsmGraph"
              class="chart-container"
              layout="dagre"
              [curve]="curve"
-             [autoCenter]="false"
+             [autoCenter]="true"
              [autoZoom]="false"
              [zoomLevel]="zoomLevel"
              [links]="fsmGraph.edges"

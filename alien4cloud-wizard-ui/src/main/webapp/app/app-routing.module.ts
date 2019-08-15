@@ -22,7 +22,11 @@ const routes: Routes = [
   {
     path: 'app-wizard/:applicationId/:environmentId',
     loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
-  }
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./features/settings/settings.module').then(mod => mod.SettingsModule)
+  },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes/*, { enableTracing: true } */)],

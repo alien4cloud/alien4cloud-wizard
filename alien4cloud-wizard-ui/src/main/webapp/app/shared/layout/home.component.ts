@@ -47,10 +47,18 @@ export class HomeComponent implements OnInit {
       "/catalog",
       false
     );
+    let settings = new Feature(
+      "Settings",
+      "Setup few options about this application (look'n feel, features ...).",
+      "settings",
+      "/settings",
+      true
+    );
 
     this.features.push(dashboard);
     this.features.push(wizard);
     this.features.push(modules);
+    this.features.push(settings);
 
   }
 

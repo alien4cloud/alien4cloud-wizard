@@ -1,12 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FsmGraph, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
+import {Component, OnInit} from '@angular/core';
+import {FsmGraph} from "@app/features/application-wizard/core/fsm-graph.model";
 import {Subject} from "rxjs";
 import * as _ from "lodash";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {LocalStorageService} from "ngx-webstorage";
-import {MatStepper} from "@angular/material";
-import {GraphComponent} from "@swimlane/ngx-graph";
-import {map} from "rxjs/operators";
+import {SettingsKey} from "@app/core/etc/settings-key.enum";
 
 @Component({
   selector: 'w4c-fsm-graph-viewer',
@@ -16,6 +14,7 @@ import {map} from "rxjs/operators";
 export class FsmGraphViewerComponent implements OnInit {
 
   fsmGraph: FsmGraph;
+  fsmGraphHeight: number;
   panToNode$: Subject<string> = new Subject();
 
   // make lodash usable from template
@@ -37,6 +36,9 @@ export class FsmGraphViewerComponent implements OnInit {
   }
 
   ngOnInit() {
+    let storedSetting: number = this.localStorage.retrieve(SettingsKey.FSM_GRAPH_HEIGHT_SETTING);
+    this.fsmGraphHeight = (storedSetting) ? storedSetting : 200;
+
     // get the graph so display it
     this.fsmGraph = this.fsm.getGraph();
     // listen to FSM state change events

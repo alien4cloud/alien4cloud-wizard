@@ -5,8 +5,6 @@ import {SharedModule} from "@app/shared";
 import {NgxGraphModule} from "@swimlane/ngx-graph";
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {FsmGraphRoutingModule} from "@app/features/fsm-graph/fsm-graph-routing.module";
-import {TopologyGraphViewerComponent} from "@app/features/topology-graph";
-
 
 @NgModule({
   declarations: [FsmGraphViewerComponent],
