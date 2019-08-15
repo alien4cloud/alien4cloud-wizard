@@ -222,14 +222,18 @@ export class AppplicationWizardMachineService {
       assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSucesss | OnMatchingCompleted>((_, event) => ({
         deploymentTopology: event.deploymentTopologyDTO
       })),
-      fetchDeploymentTopology: (_) => {
+      fetchDeploymentTopologyAndLocations: (_) => {
         this.deploymentTopologyService.getDeploymentTopology(
           _.applicationId,
           _.environmentId
-        ).subscribe(
-          dto => {
+        ).pipe(
+          mergeMap(dto => {
             // assign the deployment topology
             _.deploymentTopology = dto;
+            return this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environmentId);
+          })).subscribe(
+          locations => {
+            _.locations = locations;
           }
         )
       },
@@ -243,24 +247,7 @@ export class AppplicationWizardMachineService {
               }
             }
           )
-      },
-      // TODO: remove
-      assignDeploymentId: (_) => {
-          this.applicationEnvironmentService.getMonitoredDeploymentDTO(
-            _.applicationId,
-            _.environmentId
-          ).subscribe((deployment: Deployment) => {
-            console.log("Monitored Deployment ID :", deployment.id);
-            _.deploymentId = deployment.id ; 
-          });     
-      },
-      // TODO: remove
-      deploymentStatusCheck : (_) => {
-        this.applicationService.checkdeploymentStatus(
-          _.deploymentId
-        ).subscribe((execution: Execution) => {
-          console.log("Execution Status :", execution.status);
-      })}   
+      }
     }
 
   };

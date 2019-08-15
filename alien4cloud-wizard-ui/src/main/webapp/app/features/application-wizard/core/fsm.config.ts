@@ -72,7 +72,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         ON_ACTIVE_DEPLOYMENT_FOUND: {
           target: 'activeDeploymentForm',
-          actions: ['assignDeployment', 'fetchDeploymentTopology']
+          actions: ['assignDeployment', 'fetchDeploymentTopologyAndLocations']
         },
         DO_SELECT_ENVIRONMENT: {
           target: 'environmentSelected'
