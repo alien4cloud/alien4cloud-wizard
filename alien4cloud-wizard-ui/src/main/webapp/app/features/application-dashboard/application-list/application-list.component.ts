@@ -84,6 +84,9 @@ export class ApplicationListComponent implements OnInit {
     });
   }
 
+  getApplicationImageUrl(application: Application) {
+    return `api/img?id=${application.imageId}&quality=QUALITY_64`
+  }
 
   private loadApplications(from: number) {
     this.isLoading = true;

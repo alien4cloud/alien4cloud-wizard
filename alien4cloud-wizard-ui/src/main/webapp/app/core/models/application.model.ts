@@ -5,6 +5,7 @@ export interface Application {
   id: string;
   name: string;
   description: string;
+  imageId: string;
   creationDate: number;
   lastUpdateDate: number;
   tags: any[];
