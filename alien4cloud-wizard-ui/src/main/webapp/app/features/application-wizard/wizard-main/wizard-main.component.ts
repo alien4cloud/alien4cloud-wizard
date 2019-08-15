@@ -8,6 +8,8 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import * as _ from "lodash";
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
 import {Init, InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
+import {LocalStorageService} from "ngx-webstorage";
+import {SettingsKey} from "@app/core/etc/settings-key.enum";
 
 /**
  * This main component knows:
@@ -36,14 +38,22 @@ export class WizardMainComponent implements OnInit, OnDestroy {
 
   private currentStepIndex : number;
 
+  showFsmGraph: boolean = false;
+
   constructor(
     private fsm: AppplicationWizardMachineService,
     private mainService : WizardService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private localStorage: LocalStorageService
   ) {}
 
   ngOnInit() {
+    let storedSetting: boolean = this.localStorage.retrieve(SettingsKey.SHOW_FSM_GRAPH_SETTING);
+    if (storedSetting !== undefined) {
+      this.showFsmGraph = storedSetting;
+    }
+
     this.fsm.start();
     // we have a timeout here in order to 1. let the view being displayed 2. let the listener bellow to be up
     // FIXME: find a better approach
