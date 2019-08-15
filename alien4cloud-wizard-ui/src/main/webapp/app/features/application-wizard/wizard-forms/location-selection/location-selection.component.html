@@ -1,18 +1,29 @@
 <div class="locations-component-list">
-    <a *ngFor="let location  of environmentLocation; " 
+    <a *ngFor="let locationItem  of locationItems | keyvalue; let active = false"
       class="locations-component-list-item"
-      [ngClass]="{'locations-component-list-item-disabled': !location.ready , 'locations-component-list-autoselected-item': deploymentTopology.locationPolicies['_A4C_ALL'] === location.location.id }"
+      [ngClass]="{'locations-component-list-item-disabled': !locationItem.value.ready , 'locations-component-list-autoselected-item': selectedLocationId === locationItem.key }"
       href="typescript:void(0)"
-      (mouseover)="location.ready"
-      (mouseout)="location.ready"
-      (click)="selectLocation(location.location.id,location.location.name,location.orchestrator.id)" >
+      (mouseover)="active = true"
+      (mouseout)="active = false"
+      (click)="selectLocation(locationItem.key)" >
       <mat-card class="locations-component-list-card">
         <mat-card-header fxLayoutAlign="space-between center" class="locations-component-list-header">
-          <mat-card-title [ngClass]="{'w4c-primary-text-A200':location.ready}" flex>{{ location.location.name }}</mat-card-title>
+          <mat-icon *ngIf="selectedLocationId === locationItem.key || active"
+                    [color]="(selectedLocationId === locationItem.key) ? 'primary' : ''"
+                    class="selectIcon">done</mat-icon>
+          <mat-card-title [ngClass]="{'w4c-primary-text-A200': selectedLocationId === locationItem.key}"
+                          flex
+          >
+            {{ locationItem.value.location.name }}
+          </mat-card-title>
         </mat-card-header>
-        <mat-card-content class="locations-component-list-card-summary">Orchestrator : {{ location.orchestrator.name}}</mat-card-content>
+        <mat-card-content class="locations-component-list-card-summary">Orchestrator : {{ locationItem.value.orchestrator.name}}</mat-card-content>
       </mat-card>
     </a>
-    
 </div>
-  
+
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [backwardFn]="goBackward.bind(this)"
+                    [forwardFn]="goForward.bind(this)"
+                    [forwardEnabledFn]="formIsValid.bind(this)"
+></w4c-wizard-control>

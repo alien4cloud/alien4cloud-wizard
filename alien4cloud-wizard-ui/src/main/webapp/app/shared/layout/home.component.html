@@ -6,7 +6,7 @@
     class="home-component-feature-list-item"
     [ngClass]="{'home-component-feature-list-item-disabled': !(feature.allowed && isConnected)}"
     [routerLink]="[feature.activationLink]"
-    (mouseover)="feature.active = isConnected && feature.allowed && true"
+    (mouseover)="feature.active = isConnected && feature.allowed"
     (mouseout)="feature.active = false">
     <mat-card class="home-component-feature-list-card">
       <mat-card-header fxLayoutAlign="space-between center" class="home-component-feature-list-header">

@@ -60,7 +60,9 @@ export class WizardControlComponent implements OnInit {
   }
 
   _forwardEnabled(): boolean {
-    if (this.forwardEnabledFn) {
+    if (!this.forwardFn) {
+      return false;
+    } else if (this.forwardEnabledFn) {
       return this.forwardEnabledFn.call(this);
     } else {
       return true;
@@ -76,7 +78,9 @@ export class WizardControlComponent implements OnInit {
   }
 
   _backwardEnabled(): boolean {
-    if (this.backwardEnabledFn) {
+    if (!this.backwardFn) {
+      return false;
+    } else if (this.backwardEnabledFn) {
       return this.backwardEnabledFn.call(this);
     } else {
       return true;

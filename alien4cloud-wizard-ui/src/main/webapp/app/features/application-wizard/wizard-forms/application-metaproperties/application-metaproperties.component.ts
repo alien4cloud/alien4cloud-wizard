@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
-import {OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
+import {GoBack, OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
 import {ConstraintError, MetaPropertyConfiguration} from "@app/core";
 import {ApplicationMetaPropertyService} from "@app/core";
 import {catchError} from "rxjs/operators";
@@ -30,8 +30,7 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
   }
 
   goBack() {
-    // TODO: send the appropriate event to go back
-    console.log("TODO: send the appropriate event to go back");
+    this.fsm.send(new GoBack());
   }
 
   doComplete() {

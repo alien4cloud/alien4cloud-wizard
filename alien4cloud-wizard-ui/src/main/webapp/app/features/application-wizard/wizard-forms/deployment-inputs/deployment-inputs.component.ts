@@ -8,7 +8,7 @@ import {
   UpdateDeploymentTopologyRequest
 } from "@app/core";
 import * as _ from 'lodash';
-import {DoSearchLocation, OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
+import {DoSearchLocation, GoBack, OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
 import {FormGroup} from "@angular/forms";
 import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
@@ -93,8 +93,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
   }
 
   goBack() {
-    // TODO: send the appropriate event to go back
-    console.log("TODO: send the appropriate event to go back");
+    this.fsm.send(new GoBack());
   }
 
   formIsValid() {

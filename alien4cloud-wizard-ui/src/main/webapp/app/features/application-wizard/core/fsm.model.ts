@@ -17,7 +17,6 @@ export interface ApplicationWizardMachineSchema {
     templateSelected: {};
     applicationCreateForm: {};
     applicationCreating: {};
-    applicationMetapropertiesSearching: {};
     applicationMetapropertiesForm: {};
     applicationCreationError: {};
     environmentSearching: {};
@@ -35,7 +34,7 @@ export interface ApplicationWizardMachineSchema {
     undeploymentSubmitting:{},
     deleteApplicationForm:{},
     applicationDeleting:{},
-    thisIsTheEnd:{},
+    theEnd:{},
   };
 }
 
@@ -51,7 +50,9 @@ export interface ApplicationWizardMachineContext {
   applicationName: string;
   applicationDescription: string;
   applicationArchiveName: string;
-
+  /**
+   * The meta-properties that need to be defined for an application.
+   */
   applicationMetapropertiesConfiguration: MetaPropConfiguration[];
   /**
    * The id of the created application : if this is undefined, it means that the
@@ -59,14 +60,15 @@ export interface ApplicationWizardMachineContext {
    */
   applicationId: string;
   environments: ApplicationEnvironment[];
-  // deploymentTopologyId: string;
   deploymentTopology: DeploymentTopologyDTO;
   errorMessage: string;
   environmentId: string;
-  //locationId: [];
+  // FIXME: replace by a single Location Object
   locationId: string;
+  // FIXME: replace by a single Location Object
   locationName: string;
   locations: LocationMatch[];
+  // FIXME: replace by a single Location Object
   orchestratorId: string;
   deploymentId: string;
   deploymentStatus: DeploymentStatus;

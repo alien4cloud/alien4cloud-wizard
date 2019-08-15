@@ -51,5 +51,9 @@
   //height: 80px;
 }
 .locations-component-list-autoselected-item {
-  @include mat-elevation(8);
+  //@include mat-elevation(8);
+}
+
+.selectIcon {
+  margin-bottom: 12px;
 }

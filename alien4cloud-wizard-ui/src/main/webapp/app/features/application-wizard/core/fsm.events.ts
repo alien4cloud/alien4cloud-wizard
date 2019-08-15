@@ -13,11 +13,10 @@ export type ApplicationWizardMachineEvents =
   DoSelectTemplate |
   GoBack |
   DoCreateApplication |
-  OnApplicationMetapropertiesNotFound |
-  OnApplicationMetapropertiesFound |
   OnEnvironmentsFetched |
   DoSelectEnvironment |
   DoSearchLocation|
+  // TODO: remove ? (use cond)
   OnDeploymentInputsRequired |
   OnApplicationCreateError |
   OnApplicationCreateSucess |
@@ -64,16 +63,6 @@ export class DoSelectTemplate {
 export class DoCreateApplication {
   readonly type = 'DO_CREATE_APPLICATION';
   constructor(public name: string, public description: string, public archiveName: string) {}
-}
-
-export class OnApplicationMetapropertiesNotFound {
-  readonly type = 'OnApplicationMetapropertiesNotFound';
-  constructor() {}
-}
-
-export class OnApplicationMetapropertiesFound {
-  readonly type = 'OnApplicationMetapropertiesFound';
-  constructor() {}
 }
 
 export class OnEnvironmentsFetched {

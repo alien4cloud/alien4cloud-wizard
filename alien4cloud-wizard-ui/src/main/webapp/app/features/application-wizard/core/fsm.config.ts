@@ -4,7 +4,7 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import {
-  ApplicationWizardMachineEvents, DoDeleteApplication
+  ApplicationWizardMachineEvents
 } from "@app/features/application-wizard/core/fsm.events";
 
 const { log } = actions;
@@ -45,8 +45,9 @@ export const applicationWizardMachineConfig: MachineConfig<
   initial: 'boot',
   states: {
     boot: {
+      entry: ['fetchApplicationMetaProperties'],
       on: {
-        'INIT': [
+        INIT: [
           {
             target: 'templateSelectionForm',
             actions: log(
@@ -55,12 +56,11 @@ export const applicationWizardMachineConfig: MachineConfig<
             )
           }
         ],
-        'INIT_APPLICATION_ENVIRONMENT': [
+        INIT_APPLICATION_ENVIRONMENT: [
           {
             target: 'applicationEnvironmentInitializing',
             actions: ['assignAppInitInfo']
           }
-
         ]
       }
     },
@@ -81,12 +81,13 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     templateSelectionForm: {
       on: {
-        DO_SELECT_TEMPLATE: [
-          {
-            target: 'templateSelected',
-            actions: ['assignTemplate']
-          }
-        ]
+        DO_SELECT_TEMPLATE: {
+          target: 'templateSelected',
+          actions: ['assignTemplate']
+        },
+        DoCancelWizard: {
+          target: 'theEnd'
+        }
       }
     },
     templateSelected: {
@@ -111,31 +112,29 @@ export const applicationWizardMachineConfig: MachineConfig<
         },
         GO_BACK: {
           target: 'templateSelectionForm'
-        }
-      }
-    },
-    applicationMetapropertiesSearching: {
-      invoke: {
-        id: 'searchApplicationMetaproperties',
-        src: 'searchApplicationMetaproperties'
-      },
-      on: {
-        OnApplicationMetapropertiesFound: [
+        },
+        DoCancelWizard: [
           {
-            target: 'applicationMetapropertiesForm'
-          }
-        ],
-        OnApplicationMetapropertiesNotFound: [
+          target: 'theEnd',
+          cond: 'canCancelWithoutDeleting'
+          },
           {
-            target: 'environmentSearching'
+            target: 'deleteApplicationForm',
+            cond: 'applicationExists'
           }
-        ],
+        ]
       }
     },
     applicationMetapropertiesForm: {
       on: {
+        GO_BACK: {
+          target: 'applicationCreateForm'
+        },
         OnFormCompleted: {
           target: 'environmentSearching'
+        },
+        DoCancelWizard: {
+          target: 'deleteApplicationForm'
         }
       }
     },
@@ -154,11 +153,17 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'createApplication'
       },
       on: {
-        ON_APPLICATION_CREATE_SUCCESS: {
-          target: 'applicationMetapropertiesSearching',
-          actions: ['assignAppId', 'clearError']
-          // actions: ['assignUser', 'loginSuccess']
-        },
+        ON_APPLICATION_CREATE_SUCCESS: [
+          {
+            target: 'applicationMetapropertiesForm',
+            actions: ['assignAppId', 'clearError'],
+            cond: 'hasMetapropertiesConfig'
+          },
+          {
+            target: 'environmentSearching',
+            actions: ['assignAppId', 'clearError']
+          }
+        ],
         ON_APPLICATION_CREATE_ERROR: {
           target: 'applicationCreationError',
           actions: ['assignError']
@@ -210,20 +215,31 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         // if the deployment topology has inputs, then branch to InputForm
+        // FIXME : use cond deploymentTopologyHasInputs
         ON_DEPLOYMENT_INPUTS_REQUIRED: {
           target: 'deploymentInputsForm'
         },
         DO_SEARCH_LOCATION: {
           target: 'locationSearching'
-          // actions: ['assignDeploymentTopologyId']
         }
       }
     },
     deploymentInputsForm: {
       on: {
-        // fixme : replace with a OnFormCompleted event (a form shouldn't be aware of the FSM logic)
+        GO_BACK: [
+          {
+            target: 'applicationMetapropertiesForm',
+            cond: 'hasMetapropertiesConfig'
+          },
+          {
+            target: 'applicationCreateForm'
+          }
+        ],
         OnFormCompleted: {
           target: 'locationSearching'
+        },
+        DoCancelWizard: {
+          target: 'deleteApplicationForm'
         }
       }
     },
@@ -247,14 +263,25 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     locationSelectionForm: {
       on: {
+        GO_BACK: [
+          {
+            target: 'deploymentInputsForm',
+            cond: 'deploymentTopologyHasInputs'
+          },
+          {
+            target: 'applicationMetapropertiesForm',
+            cond: 'hasMetapropertiesConfig'
+          }
+        ],
         DO_SELECT_LOCATION: {
           target: 'locationSelected',
           actions: ['assignLocationId']
-          // actions: ['assignUser', 'loginSuccess']
+        },
+        DoCancelWizard: {
+          target: 'deleteApplicationForm'
         }
       }
     },
-
     locationSelected: {
       invoke: {
         id: 'setLocationPolicies',
@@ -273,21 +300,35 @@ export const applicationWizardMachineConfig: MachineConfig<
           }
         ]
       }
-
     },
     nodeMatchingForm: {
       on: {
-        'ON_MATCHING_COMPLETED': {
+        ON_MATCHING_COMPLETED: {
           target: 'deploymentForm',
           actions: ['assignDeploymentTopology']
+        },
+        DoCancelWizard: {
+          target: 'deleteApplicationForm'
         }
       }
     },
     deploymentForm: {
       on: {
+        GO_BACK: [
+          {
+            target: 'nodeMatchingForm',
+            cond: 'shouldAskForMatching'
+          },
+          {
+            target: 'locationSelectionForm'
+          }
+        ],
         DO_SUBMIT_DEPLOYMENT: {
           target: 'deploymentSubmitting',
           cond: 'canSubmitDeployment'
+        },
+        DoCancelWizard: {
+          target: 'deleteApplicationForm'
         }
       }
     },
@@ -306,7 +347,6 @@ export const applicationWizardMachineConfig: MachineConfig<
         }
       }
     },
-
     undeploymentSubmitting: {
       invoke: {
         id: 'undeploy',
@@ -328,8 +368,6 @@ export const applicationWizardMachineConfig: MachineConfig<
         DO_SUBMIT_UNDEPLOYMENT: {
           target: 'undeploymentSubmitting',
           cond: 'canUndeploy'
-          //actions: ['assignTargetId']
-          // actions: ['assignUser', 'loginSuccess']
         },
         DO_SUBMIT_DEPLOYMENT: {
           target: 'deploymentSubmitting',
@@ -352,14 +390,15 @@ export const applicationWizardMachineConfig: MachineConfig<
       // TODO: invoke delete on backend
       on: {
         OnApplicationDeleteSucsess: {
-          target: 'thisIsTheEnd'
+          target: 'theEnd'
         },
         OnApplicationDeleteError: {
           target: 'deleteApplicationForm'
         }
       }
     },
-    thisIsTheEnd: {
+    theEnd: {
+      type: 'final'
     }
   },
 };

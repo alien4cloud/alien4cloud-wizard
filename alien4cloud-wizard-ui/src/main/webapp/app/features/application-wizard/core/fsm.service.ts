@@ -27,8 +27,6 @@ import {
   OnSelectLocationSucesss,
   OnUndeploymentSubmitError,
   OnUndeploymentSubmitSucess,
-  OnApplicationMetapropertiesFound,
-  OnApplicationMetapropertiesNotFound,
   OnMatchingCompleted
 } from "@app/features/application-wizard/core/fsm.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
@@ -72,19 +70,6 @@ export class AppplicationWizardMachineService {
             catchError(err => {
               console.log("------------ Error catch by service : " + err);
               return of(new OnApplicationCreateError(err.message));
-            })
-          ),
-      searchApplicationMetaproperties: (_, event) =>
-        this.metaPropertiesService.search(0, 1000, "", {"target":["application"]})
-          .pipe(
-            map(metaprops => {
-              if (metaprops.totalResults > 0) {
-                // assign the meta properties config in the context
-                _.applicationMetapropertiesConfiguration = metaprops.data;
-                return new OnApplicationMetapropertiesFound();
-              } else {
-                return new OnApplicationMetapropertiesNotFound();
-              }
             })
           ),
       getActiveDeployment: (_, event) =>
@@ -172,7 +157,7 @@ export class AppplicationWizardMachineService {
             return of(new OnDeploymentSubmitError(err.message));
           })
         ),
-        undeploy: (_, event) =>
+      undeploy: (_, event) =>
         this.applicationDeploymentService.undeploy(
           _.applicationId, _.environmentId
         ).pipe(
@@ -183,6 +168,8 @@ export class AppplicationWizardMachineService {
         )
     },
     guards: {
+      hasMetapropertiesConfig: context => context.applicationMetapropertiesConfiguration != undefined,
+      deploymentTopologyHasInputs: context => context.deploymentTopology && context.deploymentTopology.topology.inputs && lodash.size(context.deploymentTopology.topology.inputs) > 0,
       shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology),
       canUndeploy: context => context.deploymentId && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED
@@ -191,7 +178,9 @@ export class AppplicationWizardMachineService {
         || context.deploymentStatus === DeploymentStatus.DEPLOYMENT_IN_PROGRESS),
       canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
       canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
-      canCancel: context => false
+      canCancelWithoutDeleting: context => context.applicationId == undefined,
+      applicationExists: context => context.applicationId != undefined,
+      canCancel: context => true
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
@@ -234,6 +223,17 @@ export class AppplicationWizardMachineService {
       assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSucesss | OnMatchingCompleted>((_, event) => ({
         deploymentTopology: event.deploymentTopologyDTO
       })),
+      fetchApplicationMetaProperties: (_) => {
+        this.metaPropertiesService.search(0, 1000, "", {"target":["application"]})
+          .subscribe(
+            metaprops => {
+              if (metaprops.totalResults > 0) {
+                // assign the meta properties config in the context
+                _.applicationMetapropertiesConfiguration = metaprops.data;
+              }
+            }
+          )
+      },
       // TODO: remove
       assignDeploymentId: (_) => {
           this.applicationEnvironmentService.getMonitoredDeploymentDTO(
