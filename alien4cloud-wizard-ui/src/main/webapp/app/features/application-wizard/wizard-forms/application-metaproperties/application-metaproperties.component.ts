@@ -29,10 +29,6 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
   ngOnInit() {
   }
 
-  goBack() {
-    this.fsm.send(new GoBack());
-  }
-
   doComplete() {
     this.fsm.send(new OnFormCompleted());
   }

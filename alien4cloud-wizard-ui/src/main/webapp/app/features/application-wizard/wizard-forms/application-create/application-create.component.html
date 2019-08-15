@@ -14,7 +14,7 @@
   </form>
 
   <w4c-wizard-control [fsmContext]="fsmContext"
-                      [backwardEnabledFn]="canGoBack.bind(this)"
+                      [displayBackward]="false"
                       [forwardFn]="createApp.bind(this)"
   ></w4c-wizard-control>
 </div>

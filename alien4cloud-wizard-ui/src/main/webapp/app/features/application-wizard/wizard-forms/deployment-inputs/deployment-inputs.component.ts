@@ -92,10 +92,6 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
       );
   }
 
-  goBack() {
-    this.fsm.send(new GoBack());
-  }
-
   formIsValid() {
     return !this.inputsForm.invalid;
   }

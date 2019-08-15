@@ -30,8 +30,4 @@ export class ApplicationDeploymentComponent implements OnInit , WizardFormCompon
     this.fsm.send(new DoSubmitDeployment());
   }
 
-  goBack() {
-    this.fsm.send(new GoBack())
-  }
-
 }

@@ -1,5 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center center">
   <w4c-wizard-button (click)="_backward()"
+                     *ngIf="displayBackward"
                      [enableOnGuard]="backwardGuard"
                      [enabledFn]="_backwardEnabled.bind(this)"
                      [fsmContext]="fsmContext"

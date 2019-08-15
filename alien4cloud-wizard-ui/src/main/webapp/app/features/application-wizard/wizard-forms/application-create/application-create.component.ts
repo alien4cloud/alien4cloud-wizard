@@ -49,17 +49,8 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent, 
     }
   }
 
-  canGoBack() {
-    // TODO: For the moment we don't know how we'll manage the changement of a topology template...
-    return false;
-  }
-
   createApp() {
     this.fsm.send(new DoCreateApplication(this.applicationNameFormCtrl.value, this.applicationDescription, this.archiveName));
-  }
-
-  back() {
-    this.fsm.send(new GoBack());
   }
 
 }

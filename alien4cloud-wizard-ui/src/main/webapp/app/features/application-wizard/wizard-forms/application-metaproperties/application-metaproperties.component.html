@@ -15,7 +15,6 @@
 <!--  <button mat-stroked-button [disabled]="metaPropertiesForm.invalid" (click)="doComplete()">Next</button>-->
 <!--</div>-->
 <w4c-wizard-control [fsmContext]="fsmContext"
-                    [backwardFn]="goBack.bind(this)"
                     [forwardFn]="doComplete.bind(this)"
                     [forwardEnabledFn]="formIsValid.bind(this)"
 ></w4c-wizard-control>
