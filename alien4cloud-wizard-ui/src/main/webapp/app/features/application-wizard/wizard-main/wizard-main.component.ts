@@ -6,7 +6,7 @@ import {AppplicationWizardMachineService} from "@app/features/application-wizard
 import {WizardService} from "@app/features/application-wizard/core/wizard.service";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import * as _ from "lodash";
-import {ActivatedRoute, ActivatedRouteSnapshot} from "@angular/router";
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
 import {Init, InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
 
 /**
@@ -39,7 +39,8 @@ export class WizardMainComponent implements OnInit, OnDestroy {
   constructor(
     private fsm: AppplicationWizardMachineService,
     private mainService : WizardService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -76,6 +77,10 @@ export class WizardMainComponent implements OnInit, OnDestroy {
       console.log(data);
       console.log("State is now : " + data.value);
 
+      if (data.value == "theEnd") {
+        // FIXME: we should find a better way to do this, maybe react on "Complete" observable ...
+        this.router.navigateByUrl("/");
+      }
 
       // we store locally the current FSM context
       this.currentFsmContext = data.context;
@@ -113,6 +118,8 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         console.log(`${data.value} is not a form state !`);
         // this.stepFormContainer.renderSpinner();
       }
+    }, () => {}, () => {
+      console.log("Machine is completed");
     });
 
     // let's init the wizard
