@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {DoCancelWizard, GoBack} from "@app/features/application-wizard/core/fsm.events";
@@ -13,36 +13,50 @@ import {DoCancelWizard, GoBack} from "@app/features/application-wizard/core/fsm.
 })
 export class WizardControlComponent implements OnInit {
 
-  @Input() fsmContext: ApplicationWizardMachineContext;
-
-  @Input() displayBackward: boolean = true;
+  @Input()
+  fsmContext: ApplicationWizardMachineContext;
 
   @Input()
-  public backwardFn: Function;
+  buttonHookTemplate: TemplateRef<any>;
 
   @Input()
-  public backwardGuard: string;
+  displayBackward: boolean = true;
 
   @Input()
-  public backwardAltLabel: string;
+  backwardFn: Function;
 
   @Input()
-  public backwardEnabledFn: Function;
+  backwardGuard: string;
 
   @Input()
-  public forwardFn: Function;
+  backwardAltLabel: string;
 
   @Input()
-  public forwardGuard: string;
+  backwardEnabledFn: Function;
 
   @Input()
-  public forwardAltLabel: string;
+  forwardFn: Function;
 
   @Input()
-  public forwardEnabledFn: Function;
+  forwardGuard: string;
 
   @Input()
-  public cancelEnabledFn: Function;
+  forwardAltLabel: string;
+
+  @Input()
+  forwardEnabledFn: Function;
+
+  @Input()
+  cancelFn: Function;
+
+  @Input()
+  cancelGuard: string;
+
+  @Input()
+  cancelEnabledFn: Function;
+
+  @Input()
+  cancelLabel: string;
 
   constructor(private fsm: AppplicationWizardMachineService) { }
 
@@ -53,12 +67,18 @@ export class WizardControlComponent implements OnInit {
     if (this.backwardFn) {
       this.backwardFn.call(this);
     } else {
+      // default behavior for Back button is to send a GoBack event.
       this.fsm.send(new GoBack());
     }
   }
 
-  cancel() {
-    this.fsm.send(new DoCancelWizard());
+  _cancel() {
+    if (this.cancelFn) {
+      this.cancelFn.call(this);
+    } else {
+      // default behavior for Cancel button is to send a DoCancelWizard event.
+      this.fsm.send(new DoCancelWizard());
+    }
   }
 
   _forward() {

@@ -72,7 +72,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         ON_ACTIVE_DEPLOYMENT_FOUND: {
           target: 'activeDeploymentForm',
-          actions: ['assignDeployment']
+          actions: ['assignDeployment', 'fetchDeploymentTopology']
         },
         DO_SELECT_ENVIRONMENT: {
           target: 'environmentSelected'
@@ -365,6 +365,11 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     activeDeploymentForm: {
       on: {
+        GO_BACK: [
+          {
+            target: 'deploymentForm'
+          }
+        ],
         DO_SUBMIT_UNDEPLOYMENT: {
           target: 'undeploymentSubmitting',
           cond: 'canUndeploy'

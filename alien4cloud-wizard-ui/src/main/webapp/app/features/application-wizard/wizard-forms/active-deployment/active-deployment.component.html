@@ -2,16 +2,15 @@
 
   <span>Deployment status : {{ fsmContext.deploymentStatus }}</span>
 
-  <div *ngIf="!isWorkflowInProgress; else deploying" fxLayout="row" fxFlex="100%">
+  <div *ngIf="!workflowInProgress; else deploying" fxLayout="row" fxFlex="100%">
     <h2>No workflow in progress</h2>
   </div>
 
-
   <ng-template #deploying>
     <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center">
-      <h2 *ngIf="isWorkflowInProgress">Workflow in progress ...</h2>
-      <h2 *ngIf="!isWorkflowInProgress">Workflow executed (but maybe with error !)</h2>
-      <mat-progress-bar *ngIf="isWorkflowInProgress && !progessBarData" mode="indeterminate"></mat-progress-bar>
+      <h2 *ngIf="workflowInProgress">Workflow in progress ...</h2>
+      <h2 *ngIf="!workflowInProgress">Workflow executed (but maybe with error !)</h2>
+      <mat-progress-bar *ngIf="workflowInProgress && !progessBarData" mode="indeterminate"></mat-progress-bar>
       <mat-progress-bar *ngIf="progessBarData" mode="determinate" value="{{ progessBarData.progress }}"
         [color]="(progessBarData.status && progessBarData.status.toString() == 'FAILED') ? 'warn' : 'primary'">
       </mat-progress-bar>
@@ -21,11 +20,28 @@
     </div>
   </ng-template>
 
-  <br><br>
   <mat-divider></mat-divider>
-  <br>
-  <div fxLayout="row" fxLayoutAlign="center center">
-    <w4c-wizard-button enableOnGuard="canUndeploy" [fsmContext]="fsmContext" (click)="doUndeploy()" label="Undeploy"></w4c-wizard-button>
-    <w4c-wizard-button enableOnGuard="canDeploy" [fsmContext]="fsmContext" (click)="doDeploy()" label="Deploy"></w4c-wizard-button>
-  </div>
+<!-- You can add custom buttons in the wizard control like below
+1. Add a ng-template
+  <ng-template #customButtons>
+    <div fxLayout="row">
+      <w4c-wizard-button enableOnGuard="canUndeploy" [fsmContext]="fsmContext" (click)="doUndeploy($event)" label="Undeploy"></w4c-wizard-button>
+      <w4c-wizard-button enableOnGuard="canDeploy" [fsmContext]="fsmContext" (click)="doDeploy($event)" label="Deploy"></w4c-wizard-button>
+    </div>
+  </ng-template>
+-->
+  <!--
+2. add this to the  <w4c-wizard-control/> tag
+  [buttonHookTemplate]="customButtons"
+  -->
+  <w4c-wizard-control [fsmContext]="fsmContext"
+                      backwardGuard="canDeploy"
+                      backwardAltLabel="Deploy"
+                      cancelGuard="canUndeploy"
+                      cancelLabel="Undeploy"
+                      [cancelFn]="doUndeploy.bind(this)"
+                      forwardGuard="canDeploy"
+                      [forwardFn]="deleteApplication.bind(this)">
+  </w4c-wizard-control>
+
 </div>

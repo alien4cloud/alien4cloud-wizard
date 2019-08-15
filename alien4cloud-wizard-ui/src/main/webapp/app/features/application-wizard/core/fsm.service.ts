@@ -179,8 +179,7 @@ export class AppplicationWizardMachineService {
       canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
       canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
       canCancelWithoutDeleting: context => context.applicationId == undefined,
-      applicationExists: context => context.applicationId != undefined,
-      canCancel: context => true
+      applicationExists: context => context.applicationId != undefined
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
@@ -223,6 +222,17 @@ export class AppplicationWizardMachineService {
       assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSucesss | OnMatchingCompleted>((_, event) => ({
         deploymentTopology: event.deploymentTopologyDTO
       })),
+      fetchDeploymentTopology: (_) => {
+        this.deploymentTopologyService.getDeploymentTopology(
+          _.applicationId,
+          _.environmentId
+        ).subscribe(
+          dto => {
+            // assign the deployment topology
+            _.deploymentTopology = dto;
+          }
+        )
+      },
       fetchApplicationMetaProperties: (_) => {
         this.metaPropertiesService.search(0, 1000, "", {"target":["application"]})
           .subscribe(

@@ -7,7 +7,7 @@ import {MonitorDeploymentService} from "@app/core/services/monitor-deployment.se
 import {map} from "rxjs/operators";
 import {DeploymentWorkflowExecutionService} from "@app/core/services/workflow-execution.service";
 import {DeploymentStatus, ExecutionStatus, MonitoredDeploymentDTO, Task, WorkflowExecutionDTO} from "@app/core";
-import {DoSubmitDeployment, DoSubmitUndeployment} from '../../core/fsm.events';
+import {DoCancelWizard, DoSubmitDeployment, DoSubmitUndeployment, GoBack} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
 
@@ -18,12 +18,22 @@ import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.m
 })
 export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormComponent {
 
-  @Input() fsmContext: ApplicationWizardMachineContext;
-  public isWorkflowInProgress: boolean = false;
-  private monitoredDeployment: MonitoredDeploymentDTO;
+  @Input()
+  fsmContext: ApplicationWizardMachineContext;
 
+  workflowInProgress: boolean = false;
+  progessBarData: ProgessBarData;
+
+  private monitoredDeployment: MonitoredDeploymentDTO;
   private wsSubscription: Subscription;
   private workflowMonitoringSubscription: Subscription;
+
+  constructor(
+    private fsm: AppplicationWizardMachineService,
+    private monitorDeploymentService: MonitorDeploymentService,
+    private deploymentWorkflowExecutionService: DeploymentWorkflowExecutionService,
+    private websocketService: WebsocketSubscriptionManager
+  ) { }
 
   ngOnInit() {
     this.wsSubscription = this.websocketService.registerEnvironmentStatusChannel(this.fsmContext.environmentId).subscribe(event =>
@@ -49,8 +59,6 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
 
   }
 
-  progessBarData: ProgessBarData;
-
   ngOnDestroy(): void {
     if (this.workflowMonitoringSubscription && !this.workflowMonitoringSubscription.closed)  {
       // FIXME: this does'nt seem to work. If I trigger a wf and leave the page (go Home), the polling still running !
@@ -66,28 +74,20 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
         let deploymentId = e.deployment.id;
         console.log("Motitored deployement: ", JSON.stringify(e));
         this.monitoredDeployment = e;
-        this.isWorkflowInProgress = true;
+        this.workflowInProgress = true;
         // now poll the deployment
         this.workflowMonitoringSubscription = this.deploymentWorkflowExecutionService.monitorWorkflowExecution(deploymentId).subscribe(dto => {
           console.log("Returned execution: ", JSON.stringify(dto));
           this.updateProgessData(dto);
         }, error => {
         }, () => {
-          this.isWorkflowInProgress = false;
+          this.workflowInProgress = false;
         });
       });
     }
   }
 
-  constructor(
-    private fsm: AppplicationWizardMachineService,
-    private monitorDeploymentService: MonitorDeploymentService,
-    private deploymentWorkflowExecutionService: DeploymentWorkflowExecutionService
-    ,private websocketService: WebsocketSubscriptionManager
-  ) { }
 
-  // FIXME: this logic should probably move to a service
-  // not sure, since it's just UI stuffs
   private updateProgessData(wfExecution: WorkflowExecutionDTO) {
     if (!wfExecution.execution) {
       return;
@@ -112,14 +112,13 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
     this.progessBarData.progress = progress;
   }
 
-
-  doUndeploy(){
+  doUndeploy(e: any){
     console.log("About to Undeploy with deployment status : ===>"+this.fsmContext.deploymentStatus);
-    this.fsm.send(new DoSubmitUndeployment());   
+    this.fsm.send(new DoSubmitUndeployment());
   }
 
-  doDeploy() {
-    this.fsm.send(new DoSubmitDeployment());
+  deleteApplication() {
+    this.fsm.send(new DoCancelWizard());
   }
 
 }
