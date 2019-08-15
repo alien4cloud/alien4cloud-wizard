@@ -1,4 +1,4 @@
-<div class="fsmGraphViewer" [ngStyle]="{'height': fsmGraphHeight + 'px'}">
+<div #mainDiv class="fsmGraphViewer" [ngStyle]="{'_height': fsmGraphHeight + 'px'}">
 
   <ngx-graph *ngIf="fsmGraph"
              class="chart-container"
@@ -11,6 +11,7 @@
              [nodes]="fsmGraph.nodes"
              [panToNode$]="panToNode$"
              [nodeWidth]=200
+             [view]="[fsmGraphWitdh, fsmGraphHeight]"
              (zoomChange)="zoomChangedHandler($event)"
   >
 

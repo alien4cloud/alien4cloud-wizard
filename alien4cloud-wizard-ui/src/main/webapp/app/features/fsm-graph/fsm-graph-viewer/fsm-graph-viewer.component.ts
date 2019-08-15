@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FsmGraph} from "@app/features/application-wizard/core/fsm-graph.model";
 import {Subject} from "rxjs";
 import * as _ from "lodash";
@@ -15,6 +15,8 @@ export class FsmGraphViewerComponent implements OnInit {
 
   fsmGraph: FsmGraph;
   fsmGraphHeight: number;
+  fsmGraphWitdh: number;
+
   panToNode$: Subject<string> = new Subject();
 
   // make lodash usable from template
@@ -22,6 +24,8 @@ export class FsmGraphViewerComponent implements OnInit {
 
   private static STORAGE_ZOOM_LEVEL: string = "fsm-zoom-level";
   private zoomLevel: number;
+
+  @ViewChild('mainDiv', {static: true}) mainDiv: ElementRef;
 
   constructor(
     private fsm: AppplicationWizardMachineService,
@@ -38,6 +42,7 @@ export class FsmGraphViewerComponent implements OnInit {
   ngOnInit() {
     let storedSetting: number = this.localStorage.retrieve(SettingsKey.FSM_GRAPH_HEIGHT_SETTING);
     this.fsmGraphHeight = (storedSetting) ? storedSetting : 200;
+    this.fsmGraphWitdh = this.mainDiv.nativeElement.offsetWidth;
 
     // get the graph so display it
     this.fsmGraph = this.fsm.getGraph();
