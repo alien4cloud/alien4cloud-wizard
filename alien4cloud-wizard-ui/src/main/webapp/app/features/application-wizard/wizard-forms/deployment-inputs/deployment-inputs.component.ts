@@ -75,7 +75,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
     request.inputProperties[inputName] = value;
     // this.inputsForm.get(inputName).markAsPending();
     // this.inputsForm.markAsPending();
-    this.deploymentTopologyService.updateDeploymentSetup(this.fsmContext.applicationId, this.fsmContext.environmentId, request)
+    this.deploymentTopologyService.updateDeploymentSetup(this.fsmContext.application.id, this.fsmContext.environmentId, request)
       .pipe(catchError(err => {
         if (err instanceof ConstraintError) {
           let constraintInformation = (<ConstraintError>err).constraintInformation;

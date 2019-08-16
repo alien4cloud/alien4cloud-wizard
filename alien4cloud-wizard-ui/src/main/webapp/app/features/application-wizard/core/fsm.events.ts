@@ -13,6 +13,7 @@ export type ApplicationWizardMachineEvents =
   DoSelectTemplate |
   GoBack |
   DoCreateApplication |
+  DoUpdateApplication |
   OnEnvironmentsFetched |
   DoSelectEnvironment |
   DoSearchLocation|
@@ -20,6 +21,8 @@ export type ApplicationWizardMachineEvents =
   OnDeploymentInputsRequired |
   OnApplicationCreateError |
   OnApplicationCreateSucess |
+  OnApplicationUpdateError |
+  OnApplicationUpdateSucess |
   DoSelectLocation |
   OnSelectLocationSucesss |
   OnLocationFetched|
@@ -62,7 +65,12 @@ export class DoSelectTemplate {
 
 export class DoCreateApplication {
   readonly type = 'DO_CREATE_APPLICATION';
-  constructor(public name: string, public description: string, public archiveName: string) {}
+  constructor(public applicationName: string, public applicationDescription: string, public archiveName: string) {}
+}
+
+export class DoUpdateApplication {
+  readonly type = 'DoUpdateApplication';
+  constructor(public applicationId: string, public applicationName: string, public applicationDescription: string) {}
 }
 
 export class OnEnvironmentsFetched {
@@ -118,6 +126,16 @@ export class OnApplicationCreateError extends OnError {
 export class OnApplicationCreateSucess {
   readonly type = 'ON_APPLICATION_CREATE_SUCCESS';
   constructor(public applicationId: string) {}
+}
+
+export class OnApplicationUpdateError extends OnError {
+  readonly type = 'OnApplicationUpdateError';
+  constructor(public message: string) { super(message) }
+}
+
+export class OnApplicationUpdateSucess {
+  readonly type = 'OnApplicationUpdateSucess';
+  constructor() {}
 }
 
 export class DoSubmitDeployment{

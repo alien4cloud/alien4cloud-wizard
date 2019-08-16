@@ -4,8 +4,13 @@
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Application name" [formControl]="applicationNameFormCtrl" name="applicationName" required>
     </mat-form-field>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Application archive name" [(ngModel)]="archiveName" name="archiveName" required>
+    <mat-form-field class="example-full-width" *ngIf="!this.fsmContext.application">
+      <input matInput
+             placeholder="Application archive name"
+             [(ngModel)]="archiveName"
+             name="archiveName"
+             [disabled]="(fsmContext.application) ? true : false"
+             required>
     </mat-form-field>
     <mat-form-field class="example-full-width" floatLabel="never">
       <textarea matInput placeholder="Application description" rows="4" [(ngModel)]="applicationDescription"
@@ -16,5 +21,6 @@
   <w4c-wizard-control [fsmContext]="fsmContext"
                       [displayBackward]="false"
                       [forwardFn]="createApp.bind(this)"
+                      [forwardAltLabel]="(fsmContext.application) ? 'update application' : 'create application'"
   ></w4c-wizard-control>
 </div>

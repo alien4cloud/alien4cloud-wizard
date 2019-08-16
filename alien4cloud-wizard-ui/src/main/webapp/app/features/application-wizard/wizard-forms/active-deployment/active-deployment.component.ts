@@ -69,7 +69,7 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
 
   private monitorWorkflow() {
     if (!this.workflowMonitoringSubscription || this.workflowMonitoringSubscription.closed) {
-      this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.applicationId, this.fsmContext.environmentId).subscribe(e => {
+      this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.application.id, this.fsmContext.environmentId).subscribe(e => {
         console.log("deploymentID is : " + e.deployment.id);
         let deploymentId = e.deployment.id;
         console.log("Motitored deployement: ", JSON.stringify(e));

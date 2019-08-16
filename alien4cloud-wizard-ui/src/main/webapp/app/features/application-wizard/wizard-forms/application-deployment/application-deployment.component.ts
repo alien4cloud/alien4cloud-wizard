@@ -11,10 +11,6 @@ import {DoSubmitDeployment, GoBack} from '../../core/fsm.events';
 })
 export class ApplicationDeploymentComponent implements OnInit , WizardFormComponent {
 
-  application:string ;
-  version: string ;
-  target : string 
-
   @Input() fsmContext: ApplicationWizardMachineContext;
   
   constructor(
@@ -22,8 +18,6 @@ export class ApplicationDeploymentComponent implements OnInit , WizardFormCompon
   ) { }
 
   ngOnInit() {
-    this.application = this.fsmContext.applicationName;
-    this.target = this.fsmContext.locationName;
   }
 
   deployApp(){

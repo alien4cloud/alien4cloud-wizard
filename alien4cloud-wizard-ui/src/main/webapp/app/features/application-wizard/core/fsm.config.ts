@@ -15,10 +15,7 @@ const { log } = actions;
 export const context: ApplicationWizardMachineContext = {
   topologyTemplate: undefined,
   applicationMetapropertiesConfiguration: undefined,
-  applicationName: undefined,
-  applicationDescription: undefined,
-  applicationArchiveName: undefined,
-  applicationId: undefined,
+  application: undefined,
   environments: undefined,
   deploymentTopology: undefined,
   environmentId: undefined,
@@ -106,9 +103,10 @@ export const applicationWizardMachineConfig: MachineConfig<
     applicationCreateForm: {
       on: {
         DO_CREATE_APPLICATION: {
-          target: 'applicationCreating',
-          actions: ['assignAppInfo']
-          // actions: ['assignUser', 'loginSuccess']
+          target: 'applicationCreating'
+        },
+        DoUpdateApplication: {
+          target: 'applicationUpdating'
         },
         GO_BACK: {
           target: 'templateSelectionForm'
@@ -156,16 +154,41 @@ export const applicationWizardMachineConfig: MachineConfig<
         ON_APPLICATION_CREATE_SUCCESS: [
           {
             target: 'applicationMetapropertiesForm',
-            actions: ['assignAppId', 'clearError'],
+            // FIXM%E: trigger and forget
+            actions: ['clearError'],
             cond: 'hasMetapropertiesConfig'
           },
           {
             target: 'environmentSearching',
-            actions: ['assignAppId', 'clearError']
+            // FIXM%E: trigger and forget
+            actions: ['clearError']
           }
         ],
         ON_APPLICATION_CREATE_ERROR: {
           target: 'applicationCreationError',
+          actions: ['assignError']
+        }
+      }
+    },
+    applicationUpdating: {
+      invoke: {
+        id: 'updateApplication',
+        src: 'updateApplication'
+      },
+      on: {
+        OnApplicationUpdateSucess: [
+          {
+            target: 'applicationMetapropertiesForm',
+            actions: ['clearError'],
+            cond: 'hasMetapropertiesConfig'
+          },
+          {
+            target: 'environmentSearching',
+            actions: ['clearError']
+          }
+        ],
+        OnApplicationUpdateError: {
+          target: 'applicationCreateForm',
           actions: ['assignError']
         }
       }

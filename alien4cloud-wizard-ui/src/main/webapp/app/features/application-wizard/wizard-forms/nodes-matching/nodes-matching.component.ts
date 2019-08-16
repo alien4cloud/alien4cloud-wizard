@@ -26,7 +26,7 @@ export class NodesMatchingComponent implements OnInit, WizardFormComponent {
   changeSubstitution(nodeName: string, e: MatRadioChange) {
     console.log(`Substitution has changed for ${nodeName}:`, e.value);
     this.deploymentTopologyService
-      .updateSubstitution(this.fsmContext.applicationId, this.fsmContext.environmentId, nodeName, e.value)
+      .updateSubstitution(this.fsmContext.application.id, this.fsmContext.environmentId, nodeName, e.value)
       .subscribe(dto => { this.fsmContext.deploymentTopology = dto; }
       );
   }

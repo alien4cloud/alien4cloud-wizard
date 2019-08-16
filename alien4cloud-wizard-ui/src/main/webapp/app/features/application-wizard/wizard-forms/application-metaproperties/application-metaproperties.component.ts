@@ -40,7 +40,7 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
   private metapropertyValueChanged(mpc: MetaPropertyConfiguration, value: any) {
     console.log(`A value has changed for ${mpc.name}, event is: `, JSON.stringify(value));
     this.applicationMetaPropertyService
-      .upsertProperty(this.fsmContext.applicationId, {definitionId: mpc.id, value: value})
+      .upsertProperty(this.fsmContext.application.id, {definitionId: mpc.id, value: value})
       .pipe(catchError(err => {
         if (err instanceof ConstraintError) {
           let constraintInformation = (<ConstraintError>err).constraintInformation;

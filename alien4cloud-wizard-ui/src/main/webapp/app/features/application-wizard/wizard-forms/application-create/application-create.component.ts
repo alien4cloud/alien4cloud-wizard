@@ -1,7 +1,7 @@
 import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
-import {DoCreateApplication, GoBack} from "@app/features/application-wizard/core/fsm.events";
+import {DoCreateApplication, DoUpdateApplication, GoBack} from "@app/features/application-wizard/core/fsm.events";
 import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe} from "@app/shared";
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {FormControl} from "@angular/forms";
@@ -30,27 +30,31 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent, 
 
   ngOnInit() {
     this.applicationNameFormCtrl.valueChanges.pipe(debounceTime(500)).subscribe(value => {
-      this.archiveName = _.capitalize(_.camelCase(value));
+      if (!this.fsmContext.application) {
+        // The archive name can not be changed for an existing application
+        this.archiveName = _.capitalize(_.camelCase(value));
+      }
     });
   }
 
   ngAfterContentInit(): void {
-    if (this.fsmContext.applicationName) {
-      this.applicationNameFormCtrl.setValue(this.fsmContext.applicationName);
+    if (this.fsmContext.application) {
+      this.applicationNameFormCtrl.setValue(this.fsmContext.application.name);
+      this.applicationDescription = this.fsmContext.application.description;
     } else {
       // no applicationName is found in the context, let's pre-fill the applicationName using topology template name
       this.applicationNameFormCtrl.setValue("MyApp" + this.w4cToscaTypeShortName.transform(this.w4cToscaIdArchiveExtractor.transform(this.fsmContext.topologyTemplate.id)));
-    }
-    if (this.fsmContext.applicationDescription) {
-      this.applicationDescription = this.fsmContext.applicationDescription;
-    } else {
       // pre-fill using topology template description
       this.applicationDescription = this.fsmContext.topologyTemplate.description;
     }
   }
 
   createApp() {
-    this.fsm.send(new DoCreateApplication(this.applicationNameFormCtrl.value, this.applicationDescription, this.archiveName));
+    if (this.fsmContext.application) {
+      this.fsm.send(new DoUpdateApplication(this.fsmContext.application.id, this.applicationNameFormCtrl.value, this.applicationDescription));
+    } else {
+      this.fsm.send(new DoCreateApplication(this.applicationNameFormCtrl.value, this.applicationDescription, this.archiveName));
+    }
   }
 
 }

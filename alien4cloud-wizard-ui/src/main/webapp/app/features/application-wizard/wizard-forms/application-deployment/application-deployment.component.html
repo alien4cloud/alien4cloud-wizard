@@ -1,9 +1,9 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <div class="mat-error">{{fsmContext.errorMessage}}</div>
   <div>
-    <p><span>Application : {{application}} </span></p>
-    <p><span>Version : {{version}} </span></p>
-    <p><span>Target : {{target}}</span></p>
+    <p><span>Application : {{fsmContext.application.name}} </span></p>
+    <p><span>Version : {{fsmContext.deploymentTopology.topology.archiveVersion}} </span></p>
+    <p><span>Target : {{fsmContext.locationName}}</span></p>
   </div> 
 </div>
 

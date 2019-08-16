@@ -32,6 +32,15 @@ export class ApplicationService extends GenericResourceService<Application> {
     }));
   }
 
+  updateApplication(id: string, name: string, description: string): Observable<void> {
+    let payload = {
+      name: name,
+      description: description
+    };
+    let urlParams = {applicationId: id};
+    let url = this.getUrl("/@{applicationId}", urlParams);
+    return this.handleResult<void>(this.http.put(url, payload));
+  }
 
 
   checkdeploymentStatus(deploymentId: string) {
