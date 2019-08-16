@@ -53,7 +53,7 @@ export const applicationWizardMachineConfig: MachineConfig<
             )
           }
         ],
-        INIT_APPLICATION_ENVIRONMENT: [
+        InitApplicationEnvironment: [
           {
             target: 'applicationEnvironmentInitializing',
             actions: ['assignAppInitInfo']
@@ -67,18 +67,18 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'getActiveDeployment'
       },
       on: {
-        ON_ACTIVE_DEPLOYMENT_FOUND: {
+        OnActiveDeploymentFound: {
           target: 'activeDeploymentForm',
           actions: ['assignDeployment', 'fetchDeploymentTopologyAndLocations']
         },
-        DO_SELECT_ENVIRONMENT: {
+        DoSelectEnvironment: {
           target: 'environmentSelected'
         }
       }
     },
     templateSelectionForm: {
       on: {
-        DO_SELECT_TEMPLATE: {
+        DoSelectTemplate: {
           target: 'templateSelected',
           actions: ['assignTemplate']
         },
@@ -102,13 +102,13 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     applicationCreateForm: {
       on: {
-        DO_CREATE_APPLICATION: {
+        DoCreateApplication: {
           target: 'applicationCreating'
         },
         DoUpdateApplication: {
           target: 'applicationUpdating'
         },
-        GO_BACK: {
+        GoBack: {
           target: 'templateSelectionForm'
         },
         DoCancelWizard: [
@@ -125,7 +125,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     applicationMetapropertiesForm: {
       on: {
-        GO_BACK: {
+        GoBack: {
           target: 'applicationCreateForm'
         },
         OnFormCompleted: {
@@ -151,7 +151,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'createApplication'
       },
       on: {
-        ON_APPLICATION_CREATE_SUCCESS: [
+        OnApplicationCreateSucess: [
           {
             target: 'applicationMetapropertiesForm',
             // FIXM%E: trigger and forget
@@ -164,7 +164,7 @@ export const applicationWizardMachineConfig: MachineConfig<
             actions: ['clearError']
           }
         ],
-        ON_APPLICATION_CREATE_ERROR: {
+        OnApplicationCreateError: {
           target: 'applicationCreationError',
           actions: ['assignError']
         }
@@ -176,7 +176,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'updateApplication'
       },
       on: {
-        OnApplicationUpdateSucess: [
+        OnApplicationUpdateSuccess: [
           {
             target: 'applicationMetapropertiesForm',
             actions: ['clearError'],
@@ -199,11 +199,11 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'searchEnvironments'
       },
       on: {
-        DO_SELECT_ENVIRONMENT: {
+        DoSelectEnvironment: {
           target: 'environmentSelected',
           actions: ['assignEnvironmentId']
         },
-        ON_ENVIRONMENTS_FETCHED: {
+        OnEnvironmentsFetched: {
           target: 'environmentSelectionForm',
           actions: ['assignEnvironments']
         }
@@ -211,7 +211,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     environmentSelectionForm: {
       on: {
-        DO_SELECT_ENVIRONMENT: {
+        DoSelectEnvironment: {
           target: 'environmentSelected',
           actions: ['assignEnvironmentId']
           // actions: ['assignUser', 'loginSuccess']
@@ -239,17 +239,17 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         // if the deployment topology has inputs, then branch to InputForm
         // FIXME : use cond deploymentTopologyHasInputs
-        ON_DEPLOYMENT_INPUTS_REQUIRED: {
+        OnDeploymentInputsRequired: {
           target: 'deploymentInputsForm'
         },
-        DO_SEARCH_LOCATION: {
+        DoSearchLocation: {
           target: 'locationSearching'
         }
       }
     },
     deploymentInputsForm: {
       on: {
-        GO_BACK: [
+        GoBack: [
           {
             target: 'applicationMetapropertiesForm',
             cond: 'hasMetapropertiesConfig'
@@ -272,13 +272,13 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'searchLocations'
       },
       on: {
-        DO_SELECT_LOCATION: {
+        DoSelectLocation: {
           target: 'locationSelected',
           actions: ['assignLocationId']
           //actions: ['assignLocation']
           // actions: ['assignUser', 'loginSuccess']
         },
-        ON_LOCATION_FETCHED: {
+        OnLocationFetched: {
           target: 'locationSelectionForm',
           actions: ['assignLocation']
         }
@@ -286,7 +286,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     locationSelectionForm: {
       on: {
-        GO_BACK: [
+        GoBack: [
           {
             target: 'deploymentInputsForm',
             cond: 'deploymentTopologyHasInputs'
@@ -296,7 +296,7 @@ export const applicationWizardMachineConfig: MachineConfig<
             cond: 'hasMetapropertiesConfig'
           }
         ],
-        DO_SELECT_LOCATION: {
+        DoSelectLocation: {
           target: 'locationSelected',
           actions: ['assignLocationId']
         },
@@ -311,7 +311,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'setLocationPolicies'
       },
       on: {
-        'ON_SELECT_LOCATION_SUCESSS': [
+        OnSelectLocationSucesss: [
           {
             target: 'nodeMatchingForm',
             actions: ['assignDeploymentTopology'],
@@ -326,7 +326,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     nodeMatchingForm: {
       on: {
-        ON_MATCHING_COMPLETED: {
+        OnMatchingCompleted: {
           target: 'deploymentForm',
           actions: ['assignDeploymentTopology']
         },
@@ -337,7 +337,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     deploymentForm: {
       on: {
-        GO_BACK: [
+        GoBack: [
           {
             target: 'nodeMatchingForm',
             cond: 'shouldAskForMatching'
@@ -346,7 +346,7 @@ export const applicationWizardMachineConfig: MachineConfig<
             target: 'locationSelectionForm'
           }
         ],
-        DO_SUBMIT_DEPLOYMENT: {
+        DoSubmitDeployment: {
           target: 'deploymentSubmitting',
           cond: 'canSubmitDeployment'
         },
@@ -361,10 +361,10 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'deploy'
       },
       on: {
-        ON_DEPLOYMENT_SUBMIT_SUCCESS: {
+        OnDeploymentSubmitSuccess: {
           target: 'activeDeploymentForm'
         },
-        ON_DEPLOYMENT_SUBMIT_ERROR: {
+        OnDeploymentSubmitError: {
           target: 'deploymentForm',
           actions: ['assignError']
         }
@@ -376,11 +376,11 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'undeploy'
       },
       on: {
-        ON_UNDEPLOYMENT_SUBMIT_SUCCESS: {
+        OnUndeploymentSubmitSuccess: {
           target: 'activeDeploymentForm',
           actions: ['clearError']
         },
-        ON_UNDEPLOYMENT_SUBMIT_ERROR: {
+        OnUndeploymentSubmitError: {
           target: 'activeDeploymentForm',
           actions: ['assignError']
         }
@@ -388,16 +388,16 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     activeDeploymentForm: {
       on: {
-        GO_BACK: [
+        GoBack: [
           {
             target: 'deploymentForm'
           }
         ],
-        DO_SUBMIT_UNDEPLOYMENT: {
+        DoSubmitUndeployment: {
           target: 'undeploymentSubmitting',
           cond: 'canUndeploy'
         },
-        DO_SUBMIT_DEPLOYMENT: {
+        DoSubmitDeployment: {
           target: 'deploymentSubmitting',
           cond: 'canDeploy'
         },
@@ -417,7 +417,7 @@ export const applicationWizardMachineConfig: MachineConfig<
     applicationDeleting: {
       // TODO: invoke delete on backend
       on: {
-        OnApplicationDeleteSucsess: {
+        OnApplicationDeleteSuccess: {
           target: 'theEnd'
         },
         OnApplicationDeleteError: {

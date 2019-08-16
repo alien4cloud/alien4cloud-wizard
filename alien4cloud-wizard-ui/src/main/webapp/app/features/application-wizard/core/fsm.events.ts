@@ -22,20 +22,20 @@ export type ApplicationWizardMachineEvents =
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   OnApplicationUpdateError |
-  OnApplicationUpdateSucess |
+  OnApplicationUpdateSuccess |
   DoSelectLocation |
-  OnSelectLocationSucesss |
+  OnSelectLocationSuccesss |
   OnLocationFetched|
   OnMatchingCompleted |
   DoSubmitDeployment|
-  OnDeploymentSubmitSucess |
+  OnDeploymentSubmitSuccess |
   DoSubmitUndeployment|
-  OnUndeploymentSubmitSucess |
+  OnUndeploymentSubmitSuccess |
   OnUndeploymentSubmitError |
   OnDeploymentSubmitError |
   DoCancelWizard |
   DoDeleteApplication |
-  OnApplicationDeleteSucsess |
+  OnApplicationDeleteSuccess |
   OnApplicationDeleteError
 ;
 
@@ -49,22 +49,22 @@ export class OnFormCompleted {
 }
 
 export class InitApplicationEnvironment {
-  readonly type = 'INIT_APPLICATION_ENVIRONMENT';
+  readonly type = 'InitApplicationEnvironment';
   constructor(public applicationId: string , public environmentId: string) {}
 }
 
 export class OnActiveDeploymentFound {
-  readonly type = 'ON_ACTIVE_DEPLOYMENT_FOUND';
+  readonly type = 'OnActiveDeploymentFound';
   constructor(public deployment: Deployment, public deploymentStatus: DeploymentStatus) {}
 }
 
 export class DoSelectTemplate {
-  readonly type = 'DO_SELECT_TEMPLATE';
+  readonly type = 'DoSelectTemplate';
   constructor(public topology: Topology) {}
 }
 
 export class DoCreateApplication {
-  readonly type = 'DO_CREATE_APPLICATION';
+  readonly type = 'DoCreateApplication';
   constructor(public applicationName: string, public applicationDescription: string, public archiveName: string) {}
 }
 
@@ -74,42 +74,42 @@ export class DoUpdateApplication {
 }
 
 export class OnEnvironmentsFetched {
-  readonly type = 'ON_ENVIRONMENTS_FETCHED';
+  readonly type = 'OnEnvironmentsFetched';
   constructor(public environments: ApplicationEnvironment[]) {}
 }
 
 export class DoSelectEnvironment {
-  readonly type = 'DO_SELECT_ENVIRONMENT';
+  readonly type = 'DoSelectEnvironment';
   constructor(public environmentId: string) {}
 }
 
 export class DoSearchLocation {
-  readonly type = 'DO_SEARCH_LOCATION';
+  readonly type = 'DoSearchLocation';
   constructor(public deploymentTopology: DeploymentTopologyDTO) {}
 }
 
 export class OnDeploymentInputsRequired {
-  readonly type = 'ON_DEPLOYMENT_INPUTS_REQUIRED';
+  readonly type = 'OnDeploymentInputsRequired';
   constructor() {}
 }
 
 export class DoSelectLocation {
-  readonly type = 'DO_SELECT_LOCATION';
+  readonly type = 'DoSelectLocation';
   constructor(public locationId: string,public locationName: string,public orchestratorId: string) {}
 }
 
-export class OnSelectLocationSucesss {
-  readonly type = 'ON_SELECT_LOCATION_SUCESSS';
+export class OnSelectLocationSuccesss {
+  readonly type = 'OnSelectLocationSucesss';
   constructor(public deploymentTopologyDTO: DeploymentTopologyDTO) {}
 }
 
 export class OnMatchingCompleted {
-  readonly type = 'ON_MATCHING_COMPLETED';
+  readonly type = 'OnMatchingCompleted';
   constructor(public deploymentTopologyDTO: DeploymentTopologyDTO) {}
 }
 
 export class OnLocationFetched {
-  readonly type = 'ON_LOCATION_FETCHED';
+  readonly type = 'OnLocationFetched';
   constructor(public locations: LocationMatch[]) {}
 }
 
@@ -119,12 +119,12 @@ export abstract class OnError {
 }
 
 export class OnApplicationCreateError extends OnError {
-  readonly type = 'ON_APPLICATION_CREATE_ERROR';
+  readonly type = 'OnApplicationCreateError';
   constructor(public message: string) { super(message) }
 }
 
 export class OnApplicationCreateSucess {
-  readonly type = 'ON_APPLICATION_CREATE_SUCCESS';
+  readonly type = 'OnApplicationCreateSucess';
   constructor(public applicationId: string) {}
 }
 
@@ -133,44 +133,44 @@ export class OnApplicationUpdateError extends OnError {
   constructor(public message: string) { super(message) }
 }
 
-export class OnApplicationUpdateSucess {
-  readonly type = 'OnApplicationUpdateSucess';
+export class OnApplicationUpdateSuccess {
+  readonly type = 'OnApplicationUpdateSuccess';
   constructor() {}
 }
 
 export class DoSubmitDeployment{
-  readonly type = 'DO_SUBMIT_DEPLOYMENT';
+  readonly type = 'DoSubmitDeployment';
   constructor() {}
 }
 
-export class OnDeploymentSubmitSucess {
-  readonly type = 'ON_DEPLOYMENT_SUBMIT_SUCCESS';
+export class OnDeploymentSubmitSuccess {
+  readonly type = 'OnDeploymentSubmitSuccess';
   constructor() {}
 }
 
 export class OnDeploymentSubmitError extends OnError {
-  readonly type = 'ON_DEPLOYMENT_SUBMIT_ERROR';
+  readonly type = 'OnDeploymentSubmitError';
   constructor(public message: string) { super(message) }
 }
 
 export class DoSubmitUndeployment {
-  readonly type = 'DO_SUBMIT_UNDEPLOYMENT';
+  readonly type = 'DoSubmitUndeployment';
   // TODO: use deployment topology that is returned
   constructor() {}
 }
 
-export class OnUndeploymentSubmitSucess {
-  readonly type = 'ON_UNDEPLOYMENT_SUBMIT_SUCCESS';
+export class OnUndeploymentSubmitSuccess {
+  readonly type = 'OnUndeploymentSubmitSuccess';
   constructor() {}
 }
 
 export class OnUndeploymentSubmitError extends OnError {
-  readonly type = 'ON_UNDEPLOYMENT_SUBMIT_ERROR';
+  readonly type = 'OnUndeploymentSubmitError';
   constructor(public message: string) { super(message) }
 }
 
 export class GoBack {
-  readonly type = 'GO_BACK';
+  readonly type = 'GoBack';
   constructor() {}
 }
 
@@ -184,17 +184,12 @@ export class DoDeleteApplication {
   constructor() {}
 }
 
-export class OnApplicationDeleteSucsess {
-  readonly type = 'OnApplicationDeleteSucsess';
+export class OnApplicationDeleteSuccess {
+  readonly type = 'OnApplicationDeleteSuccess';
   constructor() {}
 }
 
 export class OnApplicationDeleteError {
   readonly type = 'OnApplicationDeleteError';
   constructor() {}
-}
-
-
-export interface Errors {
-  [key: string]: string;
 }

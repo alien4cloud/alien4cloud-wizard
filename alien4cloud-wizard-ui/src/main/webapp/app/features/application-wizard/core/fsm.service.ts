@@ -17,15 +17,15 @@ import {
   OnApplicationCreateSucess,
   OnDeploymentInputsRequired,
   OnDeploymentSubmitError,
-  OnDeploymentSubmitSucess,
+  OnDeploymentSubmitSuccess,
   DoSearchLocation,
   OnEnvironmentsFetched,
   OnError,
   OnLocationFetched,
-  OnSelectLocationSucesss,
+  OnSelectLocationSuccesss,
   OnUndeploymentSubmitError,
-  OnUndeploymentSubmitSucess,
-  OnMatchingCompleted, OnApplicationUpdateSucess, OnApplicationUpdateError
+  OnUndeploymentSubmitSuccess,
+  OnMatchingCompleted, OnApplicationUpdateSuccess, OnApplicationUpdateError
 } from "@app/features/application-wizard/core/fsm.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
@@ -80,7 +80,7 @@ export class AppplicationWizardMachineService {
             mergeMap(result =>
               this.applicationService.getById(event.applicationId).pipe(map(application => {
                 _.application = application;
-                return new OnApplicationUpdateSucess();
+                return new OnApplicationUpdateSuccess();
               }))
             ),
             catchError(err => {
@@ -168,14 +168,14 @@ export class AppplicationWizardMachineService {
             // we have an assignation in the FSM config but we are not guaranteed that this assignation was done before the guard was called
             // that's why we assign directly here
             _.deploymentTopology = deploymentTopologyDTO;
-            return new OnSelectLocationSucesss(deploymentTopologyDTO);
+            return new OnSelectLocationSuccesss(deploymentTopologyDTO);
           }))
       ,
       deploy: (_, event) =>
         this.applicationDeploymentService.deploy(
           _.application.id, _.environmentId
         ).pipe(
-          map(data => new OnDeploymentSubmitSucess()),
+          map(data => new OnDeploymentSubmitSuccess()),
           catchError(err => {
             console.log("------------ Error catch by service : " + err);
             return of(new OnDeploymentSubmitError(err.message));
@@ -185,7 +185,7 @@ export class AppplicationWizardMachineService {
         this.applicationDeploymentService.undeploy(
           _.application.id, _.environmentId
         ).pipe(
-          map(data => new OnUndeploymentSubmitSucess()),
+          map(data => new OnUndeploymentSubmitSuccess()),
           catchError(err => {
             return of(new OnUndeploymentSubmitError(err.message));
           })
@@ -235,7 +235,7 @@ export class AppplicationWizardMachineService {
         errorMessage: undefined
       })),
       // FIXME: remove since it's useless ? (assignation is done in setLocationPolicies)
-      assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSucesss | OnMatchingCompleted>((_, event) => ({
+      assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSuccesss | OnMatchingCompleted>((_, event) => ({
         deploymentTopology: event.deploymentTopologyDTO
       })),
       fetchDeploymentTopologyAndLocations: (_) => {
