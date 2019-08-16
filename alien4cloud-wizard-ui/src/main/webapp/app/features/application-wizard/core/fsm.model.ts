@@ -47,8 +47,11 @@ export interface ApplicationWizardMachineContext {
    * The topology template that have been chosen.
    */
   topologyTemplate: Topology;
+  // FIXME: remove, use an Applicatino object
   applicationName: string;
+  // FIXME: remove, use an Applicatino object
   applicationDescription: string;
+  // FIXME: remove, use an Applicatino object
   applicationArchiveName: string;
   /**
    * The meta-properties that need to be defined for an application.
@@ -58,6 +61,7 @@ export interface ApplicationWizardMachineContext {
    * The id of the created application : if this is undefined, it means that the
    * application has not been yet created.
    */
+  // FIXME: remove, use an Applicatino object
   applicationId: string;
   environments: ApplicationEnvironment[];
   deploymentTopology: DeploymentTopologyDTO;

@@ -4,7 +4,7 @@ import {Subject} from "rxjs";
 import * as _ from "lodash";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {LocalStorageService} from "ngx-webstorage";
-import {SettingsKey} from "@app/core/etc/settings-key.enum";
+import {SettingsService, SettingsKey} from "@app/core";
 
 @Component({
   selector: 'w4c-fsm-graph-viewer',
@@ -29,19 +29,15 @@ export class FsmGraphViewerComponent implements OnInit {
 
   constructor(
     private fsm: AppplicationWizardMachineService,
-    private localStorage: LocalStorageService
+    private settingsService: SettingsService
   ) {
     this.zoomLevel = 1;
-    // if found, use the prefered user setting for zoom level
-    let storedZoomLevel = this.localStorage.retrieve(FsmGraphViewerComponent.STORAGE_ZOOM_LEVEL);
-    if (storedZoomLevel) {
-      this.zoomLevel = storedZoomLevel;
-    }
+    // use the preferred user setting for zoom level
+    this.zoomLevel = this.settingsService.getSetting(SettingsKey.FSM_GRAPH_ZOOM_LEVEL, 1);
   }
 
   ngOnInit() {
-    let storedSetting: number = this.localStorage.retrieve(SettingsKey.FSM_GRAPH_HEIGHT_SETTING);
-    this.fsmGraphHeight = (storedSetting) ? storedSetting : 200;
+    this.fsmGraphHeight = this.settingsService.getSetting(SettingsKey.FSM_GRAPH_HEIGHT_SETTING, 200);
     this.fsmGraphWitdh = this.mainDiv.nativeElement.offsetWidth;
 
     // get the graph so display it
@@ -78,7 +74,7 @@ export class FsmGraphViewerComponent implements OnInit {
    */
   zoomChangedHandler(zoomLevel) {
     // the zoom has changed, let's store it (event is zoom level)
-    this.localStorage.store(FsmGraphViewerComponent.STORAGE_ZOOM_LEVEL, zoomLevel);
+    this.settingsService.setSetting(SettingsKey.FSM_GRAPH_ZOOM_LEVEL, zoomLevel);
   }
 
 }

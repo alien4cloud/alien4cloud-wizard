@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatStepper} from "@angular/material";
 import {WizardFormStep} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {WizardStepContainerComponent} from "@app/features/application-wizard/wizard-step-container/wizard-step-container.component";
@@ -6,10 +6,9 @@ import {AppplicationWizardMachineService} from "@app/features/application-wizard
 import {WizardService} from "@app/features/application-wizard/core/wizard.service";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import * as _ from "lodash";
-import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Init, InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
-import {LocalStorageService} from "ngx-webstorage";
-import {SettingsKey} from "@app/core/etc/settings-key.enum";
+import {SettingsService, SettingsKey} from "@app/core";
 
 /**
  * This main component knows:
@@ -45,14 +44,11 @@ export class WizardMainComponent implements OnInit, OnDestroy {
     private mainService : WizardService,
     private route: ActivatedRoute,
     private router: Router,
-    private localStorage: LocalStorageService
+    private settingsService: SettingsService
   ) {}
 
   ngOnInit() {
-    let storedSetting: boolean = this.localStorage.retrieve(SettingsKey.SHOW_FSM_GRAPH_SETTING);
-    if (storedSetting !== undefined) {
-      this.showFsmGraph = storedSetting;
-    }
+    this.showFsmGraph = this.settingsService.getSetting(SettingsKey.SHOW_FSM_GRAPH_SETTING, false);
 
     this.fsm.start();
     // we have a timeout here in order to 1. let the view being displayed 2. let the listener bellow to be up
