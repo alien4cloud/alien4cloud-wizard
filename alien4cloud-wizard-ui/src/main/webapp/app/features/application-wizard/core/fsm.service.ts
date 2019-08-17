@@ -25,7 +25,11 @@ import {
   OnSelectLocationSuccesss,
   OnUndeploymentSubmitError,
   OnUndeploymentSubmitSuccess,
-  OnMatchingCompleted, OnApplicationUpdateSuccess, OnApplicationUpdateError
+  OnMatchingCompleted,
+  OnApplicationUpdateSuccess,
+  OnApplicationUpdateError,
+  OnApplicationDeleteSuccess,
+  OnApplicationDeleteError
 } from "@app/features/application-wizard/core/fsm.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
@@ -88,7 +92,37 @@ export class AppplicationWizardMachineService {
               return of(new OnApplicationUpdateError(err.message));
             })
           ),
-      getActiveDeployment: (_, event: InitApplicationEnvironment) =>
+      initWizardContextForExistingApplicationEnvironment: (_, event: InitApplicationEnvironment) =>
+        // get the application
+        this.applicationService.getById(event.applicationId).pipe(
+          mergeMap(application => {
+            _.application = application;
+            // get the active deployment for this application / environment
+            return this.applicationDeploymentService
+              .getActiveDeployment(_.application.id, _.environmentId)
+              .pipe(
+                mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environmentId)
+                  .pipe(
+                    map(status => {
+                      if (deployment) {
+                        return new OnActiveDeploymentFound(deployment, status);
+                      } else {
+                        return new DoSelectEnvironment(_.environmentId);
+                      }
+                    }),
+                    catchError(err => {
+                      console.log("------------ Error catch by service : " + err);
+                      // return new DoSelectEnvironment(_.environmentId);
+                      // FIXME
+                      return undefined;
+                    })
+                  )
+                )
+              )
+          }
+        )
+      ),
+      _getActiveDeployment: (_, event: InitApplicationEnvironment) =>
         this.applicationService.getById(event.applicationId).pipe(
           mergeMap(application => {
             _.application = application;
@@ -189,6 +223,22 @@ export class AppplicationWizardMachineService {
           catchError(err => {
             return of(new OnUndeploymentSubmitError(err.message));
           })
+        ),
+      deleteApplication: (_, event) =>
+        this.applicationService.delete(
+          _.application.id
+        ).pipe(
+          catchError(err => {
+            return of(new OnApplicationDeleteError(err.message));
+          })
+        ).pipe(
+          map(data => {
+            // FIXME: switchMap ?
+            if (data instanceof OnApplicationDeleteError) {
+              return <OnApplicationDeleteError>data;
+            }
+            return new OnApplicationDeleteSuccess();
+          })
         )
     },
     guards: {
@@ -203,7 +253,8 @@ export class AppplicationWizardMachineService {
       canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
       canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
       canCancelWithoutDeleting: context => context.application == undefined,
-      applicationExists: context => context.application != undefined
+      applicationExists: context => context.application != undefined,
+      hasNotMultipleEnvironments: context => context.environments && context.environments.length <= 1
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
@@ -263,6 +314,17 @@ export class AppplicationWizardMachineService {
               }
             }
           )
+      },
+      fetchEnvironments: (_) => {
+        this.applicationEnvironmentService.search(
+          0,
+          50,
+          "",
+          {},
+          { applicationId: _.application.id }
+        ).subscribe(environments => {
+          _.environments = environments['data'];
+        });
       }
     }
 

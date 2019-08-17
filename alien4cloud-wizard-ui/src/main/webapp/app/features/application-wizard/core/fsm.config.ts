@@ -63,8 +63,8 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     applicationEnvironmentInitializing: {
       invoke: {
-        id: 'getActiveDeployment',
-        src: 'getActiveDeployment'
+        id: 'initWizardContextForExistingApplicationEnvironment',
+        src: 'initWizardContextForExistingApplicationEnvironment'
       },
       on: {
         OnActiveDeploymentFound: {
@@ -326,6 +326,9 @@ export const applicationWizardMachineConfig: MachineConfig<
     },
     nodeMatchingForm: {
       on: {
+        GoBack: {
+          target: 'locationSelectionForm'
+        },
         OnMatchingCompleted: {
           target: 'deploymentForm',
           actions: ['assignDeploymentTopology']
@@ -407,21 +410,29 @@ export const applicationWizardMachineConfig: MachineConfig<
       }
     },
     deleteApplicationForm: {
+      entry: ['fetchEnvironments'],
       on: {
         DoDeleteApplication: {
           target: 'applicationDeleting'
           // TODO: add cond
+        },
+        DoCancelWizard: {
+          target: 'theEnd'
         }
       }
     },
     applicationDeleting: {
-      // TODO: invoke delete on backend
+      invoke: {
+        id: 'deleteApplication',
+        src: 'deleteApplication'
+      },
       on: {
         OnApplicationDeleteSuccess: {
           target: 'theEnd'
         },
         OnApplicationDeleteError: {
-          target: 'deleteApplicationForm'
+          target: 'deleteApplicationForm',
+          actions: ['assignError']
         }
       }
     },

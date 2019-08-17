@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Application} from "@app/core";
 import {TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Execution} from '../models/execution.model';
 import {GenericResourceService} from "@app/core/services/generic-resource.service";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -42,10 +43,20 @@ export class ApplicationService extends GenericResourceService<Application> {
     return this.handleResult<void>(this.http.put(url, payload));
   }
 
-
   checkdeploymentStatus(deploymentId: string) {
-    const url = GenericResourceService.baseUrl + "/workflow_execution/s/@{deploymentId}";
     let urlParams = {deploymentId: deploymentId};
-    return this.handleResult<Execution>(this.http.get(this.getParametrizedUrl(url, urlParams)));
+    let url = this.getUrl("/workflow_execution/s/@{deploymentId}", urlParams);
+    return this.handleResult<Execution>(this.http.get(url));
   }
+
+  // FIXME: generalize ?
+  delete(id: string): Observable<boolean> {
+    let urlParams = {id: id};
+    let url = this.getUrl("/@{id}", urlParams);
+    return this.handleResult<boolean>(this.http.delete(url).pipe(catchError(err => {
+      console.log("====== Error catched", JSON.stringify(err));
+      throw new Error(this.translate.instant("ERRORS." + err['error']['error']['code']));
+    })));
+  }
+
 }

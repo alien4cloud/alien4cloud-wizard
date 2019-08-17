@@ -6,6 +6,8 @@
     <h2>No workflow in progress</h2>
   </div>
 
+  <div class="mat-error">{{fsmContext.errorMessage}}</div>
+
   <ng-template #deploying>
     <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center">
       <h2 *ngIf="workflowInProgress">Workflow in progress ...</h2>

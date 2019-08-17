@@ -189,7 +189,7 @@ export class OnApplicationDeleteSuccess {
   constructor() {}
 }
 
-export class OnApplicationDeleteError {
+export class OnApplicationDeleteError extends OnError {
   readonly type = 'OnApplicationDeleteError';
-  constructor() {}
+  constructor(public message: string) { super(message) }
 }
