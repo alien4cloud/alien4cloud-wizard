@@ -1,6 +1,6 @@
 import {
   Application,
-  ApplicationEnvironment,
+  ApplicationEnvironment, ApplicationEnvironmentDTO,
   DeploymentStatus,
   DeploymentTopologyDTO,
   LocationMatch,
@@ -61,7 +61,7 @@ export interface ApplicationWizardMachineContext {
    */
   applicationMetapropertiesConfiguration: MetaPropConfiguration[];
 
-  environments: ApplicationEnvironment[];
+  environments: ApplicationEnvironmentDTO[];
   deploymentTopology: DeploymentTopologyDTO;
   errorMessage: string;
   environmentId: string;

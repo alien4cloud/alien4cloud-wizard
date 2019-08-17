@@ -1,7 +1,14 @@
 /**
  * The event types our FSM will manage to trigger transition between states.
  */
-import {ApplicationEnvironment, Deployment, DeploymentStatus, LocationMatch, Topology} from "@app/core";
+import {
+  ApplicationEnvironment,
+  ApplicationEnvironmentDTO,
+  Deployment,
+  DeploymentStatus,
+  LocationMatch,
+  Topology
+} from "@app/core";
 import {DeploymentTopologyDTO} from '@app/core/models/deployment-topology.model';
 import {EventObject} from "xstate";
 
@@ -75,7 +82,7 @@ export class DoUpdateApplication {
 
 export class OnEnvironmentsFetched {
   readonly type = 'OnEnvironmentsFetched';
-  constructor(public environments: ApplicationEnvironment[]) {}
+  constructor(public environments: ApplicationEnvironmentDTO[]) {}
 }
 
 export class DoSelectEnvironment {

@@ -48,17 +48,31 @@ export class WizardButtonComponent implements OnInit {
     if (!enabledFnResult) {
       return false;
     }
-    let guardResult = true;
-    if (this.enableOnGuard) {
-      try {
-        if (this.fsmContext && this.fsm.machineOptions && this.fsm.machineOptions.guards && this.fsm.machineOptions.guards[this.enableOnGuard]) {
-          guardResult = this.fsm.machineOptions.guards[this.enableOnGuard].call(this, this.fsmContext);
-        }
-      } catch (e) {
-        console.error("Error occurred while using guard to enable/disable the button", e);
-      }
-    }
+    let guardResult = this.callFsmGuard();
     return guardResult;
+  }
+
+  private callFsmGuard(): boolean {
+    if (!this.enableOnGuard) {
+      // no guard is configured for this button, returning true
+      return true;
+    }
+    if (!this.fsm.machineOptions.guards) {
+      console.log("No guards on FSM, returning true by default");
+      return true;
+    }
+    if (!this.fsm.machineOptions.guards[this.enableOnGuard]) {
+      console.log(`No guards named ${this.enableOnGuard} on FSM, returning true by default`);
+      return true;
+    }
+    try {
+      let guardResult = this.fsm.machineOptions.guards[this.enableOnGuard].call(this, this.fsmContext);
+      console.log(`FSM guard ${this.enableOnGuard} returned ${guardResult}`);
+      return guardResult;
+    } catch (e) {
+      console.error("Error occurred while using guard to enable/disable the button, returning true", e);
+      return true;
+    }
   }
 
   ngOnInit() {

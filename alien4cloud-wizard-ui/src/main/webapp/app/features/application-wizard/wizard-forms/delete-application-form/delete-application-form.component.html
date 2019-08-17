@@ -5,14 +5,11 @@
   You can delete this application or leave the wizard without deleting it.
   You'll then be able find it in the Dashboard and re-open this wizard later.
 </p>
-<p *ngIf="fsmContext.environments && fsmContext.environments.length > 1" class="mat-error">
-  Several environments for this application exist, you can not delete the application.
-</p>
 <div class="mat-error">{{fsmContext.errorMessage}}</div>
 <w4c-wizard-control [fsmContext]="fsmContext"
                     [forwardFn]="doDelete.bind(this)"
                     cancelLabel="Leave without deleting"
                     forwardAltLabel="Delete the application"
-                    forwardGuard="hasNotMultipleEnvironments"
+                    forwardGuard="hasntActiveEnvironment"
                     [displayBackward]="false"
 ></w4c-wizard-control>

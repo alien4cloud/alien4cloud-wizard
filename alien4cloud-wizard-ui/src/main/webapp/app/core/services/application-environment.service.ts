@@ -9,7 +9,7 @@ import {Deployment} from "@app/core/models/deployment.model";
 @Injectable({
   providedIn: 'root'
 })
-export class ApplicationEnvironmentService extends GenericResourceService<ApplicationEnvironment> {
+export class ApplicationEnvironmentService extends GenericResourceService<ApplicationEnvironmentDTO> {
 
   constructor(
     http: HttpClient,

@@ -8,6 +8,7 @@ import {
 } from "@app/features/application-wizard/core/fsm.model";
 import {
   ApplicationWizardMachineEvents,
+  DoSearchLocation,
   DoSelectEnvironment,
   DoSelectLocation,
   DoSelectTemplate,
@@ -15,21 +16,20 @@ import {
   OnActiveDeploymentFound,
   OnApplicationCreateError,
   OnApplicationCreateSucess,
+  OnApplicationDeleteError,
+  OnApplicationDeleteSuccess,
+  OnApplicationUpdateError,
+  OnApplicationUpdateSuccess,
   OnDeploymentInputsRequired,
   OnDeploymentSubmitError,
   OnDeploymentSubmitSuccess,
-  DoSearchLocation,
   OnEnvironmentsFetched,
   OnError,
   OnLocationFetched,
+  OnMatchingCompleted,
   OnSelectLocationSuccesss,
   OnUndeploymentSubmitError,
-  OnUndeploymentSubmitSuccess,
-  OnMatchingCompleted,
-  OnApplicationUpdateSuccess,
-  OnApplicationUpdateError,
-  OnApplicationDeleteSuccess,
-  OnApplicationDeleteError
+  OnUndeploymentSubmitSuccess
 } from "@app/features/application-wizard/core/fsm.events";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 import {FsmGraph, FsmGraphEdge, FsmGraphNode} from "@app/features/application-wizard/core/fsm-graph.model";
@@ -37,8 +37,10 @@ import {
   ApplicationDeploymentService,
   ApplicationEnvironmentService,
   ApplicationService,
-  DeploymentStatus, DeploymentTopologyService,
-  LocationMatchingService, MetaPropertiesService,
+  DeploymentStatus,
+  DeploymentTopologyService,
+  LocationMatchingService,
+  MetaPropertiesService,
   TopologyService
 } from "@app/core";
 import * as lodash from 'lodash';
@@ -254,7 +256,7 @@ export class AppplicationWizardMachineService {
       canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
       canCancelWithoutDeleting: context => context.application == undefined,
       applicationExists: context => context.application != undefined,
-      hasNotMultipleEnvironments: context => context.environments && context.environments.length <= 1
+      hasntActiveEnvironment: context => context.environments && context.environments.filter(e => e.status != DeploymentStatus.UNDEPLOYED).length == 0
     },
     actions: {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
@@ -323,7 +325,7 @@ export class AppplicationWizardMachineService {
           {},
           { applicationId: _.application.id }
         ).subscribe(environments => {
-          _.environments = environments['data'];
+          _.environments = environments.data;
         });
       }
     }
