@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {PageEvent} from '@angular/material/paginator';
-import {debounceTime} from 'rxjs/operators';
+import {debounceTime, mergeMap} from 'rxjs/operators';
 import * as _ from 'lodash';
 
 import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService, ApplicationEnvironmentService, ApplicationEnvironmentDTO, ApplicationEnvironment} from "@app/core";
 import {Router} from "@angular/router";
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
-import {Observable, Subscription} from "rxjs";
+import {Observable, of, Subscription} from "rxjs";
 import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
 
 @Component({
@@ -30,29 +30,24 @@ export class ApplicationListComponent implements OnInit {
   // make lodash usable from template
   private lodash = _;
 
-  public applications: Application[];
-  private overview: ApplicationOverview;
-  
-  //Not exactly an array of ApplicationEnvironmentDTO
-  private applicationEnvironments: Map<string, ApplicationEnvironmentDTO[]>;
-  private applicationIds: Array<String> = [];
+  applications: Application[];
+  overview: ApplicationOverview;
 
+
+  applicationEnvironments: Map<string, ApplicationEnvironmentDTO[]>;
 
   // Paginator config
-  public length = 100;
-  public pageSize = 10;
-  public pageSizeOptions: number[] = [5, 10, 25, 100];
-  private query = null;
-  public pageIndex = 0;
-
-  // MatPaginator Output
-  private pageEvent: PageEvent;
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  query = null;
+  pageIndex = 0;
 
   // a form control to bind to search input
-  public searchField: FormControl = new FormControl();
+  searchField: FormControl = new FormControl();
 
   // indicates data loading
-  public isLoading: boolean = false;
+  isLoading: boolean = false;
 
   private statusMonitorEventSubscription: Subscription;
 
@@ -90,18 +85,23 @@ export class ApplicationListComponent implements OnInit {
 
   private loadApplications(from: number) {
     this.isLoading = true;
-    this.applicationService.search(from, this.pageSize, this.query).subscribe((data) => {
+    this.applicationService.search(from, this.pageSize, this.query).pipe(mergeMap(data => {
       this.applications = data.data;
       this.length = data.totalResults;
-      this.getApplicationEnvironments();
+      let applicationIds: string[] = this.applications.map(application => application.id);
+      console.log("Applications IDs array length ", applicationIds.length);
       this.isLoading = false;
+      return this.applicationEnvironmentService.getEnvironmentApplications(applicationIds)
+    })).subscribe((data) => {
+      console.log("Received environments data: ", JSON.stringify(data))
+      this.applicationEnvironments = data;
     });
   }
 
   /**
    * This is trigerred when something is changed about pagination options.
    */
-  public handlePage(e: any) {
+  handlePage(e: any) {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
     this.loadApplications(this.pageSize * e.pageIndex);
@@ -110,7 +110,7 @@ export class ApplicationListComponent implements OnInit {
   /**
    * Trigered when the panel is expanded.
    */
-  private openDetails(applicationId: string) {
+  openDetails(applicationId: string) {
     console.log("Openning ", applicationId);
     this.overview = undefined;
     this.applicationOverviewService.getById(applicationId).subscribe((data) => {
@@ -127,16 +127,10 @@ export class ApplicationListComponent implements OnInit {
     this.statusMonitorEventSubscription.unsubscribe();
   }
 
-  private openWizard() {
+  openWizard() {
     let routeUrl = `/app-wizard/${this.overview.application.id}/${this.overview.applicationEnvironment.id}`;
     console.log("Routing to :", routeUrl)
     this.router.navigateByUrl(routeUrl);
   }
 
-  private getApplicationEnvironments() {
-    this.applications.map(item => this.applicationIds.push(item.id));
-    this.applicationEnvironmentService.getEnvironmentApplications(this.applicationIds).subscribe((data) => {
-      this.applicationEnvironments = data;
-    });
-  }
 }

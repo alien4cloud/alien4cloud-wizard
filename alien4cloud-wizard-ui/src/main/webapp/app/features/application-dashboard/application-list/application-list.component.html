@@ -32,7 +32,7 @@
             </div>
             <div fxFlex="5%">
               <span *ngIf="applicationEnvironments && !isOpenned">
-                <w4c-deployment-status-piechart [applicationEnvironmentDTO]="applicationEnvironments[application.id]">
+                <w4c-deployment-status-piechart  *ngIf="applicationEnvironments[application.id]" [applicationEnvironmentDTO]="applicationEnvironments[application.id]">
                 </w4c-deployment-status-piechart>
               </span>
             </div>

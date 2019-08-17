@@ -36,7 +36,7 @@ export class DeploymentStatusPiechartComponent implements OnInit {
 
   ngOnInit() {
     this.applicationEnvironmentDTO.map(item => {
-      this.environments.push({ "name": item.name+" \n "+item.status, "value": 1})
+      this.environments.push({"name": item.name + " \n " + item.status, "value": 1})
       this.colorScheme.domain.push(this.colorsByStatus.get(item.status));
     });
   }
