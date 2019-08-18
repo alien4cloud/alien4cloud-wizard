@@ -262,7 +262,10 @@ export const applicationWizardMachineConfig: MachineConfig<
           }
         ],
         OnFormCompleted: {
-          target: 'locationSearching'
+          target: 'locationSearching',
+          // refresh the deploymentTopology in order to ensure it contains input values
+          // this to be able to back to this form in case of new application
+          // actions: ['refreshDeploymentTopology']
         },
         DoCancelWizard: {
           target: 'deleteApplicationForm'
@@ -278,8 +281,6 @@ export const applicationWizardMachineConfig: MachineConfig<
         DoSelectLocation: {
           target: 'locationSelected',
           actions: ['assignLocationId']
-          //actions: ['assignLocation']
-          // actions: ['assignUser', 'loginSuccess']
         },
         OnLocationFetched: {
           target: 'locationSelectionForm',

@@ -1,14 +1,13 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {
   AbstractPropertyValue, ConstraintError, DeploymentTopologyService,
-  PropertyDefinition, PropertyValue,
+  PropertyDefinition,
   UpdateDeploymentTopologyRequest
 } from "@app/core";
-import * as _ from 'lodash';
-import {DoSearchLocation, GoBack, OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
+import {OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
 import {FormGroup} from "@angular/forms";
 import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
@@ -18,7 +17,7 @@ import {Observable} from "rxjs";
   templateUrl: './deployment-inputs.component.html',
   styleUrls: ['./deployment-inputs.component.css']
 })
-export class DeploymentInputsComponent implements OnInit, WizardFormComponent, AfterViewInit {
+export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
 
   @Input() fsmContext: ApplicationWizardMachineContext;
 
@@ -33,31 +32,36 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent, A
   ) { }
 
   ngOnInit() {
-    let topology = this.fsmContext.deploymentTopology.topology;
-    // FIXME: we do this because our object are not well typed
-    // if we could .forEach on inputs, we could iterate directly in the html
-    for (const [key, pd] of Object.entries(topology.inputs)) {
-      let pfd = new PropertyFormDefinition();
-      pfd.inputName = key;
-      pfd.definition = pd;
-      if (topology.deployerInputProperties) {
-        let property_value = <AbstractPropertyValue>_.get(topology.deployerInputProperties, key);
-        pfd.value = property_value;
+    // FIXME : we need to retrieve the deploymentTopology since the one fom context is not always fresh even after refresh
+    this.deploymentTopologyService.getDeploymentTopology(
+      this.fsmContext.application.id,
+      this.fsmContext.environmentId
+    ).subscribe(deploymentTopology => {
+      // if we could .forEach on inputs, we could iterate directly in the html
+      for (const [key, pd] of Object.entries(deploymentTopology.topology.inputs)) {
+        let pfd = new PropertyFormDefinition();
+        pfd.inputName = key;
+        pfd.definition = pd;
+        if (deploymentTopology.topology.deployerInputProperties) {
+          let property_value = <AbstractPropertyValue>(deploymentTopology.topology.deployerInputProperties[key]);
+          console.log(`Input ${key} has value: ${ JSON.stringify(property_value) }`);
+          pfd.value = property_value;
+        }
+        this.propertieFormDefitions.push(pfd);
       }
-      this.propertieFormDefitions.push(pfd);
-    }
+      // we need to wait for rendering
+      setTimeout(() => { this.initDefaults(); }, 500);
+    })
 
   }
 
-  ngAfterViewInit(): void {
+  initDefaults(): void {
     // if default values exist and no value is already set, fill the form with the default.
     // this will update the deployment setup by calling the backend.
     // FIXME: Should the backend directly manage such default values on deployment topology creation ?
     this.propertieFormDefitions.forEach(pfd => {
       if (!pfd.value && pfd.definition.default) {
-        // we have a pb here, we shouldn't set the value directly on the formControl
         pfd.value = pfd.definition.default;
-        //this.inputsForm.get(pfd.inputName).setValue(pfd.definition.default.value);
       }
     });
   }

@@ -332,7 +332,16 @@ export class AppplicationWizardMachineService {
         this.applicationService.getById(_.application.id).subscribe(application => {
           _.application = application;
         });
+      },
+      refreshDeploymentTopology: (_) => {
+        this.deploymentTopologyService.getDeploymentTopology(
+          _.application.id,
+          _.environmentId
+        ).subscribe(dto => {
+          _.deploymentTopology = dto;
+        })
       }
+
     }
 
   };

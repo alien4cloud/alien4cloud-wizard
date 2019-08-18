@@ -71,7 +71,7 @@ export class PropertyEditorComponent implements OnInit {
       case "integer":
       case "float": {
         this.pfd.inputType = "number";
-        if (this.pfd.definition.options.useSlider) {
+        if (this.pfd.definition.options && this.pfd.definition.options.useSlider) {
           this.pfd.formType = PropertyFormType.SLIDER;
         }
         break;

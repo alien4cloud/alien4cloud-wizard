@@ -14,7 +14,7 @@
             [required]="pfd.definition.required"
             matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=20>
   </textarea>
-  <!-- Checkbox for boolean property -->
+  <!-- Slide Toggle for boolean property -->
   <input *ngIf="pfd.formType == 'CHEKBOX'" matInput style="display: none" [formControl]="pfd.formControl">
   <mat-slide-toggle *ngIf="pfd.formType == 'CHEKBOX'"
                     [required]="pfd.definition.required"
