@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit {
       let idx = _.findIndex(this.settingDefinitions, setting => setting.setting.id == s.id);
       if (idx > -1) {
         // this.settingDefinitions[idx].value = s.value;
-        if (this.settingsForm.get(s.id).value != s.value) {
+        if (this.settingsForm.get(s.id) && this.settingsForm.get(s.id).value != s.value) {
           this.settingsForm.get(s.id).setValue(s.value);
         }
       } else {

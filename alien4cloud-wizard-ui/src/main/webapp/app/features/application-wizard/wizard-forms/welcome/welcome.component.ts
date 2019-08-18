@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {Init} from "@app/features/application-wizard/core/fsm.events";
@@ -13,7 +13,9 @@ export class WelcomeComponent implements WizardFormComponent {
 
   @Input() fsmContext: ApplicationWizardMachineContext;
 
-  constructor(private fsm: AppplicationWizardMachineService) { }
+  constructor(
+    private fsm: AppplicationWizardMachineService
+  ) { }
 
   startWizard() {
     this.fsm.send(new Init());
