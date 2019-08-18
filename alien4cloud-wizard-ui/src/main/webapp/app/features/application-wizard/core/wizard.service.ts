@@ -3,8 +3,8 @@ import {WelcomeComponent} from "@app/features/application-wizard/wizard-forms/we
 import {TemplateSelectionComponent} from "@app/features/application-wizard/wizard-forms/template-selection/template-selection.component";
 import {ApplicationCreateComponent} from "@app/features/application-wizard/wizard-forms/application-create/application-create.component";
 import {LocationSelectionComponent} from "@app/features/application-wizard/wizard-forms/location-selection/location-selection.component";
-import {ApplicationDeploymentComponent} from "@app/features/application-wizard/wizard-forms/application-deployment/application-deployment.component";
-import { ActiveDeploymentComponent } from '../wizard-forms/active-deployment/active-deployment.component';
+import {DeploymentValidationComponent} from "@app/features/application-wizard/wizard-forms/deployment-validation/deployment-validation.component";
+import {ActiveDeploymentComponent} from '../wizard-forms/active-deployment/active-deployment.component';
 import {DeploymentInputsComponent} from "@app/features/application-wizard/wizard-forms/deployment-inputs/deployment-inputs.component";
 import {ApplicationMetapropertiesComponent} from "@app/features/application-wizard/wizard-forms/application-metaproperties/application-metaproperties.component";
 import {NodesMatchingComponent} from "@app/features/application-wizard/wizard-forms/nodes-matching/nodes-matching.component";
@@ -24,7 +24,7 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Fill inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm", description: "Inputs are properties that are set before the deployment, they can change the application behavior."},
   {stepLabel: "Select target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm", description: "The target AKA location is where your application will be deployed."},
   {stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm", description: "Some abstract nodes need to be replaced by concrete implementations provided by the location."},
-  {stepLabel: "Deploy application", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
+  {stepLabel: "Deploy application", component: DeploymentValidationComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
   {stepLabel: "Active deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm", description: "Monitor the current deployment's workflow, and undeploy the application when it's deployed."},
   {stepLabel: "Delete application", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm", description: "Delete or leave the application."}
 ];

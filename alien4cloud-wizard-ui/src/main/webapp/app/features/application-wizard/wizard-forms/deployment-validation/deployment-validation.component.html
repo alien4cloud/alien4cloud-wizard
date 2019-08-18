@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div class="mat-error">{{fsmContext.errorMessage}}</div>
+  <div>
+    <p><span>Application : {{fsmContext.application.name}} </span></p>
+    <p><span>Version : {{fsmContext.deploymentTopology.topology.archiveVersion}} </span></p>
+    <p><span>Target : {{fsmContext.locationName}}</span></p>
+  </div> 
+</div>
+
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [forwardFn]="deployApp.bind(this)"
+                    forwardAltLabel="deploy !"
+                    forwardGuard="canSubmitDeployment"
+></w4c-wizard-control>

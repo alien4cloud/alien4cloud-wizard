@@ -12,7 +12,7 @@ import {LocationSelectionComponent} from './wizard-forms/location-selection/loca
 import {NgxGraphModule} from "@swimlane/ngx-graph";
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
-import { ApplicationDeploymentComponent } from './wizard-forms/application-deployment/application-deployment.component';
+import { DeploymentValidationComponent } from './wizard-forms/deployment-validation/deployment-validation.component';
 import { ActiveDeploymentComponent } from './wizard-forms/active-deployment/active-deployment.component';
 import { WizardButtonComponent } from './wizard-button/wizard-button.component';
 import { WizardSpinnerComponent } from './wizard-forms/wizard-spinner/wizard-spinner.component';
@@ -31,7 +31,7 @@ import { DeleteApplicationFormComponent } from './wizard-forms/delete-applicatio
     WizardStepContainerComponent,
     WelcomeComponent,
     LocationSelectionComponent,
-    ApplicationDeploymentComponent,
+    DeploymentValidationComponent,
     ActiveDeploymentComponent,
     WizardButtonComponent,
     WizardSpinnerComponent,
@@ -57,7 +57,7 @@ import { DeleteApplicationFormComponent } from './wizard-forms/delete-applicatio
     DeploymentInputsComponent,
     LocationSelectionComponent,
     NodesMatchingComponent,
-    ApplicationDeploymentComponent,
+    DeploymentValidationComponent,
     ActiveDeploymentComponent,
     DeleteApplicationFormComponent,
     WizardSpinnerComponent]
