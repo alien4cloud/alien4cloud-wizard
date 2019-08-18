@@ -327,6 +327,11 @@ export class AppplicationWizardMachineService {
         ).subscribe(environments => {
           _.environments = environments.data;
         });
+      },
+      refreshApplication: (_) => {
+        this.applicationService.getById(_.application.id).subscribe(application => {
+          _.application = application;
+        });
       }
     }
 

@@ -3,7 +3,7 @@ import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {GoBack, OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
-import {ConstraintError, MetaPropertyConfiguration} from "@app/core";
+import {ConstraintError, MetaPropConfiguration, MetaPropertyConfiguration, ScalarPropertyValue} from "@app/core";
 import {ApplicationMetaPropertyService} from "@app/core";
 import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
@@ -19,7 +19,9 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
   @Input() fsmContext: ApplicationWizardMachineContext;
 
   /** The form. */
-  private metaPropertiesForm = new FormGroup({});
+  metaPropertiesForm = new FormGroup({});
+
+  metaPropertyDefinitions: MetaPropertyDefinition[] = new Array();
 
   constructor(
     private fsm: AppplicationWizardMachineService,
@@ -27,6 +29,16 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
   ) { }
 
   ngOnInit() {
+    if (this.fsmContext.applicationMetapropertiesConfiguration) {
+      this.fsmContext.applicationMetapropertiesConfiguration.forEach(metaPropertyConfiguration => {
+        let definition = new MetaPropertyDefinition();
+        definition.configuration = metaPropertyConfiguration;
+        if (this.fsmContext.application && this.fsmContext.application.metaProperties) {
+          definition.value = new ScalarPropertyValue(this.fsmContext.application.metaProperties[definition.configuration.id]);
+        }
+        this.metaPropertyDefinitions.push(definition);
+      });
+    }
   }
 
   doComplete() {
@@ -37,7 +49,7 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
     return !this.metaPropertiesForm.invalid;
   }
 
-  private metapropertyValueChanged(mpc: MetaPropertyConfiguration, value: any) {
+  metapropertyValueChanged(mpc: MetaPropertyConfiguration, value: any) {
     console.log(`A value has changed for ${mpc.name}, event is: `, JSON.stringify(value));
     this.applicationMetaPropertyService
       .upsertProperty(this.fsmContext.application.id, {definitionId: mpc.id, value: value})
@@ -56,4 +68,9 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
     );
   }
 
+}
+
+export class MetaPropertyDefinition {
+  configuration: MetaPropConfiguration;
+  value: ScalarPropertyValue;
 }

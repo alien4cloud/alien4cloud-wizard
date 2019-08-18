@@ -1,19 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="center center">
   <form class="metaprops-form">
     <w4c-property-editor
-      *ngFor="let ampc of fsmContext.applicationMetapropertiesConfiguration;"
-      [propertyDefinition]="ampc"
+      *ngFor="let mpd of metaPropertyDefinitions;"
+      [propertyDefinition]="mpd.configuration"
       [formGroup]="metaPropertiesForm"
-      [id]="ampc.id"
-      [label]="ampc.name"
-      (valueChange)="metapropertyValueChanged(ampc, $event)">
+      [id]="mpd.configuration.id"
+      [label]="mpd.configuration.name"
+      [value]="mpd.value"
+      (valueChange)="metapropertyValueChanged(mpd.configuration, $event)">
     </w4c-property-editor>
   </form>
 </div>
 
-<!--<div fxLayout="row" fxLayoutAlign="center center">-->
-<!--  <button mat-stroked-button [disabled]="metaPropertiesForm.invalid" (click)="doComplete()">Next</button>-->
-<!--</div>-->
 <w4c-wizard-control [fsmContext]="fsmContext"
                     [forwardFn]="doComplete.bind(this)"
                     [forwardEnabledFn]="formIsValid.bind(this)"

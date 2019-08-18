@@ -9,7 +9,7 @@ export interface Application {
   creationDate: number;
   lastUpdateDate: number;
   tags: any[];
-  metaProperties: any[];
+  metaProperties: Map<string, string>;
   userRoles: []
 }
 
