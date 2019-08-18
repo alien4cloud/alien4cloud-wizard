@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {WizardFormStep} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {WelcomeComponent} from "@app/features/application-wizard/wizard-forms/welcome/welcome.component";
 import {TemplateSelectionComponent} from "@app/features/application-wizard/wizard-forms/template-selection/template-selection.component";
 import {ApplicationCreateComponent} from "@app/features/application-wizard/wizard-forms/application-create/application-create.component";
@@ -10,6 +9,7 @@ import {DeploymentInputsComponent} from "@app/features/application-wizard/wizard
 import {ApplicationMetapropertiesComponent} from "@app/features/application-wizard/wizard-forms/application-metaproperties/application-metaproperties.component";
 import {NodesMatchingComponent} from "@app/features/application-wizard/wizard-forms/nodes-matching/nodes-matching.component";
 import {DeleteApplicationFormComponent} from "@app/features/application-wizard/wizard-forms/delete-application-form/delete-application-form.component";
+import {WizardFormStep} from "@app/features/application-wizard/core/wizard.model";
 /**
  * This is the configuration of our wizard. The step order is the same that this array order.
  *
@@ -17,16 +17,16 @@ import {DeleteApplicationFormComponent} from "@app/features/application-wizard/w
  */
 export const wizardDefinition: WizardFormStep[] = [
   // This first step is not related to any FSM state.
-  {stepLabel: "Welcome", component: WelcomeComponent, fsmStateName: ""},
-  {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
-  {stepLabel: "Fill the app form", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
-  {stepLabel: "Fill Metaproperties", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm"},
-  {stepLabel: "Fill Inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm"},
-  {stepLabel: "Select Target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm"},
-  {stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm"},
-  {stepLabel: "Deploy app", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm"},
-  {stepLabel: "Active Deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"},
-  {stepLabel: "Delete Application", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm"}
+  {stepLabel: "Welcome", component: WelcomeComponent, fsmStateName: "", description: ""},
+  {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm", description: "The template will be used to create the application."},
+  {stepLabel: "Fill application details", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm", description: "At least the application name is required to create an application."},
+  {stepLabel: "Fill meta-properties", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm", description: "Meta-properties are defined by the administrator and should be required."},
+  {stepLabel: "Fill inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm", description: "Inputs are properties that are set before the deployment, they can change the application behavior."},
+  {stepLabel: "Select target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm", description: "The target AKA location is where your application will be deployed."},
+  {stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm", description: "Some abstract nodes need to be replaced by concrete implementations provided by the location."},
+  {stepLabel: "Deploy application", component: ApplicationDeploymentComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
+  {stepLabel: "Active deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm", description: "Monitor the current deployment's workflow, and undeploy the application when it's deployed."},
+  {stepLabel: "Delete application", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm", description: "Delete or leave the application."}
 ];
 
 @Injectable({

@@ -58,7 +58,10 @@ export const applicationWizardMachineConfig: MachineConfig<
             target: 'applicationEnvironmentInitializing',
             actions: ['assignAppInitInfo']
           }
-        ]
+        ],
+        DoCancelWizard: {
+          target: 'theEnd'
+        }
       }
     },
     applicationEnvironmentInitializing: {

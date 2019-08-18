@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {
@@ -11,6 +10,7 @@ import {OnFormCompleted} from "@app/features/application-wizard/core/fsm.events"
 import {FormGroup} from "@angular/forms";
 import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.model";
 
 @Component({
   selector: 'w4c-deployment-inputs',

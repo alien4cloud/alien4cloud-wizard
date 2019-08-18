@@ -1,4 +1,9 @@
-<p>This wizard will guide throw the necessary steps in order to create a new application</p>
-<div>
-  <button (click)="startWizard()" type="button">Start</button>
-</div>
+<p>This wizard will guide throw the necessary steps in order to create a new application from a template.</p>
+<p>
+  You can skip displaying this page in the settings.
+</p>
+
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [forwardFn]="startWizard.bind(this)"
+                    [displayBackward]="false"
+></w4c-wizard-control>

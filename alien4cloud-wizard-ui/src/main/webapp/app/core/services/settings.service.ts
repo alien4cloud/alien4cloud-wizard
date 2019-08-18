@@ -11,6 +11,7 @@ export class SettingsService {
   public static SHOW_FSM_GRAPH_SETTING: string = "settings:show-fsm-graph";
   public static FSM_GRAPH_HEIGHT_SETTING: string = "settings:fsm-graph-height";
   public static FSM_GRAPH_ZOOM_LEVEL: string = "settings:fsm-graph-zoom-level";
+  public static WIZARD_SHOWS_WELCOME: string = "settings:wizard-shows-welcome";
 
   settings: Map<string, Setting> = new Map<string, Setting>();
 
@@ -40,6 +41,14 @@ export class SettingsService {
     fsmGraphZoomLevel.description = "Zoom level for the FSM graph.";
     fsmGraphZoomLevel.options = {useSlider : true, sliderMin: 0.1, sliderMax: 4.0, sliderStep: 0.1};
     this.settings.set(fsmGraphZoomLevel.id, fsmGraphZoomLevel);
+
+    let displayWizardWelcome = new Setting();
+    displayWizardWelcome.id = SettingsService.WIZARD_SHOWS_WELCOME;
+    displayWizardWelcome.label = "Display Welcome page in Wizard";
+    displayWizardWelcome.type = 'boolean';
+    displayWizardWelcome.default = new ScalarPropertyValue('true');
+    displayWizardWelcome.description = "Disable this option if you want to skip the welcome page in the wizard.";
+    this.settings.set(displayWizardWelcome.id, displayWizardWelcome);
   }
 
   setSetting(key: string, value: any) {
@@ -48,10 +57,15 @@ export class SettingsService {
 
   getSetting(key: string) {
     let value = this.localStorage.retrieve(key);
-    if (value !== undefined) {
+    if (value == undefined) {
+      value = this.settings.get(key).default.value;
+      console.log(`No value found for setting ${key}, returning default value which is ${JSON.stringify(value)}`);
+      return value;
+    } else {
+      console.log(`Value for setting ${key} is ${JSON.stringify(value)}`);
       return value;
     }
-    return this.settings.get(key).default;
+
   }
 
 }

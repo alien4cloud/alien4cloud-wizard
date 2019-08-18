@@ -3,10 +3,10 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {DoCreateApplication, DoUpdateApplication, GoBack} from "@app/features/application-wizard/core/fsm.events";
 import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe} from "@app/shared";
-import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {FormControl} from "@angular/forms";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
+import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.model";
 
 @Component({
   selector: 'w4c-application-create',

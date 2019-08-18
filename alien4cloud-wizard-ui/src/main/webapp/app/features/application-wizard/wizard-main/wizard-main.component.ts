@@ -1,20 +1,20 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatStepper} from "@angular/material";
-import {WizardFormStep} from "@app/features/application-wizard/wizard-main/wizard-main.model";
 import {WizardStepContainerComponent} from "@app/features/application-wizard/wizard-step-container/wizard-step-container.component";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {WizardService} from "@app/features/application-wizard/core/wizard.service";
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import * as _ from "lodash";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Init, InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
+import {GoBack, Init, InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
 import {SettingsService} from "@app/core";
+import {WizardFormStep} from "@app/features/application-wizard/core/wizard.model";
 
 /**
  * This main component knows:
  * <li>
- *     <ul>the state machine : it suscribe to it's state change events.</ul>
- *     <ul>the stepper : it suscribe to it's selected change events in order to render the ad-hoc form.</ul>
+ *     <ul>the state machine : it subscribe to it's state change events.</ul>
+ *     <ul>the stepper : it subscribe to it's selected change events in order to render the ad-hoc form.</ul>
  * </li>
  */
 @Component({
@@ -35,8 +35,11 @@ export class WizardMainComponent implements OnInit, OnDestroy {
 
   private currentFsmContext: ApplicationWizardMachineContext;
 
-  private currentStepIndex : number;
+  private currentStepIndex: number;
 
+  /**
+   * Display the FSM only if the appropriate setting is enabled.
+   */
   showFsmGraph: boolean = false;
 
   constructor(
@@ -49,6 +52,7 @@ export class WizardMainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.showFsmGraph = this.settingsService.getSetting(SettingsService.SHOW_FSM_GRAPH_SETTING) == 'true';
+    let showWelcome = this.settingsService.getSetting(SettingsService.WIZARD_SHOWS_WELCOME) == 'true';
 
     this.fsm.start();
     // we have a timeout here in order to 1. let the view being displayed 2. let the listener bellow to be up
@@ -63,7 +67,11 @@ export class WizardMainComponent implements OnInit, OnDestroy {
           console.log("Start a new wizard by sending and Init event");
           // if we don't send this event, the welcome panel will be displayed
           // FIXME: do we still use this welcome panel ?
-          this.fsm.send(new Init());
+          if (showWelcome) {
+            this.renderStateForm(0);
+          } else {
+            this.fsm.send(new Init());
+          }
         }
       }, 500);
     });
@@ -74,8 +82,20 @@ export class WizardMainComponent implements OnInit, OnDestroy {
     // let's suscribe to the stepper selection change events
     this.stepper.selectionChange.subscribe(data => {
       console.log(data);
-      console.log("Current step is : " + data.selectedIndex);
-      this.renderStateForm(data.selectedIndex);
+      console.log(`Stepper selection change index: ${data.selectedIndex}, currentStepIndex: ${this.currentStepIndex}`);
+      if (data.selectedIndex != this.currentStepIndex) {
+        console.log(`The step index coming from stepper change is ${data.selectedIndex} but the expected step is ${this.currentStepIndex}, do nothing !`);
+        // need to deffer this in order to do this out of the callback
+        setTimeout(value => {this.stepper.selectedIndex = this.currentStepIndex;}, 1);
+      } else {
+        this.renderStateForm(data.selectedIndex);
+        this.stepper.steps.forEach((item, index) => {
+          if (index != data.selectedIndex) {
+            item.editable = false;
+            item.interacted = false;
+          }
+        });
+      }
     });
 
     // let's suscribe to FSM state change events
@@ -88,6 +108,12 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl("/");
       }
 
+      let backward: boolean = false;
+      if (data.event.type === "GoBack") {
+        backward = true;
+      }
+      console.log("Navigation direction : ", (backward) ? "<-" : "->");
+
       // we store locally the current FSM context
       this.currentFsmContext = data.context;
 
@@ -98,10 +124,16 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         const expectedStep = this.steps[expectedStepIndex];
         console.log(expectedStep.fsmStateName + " is a form state !");
         this.stepper.steps.forEach((item, index) => {
-          // the precedent step is considered as completed
-          if (index === this.currentStepIndex || index < expectedStepIndex) {
+          // the precedent step (actually currentStepIndex) is considered as completed
+          if (index === this.currentStepIndex) {
             item.completed = true;
-            item.editable = false;
+          }
+          // forward direction, all steps before the expected are completed
+          if (!backward && index < expectedStepIndex) {
+            item.completed = true;
+          }
+          if (backward && index > expectedStepIndex) {
+            item.completed = false;
           }
           // the concerned step is made editable
           if (index === expectedStepIndex) {
@@ -116,7 +148,6 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         } else {
           // the step index has not changed (can occur when error is thrown)
           // we have to set the fsmContext to the current form
-          // this.renderStateForm(this.currentStepIndex);
           this.stepFormContainer.setContext(this.currentFsmContext);
         }
       } else {
@@ -149,7 +180,5 @@ export class WizardMainComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.fsm.stop();
   }
-
-
 
 }

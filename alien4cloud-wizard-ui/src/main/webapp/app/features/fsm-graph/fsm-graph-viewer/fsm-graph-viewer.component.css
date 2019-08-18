@@ -1,5 +1,7 @@
 .fsmGraphViewer {
   /*background-color: white;*/
+  /* FIXME: why ? */
+  width: 1200px;
 }
 
 .chart-container {

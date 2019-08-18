@@ -110,7 +110,7 @@ export class PropertyEditorComponent implements OnInit {
     this.initValue();
 
     // subscribe to FormControl changes and emit the value to observer.
-    this.pfd.formControl.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
+    this.pfd.formControl.valueChanges.pipe(debounceTime(300)).subscribe(value => {
       console.log("Form value changes : ", JSON.stringify(value));
       if (this.pfd.units) {
         // in case of scalar units we need to suffixe with the unit

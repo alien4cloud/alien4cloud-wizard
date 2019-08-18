@@ -17,6 +17,10 @@ export interface WizardFormStep {
    * The FSM state name it relies to.
    */
   fsmStateName: string;
+  /**
+   * Explanation of the step.
+   */
+  description: string;
 }
 
 /**

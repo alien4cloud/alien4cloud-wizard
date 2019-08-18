@@ -7,7 +7,7 @@ import {FormControl} from "@angular/forms";
 import {TopologyOverview, Topology, TopologyService, TopologyOverviewService} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
-import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
+import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.model";
 
 @Component({
   selector: 'w4c-template-selection',

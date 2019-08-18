@@ -1,6 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
-import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/wizard-main.model";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'w4c-wizard-spinner',

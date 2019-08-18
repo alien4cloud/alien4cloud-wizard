@@ -1,3 +1,11 @@
-<div>
-  <ng-template w4cStepComponent></ng-template>
+<div class="w4c-full-width">
+  <div class="w4cStepComponentContainer">
+    <mat-card *ngIf="wizardFormStep">
+      <mat-card-header>
+        <mat-card-title>{{ wizardFormStep.stepLabel }}</mat-card-title>
+        <mat-card-subtitle>{{ wizardFormStep.description }}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    <ng-template w4cStepComponent></ng-template>
+  </div>
 </div>
