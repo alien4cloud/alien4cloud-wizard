@@ -132,7 +132,7 @@ export const applicationWizardMachineConfig: MachineConfig<
           target: 'environmentSearching',
           // We need to refresh the application in order to have metaproperties on it
           // and to be able to come back to this form with correct values displayed
-          actions: ['refreshApplication']
+          // actions: ['refreshApplication']
         },
         DoCancelWizard: {
           target: 'deleteApplicationForm'

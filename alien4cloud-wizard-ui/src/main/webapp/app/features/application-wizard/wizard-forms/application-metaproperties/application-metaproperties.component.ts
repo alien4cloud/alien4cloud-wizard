@@ -3,7 +3,13 @@ import {WizardFormComponent} from "@app/features/application-wizard/wizard-main/
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {GoBack, OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
-import {ConstraintError, MetaPropConfiguration, MetaPropertyConfiguration, ScalarPropertyValue} from "@app/core";
+import {
+  ApplicationService,
+  ConstraintError,
+  MetaPropConfiguration,
+  MetaPropertyConfiguration,
+  ScalarPropertyValue
+} from "@app/core";
 import {ApplicationMetaPropertyService} from "@app/core";
 import {catchError} from "rxjs/operators";
 import {Observable} from "rxjs";
@@ -25,20 +31,23 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
 
   constructor(
     private fsm: AppplicationWizardMachineService,
-    private applicationMetaPropertyService: ApplicationMetaPropertyService
+    private applicationMetaPropertyService: ApplicationMetaPropertyService,
+    private applicationService: ApplicationService
   ) { }
 
   ngOnInit() {
-    if (this.fsmContext.applicationMetapropertiesConfiguration) {
-      this.fsmContext.applicationMetapropertiesConfiguration.forEach(metaPropertyConfiguration => {
-        let definition = new MetaPropertyDefinition();
-        definition.configuration = metaPropertyConfiguration;
-        if (this.fsmContext.application && this.fsmContext.application.metaProperties) {
-          definition.value = new ScalarPropertyValue(this.fsmContext.application.metaProperties[definition.configuration.id]);
-        }
-        this.metaPropertyDefinitions.push(definition);
-      });
-    }
+    this.applicationService.getById(this.fsmContext.application.id).subscribe(application => {
+      if (this.fsmContext.applicationMetapropertiesConfiguration) {
+        this.fsmContext.applicationMetapropertiesConfiguration.forEach(metaPropertyConfiguration => {
+          let definition = new MetaPropertyDefinition();
+          definition.configuration = metaPropertyConfiguration;
+          if (application.metaProperties) {
+            definition.value = new ScalarPropertyValue(application.metaProperties[definition.configuration.id]);
+          }
+          this.metaPropertyDefinitions.push(definition);
+        });
+      }
+    });
   }
 
   doComplete() {
