@@ -3,8 +3,7 @@ import {FsmGraph} from "@app/features/application-wizard/core/fsm-graph.model";
 import {Subject} from "rxjs";
 import * as _ from "lodash";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
-import {LocalStorageService} from "ngx-webstorage";
-import {SettingsService, SettingsKey} from "@app/core";
+import {SettingsService} from "@app/core";
 
 @Component({
   selector: 'w4c-fsm-graph-viewer',
@@ -33,11 +32,11 @@ export class FsmGraphViewerComponent implements OnInit {
   ) {
     this.zoomLevel = 1;
     // use the preferred user setting for zoom level
-    this.zoomLevel = this.settingsService.getSetting(SettingsKey.FSM_GRAPH_ZOOM_LEVEL, 1);
+    this.zoomLevel = this.settingsService.getSetting(SettingsService.FSM_GRAPH_ZOOM_LEVEL);
   }
 
   ngOnInit() {
-    this.fsmGraphHeight = this.settingsService.getSetting(SettingsKey.FSM_GRAPH_HEIGHT_SETTING, 200);
+    this.fsmGraphHeight = this.settingsService.getSetting(SettingsService.FSM_GRAPH_HEIGHT_SETTING);
     this.fsmGraphWitdh = this.mainDiv.nativeElement.offsetWidth;
 
     // get the graph so display it
@@ -74,7 +73,7 @@ export class FsmGraphViewerComponent implements OnInit {
    */
   zoomChangedHandler(zoomLevel) {
     // the zoom has changed, let's store it (event is zoom level)
-    this.settingsService.setSetting(SettingsKey.FSM_GRAPH_ZOOM_LEVEL, zoomLevel);
+    this.settingsService.setSetting(SettingsService.FSM_GRAPH_ZOOM_LEVEL, zoomLevel);
   }
 
 }

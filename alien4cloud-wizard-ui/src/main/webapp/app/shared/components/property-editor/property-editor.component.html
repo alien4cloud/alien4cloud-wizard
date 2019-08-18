@@ -1,6 +1,8 @@
-<mat-form-field class="full-width">
+<mat-form-field class="w4c-full-width">
   <!-- Standard input -->
-  <input *ngIf="pfd.formType == 'INPUT' && !isLongText" matInput placeholder="{{ pfd.label }}"
+  <input *ngIf="pfd.formType == 'INPUT' && !isLongText"
+         matInput
+         placeholder="{{ pfd.label }}"
          [formControl]="pfd.formControl"
          [required]="pfd.definition.required"
          [type]="pfd.inputType" />
@@ -14,12 +16,34 @@
   </textarea>
   <!-- Checkbox for boolean property -->
   <input *ngIf="pfd.formType == 'CHEKBOX'" matInput style="display: none" [formControl]="pfd.formControl">
+  <mat-slide-toggle *ngIf="pfd.formType == 'CHEKBOX'"
+                    [required]="pfd.definition.required"
+                    labelPosition="after"
+                    [checked]="pfd.formControl.value == 'true'"
+                    (change)="pfd.formControl.setValue(($event.checked)?'true':'false')"
+  >
+    {{ pfd.label }}
+  </mat-slide-toggle>
+<!--  <input *ngIf="pfd.formType == 'CHEKBOX'" matInput style="display: none" [formControl]="pfd.formControl">
   <mat-checkbox *ngIf="pfd.formType == 'CHEKBOX'"
                 [required]="pfd.definition.required"
                 [checked]="pfd.displayableValue == 'true'"
                 (change)="pfd.formControl.setValue(($event.checked)?'true':'false')">
     {{ pfd.label }}
-  </mat-checkbox>
+  </mat-checkbox>-->
+  <!-- Slider when option is used -->
+  <input *ngIf="pfd.formType == 'SLIDER'" matInput style="display: none" [formControl]="pfd.formControl">
+  <div *ngIf="pfd.formType == 'SLIDER'">
+    <mat-slider
+                [min]="pfd.definition.options.sliderMin"
+                [max]="pfd.definition.options.sliderMax"
+                [step]="pfd.definition.options.sliderStep"
+                [value]="pfd.formControl.value"
+                (valueChange)="pfd.formControl.setValue($event)"
+                thumbLabel>
+    </mat-slider>
+    <span>{{ pfd.label }}</span>
+  </div>
   <!-- Select for validValues constrained property -->
   <mat-select *ngIf="pfd.formType == 'SELECT'"
               placeholder="{{ pfd.label }}"

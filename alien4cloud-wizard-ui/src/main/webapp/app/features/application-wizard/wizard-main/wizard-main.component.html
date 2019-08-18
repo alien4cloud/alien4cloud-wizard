@@ -1,8 +1,24 @@
-<!-- TODO: find a way to display this on an option activation -->
-<hero-loader *ngIf="showFsmGraph" moduleName="src/main/webapp/app/features/fsm-graph/fsm-graph.module#FsmGraphModule"></hero-loader>
-<mat-horizontal-stepper [linear]="true" #applicationWizardStepper>
-  <mat-step *ngFor="let step of steps;" editable="false" completed="false">
-    <ng-template matStepLabel>{{ step.stepLabel }}</ng-template>
-  </mat-step>
-</mat-horizontal-stepper>
-<w4c-wizard-step-container></w4c-wizard-step-container>
+
+
+<!-- vertical layout test -->
+<!--<div fxLayout="column" fxLayoutAlign="start start" class="w4c-full-width wizard-main" fxFlex="100%" layout="fill">-->
+<!--  <div fxLayout="row" fxLayoutAlign="center start" fxFlex="100%" class="w4c-full-width" >-->
+<!--    <mat-vertical-stepper [linear]="true" #applicationWizardVStepper>-->
+<!--      <mat-step *ngFor="let step of steps;" editable="false" completed="false">-->
+<!--        <ng-template matStepLabel>{{ step.stepLabel }}</ng-template>-->
+<!--      </mat-step>-->
+<!--    </mat-vertical-stepper>-->
+<!--    <div fxLayout="column" fxLayoutAlign="center center" class="w4c-full-width" fxFlex="100%">-->
+<!--      <hero-loader *ngIf="showFsmGraph" moduleName="src/main/webapp/app/features/fsm-graph/fsm-graph.module#FsmGraphModule"></hero-loader>-->
+<!--      <w4c-wizard-step-container></w4c-wizard-step-container>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+  <hero-loader *ngIf="showFsmGraph" moduleName="src/main/webapp/app/features/fsm-graph/fsm-graph.module#FsmGraphModule"></hero-loader>
+  <mat-horizontal-stepper [linear]="true" #applicationWizardStepper>
+    <mat-step *ngFor="let step of steps;" editable="false" completed="false">
+      <ng-template matStepLabel>{{ step.stepLabel }}</ng-template>
+    </mat-step>
+  </mat-horizontal-stepper>
+  <w4c-wizard-step-container></w4c-wizard-step-container>

@@ -8,7 +8,7 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import * as _ from "lodash";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Init, InitApplicationEnvironment} from "@app/features/application-wizard/core/fsm.events";
-import {SettingsService, SettingsKey} from "@app/core";
+import {SettingsService} from "@app/core";
 
 /**
  * This main component knows:
@@ -48,7 +48,7 @@ export class WizardMainComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.showFsmGraph = this.settingsService.getSetting(SettingsKey.SHOW_FSM_GRAPH_SETTING, false);
+    this.showFsmGraph = this.settingsService.getSetting(SettingsService.SHOW_FSM_GRAPH_SETTING) == 'true';
 
     this.fsm.start();
     // we have a timeout here in order to 1. let the view being displayed 2. let the listener bellow to be up

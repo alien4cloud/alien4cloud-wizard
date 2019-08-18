@@ -4,7 +4,7 @@ export interface IValue {
   definition: boolean;
 }
 
-export interface PropertyDefinition extends IValue {
+export class PropertyDefinition implements IValue {
   type: string;
   entrySchema : PropertyDefinition;
   required: boolean;
@@ -14,6 +14,10 @@ export interface PropertyDefinition extends IValue {
   default: PropertyValue<any>;
   definition: boolean;
   password: boolean;
+  /**
+   * Does'nt exist in backend. Added to manage settings.
+   */
+  options: any;
 }
 
 export interface AbstractPropertyValue extends IValue {
@@ -34,4 +38,10 @@ export interface MetaPropConfiguration extends PropertyDefinition {
 export interface PropertyRequest {
   value: string;
   definitionId: string;
+}
+
+export class ScalarPropertyValue implements PropertyValue<string> {
+  constructor(value: string) { this.value = value; }
+  value: string;
+  definition: boolean = false;
 }
