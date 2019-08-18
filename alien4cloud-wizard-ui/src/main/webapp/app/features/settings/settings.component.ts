@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
-import {debounceTime} from "rxjs/operators";
-import {SettingsService, PropertyDefinition, Setting, AbstractPropertyValue, ScalarPropertyValue} from "@app/core";
+import {Component, OnInit} from '@angular/core';
+import {FormGroup} from "@angular/forms";
+import {SettingsService, Setting, ScalarPropertyValue} from "@app/core";
+import * as _ from "lodash";
 
 @Component({
   selector: 'w4c-settings',
@@ -25,6 +25,19 @@ export class SettingsComponent implements OnInit {
       definition.value = new ScalarPropertyValue(this.settingsService.getSetting(setting.id));
       console.log(`Settings ${definition.setting.id} has value ${definition.value}`);
       this.settingDefinitions.push(definition);
+    });
+
+    this.settingsService.settingChange.subscribe(s => {
+      console.log("Setting change detection : ", JSON.stringify(s))
+      let idx = _.findIndex(this.settingDefinitions, setting => setting.setting.id == s.id);
+      if (idx > -1) {
+        // this.settingDefinitions[idx].value = s.value;
+        if (this.settingsForm.get(s.id).value != s.value) {
+          this.settingsForm.get(s.id).setValue(s.value);
+        }
+      } else {
+        console.log("No setting found corresponding to change")
+      }
     });
   }
 

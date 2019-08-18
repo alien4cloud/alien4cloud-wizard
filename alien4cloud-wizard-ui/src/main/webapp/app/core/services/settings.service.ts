@@ -2,12 +2,15 @@ import {Injectable} from '@angular/core';
 import {LocalStorageService} from "ngx-webstorage";
 import {PropertyDefinition, PropertyValue, ScalarPropertyValue} from "@app/core/models";
 import * as _ from "lodash";
+import {ReplaySubject} from "rxjs";
+import {DeploymentStatusChangeEvent} from "@app/core/models/internal-event.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
 
+  public static THEME_NAME: string = "settings:theme-name";
   public static SHOW_FSM_GRAPH_SETTING: string = "settings:show-fsm-graph";
   public static FSM_GRAPH_HEIGHT_SETTING: string = "settings:fsm-graph-height";
   public static FSM_GRAPH_ZOOM_LEVEL: string = "settings:fsm-graph-zoom-level";
@@ -15,7 +18,19 @@ export class SettingsService {
 
   settings: Map<string, Setting> = new Map<string, Setting>();
 
+  private settingChangeSubject = new ReplaySubject<Setting>(1);
+  settingChange = this.settingChangeSubject.asObservable();
+
   constructor(private localStorage: LocalStorageService) {
+    let themeName = new Setting();
+    themeName.id = SettingsService.THEME_NAME;
+    themeName.label = "Look'n feel theme";
+    themeName.type = 'string';
+    themeName.default = new ScalarPropertyValue('indigo-pink');
+    themeName.description = "Choose the theme you want to apply.";
+    themeName.constraints = [{validValues: ['deeppurple-amber', 'indigo-pink', 'pink-bluegrey', 'purple-green']}];
+    this.settings.set(themeName.id, themeName);
+
     let showFsmGrzph = new Setting();
     showFsmGrzph.id = SettingsService.SHOW_FSM_GRAPH_SETTING;
     showFsmGrzph.label = "Show FSM graph";
@@ -52,7 +67,13 @@ export class SettingsService {
   }
 
   setSetting(key: string, value: any) {
-    this.localStorage.store(key, value);
+    let setting = this.settings.get(key);
+    if (setting) {
+      setting.value = value;
+      this.localStorage.store(key, value);
+      console.log("Sending setting change event : ", JSON.stringify(setting));
+      this.settingChangeSubject.next(setting);
+    }
   }
 
   getSetting(key: string) {
@@ -65,7 +86,6 @@ export class SettingsService {
       console.log(`Value for setting ${key} is ${JSON.stringify(value)}`);
       return value;
     }
-
   }
 
 }
@@ -73,4 +93,5 @@ export class SettingsService {
 export class Setting extends PropertyDefinition {
   id: string;
   label: string;
+  value: string;
 }

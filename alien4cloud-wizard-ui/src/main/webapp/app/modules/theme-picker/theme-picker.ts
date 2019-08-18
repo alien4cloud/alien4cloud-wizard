@@ -6,7 +6,6 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import {ThemeStorage, DocsSiteTheme} from './theme-storage/theme-storage';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
@@ -16,7 +15,7 @@ import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {map, filter} from 'rxjs/operators';
-import {StyleManager} from "@app/core";
+import {SettingsService, StyleManager} from "@app/core";
 
 
 @Component({
@@ -61,19 +60,30 @@ export class ThemePicker implements OnInit, OnDestroy {
 
   constructor(
     public styleManager: StyleManager,
-    private _themeStorage: ThemeStorage,
+    private settingsService: SettingsService,
     private _activatedRoute: ActivatedRoute) {
-    this.installTheme(this._themeStorage.getStoredThemeName());
+    this.installTheme(this.settingsService.getSetting(SettingsService.THEME_NAME));
   }
 
   ngOnInit() {
     this._queryParamSubscription = this._activatedRoute.queryParamMap
       .pipe(map(params => params.get('theme')), filter(Boolean))
       .subscribe(themeName => this.installTheme(themeName));
+
+    this.settingsService.settingChange.subscribe(setting => {
+      if (setting.id == SettingsService.THEME_NAME) {
+        console.log("Theme changed : ", setting.value);
+        this.installTheme(setting.value);
+      }
+    });
   }
 
   ngOnDestroy() {
     this._queryParamSubscription.unsubscribe();
+  }
+
+  setTheme(themeName: string) {
+    this.settingsService.setSetting(SettingsService.THEME_NAME, themeName);
   }
 
   installTheme(themeName: string) {
@@ -92,7 +102,7 @@ export class ThemePicker implements OnInit, OnDestroy {
     }
 
     if (this.currentTheme) {
-      this._themeStorage.storeTheme(this.currentTheme);
+      //this.settingsService.setSetting(SettingsService.THEME_NAME, this.currentTheme.name);
     }
   }
 }
@@ -108,6 +118,14 @@ export class ThemePicker implements OnInit, OnDestroy {
   ],
   exports: [ThemePicker],
   declarations: [ThemePicker],
-  providers: [StyleManager, ThemeStorage],
+  providers: [StyleManager],
 })
 export class ThemePickerModule { }
+
+export interface DocsSiteTheme {
+  name: string;
+  accent: string;
+  primary: string;
+  isDark?: boolean;
+  isDefault?: boolean;
+}
