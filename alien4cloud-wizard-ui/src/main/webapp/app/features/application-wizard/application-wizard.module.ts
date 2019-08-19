@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from "@app/shared";
+import {SharedModule, ConfirmationDialogComponent} from "@app/shared";
 import {WizardMainComponent} from "@app/features/application-wizard/wizard-main/wizard-main.component";
 import {TemplateSelectionComponent} from "@app/features/application-wizard/wizard-forms/template-selection/template-selection.component";
 import {ApplicationCreateComponent} from "@app/features/application-wizard/wizard-forms/application-create/application-create.component";
@@ -60,7 +60,9 @@ import { DeleteApplicationFormComponent } from './wizard-forms/delete-applicatio
     DeploymentValidationComponent,
     ActiveDeploymentComponent,
     DeleteApplicationFormComponent,
-    WizardSpinnerComponent]
+    WizardSpinnerComponent,
+    ConfirmationDialogComponent
+    ]
 })
 
 export class ApplicationWizardModule {

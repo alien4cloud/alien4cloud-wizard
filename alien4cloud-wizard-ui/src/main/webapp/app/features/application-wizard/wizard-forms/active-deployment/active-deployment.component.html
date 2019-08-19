@@ -41,7 +41,7 @@
                       backwardAltLabel="Deploy"
                       cancelGuard="canUndeploy"
                       cancelLabel="Undeploy"
-                      [cancelFn]="doUndeploy.bind(this)"
+                      [cancelFn]="openUndeployDialog.bind(this)"
                       forwardGuard="canDeploy"
                       [forwardFn]="deleteApplication.bind(this)">
   </w4c-wizard-control>

@@ -10,6 +10,8 @@ import {DeploymentStatus, ExecutionStatus, MonitoredDeploymentDTO, Task, Workflo
 import {DoCancelWizard, DoSubmitDeployment, DoSubmitUndeployment, GoBack} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
+import { MatDialog } from '@angular/material';
+import { ConfirmationDialogComponent } from '@app/shared';
 
 @Component({
   selector: 'w4c-active-deployment',
@@ -32,7 +34,8 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
     private fsm: AppplicationWizardMachineService,
     private monitorDeploymentService: MonitorDeploymentService,
     private deploymentWorkflowExecutionService: DeploymentWorkflowExecutionService,
-    private websocketService: WebsocketSubscriptionManager
+    private websocketService: WebsocketSubscriptionManager,
+    private  dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -112,10 +115,20 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
     this.progessBarData.progress = progress;
   }
 
-  doUndeploy(e: any){
-    console.log("About to Undeploy with deployment status : ===>"+this.fsmContext.deploymentStatus);
-    this.fsm.send(new DoSubmitUndeployment());
+  openUndeployDialog(event: any): void {
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '35%',
+      data: {actionDescription :"Application undeployment", message: "Do you confirm the undeployment of this application?"}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.fsm.send(new DoSubmitUndeployment());
+      }
+    });
   }
+
+
 
   deleteApplication() {
     this.fsm.send(new DoCancelWizard());

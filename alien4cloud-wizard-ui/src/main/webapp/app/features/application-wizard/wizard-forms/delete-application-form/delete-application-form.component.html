@@ -7,7 +7,7 @@
 </p>
 <div class="mat-error">{{fsmContext.errorMessage}}</div>
 <w4c-wizard-control [fsmContext]="fsmContext"
-                    [forwardFn]="doDelete.bind(this)"
+                    [forwardFn]="openDeletionDialog.bind(this)"
                     cancelLabel="Leave without deleting"
                     forwardAltLabel="Delete the application"
                     forwardGuard="hasntActiveEnvironment"

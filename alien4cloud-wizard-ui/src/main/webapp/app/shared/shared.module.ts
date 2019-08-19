@@ -8,7 +8,8 @@ import {SvgNodeTypeImageSourceDirective} from './directives';
 import {ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, TrimNamePipe, DeploymentStatusButtonLabel} from './pipes';
 import {
   LoginComponent,
-  TopologyOverviewComponent
+  TopologyOverviewComponent,
+  ConfirmationDialogComponent
 } from './components';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
 import {PropertyEditorComponent} from "@app/shared/components/property-editor/property-editor.component";
@@ -27,7 +28,8 @@ import {PropertyEditorComponent} from "@app/shared/components/property-editor/pr
     ToscaIdArchiveExtractorPipe,
     SvgNodeTypeImageSourceDirective,
     TrimNamePipe,
-    DeploymentStatusButtonLabel
+    DeploymentStatusButtonLabel,
+    ConfirmationDialogComponent
   ],
   imports: [
     A4cMaterialModule,

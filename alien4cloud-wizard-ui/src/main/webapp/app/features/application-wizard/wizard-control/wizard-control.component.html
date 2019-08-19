@@ -7,7 +7,7 @@
                      [label]="(backwardAltLabel) ? 'Back: ' + backwardAltLabel : 'Back'"
                      matIconName="fast_rewind">
   </w4c-wizard-button>
-  <w4c-wizard-button (click)="_cancel()"
+  <w4c-wizard-button (click)="_cancel($event)"
                      [enableOnGuard]="cancelGuard"
                      [enabledFn]="_cancelEnabled.bind(this)"
                      [fsmContext]="fsmContext"
@@ -16,7 +16,7 @@
   </w4c-wizard-button>
   <!-- A container where a parent can insert buttons if needed. -->
   <ng-container [ngTemplateOutlet]="buttonHookTemplate"></ng-container>
-  <w4c-wizard-button (click)="_forward()"
+  <w4c-wizard-button (click)="_forward($event)"
                      [enableOnGuard]="forwardGuard"
                      [enabledFn]="_forwardEnabled.bind(this)"
                      [fsmContext]="fsmContext"
