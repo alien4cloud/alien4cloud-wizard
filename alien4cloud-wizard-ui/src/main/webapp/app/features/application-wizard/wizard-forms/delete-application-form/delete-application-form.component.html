@@ -7,11 +7,11 @@
     You'll then be able find it in the Dashboard and re-open this wizard later.
   </p>
   <div class="mat-error">{{fsmContext.errorMessage}}</div>
-  <w4c-wizard-control [fsmContext]="fsmContext"
-                      [forwardFn]="doDelete.bind(this)"
-                      cancelLabel="Leave without deleting"
-                      forwardAltLabel="Delete the application"
-                      forwardGuard="hasntActiveEnvironment"
-                      [displayBackward]="false">
-  </w4c-wizard-control>
 </div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [forwardFn]="doDelete.bind(this)"
+                    cancelLabel="Leave without deleting"
+                    forwardAltLabel="Delete the application"
+                    forwardGuard="hasntActiveEnvironment"
+                    [displayBackward]="false">
+</w4c-wizard-control>
