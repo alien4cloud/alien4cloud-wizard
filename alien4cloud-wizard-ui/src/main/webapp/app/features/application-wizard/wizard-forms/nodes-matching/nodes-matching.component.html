@@ -1,23 +1,22 @@
-<mat-accordion>
-  <mat-expansion-panel
-    *ngFor="let e of fsmContext.deploymentTopology.availableSubstitutions.availableSubstitutions | keyvalue;">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ e.key }}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-radio-group (change)="changeSubstitution(e.key, $event)" aria-label="Select an option" fxLayout="column" [value]="fsmContext.deploymentTopology.topology.substitutedNodes[e.key]">
-      <mat-radio-button *ngFor="let resourceTemplateId of e.value" [value]="resourceTemplateId">
-        <!-- TODO: use a shared templateComponent to properly display a node template -->
-        {{ fsmContext.deploymentTopology.availableSubstitutions.substitutionsTemplates[resourceTemplateId].name }}
-      </mat-radio-button>
-    </mat-radio-group>
-  </mat-expansion-panel>
-</mat-accordion>
-
+<div fxLayout="column" class="w4c-wizard-form">
+  <mat-accordion>
+    <mat-expansion-panel
+      *ngFor="let e of fsmContext.deploymentTopology.availableSubstitutions.availableSubstitutions | keyvalue;">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ e.key }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-radio-group (change)="changeSubstitution(e.key, $event)" aria-label="Select an option" fxLayout="column" [value]="fsmContext.deploymentTopology.topology.substitutedNodes[e.key]">
+        <mat-radio-button *ngFor="let resourceTemplateId of e.value" [value]="resourceTemplateId">
+          <!-- TODO: use a shared templateComponent to properly display a node template -->
+          {{ fsmContext.deploymentTopology.availableSubstitutions.substitutionsTemplates[resourceTemplateId].name }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
 <w4c-wizard-control [fsmContext]="fsmContext"
-                    [forwardFn]="doCompleteMatching.bind(this)"
->
+                    [forwardFn]="doCompleteMatching.bind(this)">
 </w4c-wizard-control>
-
 

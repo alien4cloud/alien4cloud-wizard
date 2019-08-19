@@ -13,6 +13,7 @@ export class SettingsService {
   public static THEME_NAME: string = "settings:theme-name";
   public static SHOW_FSM_GRAPH_SETTING: string = "settings:show-fsm-graph";
   public static FSM_GRAPH_HEIGHT_SETTING: string = "settings:fsm-graph-height";
+  public static FSM_GRAPH_WIDTH_SETTING: string = "settings:fsm-graph-width";
   public static FSM_GRAPH_ZOOM_LEVEL: string = "settings:fsm-graph-zoom-level";
   public static WIZARD_SHOWS_WELCOME: string = "settings:wizard-shows-welcome";
 
@@ -44,9 +45,18 @@ export class SettingsService {
     fsmGraphHeight.label = "FSM Graph height";
     fsmGraphHeight.type = 'integer';
     fsmGraphHeight.default = new ScalarPropertyValue('200');
-    fsmGraphHeight.description = "Height of the panel to display FSM graph.";
+    fsmGraphHeight.description = "Height of the panel to display FSM graph (px).";
     fsmGraphHeight.options = {useSlider : true, sliderMin: 100, sliderMax: 1800, sliderStep: 10};
     this.settings.set(fsmGraphHeight.id, fsmGraphHeight);
+
+    let fsmGraphWidth = new Setting();
+    fsmGraphWidth.id = SettingsService.FSM_GRAPH_WIDTH_SETTING;
+    fsmGraphWidth.label = "FSM Graph width";
+    fsmGraphWidth.type = 'integer';
+    fsmGraphWidth.default = new ScalarPropertyValue('1000');
+    fsmGraphWidth.description = "Width of the panel to display FSM graph (px).";
+    fsmGraphWidth.options = {useSlider : true, sliderMin: 100, sliderMax: 3840, sliderStep: 10};
+    this.settings.set(fsmGraphWidth.id, fsmGraphWidth);
 
     let fsmGraphZoomLevel = new Setting();
     fsmGraphZoomLevel.id = SettingsService.FSM_GRAPH_ZOOM_LEVEL;

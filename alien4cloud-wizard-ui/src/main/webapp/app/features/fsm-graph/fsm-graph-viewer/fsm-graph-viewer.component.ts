@@ -21,7 +21,6 @@ export class FsmGraphViewerComponent implements OnInit {
   // make lodash usable from template
   lodash = _;
 
-  private static STORAGE_ZOOM_LEVEL: string = "fsm-zoom-level";
   private zoomLevel: number;
 
   @ViewChild('mainDiv', {static: true}) mainDiv: ElementRef;
@@ -37,7 +36,8 @@ export class FsmGraphViewerComponent implements OnInit {
 
   ngOnInit() {
     this.fsmGraphHeight = this.settingsService.getSetting(SettingsService.FSM_GRAPH_HEIGHT_SETTING);
-    this.fsmGraphWitdh = this.mainDiv.nativeElement.offsetWidth;
+    // this.fsmGraphWitdh = this.mainDiv.nativeElement.offsetWidth;
+    this.fsmGraphWitdh = this.settingsService.getSetting(SettingsService.FSM_GRAPH_WIDTH_SETTING);
 
     // get the graph so display it
     this.fsmGraph = this.fsm.getGraph();

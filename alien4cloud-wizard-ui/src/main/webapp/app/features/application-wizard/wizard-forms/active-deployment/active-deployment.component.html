@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form">
 
   <span>Deployment status : {{ fsmContext.deploymentStatus }}</span>
 
@@ -22,7 +22,7 @@
     </div>
   </ng-template>
 
-  <mat-divider></mat-divider>
+</div>
 <!-- You can add custom buttons in the wizard control like below
 1. Add a ng-template
   <ng-template #customButtons>
@@ -32,10 +32,10 @@
     </div>
   </ng-template>
 -->
-  <!--
+<!--
 2. add this to the  <w4c-wizard-control/> tag
-  [buttonHookTemplate]="customButtons"
-  -->
+[buttonHookTemplate]="customButtons"
+-->
   <w4c-wizard-control [fsmContext]="fsmContext"
                       backwardGuard="canDeploy"
                       backwardAltLabel="Deploy"
@@ -45,5 +45,3 @@
                       forwardGuard="canDeploy"
                       [forwardFn]="deleteApplication.bind(this)">
   </w4c-wizard-control>
-
-</div>
