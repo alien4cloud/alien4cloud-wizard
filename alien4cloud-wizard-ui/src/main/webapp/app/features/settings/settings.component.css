@@ -1,15 +1,10 @@
 
-.settings-table {
-  width: 100%;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: large;
+.settings-page {
+  margin: 40px;
 }
 
-tr {
-  height: 50px;
-}
-.settings-label {
-  align: right;
+.settings-form {
+  width: 700px;
 }
 
 mat-slider {
