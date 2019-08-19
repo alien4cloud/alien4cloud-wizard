@@ -8,6 +8,11 @@
     <span class="fill-space"></span>
 
     <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/settings']">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <mat-divider></mat-divider>
       <button mat-menu-item [disabled]="isAuthenticated" [routerLink]="['/login']">
         <mat-icon>exit_to_app</mat-icon>
         <span>Login</span>
