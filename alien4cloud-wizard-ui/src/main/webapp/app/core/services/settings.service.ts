@@ -45,7 +45,7 @@ export class SettingsService {
     fsmGraphHeight.label = "FSM Graph height";
     fsmGraphHeight.type = 'integer';
     fsmGraphHeight.default = new ScalarPropertyValue('200');
-    fsmGraphHeight.description = "Height of the panel to display FSM graph.";
+    fsmGraphHeight.description = "Height of the panel to display FSM graph (px).";
     fsmGraphHeight.options = {useSlider : true, sliderMin: 100, sliderMax: 1800, sliderStep: 10};
     this.settings.set(fsmGraphHeight.id, fsmGraphHeight);
 
@@ -54,8 +54,8 @@ export class SettingsService {
     fsmGraphWidth.label = "FSM Graph width";
     fsmGraphWidth.type = 'integer';
     fsmGraphWidth.default = new ScalarPropertyValue('1000');
-    fsmGraphWidth.description = "Width of the panel to display FSM graph.";
-    fsmGraphWidth.options = {useSlider : true, sliderMin: 100, sliderMax: 1800, sliderStep: 10};
+    fsmGraphWidth.description = "Width of the panel to display FSM graph (px).";
+    fsmGraphWidth.options = {useSlider : true, sliderMin: 100, sliderMax: 3840, sliderStep: 10};
     this.settings.set(fsmGraphWidth.id, fsmGraphWidth);
 
     let fsmGraphZoomLevel = new Setting();
