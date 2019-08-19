@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="center center">
+<div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form">
   <form class="metaprops-form">
     <w4c-property-editor
       *ngFor="let mpd of metaPropertyDefinitions;"
@@ -11,8 +11,9 @@
     </w4c-property-editor>
   </form>
 </div>
-
 <w4c-wizard-control [fsmContext]="fsmContext"
                     [forwardFn]="doComplete.bind(this)"
-                    [forwardEnabledFn]="formIsValid.bind(this)"
-></w4c-wizard-control>
+                    [forwardEnabledFn]="formIsValid.bind(this)">
+</w4c-wizard-control>
+
+

@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" class="w4c-wizard-form">
   <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
     <mat-form-field fxFlex="50%">
       <mat-label>Search for ...</mat-label>
@@ -44,5 +44,5 @@
   <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                  (page)="handlePage($event)">
   </mat-paginator>
-  <w4c-wizard-control [fsmContext]="fsmContext" [displayBackward]="false"></w4c-wizard-control>
 </div>
+<w4c-wizard-control [fsmContext]="fsmContext" [displayBackward]="false"></w4c-wizard-control>
