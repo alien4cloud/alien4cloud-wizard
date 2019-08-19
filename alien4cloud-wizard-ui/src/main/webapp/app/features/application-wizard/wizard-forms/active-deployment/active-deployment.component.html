@@ -36,12 +36,12 @@
 2. add this to the  <w4c-wizard-control/> tag
 [buttonHookTemplate]="customButtons"
 -->
-<w4c-wizard-control [fsmContext]="fsmContext"
-                    backwardGuard="canDeploy"
-                    backwardAltLabel="Deploy"
-                    cancelGuard="canUndeploy"
-                    cancelLabel="Undeploy"
-                    [cancelFn]="doUndeploy.bind(this)"
-                    forwardGuard="canDeploy"
-                    [forwardFn]="deleteApplication.bind(this)">
-</w4c-wizard-control>
+  <w4c-wizard-control [fsmContext]="fsmContext"
+                      backwardGuard="canDeploy"
+                      backwardAltLabel="Deploy"
+                      cancelGuard="canUndeploy"
+                      cancelLabel="Undeploy"
+                      [cancelFn]="openUndeployDialog.bind(this)"
+                      forwardGuard="canDeploy"
+                      [forwardFn]="deleteApplication.bind(this)">
+  </w4c-wizard-control>

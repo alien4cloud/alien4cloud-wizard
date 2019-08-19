@@ -72,17 +72,17 @@ export class WizardControlComponent implements OnInit {
     }
   }
 
-  _cancel() {
+  _cancel(event: any) {
     if (this.cancelFn) {
-      this.cancelFn.call(this);
+      this.cancelFn.call(this, event);
     } else {
       // default behavior for Cancel button is to send a DoCancelWizard event.
       this.fsm.send(new DoCancelWizard());
     }
   }
 
-  _forward() {
-    this.forwardFn.call(this);
+  _forward(event: any) {
+    this.forwardFn.call(this, event);
   }
 
   _forwardEnabled(): boolean {
