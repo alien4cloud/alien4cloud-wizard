@@ -21,7 +21,7 @@ export class ApplicationMetaPropertyService extends GenericService {
   upsertProperty(applicationId: string, propertyRequest: PropertyRequest): Observable<ConstraintInformation> {
     let params = { applicationId: applicationId};
     let url = "/applications/@{applicationId}/properties";
-    return this.http.post(GenericService.baseUrl+ this.getParametrizedUrl(url, params), propertyRequest, {
+    return this.http.post(GenericService.BASE_URL+ this.getParametrizedUrl(url, params), propertyRequest, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       })

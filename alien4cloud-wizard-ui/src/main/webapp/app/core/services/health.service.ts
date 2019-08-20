@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, interval } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 /**
  * This service will regularly check if the A4C backend is available.
@@ -26,7 +27,7 @@ export class HealthService {
   }
 
   private healthCheck() {
-    return this.http.get('/api/rest/admin/health').subscribe(
+    return this.http.get(environment.urlPrefix + '/rest/admin/health').subscribe(
       data => {
         // console.log("A4C is connected ", data);
         this.isConnectedSubject.next(true);

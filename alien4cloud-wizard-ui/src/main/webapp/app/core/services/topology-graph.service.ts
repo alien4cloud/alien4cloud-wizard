@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {GenericService} from "@app/core/services/generic.service";
 
 /**
  * This service retrieves a graph for a given topology.
@@ -23,7 +24,7 @@ export class TopologyGraphService {
   }
 
   private getTopologyGraph(topologyId: string, topologyVersion: string): Observable<{}> {
-    return this.http.get(`/api/rest/latest/wizard/topologies/graph/${topologyId}:${topologyVersion}`, {
+    return this.http.get(GenericService.BASE_URL + `/wizard/topologies/graph/${topologyId}:${topologyVersion}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       }),

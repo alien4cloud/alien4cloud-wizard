@@ -7,7 +7,7 @@ import * as _ from "lodash";
 
 export abstract class GenericService {
 
-  protected static baseUrl = environment.urlPrefix + '/rest/latest';
+  public static BASE_URL = environment.urlPrefix + '/rest/latest';
 
   constructor(
     protected http: HttpClient,

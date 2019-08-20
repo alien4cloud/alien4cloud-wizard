@@ -5,6 +5,7 @@ import * as SockJS from 'sockjs-client';
 import {Observable} from "rxjs";
 import {Client, Stomp, StompHeaders} from '@stomp/stompjs';
 import {filter, first} from "rxjs/operators";
+import { environment } from '../../../environments/environment';
 
 export enum SocketClientState {
   ATTEMPTING, CONNECTED
@@ -20,7 +21,7 @@ export enum SocketClientState {
 })
 export class WebsocketClientService implements OnDestroy {
 
-  private static STOMP_CHANNEL_BASE_URL: string = "/api/rest/w4cAlienEndPoint";
+  private static STOMP_CHANNEL_BASE_URL: string = environment.urlPrefix + "/rest/w4cAlienEndPoint";
 
   private client: any;
   private state: BehaviorSubject<SocketClientState>;

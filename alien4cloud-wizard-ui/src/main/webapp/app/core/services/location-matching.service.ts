@@ -19,7 +19,7 @@ export class LocationMatchingService extends GenericService  {
   }
 
   match(templateId: string, environmentId: String): Observable<LocationMatch[]> {
-    const url =  GenericResourceService.baseUrl + "/topologies/@{templateId}/locations?environmentId=@{environmentId}"
+    const url =  GenericResourceService.BASE_URL + "/topologies/@{templateId}/locations?environmentId=@{environmentId}"
     let urlParams  = {templateId: templateId , environmentId: environmentId}
     return this.handleResult<LocationMatch[]>(this.http.get(this.getParametrizedUrl(url,urlParams)));
   }
