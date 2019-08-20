@@ -14,7 +14,7 @@ export abstract class GenericResourceService<T> extends GenericService {
     protected apiUrl: string)
   {
     super(http, translate);
-    this.endpointUrl = GenericResourceService.baseUrl + this.apiUrl;
+    this.endpointUrl = GenericResourceService.BASE_URL + this.apiUrl;
   }
 
   /**

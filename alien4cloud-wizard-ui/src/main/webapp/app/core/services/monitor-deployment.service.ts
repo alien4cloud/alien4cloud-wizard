@@ -18,7 +18,7 @@ export class MonitorDeploymentService extends GenericService {
   }
 
   getMonitoredDeploymentDTO(applicationId: string, environmentId: String): Observable<MonitoredDeploymentDTO> {
-    const url = GenericService.baseUrl + "/applications/@{applicationId}/environments/@{environmentId}/active-deployment-monitored";
+    const url = GenericService.BASE_URL + "/applications/@{applicationId}/environments/@{environmentId}/active-deployment-monitored";
     let urlParams = {applicationId: applicationId, environmentId: environmentId};
     return this.handleResult(this.http.get(this.getParametrizedUrl(url, urlParams)));
   }

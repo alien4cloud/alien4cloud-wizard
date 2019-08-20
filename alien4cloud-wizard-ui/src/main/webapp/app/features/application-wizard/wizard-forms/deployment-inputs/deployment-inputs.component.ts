@@ -24,7 +24,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
   public propertieFormDefitions: PropertyFormDefinition[] = new Array<PropertyFormDefinition>();
 
   /** The form. */
-  private inputsForm = new FormGroup({});
+  inputsForm = new FormGroup({});
 
   constructor(
     private fsm: AppplicationWizardMachineService,
@@ -100,7 +100,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
     return !this.inputsForm.invalid;
   }
 
-  doSearchLocation() {
+  doSubmitForm() {
     this.fsm.send(new OnFormCompleted());
   }
 }

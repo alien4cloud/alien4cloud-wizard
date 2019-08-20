@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {SettingsService, Setting, ScalarPropertyValue} from "@app/core";
 import * as _ from "lodash";
@@ -16,7 +16,12 @@ export class SettingsComponent implements OnInit {
   /** The settings definitions. */
   settingDefinitions: SettingDefinition[] = new Array();
 
-  constructor(private settingsService: SettingsService) { }
+  // make lodash usable from template
+  lodash = _;
+
+  constructor(
+    private settingsService: SettingsService
+  ) { }
 
   ngOnInit() {
     this.settingsService.settings.forEach(setting => {

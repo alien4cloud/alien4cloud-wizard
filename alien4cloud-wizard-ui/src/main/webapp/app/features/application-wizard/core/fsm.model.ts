@@ -26,6 +26,7 @@ export interface ApplicationWizardMachineSchema {
     environmentSelected: {};
     deploymentTopologyFetching:{};
     deploymentInputsForm:{};
+    deploymentInputArtifactsForm:{};
     locationSelectionForm: {};
     locationSearching: {};
     locationSelected: {};

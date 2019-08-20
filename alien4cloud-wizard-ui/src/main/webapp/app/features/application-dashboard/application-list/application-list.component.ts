@@ -1,15 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {PageEvent} from '@angular/material/paginator';
 import {debounceTime, mergeMap} from 'rxjs/operators';
 import * as _ from 'lodash';
-
 import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService, ApplicationEnvironmentService, ApplicationEnvironmentDTO, ApplicationEnvironment} from "@app/core";
 import {Router} from "@angular/router";
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
-import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
-import {Observable, of, Subscription} from "rxjs";
-import {applicationWizardMachineConfig} from "@app/features/application-wizard/core/fsm.config";
+import {Subscription} from "rxjs";
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-application-list',
@@ -80,7 +77,7 @@ export class ApplicationListComponent implements OnInit {
   }
 
   getApplicationImageUrl(application: Application) {
-    return `api/img?id=${application.imageId}&quality=QUALITY_64`
+    return environment.urlPrefix + `/img?id=${application.imageId}&quality=QUALITY_64`
   }
 
   private loadApplications(from: number) {

@@ -14,6 +14,7 @@ import {
 import {HeroLoaderModule} from "@herodevs/hero-loader";
 import {PropertyEditorComponent} from "@app/shared/components/property-editor/property-editor.component";
 import {StyleManager} from "@app/core";
+import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus.directive";
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -28,6 +29,7 @@ import {StyleManager} from "@app/core";
     ToscaTypeImageSrcPipe,
     ToscaIdArchiveExtractorPipe,
     SvgNodeTypeImageSourceDirective,
+    ManageFormFocusDirective,
     TrimNamePipe,
     DeploymentStatusButtonLabel,
     ConfirmationDialogComponent
@@ -54,6 +56,7 @@ import {StyleManager} from "@app/core";
     ToscaTypeImageSrcPipe,
     ToscaIdArchiveExtractorPipe,
     SvgNodeTypeImageSourceDirective,
+    ManageFormFocusDirective,
     TrimNamePipe,
     DeploymentStatusButtonLabel
   ],

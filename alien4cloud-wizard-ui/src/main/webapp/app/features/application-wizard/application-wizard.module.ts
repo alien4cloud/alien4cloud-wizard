@@ -21,6 +21,7 @@ import { ApplicationMetapropertiesComponent } from './wizard-forms/application-m
 import { NodesMatchingComponent } from './wizard-forms/nodes-matching/nodes-matching.component';
 import { WizardControlComponent } from './wizard-control/wizard-control.component';
 import { DeleteApplicationFormComponent } from './wizard-forms/delete-application-form/delete-application-form.component';
+import { DeploymentArtifactsComponent } from './wizard-forms/deployment-artifacts/deployment-artifacts.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { DeleteApplicationFormComponent } from './wizard-forms/delete-applicatio
     ApplicationMetapropertiesComponent,
     NodesMatchingComponent,
     WizardControlComponent,
-    DeleteApplicationFormComponent
+    DeleteApplicationFormComponent,
+    DeploymentArtifactsComponent
   ],
   imports: [
     SharedModule,
@@ -61,7 +63,8 @@ import { DeleteApplicationFormComponent } from './wizard-forms/delete-applicatio
     ActiveDeploymentComponent,
     DeleteApplicationFormComponent,
     WizardSpinnerComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    DeploymentArtifactsComponent
     ]
 })
 

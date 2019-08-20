@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError, tap } from 'rxjs/operators';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent } from '@angular/common/http';
-import { LoginService } from '../services/login.service';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {LocalStorageService} from 'ngx-webstorage';
+import {HttpInterceptor, HttpRequest, HttpErrorResponse, HttpHandler, HttpEvent} from '@angular/common/http';
+import {LoginService} from '../services/login.service';
+import {environment} from '../../../environments/environment';
 
 /**
  * Intercept all http calls (except jwtauth endpoint) and add auth token to Authorization header.
@@ -23,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     // for jwauth endpoint we don't want to intercept
-    if (!request || !request.url || request.url.indexOf("/api/rest/jwtauth") > -1) {
+    if (!request || !request.url || request.url.indexOf(environment.urlPrefix + "/rest/jwtauth") > -1) {
       return next.handle(request);
     }
 

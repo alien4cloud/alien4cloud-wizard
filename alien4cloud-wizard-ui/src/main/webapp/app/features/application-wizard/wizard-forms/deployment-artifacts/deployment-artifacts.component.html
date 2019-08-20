@@ -1,0 +1,7 @@
+<div fxLayout="column" class="w4c-wizard-form">
+  <p>deployment-artifacts works!</p>
+</div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [forwardFn]="doSubmitForm.bind(this)"
+                    [forwardEnabledFn]="formIsValid.bind(this)">
+</w4c-wizard-control>

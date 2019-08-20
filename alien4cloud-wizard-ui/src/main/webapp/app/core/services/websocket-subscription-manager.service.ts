@@ -5,6 +5,7 @@ import {Stomp, StompHeaders} from '@stomp/stompjs';
 import {LocalStorageService} from "ngx-webstorage";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
 import {DeploymentStatusChangeEvent} from "@app/core/models/internal-event.model";
+import { environment } from '../../../environments/environment';
 
 /**
  * Manage subscriptions to A4C websocket channels.
@@ -19,7 +20,7 @@ export class WebsocketSubscriptionManager {
   private deployementStatusChangeSubject = new ReplaySubject<DeploymentStatusChangeEvent>(1);
   public deployementStatusChange = this.deployementStatusChangeSubject.asObservable();
 
-  private static stompChannelBaseUrl: string = "/api/rest/w4cAlienEndPoint";
+  private static stompChannelBaseUrl: string = environment.urlPrefix + "/rest/w4cAlienEndPoint";
 
   constructor(
     private localStorage: LocalStorageService) {

@@ -20,9 +20,8 @@ import {
   OnApplicationDeleteSuccess,
   OnApplicationUpdateError,
   OnApplicationUpdateSuccess,
-  OnDeploymentInputsRequired,
   OnDeploymentSubmitError,
-  OnDeploymentSubmitSuccess,
+  OnDeploymentSubmitSuccess, OnDeploymentTopologyFetched,
   OnEnvironmentsFetched,
   OnError,
   OnLocationFetched,
@@ -177,11 +176,8 @@ export class AppplicationWizardMachineService {
           map(dto => {
             // assign the deployment topology
             _.deploymentTopology = dto;
-            if (dto.topology.inputs && lodash.size(dto.topology.inputs) > 0) {
-              return new OnDeploymentInputsRequired();
-            } else {
-              return new DoSearchLocation(dto);
-            }
+            return new OnDeploymentTopologyFetched();
+              // return new DoSearchLocation(dto);
           })
         ),
       searchLocations: (_, event) =>
@@ -246,6 +242,7 @@ export class AppplicationWizardMachineService {
     guards: {
       hasMetapropertiesConfig: context => context.applicationMetapropertiesConfiguration != undefined,
       deploymentTopologyHasInputs: context => context.deploymentTopology && context.deploymentTopology.topology.inputs && lodash.size(context.deploymentTopology.topology.inputs) > 0,
+      deploymentTopologyHasInputArtifacts: context => context.deploymentTopology && context.deploymentTopology.topology.inputArtifacts && lodash.size(context.deploymentTopology.topology.inputArtifacts) > 0,
       shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology),
       canUndeploy: context => context.deploymentId && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED

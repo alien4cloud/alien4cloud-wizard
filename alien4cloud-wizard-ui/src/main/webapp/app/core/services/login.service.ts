@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, ReplaySubject, throwError } from 'rxjs';
-import { retry, catchError,tap } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ReplaySubject} from 'rxjs';
+import {LocalStorageService} from 'ngx-webstorage';
+import {Router} from '@angular/router';
 import * as moment from "moment";
+import {environment} from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
@@ -56,7 +55,7 @@ export class LoginService {
     // FIXME: this is not url encoded
     var body = "user=" + credentials.username + "&password=" + credentials.password;
 
-    return this.http.post('/api/rest/jwtauth', body, {
+    return this.http.post(environment.urlPrefix + '/rest/jwtauth', body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       }),

@@ -23,9 +23,7 @@ export type ApplicationWizardMachineEvents =
   DoUpdateApplication |
   OnEnvironmentsFetched |
   DoSelectEnvironment |
-  DoSearchLocation|
-  // TODO: remove ? (use cond)
-  OnDeploymentInputsRequired |
+  OnDeploymentTopologyFetched |
   OnApplicationCreateError |
   OnApplicationCreateSucess |
   OnApplicationUpdateError |
@@ -95,8 +93,8 @@ export class DoSearchLocation {
   constructor(public deploymentTopology: DeploymentTopologyDTO) {}
 }
 
-export class OnDeploymentInputsRequired {
-  readonly type = 'OnDeploymentInputsRequired';
+export class OnDeploymentTopologyFetched {
+  readonly type = 'OnDeploymentTopologyFetched';
   constructor() {}
 }
 

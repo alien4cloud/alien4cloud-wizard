@@ -1,3 +1,4 @@
+export * from './artifact.model';
 export * from './location.model';
 export * from './orchestrator.model';
 export * from './topology.model';

@@ -10,6 +10,7 @@ import {ApplicationMetapropertiesComponent} from "@app/features/application-wiza
 import {NodesMatchingComponent} from "@app/features/application-wizard/wizard-forms/nodes-matching/nodes-matching.component";
 import {DeleteApplicationFormComponent} from "@app/features/application-wizard/wizard-forms/delete-application-form/delete-application-form.component";
 import {WizardFormStep} from "@app/features/application-wizard/core/wizard.model";
+import {DeploymentArtifactsComponent} from "@app/features/application-wizard/wizard-forms/deployment-artifacts/deployment-artifacts.component";
 /**
  * This is the configuration of our wizard. The step order is the same that this array order.
  *
@@ -22,6 +23,7 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Fill application details", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm", description: "At least the application name is required to create an application."},
   {stepLabel: "Fill meta-properties", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm", description: "Meta-properties are defined by the administrator and should be required."},
   {stepLabel: "Fill inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm", description: "Inputs are properties that are set before the deployment, they can change the application behavior."},
+  {stepLabel: "Artifacts", component: DeploymentArtifactsComponent, fsmStateName: "deploymentInputArtifactsForm", description: "Input artifacts are files that can be associated to deployemnts and used by some components of the deployment."},
   {stepLabel: "Select target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm", description: "The target AKA location is where your application will be deployed."},
   {stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm", description: "Some abstract nodes need to be replaced by concrete implementations provided by the location."},
   {stepLabel: "Deploy application", component: DeploymentValidationComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
