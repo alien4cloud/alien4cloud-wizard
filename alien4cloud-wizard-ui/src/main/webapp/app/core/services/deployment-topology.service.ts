@@ -87,6 +87,20 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
     let params = {"locationResourceTemplateId": locationResourceTemplateId};
     return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, {}, {params}));
   }
+
+  uploadDeploymentInputArtifact(applicationId: string, environmentId: string, inputArtifactId: string, event: any): Observable<DeploymentTopologyDTO> {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId, inputArtifactId: inputArtifactId};
+    let url = this.getUrl("/inputArtifacts/@{inputArtifactId}/upload", urlParams);
+
+    let files = event.srcElement.files
+    let formData: FormData = new FormData();
+    formData.append('file', files[0]);
+    // for (let i = 0; i < files.length; i++) {
+    //   formData.append(i.toString(), files[i], files[i].name);
+    // }
+    return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, formData));
+  }
+
 }
 
 /**

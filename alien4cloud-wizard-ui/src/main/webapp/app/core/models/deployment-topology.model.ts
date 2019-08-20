@@ -1,5 +1,5 @@
 import {Topology} from './topology.model';
-import {AbstractPropertyValue, CSARDependency, NodeType} from "@app/core";
+import {AbstractPropertyValue, CSARDependency, DeploymentArtifact, NodeType} from "@app/core";
 import {
   DeploymentSubstitutionConfiguration,
   LocationResourceTemplate,
@@ -41,7 +41,7 @@ export interface DeploymentTopology extends Topology {
   providerDeploymentProperties: Map<string, string>;
   deployerInputProperties: Map<string, AbstractPropertyValue>;
   preconfiguredInputProperties: Map<string, AbstractPropertyValue>;
-  // uploadedInputArtifacts: Map<string, DeploymentArtifact>;
+  uploadedInputArtifacts: Map<string, DeploymentArtifact>;
   substitutedPolicies: Map<string, string>;
   // originalPolicies: Map<string, PolicyTemplate>;
 }

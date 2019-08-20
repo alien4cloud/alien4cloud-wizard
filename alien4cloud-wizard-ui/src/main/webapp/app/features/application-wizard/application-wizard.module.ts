@@ -22,6 +22,7 @@ import { NodesMatchingComponent } from './wizard-forms/nodes-matching/nodes-matc
 import { WizardControlComponent } from './wizard-control/wizard-control.component';
 import { DeleteApplicationFormComponent } from './wizard-forms/delete-application-form/delete-application-form.component';
 import { DeploymentArtifactsComponent } from './wizard-forms/deployment-artifacts/deployment-artifacts.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DeploymentArtifactsComponent } from './wizard-forms/deployment-artifact
     ApplicationWizardRoutingModule,
     NgxGraphModule,
     NgxChartsModule,
-    HeroLoaderModule
+    HeroLoaderModule,
+    TranslateModule
   ],
   providers: [AppplicationWizardMachineService],
   entryComponents: [
