@@ -3,9 +3,7 @@
     <button mat-icon-button [routerLink]="['']">
       <mat-icon>home</mat-icon>
     </button>
-
-    <span class="fill-space"></span>
-
+    <span class="w4c-fill-space"></span>
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['/settings']">
         <mat-icon>settings</mat-icon>
@@ -21,7 +19,6 @@
         <span>Logout</span>
       </button>
     </mat-menu>
-    <span class="fill-space"></span>
     <mat-icon color="{{ (isConnected) ? 'default' : 'warn' }}" matTooltip="{{ getStatusText() }}">{{ getStatusIcon() }}</mat-icon>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>

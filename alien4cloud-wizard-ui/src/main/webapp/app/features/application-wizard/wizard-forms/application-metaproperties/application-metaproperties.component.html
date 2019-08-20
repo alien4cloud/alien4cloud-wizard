@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form">
-  <form class="metaprops-form">
+  <form class="metaprops-form" [w4cManageFormFocus]="metaPropertiesForm">
     <w4c-property-editor
       *ngFor="let mpd of metaPropertyDefinitions;"
       [propertyDefinition]="mpd.configuration"

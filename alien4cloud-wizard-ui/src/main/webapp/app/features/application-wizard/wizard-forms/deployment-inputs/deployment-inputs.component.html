@@ -1,6 +1,6 @@
 <div fxLayout="column" class="w4c-wizard-form">
   <div fxLayout="column" fxLayoutAlign="center center">
-    <form class="inputs-form">
+    <form class="inputs-form" [w4cManageFormFocus]="inputsForm">
       <w4c-property-editor
         *ngFor="let pfd of propertieFormDefitions;"
         [propertyDefinition]="pfd.definition"

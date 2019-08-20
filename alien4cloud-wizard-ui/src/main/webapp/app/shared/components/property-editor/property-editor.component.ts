@@ -1,4 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output, Renderer, Renderer2,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {AbstractPropertyValue, PropertyConstraintUtils, PropertyDefinition, PropertyValue} from "@app/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import * as _ from "lodash";
@@ -14,10 +24,12 @@ import {debounceTime} from "rxjs/operators";
 })
 export class PropertyEditorComponent implements OnInit {
 
+  @ViewChild("matFormField", {static: true, read: ElementRef}) matFormField: ElementRef;
+
   @Input() propertyDefinition: PropertyDefinition;
 
   /**
-   * The id used to register to the FormGroup.
+   * The id used to register to the FormGroup and to be set as DOM ID (so must not contain special chars).
    */
   @Input() id: string;
 
@@ -51,7 +63,10 @@ export class PropertyEditorComponent implements OnInit {
    */
   private initialiazed = false;
 
-  constructor() { }
+  constructor(
+    private elementRef: ElementRef,
+    private renderer: Renderer2
+  ) { }
 
   ngOnInit() {
     this.pfd = new PropertyFormDefinition();
@@ -179,6 +194,17 @@ export class PropertyEditorComponent implements OnInit {
       // will trigger a change event on eventual observers
       this.valueChange.emit(this.pfd.formControl.value + " " + this.pfd.unit);
     }
+  }
+
+  onFocusIn() {
+    // this is just to have the same behavior for all kind of inputs (the style of a focus mat-input change)
+    // we need to manage this since for some "custom" inputs (like sliders, toggle slider) the focus is not managed
+    this.renderer.addClass(this.matFormField.nativeElement, 'mat-focused');
+  }
+
+  onFocusOut() {
+    // Cf. onFocusIn()
+    this.renderer.removeClass(this.matFormField.nativeElement, 'mat-focused');
   }
 }
 

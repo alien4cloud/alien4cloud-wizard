@@ -7,6 +7,9 @@
   margin: 20px;
 }
 
+.w4c-fill-space {
+  flex: 1 1 auto;
+}
 
 // [[ A4C status color set : this should not be theme dependant
 $text-success: #468847;
@@ -47,7 +50,5 @@ $text-primary: #428bca;
 }
 // ]] A4C color set for status
 
-.fill-space {
-  flex: 1 1 auto;
-}
+
 
