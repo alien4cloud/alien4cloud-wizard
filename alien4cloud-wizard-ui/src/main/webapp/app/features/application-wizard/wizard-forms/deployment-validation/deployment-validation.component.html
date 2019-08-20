@@ -9,9 +9,9 @@
   </div>
 
   <div fxLayoutAlign="center center">
-    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-      <mat-chip *ngFor="let chip of taskCodes" selected [color]="chip.color">
-        {{chip.message}}
+    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection" *ngIf="fsmContext.deploymentTopology.validation && fsmContext.deploymentTopology.validation.taskList">
+      <mat-chip *ngFor="let task of fsmContext.deploymentTopology.validation.taskList" selected color="warn">
+        {{ 'TASK.' + task.code | translate}}
       </mat-chip>
     </mat-chip-list>
   </div>
