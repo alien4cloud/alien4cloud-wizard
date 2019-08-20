@@ -13,6 +13,7 @@ import {
 } from './components';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
 import {PropertyEditorComponent} from "@app/shared/components/property-editor/property-editor.component";
+import {StyleManager} from "@app/core";
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -57,7 +58,7 @@ import {PropertyEditorComponent} from "@app/shared/components/property-editor/pr
     DeploymentStatusButtonLabel
   ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA]
-  providers: [ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe, DeploymentStatusButtonLabel],
+  providers: [ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe, DeploymentStatusButtonLabel, StyleManager],
 })
 export class SharedModule {
   static forRoot() {

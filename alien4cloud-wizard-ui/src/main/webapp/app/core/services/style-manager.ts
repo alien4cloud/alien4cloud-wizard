@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {SettingsService} from "@app/core/services/settings.service";
 
 
 /**
@@ -7,6 +8,19 @@ import {Injectable} from '@angular/core';
  */
 @Injectable()
 export class StyleManager {
+
+  private static DEFAULT_THEME_NAME = "indigo-pink";
+
+  constructor(private settingsService: SettingsService) {
+    this.installTheme(this.settingsService.getSetting(SettingsService.THEME_NAME));
+    this.settingsService.settingChange.subscribe(setting => {
+      if (setting.id == SettingsService.THEME_NAME) {
+        console.log("Theme changed : ", setting.value);
+        this.installTheme(setting.value);
+      }
+    });
+  }
+
   /**
    * Set the stylesheet with the specified key.
    */
@@ -21,6 +35,14 @@ export class StyleManager {
     const existingLinkElement = getExistingLinkElementByKey(key);
     if (existingLinkElement) {
       document.head.removeChild(existingLinkElement);
+    }
+  }
+
+  installTheme(themeName: string) {
+    if (themeName == StyleManager.DEFAULT_THEME_NAME ) {
+      this.removeStyle('theme');
+    } else {
+      this.setStyle('theme', `assets/styles/built/${themeName}.css`);
     }
   }
 }

@@ -23,9 +23,8 @@ import {A4cMaterialModule} from '@app/shared';
 import {OverlayContainer} from '@angular/cdk/overlay';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {NgxWebstorageModule} from 'ngx-webstorage';
-import {AuthInterceptor} from '@app/core';
+import {AuthInterceptor, StyleManager} from '@app/core';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
-import {ThemePickerModule} from "@app/modules/theme-picker";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,8 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    HeroLoaderModule,
-    ThemePickerModule
+    HeroLoaderModule
   ],
   exports: [
     A4cMaterialModule,
