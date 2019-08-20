@@ -4,7 +4,8 @@ import {
   NodeTemplate,
   PolicyTemplate,
   PropertyDefinition,
-  Version
+  Version,
+  DeploymentArtifact
 } from '@app/core/models';
 
 export interface Topology extends HasTags {
@@ -23,7 +24,7 @@ export interface Topology extends HasTags {
   outputProperties: Map<string, Set<string>>;
   outputCapabilityProperties: Map<string, Map<string, Set<string>>>;
   outputAttributes: Map<string, Set<string>>;
-  // inputArtifacts: Map<string, DeploymentArtifact>;
+  inputArtifacts: Map<string, DeploymentArtifact>;
   // groups: Map<string, NodeGroup>;
   // substitutionMapping: SubstitutionMapping;
   // workflows: Map<string, Workflow>;

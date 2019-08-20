@@ -244,18 +244,56 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         // if the deployment topology has inputs, then branch to InputForm
-        // FIXME : use cond deploymentTopologyHasInputs
-        OnDeploymentInputsRequired: {
-          target: 'deploymentInputsForm'
-        },
-        DoSearchLocation: {
-          target: 'locationSearching'
-        }
+        OnDeploymentTopologyFetched: [
+          {
+          target: 'deploymentInputsForm',
+            cond: 'deploymentTopologyHasInputs'
+          },
+          {
+            target: 'deploymentInputArtifactsForm',
+            cond: 'deploymentTopologyHasInputArtifacts'
+          },
+          {
+            target: 'locationSearching'
+          }
+        ]
       }
     },
     deploymentInputsForm: {
       on: {
         GoBack: [
+          {
+            target: 'applicationMetapropertiesForm',
+            cond: 'hasMetapropertiesConfig'
+          },
+          {
+            target: 'applicationCreateForm'
+          }
+        ],
+        OnFormCompleted: [
+          {
+            target: 'deploymentInputArtifactsForm',
+            cond: 'deploymentTopologyHasInputArtifacts'
+          },
+          {
+            target: 'locationSearching',
+          // refresh the deploymentTopology in order to ensure it contains input values
+          // this to be able to back to this form in case of new application
+          // actions: ['refreshDeploymentTopology']
+          }
+        ],
+        DoCancelWizard: {
+          target: 'deleteApplicationForm'
+        }
+      }
+    },
+    deploymentInputArtifactsForm: {
+      on: {
+        GoBack: [
+          {
+            target: 'deploymentInputsForm',
+            cond: 'deploymentTopologyHasInputs'
+          },
           {
             target: 'applicationMetapropertiesForm',
             cond: 'hasMetapropertiesConfig'
@@ -294,6 +332,10 @@ export const applicationWizardMachineConfig: MachineConfig<
     locationSelectionForm: {
       on: {
         GoBack: [
+          {
+            target: 'deploymentInputArtifactsForm',
+            cond: 'deploymentTopologyHasInputArtifacts'
+          },
           {
             target: 'deploymentInputsForm',
             cond: 'deploymentTopologyHasInputs'

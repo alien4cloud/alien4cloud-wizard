@@ -100,7 +100,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
     return !this.inputsForm.invalid;
   }
 
-  doSearchLocation() {
+  doSubmitForm() {
     this.fsm.send(new OnFormCompleted());
   }
 }
