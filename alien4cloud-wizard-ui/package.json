@@ -10,7 +10,7 @@
     "test": "npm run build-themes && ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-themes": "bash ./tools/build-themes.sh",
+    "build-themes": "node-sass src/main/webapp/assets/styles/custom-themes -o src/main/webapp/assets/styles/built",
     "webpack:dev": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --inline --hot --port=9060 --watch-content-base --env.stats=minimal",
     "webpack:dev-verbose": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --inline --hot --port=9060 --watch-content-base --profile --progress --env.stats=normal",
     "webpack:prod:main": "npm run webpack -- --config webpack/webpack.prod.js --profile",
