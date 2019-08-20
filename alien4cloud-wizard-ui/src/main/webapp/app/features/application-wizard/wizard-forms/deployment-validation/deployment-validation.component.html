@@ -7,9 +7,15 @@
       <p><span>Target : {{fsmContext.locationName}}</span></p>
     </div>
   </div>
+
+  <div fxLayoutAlign="center center">
+    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+      <mat-chip *ngFor="let chip of taskCodes" selected [color]="chip.color">
+        {{chip.message}}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
 </div>
-<w4c-wizard-control [fsmContext]="fsmContext"
-                    [forwardFn]="deployApp.bind(this)"
-                    forwardAltLabel="deploy !"
-                    forwardGuard="canSubmitDeployment">
+<w4c-wizard-control [fsmContext]="fsmContext" [forwardFn]="deployApp.bind(this)" forwardAltLabel="deploy !"
+  forwardGuard="canSubmitDeployment">
 </w4c-wizard-control>
