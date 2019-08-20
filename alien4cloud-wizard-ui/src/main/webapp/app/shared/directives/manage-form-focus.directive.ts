@@ -24,6 +24,7 @@ export class ManageFormFocusDirective implements OnInit {
     this.renderer.listen(this.elementRef.nativeElement, "keydown", (event) => {
       this.keyDown(event);
     });
+    setTimeout(() => this.focusTo(this.getFormControlIDs()[0]), 500);
   }
 
   keyDown(event: any) {
