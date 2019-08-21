@@ -8,7 +8,7 @@ const utils = require('./utils.js');
 
 module.exports = (options) => ({
     resolve: {
-        extensions: [ '.prod.ts', '.ts', '.js'],
+        extensions: [ '.ts', '.js'],
         modules: ['node_modules'],
         alias: {
             app: utils.root('src/main/webapp/app/'),
