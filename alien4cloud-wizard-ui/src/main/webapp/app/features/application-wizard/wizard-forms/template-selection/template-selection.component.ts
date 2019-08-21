@@ -22,10 +22,6 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   // indicates data loading
   isLoading: boolean = false;
 
-  // Paginator config
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
   query = null;
 
   // MatPaginator Output
@@ -52,31 +48,23 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
       // TODO: here display the selected topology
     }
 
-    this.loadTopologies(0);
+    this.loadTopologies();
     // add a debounceTimed suscription to avoid bakend mass attack
     this.searchField.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(term => {
         this.query = term;
-        this.loadTopologies(0);
+        this.loadTopologies();
       });
   }
 
-  private loadTopologies(from: number) {
+  private loadTopologies() {
     this.isLoading = true;
-    this.topologyService.search(from, this.pageSize, this.query).subscribe((data) => {
+    this.topologyService.search(this.query).subscribe((data) => {
       this.topologyTemplates = data.data;
-      this.length = data.totalResults;
+      //this.length = data.totalResults;
       this.isLoading = false;
     })
-  }
-
-  /**
-   * This is trigerred when something is changed about pagination options.
-   */
-  handlePage(e: any) {
-    this.pageSize = e.pageSize;
-    this.loadTopologies(e.pageIndex * e.pageSize);
   }
 
   /**
