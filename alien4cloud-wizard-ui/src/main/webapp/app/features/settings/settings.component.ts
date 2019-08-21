@@ -25,11 +25,13 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.settingsService.settings.forEach(setting => {
-      let definition = new SettingDefinition();
-      definition.setting = setting;
-      definition.value = new ScalarPropertyValue(this.settingsService.getSetting(setting.id));
-      console.log(`Settings ${definition.setting.id} has value ${definition.value}`);
-      this.settingDefinitions.push(definition);
+      if (setting.enabled) {
+        let definition = new SettingDefinition();
+        definition.setting = setting;
+        definition.value = new ScalarPropertyValue(this.settingsService.getSetting(setting.id));
+        console.log(`Settings ${definition.setting.id} has value ${definition.value}`);
+        this.settingDefinitions.push(definition);
+      }
     });
 
     this.settingsService.settingChange.subscribe(s => {

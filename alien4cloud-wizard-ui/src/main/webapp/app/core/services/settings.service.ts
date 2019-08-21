@@ -4,6 +4,7 @@ import {PropertyDefinition, PropertyValue, ScalarPropertyValue} from "@app/core/
 import * as _ from "lodash";
 import {ReplaySubject} from "rxjs";
 import {DeploymentStatusChangeEvent} from "@app/core/models/internal-event.model";
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class SettingsService {
     themeName.default = new ScalarPropertyValue('indigo-pink');
     themeName.description = "Choose the theme you want to apply.";
     themeName.constraints = [{validValues: ['deeppurple-amber', 'indigo-pink', 'pink-bluegrey', 'purple-green']}];
+    themeName.enabled = true;
     this.settings.set(themeName.id, themeName);
 
     let showFsmGrzph = new Setting();
@@ -38,6 +40,7 @@ export class SettingsService {
     showFsmGrzph.type = 'boolean';
     showFsmGrzph.default = new ScalarPropertyValue('false');
     showFsmGrzph.description = "Choose if you want to display a graph representing the FSM (for developpers).";
+    showFsmGrzph.enabled = !environment.production;
     this.settings.set(showFsmGrzph.id, showFsmGrzph);
 
     let fsmGraphHeight = new Setting();
@@ -47,6 +50,7 @@ export class SettingsService {
     fsmGraphHeight.default = new ScalarPropertyValue('200');
     fsmGraphHeight.description = "Height of the panel to display FSM graph (px).";
     fsmGraphHeight.options = {useSlider : true, sliderMin: 100, sliderMax: 1800, sliderStep: 10};
+    fsmGraphHeight.enabled = !environment.production;
     this.settings.set(fsmGraphHeight.id, fsmGraphHeight);
 
     let fsmGraphWidth = new Setting();
@@ -56,6 +60,7 @@ export class SettingsService {
     fsmGraphWidth.default = new ScalarPropertyValue('1000');
     fsmGraphWidth.description = "Width of the panel to display FSM graph (px).";
     fsmGraphWidth.options = {useSlider : true, sliderMin: 100, sliderMax: 3840, sliderStep: 10};
+    fsmGraphWidth.enabled = !environment.production;
     this.settings.set(fsmGraphWidth.id, fsmGraphWidth);
 
     let fsmGraphZoomLevel = new Setting();
@@ -65,6 +70,7 @@ export class SettingsService {
     fsmGraphZoomLevel.default = new ScalarPropertyValue('1');
     fsmGraphZoomLevel.description = "Zoom level for the FSM graph.";
     fsmGraphZoomLevel.options = {useSlider : true, sliderMin: 0.1, sliderMax: 4.0, sliderStep: 0.1};
+    fsmGraphZoomLevel.enabled = !environment.production;
     this.settings.set(fsmGraphZoomLevel.id, fsmGraphZoomLevel);
 
     let displayWizardWelcome = new Setting();
@@ -73,6 +79,7 @@ export class SettingsService {
     displayWizardWelcome.type = 'boolean';
     displayWizardWelcome.default = new ScalarPropertyValue('true');
     displayWizardWelcome.description = "Disable this option if you want to skip the welcome page in the wizard.";
+    displayWizardWelcome.enabled = true;
     this.settings.set(displayWizardWelcome.id, displayWizardWelcome);
   }
 
@@ -104,4 +111,5 @@ export class Setting extends PropertyDefinition {
   id: string;
   label: string;
   value: string;
+  enabled: boolean;
 }
