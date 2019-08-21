@@ -28,7 +28,10 @@ export class DeleteApplicationFormComponent implements OnInit, WizardFormCompone
     event.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '35%',
-      data: {actionDescription :"Application deletion", message: "Do you confirm the deletion of this application?"}
+      data: {
+        actionDescription :"Application deletion",
+        message: "Do you confirm the deletion of this application?"
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result) {

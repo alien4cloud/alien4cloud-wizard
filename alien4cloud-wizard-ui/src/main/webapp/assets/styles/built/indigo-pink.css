@@ -1377,3 +1377,7 @@ th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
 
 .w4c-primary-text-A200 {
   color: #536dfe; }
+
+.w4c-header {
+  background: #3f51b5;
+  color: white; }

@@ -1,8 +1,8 @@
-<div mat-dialog-title color="primary" fxLayout="row" fxLayoutAlign="center center" >{{data.actionDescription}}</div>
+<div mat-dialog-title class="w4c-header w4c-dialog-title" fxLayout="row" fxLayoutAlign="center center" >{{data.actionDescription}}</div>
 <div mat-dialog-content fxLayout="row" fxLayoutAlign="center center">
   <p>{{data.message}}</p>
 </div>
-<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center">
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" class="w4c-dialog-action">
   <button mat-stroked-button (click)="onNoClick()">Cancel</button>
-  <button mat-stroked-button  [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+  <button mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
 </div>

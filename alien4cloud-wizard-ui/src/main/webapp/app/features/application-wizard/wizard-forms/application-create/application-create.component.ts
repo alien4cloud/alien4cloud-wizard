@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, Input, OnInit, Renderer} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {DoCreateApplication, DoUpdateApplication, GoBack} from "@app/features/application-wizard/core/fsm.events";
@@ -26,7 +26,7 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent, 
   constructor(private fsm: AppplicationWizardMachineService,
               private w4cToscaTypeShortName: ToscaTypeShortNamePipe,
               private w4cToscaIdArchiveExtractor: ToscaIdArchiveExtractorPipe,
-              private trimName: TrimNamePipe) { }
+              private elementRef: ElementRef, private renderer: Renderer) { }
 
   ngOnInit() {
     this.applicationNameFormCtrl.valueChanges.pipe(debounceTime(500)).subscribe(value => {
@@ -38,6 +38,7 @@ export class ApplicationCreateComponent implements OnInit, WizardFormComponent, 
   }
 
   ngAfterContentInit(): void {
+    setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#applicationName'), 'focus', []), 100);
     if (this.fsmContext.application) {
       this.applicationNameFormCtrl.setValue(this.fsmContext.application.name);
       this.applicationDescription = this.fsmContext.application.description;
