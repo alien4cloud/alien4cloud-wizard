@@ -184,6 +184,7 @@ export class AppplicationWizardMachineService {
         this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environmentId)
           .pipe(
             map(locations => {
+              _.locations = locations;
               if (locations.length == 1) {
                 console.log("Only one location exists :" + locations[0].location.id)
                 return new DoSelectLocation(locations[0].location.id,locations[0].location.name, locations[0].orchestrator.id );

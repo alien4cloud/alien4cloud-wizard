@@ -325,6 +325,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         },
         OnLocationFetched: {
           target: 'locationSelectionForm',
+          // FIXME: remove, the job is done in invocation
           actions: ['assignLocation']
         }
       }
