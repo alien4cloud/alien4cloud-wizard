@@ -40,7 +40,7 @@ export const applicationWizardMachineConfig: MachineConfig<
   initial: 'boot',
   states: {
     boot: {
-      entry: ['fetchApplicationMetaProperties'],
+      entry: ['fetchApplicationMetaProperties', 'clearContext'],
       on: {
         INIT: [
           {
