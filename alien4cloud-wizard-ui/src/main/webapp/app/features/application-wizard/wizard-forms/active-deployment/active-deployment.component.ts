@@ -1,17 +1,16 @@
 import {Component, OnInit, Input, OnDestroy} from '@angular/core';
-import { WizardFormComponent } from '../../core/wizard.model';
-import { ApplicationWizardMachineContext } from '../../core/fsm.model';
-import { AppplicationWizardMachineService } from '../../core/fsm.service';
-import {Subscription, timer} from 'rxjs'
+import {WizardFormComponent} from '../../core/wizard.model';
+import {ApplicationWizardMachineContext} from '../../core/fsm.model';
+import {AppplicationWizardMachineService} from '../../core/fsm.service';
+import {Subscription} from 'rxjs'
 import {MonitorDeploymentService} from "@app/core/services/monitor-deployment.service";
-import {map} from "rxjs/operators";
 import {DeploymentWorkflowExecutionService} from "@app/core/services/workflow-execution.service";
 import {DeploymentStatus, ExecutionStatus, MonitoredDeploymentDTO, Task, WorkflowExecutionDTO} from "@app/core";
-import {DoCancelWizard, DoSubmitDeployment, DoSubmitUndeployment, GoBack} from '../../core/fsm.events';
+import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
-import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent } from '@app/shared';
+import {MatDialog} from '@angular/material';
+import {ConfirmationDialogComponent} from '@app/shared';
 
 @Component({
   selector: 'w4c-active-deployment',
@@ -39,13 +38,12 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
   ) { }
 
   ngOnInit() {
-    this.wsSubscription = this.websocketService.registerEnvironmentStatusChannel(this.fsmContext.environmentId).subscribe(event =>
+    this.wsSubscription = this.websocketService.registerEnvironmentStatusChannel(this.fsmContext.environment.id).subscribe(event =>
       {
         console.log("Event received: ", event);
         let paaSDeploymentStatusMonitorEvent = <PaaSDeploymentStatusMonitorEvent>event;
         if (paaSDeploymentStatusMonitorEvent) {
           this.fsmContext.deploymentStatus = paaSDeploymentStatusMonitorEvent.deploymentStatus;
-          this.fsmContext.deploymentId = paaSDeploymentStatusMonitorEvent.deploymentId;
           if (DeploymentStatus.isPendingStatus(this.fsmContext.deploymentStatus)) {
             console.log(`The status received (${this.fsmContext.deploymentStatus}) is a pending status, so monitor the workflow`);
             this.monitorWorkflow();
@@ -72,7 +70,7 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
 
   private monitorWorkflow() {
     if (!this.workflowMonitoringSubscription || this.workflowMonitoringSubscription.closed) {
-      this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.application.id, this.fsmContext.environmentId).subscribe(e => {
+      this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.application.id, this.fsmContext.environment.id).subscribe(e => {
         console.log("deploymentID is : " + e.deployment.id);
         let deploymentId = e.deployment.id;
         console.log("Motitored deployement: ", JSON.stringify(e));
@@ -127,8 +125,6 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
       }
     });
   }
-
-
 
   deleteApplication() {
     this.fsm.send(new DoCancelWizard());

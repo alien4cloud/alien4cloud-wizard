@@ -35,7 +35,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
     // FIXME : we need to retrieve the deploymentTopology since the one fom context is not always fresh even after refresh
     this.deploymentTopologyService.getDeploymentTopology(
       this.fsmContext.application.id,
-      this.fsmContext.environmentId
+      this.fsmContext.environment.id
     ).subscribe(deploymentTopology => {
       // if we could .forEach on inputs, we could iterate directly in the html
       for (const [key, pd] of Object.entries(deploymentTopology.topology.inputs)) {
@@ -79,7 +79,7 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
     request.inputProperties[inputName] = value;
     // this.inputsForm.get(inputName).markAsPending();
     // this.inputsForm.markAsPending();
-    this.deploymentTopologyService.updateDeploymentSetup(this.fsmContext.application.id, this.fsmContext.environmentId, request)
+    this.deploymentTopologyService.updateDeploymentSetup(this.fsmContext.application.id, this.fsmContext.environment.id, request)
       .pipe(catchError(err => {
         if (err instanceof ConstraintError) {
           let constraintInformation = (<ConstraintError>err).constraintInformation;

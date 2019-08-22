@@ -1,0 +1,21 @@
+td.deployment-info {
+  padding: 10px;
+}
+
+td.deployment-label {
+  font-weight: bold;
+  width: 100px;
+}
+
+table.deployment-infos {
+  width: 100%;
+}
+
+.deployment-infos {
+  width: 400px;
+}
+
+.deployment-monitor {
+  width: 600px;
+  padding: 20px;
+}

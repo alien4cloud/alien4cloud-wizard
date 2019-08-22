@@ -18,13 +18,11 @@ export const context: ApplicationWizardMachineContext = {
   application: undefined,
   environments: undefined,
   deploymentTopology: undefined,
-  environmentId: undefined,
-  locationId: undefined,
-  locationName: undefined,
-  orchestratorId: undefined,
+  environment: undefined,
+  location: undefined,
   errorMessage: undefined,
   locations: undefined,
-  deploymentId: undefined,
+  deployment: undefined,
   deploymentStatus: undefined
 };
 
@@ -56,7 +54,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         InitApplicationEnvironment: [
           {
             target: 'applicationEnvironmentInitializing',
-            actions: ['assignAppInitInfo']
+            // actions: ['assignAppInitInfo']
           }
         ],
         DoCancelWizard: {
@@ -70,9 +68,10 @@ export const applicationWizardMachineConfig: MachineConfig<
         src: 'initWizardContextForExistingApplicationEnvironment'
       },
       on: {
+        // FIXME: a single OnAppEnvInitialiazed with guards will be better
         OnActiveDeploymentFound: {
           target: 'activeDeploymentForm',
-          actions: ['assignDeployment', 'fetchDeploymentTopologyAndLocations']
+          actions: [/*'assignDeployment',*/'fetchDeploymentTopologyAndLocations']
         },
         DoSelectEnvironment: {
           target: 'environmentSelected'
@@ -207,7 +206,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         DoSelectEnvironment: {
           target: 'environmentSelected',
-          actions: ['assignEnvironmentId']
+          actions: ['assignEnvironment']
         },
         OnEnvironmentsFetched: {
           target: 'environmentSelectionForm',
@@ -219,7 +218,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         DoSelectEnvironment: {
           target: 'environmentSelected',
-          actions: ['assignEnvironmentId']
+          actions: ['assignEnvironment']
           // actions: ['assignUser', 'loginSuccess']
         }
       }
@@ -321,12 +320,12 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         DoSelectLocation: {
           target: 'locationSelected',
-          actions: ['assignLocationId']
+          actions: ['assignLocation']
         },
         OnLocationFetched: {
           target: 'locationSelectionForm',
           // FIXME: remove, the job is done in invocation
-          actions: ['assignLocation']
+          actions: ['assignLocations']
         }
       }
     },
@@ -443,7 +442,7 @@ export const applicationWizardMachineConfig: MachineConfig<
       on: {
         GoBack: [
           {
-            target: 'deploymentForm'
+            target: 'locationSearching'
           }
         ],
         DoSubmitUndeployment: {

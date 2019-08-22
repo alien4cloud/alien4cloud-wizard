@@ -12,6 +12,7 @@ export * from './properties-constraint.model';
 export * from './rest.model';
 export * from './deployment-topology.model';
 export * from './deployment.model';
+export * from './deployment-log.model';
 export * from './execution.model';
 export * from './deployment-status.enum';
 export * from './environment-type.enum';

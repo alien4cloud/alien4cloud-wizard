@@ -21,3 +21,13 @@ export class ConstraintError extends Error {
   }
 }
 
+export class BasicSearchRequest {
+  query: string;
+  from: number;
+  size: number;
+}
+
+export class SortConfiguration {
+  sortBy: string;
+  ascending: boolean;
+}

@@ -52,7 +52,7 @@ export class LocationSelectionComponent implements OnInit, WizardFormComponent {
 
   goForward() {
     let item = this.locationItems.get(this.selectedLocationId);
-    this.fsm.send(new DoSelectLocation(item.location.id, item.location.name, item.location.orchestratorId));
+    this.fsm.send(new DoSelectLocation(item.location));
   }
 
   formIsValid() {

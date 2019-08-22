@@ -5,7 +5,7 @@ import {
   ApplicationEnvironment,
   ApplicationEnvironmentDTO,
   Deployment,
-  DeploymentStatus,
+  DeploymentStatus, Location,
   LocationMatch,
   Topology
 } from "@app/core";
@@ -85,7 +85,7 @@ export class OnEnvironmentsFetched {
 
 export class DoSelectEnvironment {
   readonly type = 'DoSelectEnvironment';
-  constructor(public environmentId: string) {}
+  constructor(public environment: ApplicationEnvironmentDTO) {}
 }
 
 export class DoSearchLocation {
@@ -100,7 +100,7 @@ export class OnDeploymentTopologyFetched {
 
 export class DoSelectLocation {
   readonly type = 'DoSelectLocation';
-  constructor(public locationId: string,public locationName: string,public orchestratorId: string) {}
+  constructor(public location: Location) {}
 }
 
 export class OnSelectLocationSuccesss {

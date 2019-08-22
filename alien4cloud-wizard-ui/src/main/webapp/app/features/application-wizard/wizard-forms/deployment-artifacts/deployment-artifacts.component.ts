@@ -39,7 +39,7 @@ export class DeploymentArtifactsComponent implements OnInit, WizardFormComponent
   }
 
   uploadFile(inputArtifactId: string, event: any) {
-    this.deploymentTopologyService.uploadDeploymentInputArtifact(this.fsmContext.application.id, this.fsmContext.environmentId, inputArtifactId, event)
+    this.deploymentTopologyService.uploadDeploymentInputArtifact(this.fsmContext.application.id, this.fsmContext.environment.id, inputArtifactId, event)
       .pipe(catchError(err => {
         if (err instanceof ConstraintError) {
           let constraintInformation = (<ConstraintError>err).constraintInformation;

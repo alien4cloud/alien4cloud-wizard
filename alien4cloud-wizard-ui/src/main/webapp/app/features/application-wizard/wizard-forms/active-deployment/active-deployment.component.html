@@ -1,28 +1,84 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form">
 
-  <span>Deployment status : {{ fsmContext.deploymentStatus }}</span>
-
-  <div *ngIf="!workflowInProgress; else deploying" fxLayout="row" fxFlex="100%">
-    <h2>No workflow in progress</h2>
-  </div>
-
-  <div class="mat-error">{{fsmContext.errorMessage}}</div>
-
-  <ng-template #deploying>
-    <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center">
-      <h2 *ngIf="workflowInProgress">Workflow in progress ...</h2>
-      <h2 *ngIf="!workflowInProgress">Workflow executed (but maybe with error !)</h2>
-      <mat-progress-bar *ngIf="workflowInProgress && !progessBarData" mode="indeterminate"></mat-progress-bar>
-      <mat-progress-bar *ngIf="progessBarData" mode="determinate" value="{{ progessBarData.progress }}"
-        [color]="(progessBarData.status && progessBarData.status.toString() == 'FAILED') ? 'warn' : 'primary'">
-      </mat-progress-bar>
-      <span *ngIf="progessBarData">Wf: {{ progessBarData.workflowName }} - status: {{ progessBarData.status }} -
-        progess:
-        {{ progessBarData.progress }}</span>
+    <div fxLayout="row" fxLayoutAlign="start start">
+      <div class="deployment-infos">
+        <table class="mat-table deployment-infos">
+          <tr class="mat-row">
+           <td class="mat-cell deployment-info" align="right">
+             <mat-icon [ngClass]="'w4c-deployment-status-' + fsmContext.deploymentStatus"
+                       matTooltip="{{fsmContext.deploymentStatus}}">lens</mat-icon>
+           </td>
+           <td class="mat-cell deployment-info">{{ fsmContext.deploymentStatus }}</td>
+          </tr>
+          <tr class="mat-row">
+           <td class="mat-cell deployment-label" align="right">Environment</td>
+           <td class="mat-cell deployment-info">{{ fsmContext.environment.name }}</td>
+          </tr>
+          <tr class="mat-row">
+           <td class="mat-cell deployment-label" align="right">Version</td>
+           <td class="mat-cell deployment-info">{{ fsmContext.deployment.versionId }}</td>
+          </tr>
+        </table>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center center" class="deployment-monitor mat-app-background">
+        <div *ngIf="!workflowInProgress && false; else deploying" fxLayout="row" fxFlex="100%">
+          <h2>No workflow in progress</h2>
+        </div>
+        <div>
+<!--          <span>Here we'll put logs</span>-->
+        </div>
+      </div>
     </div>
-  </ng-template>
+    <div>
+<!--      <span>Here will go workflow trigger</span>-->
+    </div>
+    <div>
+      <div class="mat-error">{{fsmContext.errorMessage}}</div>
+    </div>
+
+<!--    <mat-grid-list cols="2" rowHeight="400px" gutterSize="10" >-->
+<!--    <mat-grid-tile>-->
+<!--      <mat-grid-tile-header>sdfdsfds</mat-grid-tile-header>-->
+<!--      1-->
+<!--    </mat-grid-tile>-->
+<!--    <mat-grid-tile>2</mat-grid-tile>-->
+<!--    <mat-grid-tile>3</mat-grid-tile>-->
+<!--    <mat-grid-tile>4</mat-grid-tile>-->
+<!--  </mat-grid-list>-->
+
+<!--  <mat-grid-list cols="2" rowHeight="1:1">-->
+<!--    <mat-grid-tile rowspan="2">-->
+<!--      <span>Deployment status : {{ fsmContext.deploymentStatus }}</span>-->
+<!--    </mat-grid-tile>-->
+<!--    <mat-grid-tile>-->
+<!--      <div *ngIf="!workflowInProgress; else deploying" fxLayout="row" fxFlex="100%">-->
+<!--        <h2>No workflow in progress</h2>-->
+<!--      </div>-->
+<!--    </mat-grid-tile>-->
+<!--    <mat-grid-tile><span>Here we'll put logs</span></mat-grid-tile>-->
+<!--    <mat-grid-tile colspan="2"><span>Here will go workflow trigger</span></mat-grid-tile>-->
+<!--    <mat-grid-tile colspan="2">-->
+<!--      <div class="mat-error">{{fsmContext.errorMessage}}</div>-->
+<!--    </mat-grid-tile>-->
+<!--  </mat-grid-list>-->
 
 </div>
+
+<ng-template #deploying>
+  <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" class="w4c-full-width">
+    <span *ngIf="workflowInProgress && !progessBarData">Workflow initialization</span>
+    <span *ngIf="workflowInProgress && progessBarData">Workflow "{{ progessBarData.workflowName }}" in progress ({{ progessBarData.progress.toFixed(0) }} %)</span>
+    <span *ngIf="!workflowInProgress && progessBarData">Workflow "{{ progessBarData.workflowName }}" executed ({{ progessBarData.status }})</span>
+    <mat-progress-bar *ngIf="workflowInProgress && !progessBarData" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="progessBarData" mode="determinate" value="{{ progessBarData.progress }}"
+                      [color]="(progessBarData.status && progessBarData.status.toString() == 'FAILED') ? 'warn' : 'primary'">
+    </mat-progress-bar>
+<!--    <span *ngIf="progessBarData">Wf: {{ progessBarData.workflowName }} - status: {{ progessBarData.status }} - -->
+<!--        progess:-->
+<!--      {{ progessBarData.progress }}</span>-->
+  </div>
+</ng-template>
+
 <!-- You can add custom buttons in the wizard control like below
 1. Add a ng-template
   <ng-template #customButtons>

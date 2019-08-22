@@ -1,8 +1,8 @@
 import {
   Application,
-  ApplicationEnvironment, ApplicationEnvironmentDTO,
+  ApplicationEnvironment, ApplicationEnvironmentDTO, Deployment,
   DeploymentStatus,
-  DeploymentTopologyDTO,
+  DeploymentTopologyDTO, Location,
   LocationMatch,
   MetaPropConfiguration, Topology
 } from '@app/core';
@@ -65,14 +65,29 @@ export interface ApplicationWizardMachineContext {
   environments: ApplicationEnvironmentDTO[];
   deploymentTopology: DeploymentTopologyDTO;
   errorMessage: string;
-  environmentId: string;
-  // FIXME: replace by a single Location Object
-  locationId: string;
-  // FIXME: replace by a single Location Object
-  locationName: string;
+
+  /**
+   * The environment we are working on.
+   */
+  environment: ApplicationEnvironmentDTO;
+
+  /**
+   * All the possible locations for the current deployment.
+   */
   locations: LocationMatch[];
-  // FIXME: replace by a single Location Object
-  orchestratorId: string;
-  deploymentId: string;
+
+  /**
+   * The location that has been selected as a deployment target.
+   */
+  location: Location;
+
+  /**
+   * The active deployment if exist.
+   */
+  deployment: Deployment;
+
+  /**
+   * The active deployment status if exist.
+   */
   deploymentStatus: DeploymentStatus;
 }

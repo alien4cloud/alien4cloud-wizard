@@ -98,54 +98,37 @@ export class AppplicationWizardMachineService {
         this.applicationService.getById(event.applicationId).pipe(
           mergeMap(application => {
             _.application = application;
-            // get the active deployment for this application / environment
-            return this.applicationDeploymentService
-              .getActiveDeployment(_.application.id, _.environmentId)
+            // get the application environment
+            return this.applicationEnvironmentService
+              .getApplicationEnvironmentDTO(event.applicationId, event.environmentId)
               .pipe(
-                mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environmentId)
-                  .pipe(
-                    map(status => {
-                      if (deployment) {
-                        return new OnActiveDeploymentFound(deployment, status);
-                      } else {
-                        return new DoSelectEnvironment(_.environmentId);
-                      }
-                    }),
-                    catchError(err => {
-                      console.log("------------ Error catch by service : " + err);
-                      // return new DoSelectEnvironment(_.environmentId);
-                      // FIXME
-                      return undefined;
-                    })
-                  )
-                )
-              )
-          }
-        )
-      ),
-      _getActiveDeployment: (_, event: InitApplicationEnvironment) =>
-        this.applicationService.getById(event.applicationId).pipe(
-          mergeMap(application => {
-            _.application = application;
-            return this.applicationDeploymentService
-              .getActiveDeployment(_.application.id, _.environmentId)
-              .pipe(
-                mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environmentId)
-                  .pipe(
-                    map(status => {
-                      if (deployment) {
-                        return new OnActiveDeploymentFound(deployment, status);
-                      } else {
-                        return new DoSelectEnvironment(_.environmentId);
-                      }
-                    }),
-                    catchError(err => {
-                      console.log("------------ Error catch by service : " + err);
-                      // return new DoSelectEnvironment(_.environmentId);
-                      // FIXME
-                      return undefined;
-                    })
-                  )
+                mergeMap(environment => {
+                  _.environment = environment;
+                  // get the active deployment for this application / environment
+                  return this.applicationDeploymentService
+                    .getActiveDeployment(_.application.id, _.environment.id)
+                    .pipe(
+                      mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environment.id)
+                        .pipe(
+                          map(status => {
+                            if (deployment) {
+                              _.deployment = deployment;
+                              _.deploymentStatus = status;
+                              return new OnActiveDeploymentFound(deployment, status);
+                            } else {
+                              return new DoSelectEnvironment(_.environment);
+                            }
+                          }),
+                          catchError(err => {
+                            console.log("------------ Error catch by service : " + err);
+                            // return new DoSelectEnvironment(_.environmentId);
+                            // FIXME
+                            return undefined;
+                          })
+                        )
+                      )
+                    )
+                  }
                 )
               )
           }
@@ -162,7 +145,7 @@ export class AppplicationWizardMachineService {
           map(environments => {
             if (environments.data.length == 1) {
               // we have just one env, we'll skip the environment selection form
-              return new DoSelectEnvironment(environments.data[0].id);
+              return new DoSelectEnvironment(environments.data[0]);
             } else {
               return new OnEnvironmentsFetched(environments.data);
             }
@@ -171,7 +154,7 @@ export class AppplicationWizardMachineService {
       fetchDeploymentTopology: (_, event) =>
         this.deploymentTopologyService.getDeploymentTopology(
           _.application.id,
-          _.environmentId
+          _.environment.id
         ).pipe(
           map(dto => {
             // assign the deployment topology
@@ -181,13 +164,13 @@ export class AppplicationWizardMachineService {
           })
         ),
       searchLocations: (_, event) =>
-        this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environmentId)
+        this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environment.id)
           .pipe(
             map(locations => {
               _.locations = locations;
               if (locations.length == 1) {
                 console.log("Only one location exists :" + locations[0].location.id)
-                return new DoSelectLocation(locations[0].location.id,locations[0].location.name, locations[0].orchestrator.id );
+                return new DoSelectLocation(locations[0].location);
               } else {
                 console.log("Several locations exist :" + locations.length)
                 return new OnLocationFetched(locations);
@@ -195,7 +178,7 @@ export class AppplicationWizardMachineService {
             })
           ),
       setLocationPolicies: (_, event) =>
-        this.deploymentTopologyService.setLocationPolicies(_.application.id, _.environmentId, _.orchestratorId, _.locationId)
+        this.deploymentTopologyService.setLocationPolicies(_.application.id, _.environment.id, _.location.orchestratorId, _.location.id)
           .pipe(map(deploymentTopologyDTO => {
             // assign the deployment topology
             // we have an assignation in the FSM config but we are not guaranteed that this assignation was done before the guard was called
@@ -206,9 +189,16 @@ export class AppplicationWizardMachineService {
       ,
       deploy: (_, event) =>
         this.applicationDeploymentService.deploy(
-          _.application.id, _.environmentId
+          _.application.id, _.environment.id
         ).pipe(
-          map(data => new OnDeploymentSubmitSuccess()),
+          mergeMap(data => this.applicationDeploymentService.getActiveDeployment(_.application.id, _.environment.id)
+            .pipe(
+              map(deployment => {
+                _.deployment = deployment;
+                return new OnDeploymentSubmitSuccess();
+              })
+            )
+          ),
           catchError(err => {
             console.log("------------ Error catch by service : " + err);
             return of(new OnDeploymentSubmitError(err.message));
@@ -216,7 +206,7 @@ export class AppplicationWizardMachineService {
         ),
       undeploy: (_, event) =>
         this.applicationDeploymentService.undeploy(
-          _.application.id, _.environmentId
+          _.application.id, _.environment.id
         ).pipe(
           map(data => new OnUndeploymentSubmitSuccess()),
           catchError(err => {
@@ -245,12 +235,12 @@ export class AppplicationWizardMachineService {
       deploymentTopologyHasInputs: context => context.deploymentTopology && context.deploymentTopology.topology.inputs && lodash.size(context.deploymentTopology.topology.inputs) > 0,
       deploymentTopologyHasInputArtifacts: context => context.deploymentTopology && context.deploymentTopology.topology.inputArtifacts && lodash.size(context.deploymentTopology.topology.inputArtifacts) > 0,
       shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology),
-      canUndeploy: context => context.deploymentId && (
+      canUndeploy: context => context.deployment && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED
         || context.deploymentStatus === DeploymentStatus.FAILURE
         || context.deploymentStatus === DeploymentStatus.UPDATE_FAILURE
         || context.deploymentStatus === DeploymentStatus.DEPLOYMENT_IN_PROGRESS),
-      canDeploy: context => context.deploymentId && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
+      canDeploy: context => context.deployment && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
       canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
       canCancelWithoutDeleting: context => context.application == undefined,
       applicationExists: context => context.application != undefined,
@@ -260,26 +250,19 @@ export class AppplicationWizardMachineService {
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
         topologyTemplate: event.topology
       })),
-      assignDeployment: assign<ApplicationWizardMachineContext, OnActiveDeploymentFound>((_, event) => ({
-        deploymentId: event.deployment.id,
-        deploymentStatus : event.deploymentStatus
-      })),
-      assignAppInitInfo: assign<ApplicationWizardMachineContext, InitApplicationEnvironment>((_, event) => ({
-        applicationId: event.applicationId, environmentId: event.environmentId
-      })),
       assignEnvironments: assign<ApplicationWizardMachineContext, OnEnvironmentsFetched>((_, event) => ({
         environments: event.environments
       })),
-      assignEnvironmentId: assign<ApplicationWizardMachineContext, DoSelectEnvironment>((_, event) => ({
-        environmentId: event.environmentId
+      assignEnvironment: assign<ApplicationWizardMachineContext, DoSelectEnvironment>((_, event) => ({
+        environment: event.environment
       })),
       assignError: assign<ApplicationWizardMachineContext, OnError>((_, event) => ({
         errorMessage: event.message
       })),
-      assignLocationId: assign<ApplicationWizardMachineContext, DoSelectLocation>((_, event) => ({
-        locationId: event.locationId, locationName: event.locationName,  orchestratorId: event.orchestratorId
+      assignLocation: assign<ApplicationWizardMachineContext, DoSelectLocation>((_, event) => ({
+        location: event.location
       })),
-      assignLocation: assign<ApplicationWizardMachineContext, OnLocationFetched>((_, event) => ({
+      assignLocations: assign<ApplicationWizardMachineContext, OnLocationFetched>((_, event) => ({
         locations: event.locations
       })),
       clearError: assign<ApplicationWizardMachineContext, any>((_, event) => ({
@@ -292,12 +275,12 @@ export class AppplicationWizardMachineService {
       fetchDeploymentTopologyAndLocations: (_) => {
         this.deploymentTopologyService.getDeploymentTopology(
           _.application.id,
-          _.environmentId
+          _.environment.id
         ).pipe(
           mergeMap(dto => {
             // assign the deployment topology
             _.deploymentTopology = dto;
-            return this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environmentId);
+            return this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environment.id);
           })).subscribe(
           locations => {
             _.locations = locations;
@@ -334,7 +317,7 @@ export class AppplicationWizardMachineService {
       refreshDeploymentTopology: (_) => {
         this.deploymentTopologyService.getDeploymentTopology(
           _.application.id,
-          _.environmentId
+          _.environment.id
         ).subscribe(dto => {
           _.deploymentTopology = dto;
         })
