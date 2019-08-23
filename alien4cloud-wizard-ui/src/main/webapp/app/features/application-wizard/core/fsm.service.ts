@@ -248,6 +248,20 @@ export class AppplicationWizardMachineService {
       hasntActiveEnvironment: context => context.environments && context.environments.filter(e => e.status != DeploymentStatus.UNDEPLOYED).length == 0
     },
     actions: {
+      // FIXME: this should'nt be necessary
+      clearContext: (_) => {
+        _.topologyTemplate = undefined;
+        _.applicationMetapropertiesConfiguration = undefined;
+        _.application = undefined;
+        _.environments = undefined;
+        _.deploymentTopology = undefined;
+        _.environment = undefined;
+        _.location = undefined;
+        _.errorMessage = undefined;
+        _.locations = undefined;
+        _.deployment = undefined;
+        _.deploymentStatus = undefined;
+      },
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
         topologyTemplate: event.topology
       })),
