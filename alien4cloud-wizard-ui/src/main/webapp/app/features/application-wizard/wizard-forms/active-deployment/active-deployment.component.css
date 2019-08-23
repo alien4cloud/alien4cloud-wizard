@@ -7,6 +7,10 @@ td.deployment-label {
   width: 100px;
 }
 
+.deployment-label {
+  padding: 20px;
+}
+
 table.deployment-infos {
   width: 100%;
 }
@@ -18,4 +22,13 @@ table.deployment-infos {
 .deployment-monitor {
   width: 600px;
   padding: 20px;
+}
+
+.deployment-workflow {
+  height: 50px;
+  width: 300px;
+}
+
+.deployment-workflow-button {
+  width: 150px;
 }

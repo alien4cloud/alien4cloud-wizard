@@ -10,8 +10,7 @@ import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.
   templateUrl: './location-selection.component.html',
   styleUrls: ['./location-selection.component.scss']
 })
-export class LocationSelectionComponent implements OnInit, WizardFormComponent {
-
+export class LocationSelectionComponent extends WizardFormComponent implements OnInit {
 
   /**
    * A map of locationId -> LocationMatch.
@@ -20,13 +19,10 @@ export class LocationSelectionComponent implements OnInit, WizardFormComponent {
 
   selectedLocationId: string;
 
-  @Input() fsmContext: ApplicationWizardMachineContext;
-
   constructor(
     private topologyService: TopologyService,
-    private fsm: AppplicationWizardMachineService
-  ) {
-  }
+    protected fsm: AppplicationWizardMachineService
+  ) { super(fsm); }
 
   ngOnInit() {
     this.fsmContext.locations.forEach(location => {

@@ -15,7 +15,7 @@ export class ApplicationDeploymentService extends GenericService {
     translate: TranslateService
   ) { super(http, translate) }
 
-  deploy(applicationId: String, applicationEnvironmentId: String) {
+  deploy(applicationId: string, applicationEnvironmentId: string) {
     let payload = {"applicationId": applicationId, "applicationEnvironmentId": applicationEnvironmentId};
     return this.handleResult<{}>(this.http.post(GenericService.BASE_URL+"/applications/deployment", payload, {
       headers: new HttpHeaders({
@@ -24,7 +24,7 @@ export class ApplicationDeploymentService extends GenericService {
     }));
   }
 
-  getActiveDeployment(applicationId: String, environmentId: String): Observable<Deployment> {
+  getActiveDeployment(applicationId: string, environmentId: string): Observable<Deployment> {
     let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
     return this.handleResult<Deployment>(this.http.get(GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/active-deployment", params), {
       headers: new HttpHeaders({
@@ -33,9 +33,19 @@ export class ApplicationDeploymentService extends GenericService {
     }));
   }
 
-  undeploy(applicationId: String, environmentId: String): Observable<Deployment> {
+  undeploy(applicationId: string, environmentId: string): Observable<Deployment> {
     let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
     return this.handleResult<Deployment>(this.http.delete(GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/deployment", params), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      })
+    }));
+  }
+
+  launchWorkflow(applicationId: string, environmentId: string, workflowName: string): Observable<String> {
+    let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId, "workflowName": workflowName};
+    let url = GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/workflows/@{workflowName}", params);
+    return this.handleResult<String>(this.http.post(url, {}, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       })

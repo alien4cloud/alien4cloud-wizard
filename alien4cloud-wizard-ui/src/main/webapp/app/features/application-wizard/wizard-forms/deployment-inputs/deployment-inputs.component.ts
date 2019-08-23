@@ -17,9 +17,7 @@ import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.
   templateUrl: './deployment-inputs.component.html',
   styleUrls: ['./deployment-inputs.component.css']
 })
-export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+export class DeploymentInputsComponent extends WizardFormComponent implements OnInit {
 
   public propertieFormDefitions: PropertyFormDefinition[] = new Array<PropertyFormDefinition>();
 
@@ -27,9 +25,9 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
   inputsForm = new FormGroup({});
 
   constructor(
-    private fsm: AppplicationWizardMachineService,
+    protected fsm: AppplicationWizardMachineService,
     private deploymentTopologyService: DeploymentTopologyService
-  ) { }
+  ) { super(fsm); }
 
   ngOnInit() {
     // FIXME : we need to retrieve the deploymentTopology since the one fom context is not always fresh even after refresh
@@ -52,7 +50,6 @@ export class DeploymentInputsComponent implements OnInit, WizardFormComponent {
       // we need to wait for rendering
       setTimeout(() => { this.initDefaults(); }, 500);
     })
-
   }
 
   initDefaults(): void {

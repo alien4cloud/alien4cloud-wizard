@@ -9,13 +9,11 @@ import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css']
 })
-export class WelcomeComponent implements WizardFormComponent {
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+export class WelcomeComponent extends WizardFormComponent {
 
   constructor(
-    private fsm: AppplicationWizardMachineService
-  ) { }
+    protected fsm: AppplicationWizardMachineService
+  ) { super(fsm); }
 
   startWizard() {
     this.fsm.send(new Init());

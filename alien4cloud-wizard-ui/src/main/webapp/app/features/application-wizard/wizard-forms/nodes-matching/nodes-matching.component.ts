@@ -11,24 +11,18 @@ import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.
   templateUrl: './nodes-matching.component.html',
   styleUrls: ['./nodes-matching.component.css']
 })
-export class NodesMatchingComponent implements OnInit, WizardFormComponent {
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+export class NodesMatchingComponent extends WizardFormComponent {
 
   constructor(
-    private fsm: AppplicationWizardMachineService,
+    protected fsm: AppplicationWizardMachineService,
     private deploymentTopologyService: DeploymentTopologyService
-  ) { }
-
-  ngOnInit() {
-  }
+  ) { super(fsm); }
 
   changeSubstitution(nodeName: string, e: MatRadioChange) {
     console.log(`Substitution has changed for ${nodeName}:`, e.value);
     this.deploymentTopologyService
       .updateSubstitution(this.fsmContext.application.id, this.fsmContext.environment.id, nodeName, e.value)
-      .subscribe(dto => { this.fsmContext.deploymentTopology = dto; }
-      );
+      .subscribe(dto => { this.fsmContext.deploymentTopology = dto; });
   }
 
   doCompleteMatching() {

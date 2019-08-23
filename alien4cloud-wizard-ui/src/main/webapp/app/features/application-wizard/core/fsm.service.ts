@@ -110,15 +110,23 @@ export class AppplicationWizardMachineService {
                     .pipe(
                       mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environment.id)
                         .pipe(
-                          map(status => {
-                            if (deployment) {
-                              _.deployment = deployment;
-                              _.deploymentStatus = status;
-                              return new OnActiveDeploymentFound(deployment, status);
-                            } else {
-                              return new DoSelectEnvironment(_.environment);
-                            }
-                          }),
+                          mergeMap(status =>
+                            this.deploymentTopologyService.getDeploymentTopology(
+                              _.application.id,
+                              _.environment.id
+                            ).pipe(
+                              map(dto => {
+                                _.deploymentTopology = dto;
+                                if (deployment) {
+                                  _.deployment = deployment;
+                                  _.deploymentStatus = status;
+                                  return new OnActiveDeploymentFound(deployment, status);
+                                } else {
+                                  return new DoSelectEnvironment(_.environment);
+                                }
+                              })
+                            )
+                          ),
                           catchError(err => {
                             console.log("------------ Error catch by service : " + err);
                             // return new DoSelectEnvironment(_.environmentId);
@@ -286,20 +294,11 @@ export class AppplicationWizardMachineService {
       assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSuccesss | OnMatchingCompleted>((_, event) => ({
         deploymentTopology: event.deploymentTopologyDTO
       })),
-      fetchDeploymentTopologyAndLocations: (_) => {
-        this.deploymentTopologyService.getDeploymentTopology(
-          _.application.id,
-          _.environment.id
-        ).pipe(
-          mergeMap(dto => {
-            // assign the deployment topology
-            _.deploymentTopology = dto;
-            return this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environment.id);
-          })).subscribe(
+      fetchLocations: (_) => {
+        this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environment.id).subscribe(
           locations => {
             _.locations = locations;
-          }
-        )
+          })
       },
       fetchApplicationMetaProperties: (_) => {
         this.metaPropertiesService.search(0, 1000, "", {"target":["application"]})

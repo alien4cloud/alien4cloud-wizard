@@ -12,17 +12,12 @@ import { ConfirmationDialogComponent } from '@app/shared';
   templateUrl: './delete-application-form.component.html',
   styleUrls: ['./delete-application-form.component.css']
 })
-export class DeleteApplicationFormComponent implements OnInit, WizardFormComponent {
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+export class DeleteApplicationFormComponent extends WizardFormComponent {
 
   constructor(
-    private fsm: AppplicationWizardMachineService,
+    protected fsm: AppplicationWizardMachineService,
     private  dialog: MatDialog
-    ) { }
-
-  ngOnInit() {
-  }
+  ) { super(fsm); }
 
   openDialog(event: any): void {
     event.stopPropagation();

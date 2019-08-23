@@ -20,9 +20,7 @@ import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.
   templateUrl: './application-metaproperties.component.html',
   styleUrls: ['./application-metaproperties.component.css']
 })
-export class ApplicationMetapropertiesComponent implements OnInit, WizardFormComponent {
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+export class ApplicationMetapropertiesComponent extends WizardFormComponent implements OnInit {
 
   /** The form. */
   metaPropertiesForm = new FormGroup({});
@@ -30,10 +28,10 @@ export class ApplicationMetapropertiesComponent implements OnInit, WizardFormCom
   metaPropertyDefinitions: MetaPropertyDefinition[] = new Array();
 
   constructor(
-    private fsm: AppplicationWizardMachineService,
+    protected fsm: AppplicationWizardMachineService,
     private applicationMetaPropertyService: ApplicationMetaPropertyService,
     private applicationService: ApplicationService
-  ) { }
+  ) { super(fsm); }
 
   ngOnInit() {
     this.applicationService.getById(this.fsmContext.application.id).subscribe(application => {

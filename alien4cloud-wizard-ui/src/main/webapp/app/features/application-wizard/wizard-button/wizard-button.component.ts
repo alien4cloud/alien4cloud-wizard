@@ -67,7 +67,7 @@ export class WizardButtonComponent implements OnInit {
     }
     try {
       let guardResult = this.fsm.machineOptions.guards[this.enableOnGuard].call(this, this.fsmContext);
-      console.log(`FSM guard ${this.enableOnGuard} returned ${guardResult}`);
+      // console.log(`FSM guard ${this.enableOnGuard} returned ${guardResult}`);
       return guardResult;
     } catch (e) {
       console.error("Error occurred while using guard to enable/disable the button, returning true", e);

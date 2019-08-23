@@ -10,13 +10,11 @@ import { TranslateService } from "@ngx-translate/core";
   templateUrl: './deployment-validation.component.html',
   styleUrls: ['./deployment-validation.component.css']
 })
-export class DeploymentValidationComponent implements WizardFormComponent {
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+export class DeploymentValidationComponent extends WizardFormComponent {
 
   constructor(
-    private fsm: AppplicationWizardMachineService
-  ) {}
+    protected fsm: AppplicationWizardMachineService
+  ) { super(fsm); }
 
   deployApp() {
     this.fsm.send(new DoSubmitDeployment());

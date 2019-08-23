@@ -1,26 +1,34 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, OnDestroy, AfterViewInit} from '@angular/core';
 import {WizardFormComponent} from '../../core/wizard.model';
-import {ApplicationWizardMachineContext} from '../../core/fsm.model';
 import {AppplicationWizardMachineService} from '../../core/fsm.service';
 import {Subscription} from 'rxjs'
 import {MonitorDeploymentService} from "@app/core/services/monitor-deployment.service";
 import {DeploymentWorkflowExecutionService} from "@app/core/services/workflow-execution.service";
-import {DeploymentStatus, ExecutionStatus, MonitoredDeploymentDTO, Task, WorkflowExecutionDTO} from "@app/core";
+import {
+  ApplicationDeploymentService,
+  DeploymentStatus,
+  ExecutionStatus,
+  MonitoredDeploymentDTO,
+  Task, Workflow,
+  WorkflowExecutionDTO
+} from "@app/core";
 import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
 import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '@app/shared';
+import {FormControl} from "@angular/forms";
+import * as _ from "lodash";
 
 @Component({
   selector: 'w4c-active-deployment',
   templateUrl: './active-deployment.component.html',
   styleUrls: ['./active-deployment.component.css']
 })
-export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormComponent {
+export class ActiveDeploymentComponent extends WizardFormComponent implements OnInit, OnDestroy {
 
-  @Input()
-  fsmContext: ApplicationWizardMachineContext;
+  // @Input()
+  // fsmContext: ApplicationWizardMachineContext;
 
   workflowInProgress: boolean = false;
   progessBarData: ProgessBarData;
@@ -29,17 +37,23 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
   private wsSubscription: Subscription;
   private workflowMonitoringSubscription: Subscription;
 
+  workflowFormCtrl = new FormControl();
+  workflows = new Set<string>();
+
   constructor(
-    private fsm: AppplicationWizardMachineService,
+    protected fsm: AppplicationWizardMachineService,
     private monitorDeploymentService: MonitorDeploymentService,
     private deploymentWorkflowExecutionService: DeploymentWorkflowExecutionService,
+    private applicationDeploymentService: ApplicationDeploymentService,
     private websocketService: WebsocketSubscriptionManager,
-    private  dialog: MatDialog
-  ) { }
+    private dialog: MatDialog
+  ) {
+    super(fsm);
+  }
 
   ngOnInit() {
-    this.wsSubscription = this.websocketService.registerEnvironmentStatusChannel(this.fsmContext.environment.id).subscribe(event =>
-      {
+
+    this.wsSubscription = this.websocketService.registerEnvironmentStatusChannel(this.fsmContext.environment.id).subscribe(event => {
         console.log("Event received: ", event);
         let paaSDeploymentStatusMonitorEvent = <PaaSDeploymentStatusMonitorEvent>event;
         if (paaSDeploymentStatusMonitorEvent) {
@@ -58,10 +72,23 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
       this.monitorWorkflow();
     }
 
+    // we filter workflows that have steps and exclude install and uninstall
+    for (const [key, wf] of Object.entries(this.fsmContext.deploymentTopology.topology.workflows)) {
+      console.log(`Workflow ${key} : ${wf.name}`);
+      if (key != "install" && key != "uninstall" && _.size(wf['steps']) > 0) {
+        this.workflows.add(key);
+      }
+      if (this.workflows.has("run")) {
+        this.workflowFormCtrl.setValue("run");
+      } else if (this.workflows.size > 0) {
+        this.workflowFormCtrl.setValue(this.workflows.values().next().value);
+      }
+    }
+
   }
 
   ngOnDestroy(): void {
-    if (this.workflowMonitoringSubscription && !this.workflowMonitoringSubscription.closed)  {
+    if (this.workflowMonitoringSubscription && !this.workflowMonitoringSubscription.closed) {
       // FIXME: this does'nt seem to work. If I trigger a wf and leave the page (go Home), the polling still running !
       this.workflowMonitoringSubscription.unsubscribe();
     }
@@ -117,12 +144,24 @@ export class ActiveDeploymentComponent implements OnInit, OnDestroy, WizardFormC
     event.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '35%',
-      data: {actionDescription :"Application undeployment", message: "Do you confirm the undeployment of this application?"}
+      data: {
+        actionDescription: "Application undeployment",
+        message: "Do you confirm the undeployment of this application?"
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.fsm.send(new DoSubmitUndeployment());
       }
+    });
+  }
+
+  launchWorkflow() {
+    let workflow = this.workflowFormCtrl.value;
+    this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, workflow).subscribe(executionId => {
+      console.log(`Execution ID for workflow ${workflow} is ${executionId}`);
+      this.workflowInProgress = true;
+      this.monitorWorkflow();
     });
   }
 

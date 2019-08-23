@@ -29,9 +29,22 @@
         </div>
       </div>
     </div>
-    <div>
-<!--      <span>Here will go workflow trigger</span>-->
+    <div fxLayout="row" fxLayoutAlign="start center" class="deployment-workflow mat-app-background">
+      <div class="deployment-label">Workflows: </div>
+      <mat-select
+        *ngIf="fsmContext.deploymentTopology && fsmContext.deploymentTopology.topology && fsmContext.deploymentTopology.topology.workflows"
+        [formControl]="workflowFormCtrl"
+      >
+        <mat-option *ngFor="let wf of workflows"
+                    [value]="wf">
+          {{ wf }}
+        </mat-option>
+      </mat-select>
+<!--      <button mat-stroked-button [disabled]="workflowInProgress && false" (click)="launchWorkflow()" class="deployment-workflow-button">-->
+<!--        <mat-icon>play_circle_outline</mat-icon>Launch-->
+<!--      </button>-->
     </div>
+<!--      <span>Here will go workflow trigger</span>-->
     <div>
       <div class="mat-error">{{fsmContext.errorMessage}}</div>
     </div>
@@ -79,6 +92,12 @@
   </div>
 </ng-template>
 
+<ng-template #customButtons>
+  <div fxLayout="row">
+    <w4c-wizard-button enableOnGuard="canUndeploy" [fsmContext]="fsmContext" (click)="launchWorkflow()" [label]="workflowFormCtrl.value" matIconName="play_circle_outline"></w4c-wizard-button>
+  </div>
+</ng-template>
+
 <!-- You can add custom buttons in the wizard control like below
 1. Add a ng-template
   <ng-template #customButtons>
@@ -99,5 +118,6 @@
                       cancelLabel="Undeploy"
                       [cancelFn]="openUndeployDialog.bind(this)"
                       forwardGuard="canDeploy"
-                      [forwardFn]="deleteApplication.bind(this)">
+                      [forwardFn]="deleteApplication.bind(this)"
+                      [buttonHookTemplate]="customButtons">
   </w4c-wizard-control>

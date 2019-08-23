@@ -71,7 +71,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         // FIXME: a single OnAppEnvInitialiazed with guards will be better
         OnActiveDeploymentFound: {
           target: 'activeDeploymentForm',
-          actions: [/*'assignDeployment',*/'fetchDeploymentTopologyAndLocations']
+          actions: [/*'assignDeployment',*/'fetchLocations']
         },
         DoSelectEnvironment: {
           target: 'environmentSelected'

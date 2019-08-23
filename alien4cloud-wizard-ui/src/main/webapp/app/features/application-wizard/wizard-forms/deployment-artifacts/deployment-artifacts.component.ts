@@ -13,21 +13,18 @@ import * as _ from "lodash";
   templateUrl: './deployment-artifacts.component.html',
   styleUrls: ['./deployment-artifacts.component.css']
 })
-export class DeploymentArtifactsComponent implements OnInit, WizardFormComponent {
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+export class DeploymentArtifactsComponent extends WizardFormComponent implements OnInit {
 
   artifacts: Map<string, DeploymentArtifact> = new Map<string, DeploymentArtifact>();
 
   constructor(
-    private fsm: AppplicationWizardMachineService,
+    protected fsm: AppplicationWizardMachineService,
     private deploymentTopologyService: DeploymentTopologyService
-  ) {}
+  ) { super(fsm); }
 
   ngOnInit() {
     this.artifacts = this.fsmContext.deploymentTopology.topology.inputArtifacts;
-      this.artifacts = _.merge(this.artifacts, this.fsmContext.deploymentTopology.topology.uploadedInputArtifacts
-    );
+    this.artifacts = _.merge(this.artifacts, this.fsmContext.deploymentTopology.topology.uploadedInputArtifacts);
   }
 
   formIsValid() {

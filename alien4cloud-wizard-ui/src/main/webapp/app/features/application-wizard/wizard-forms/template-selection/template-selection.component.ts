@@ -14,7 +14,7 @@ import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.
   templateUrl: './template-selection.component.html',
   styleUrls: ['./template-selection.component.css']
 })
-export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
+export class TemplateSelectionComponent extends WizardFormComponent implements OnInit {
 
   // make lodash usable from template
   lodash = _;
@@ -35,18 +35,12 @@ export class TemplateSelectionComponent implements OnInit, WizardFormComponent {
   overview: TopologyOverview;
 
   constructor(
-    private fsm: AppplicationWizardMachineService,
+    protected fsm: AppplicationWizardMachineService,
     private topologyService: TopologyService,
     private topologyOverviewService: TopologyOverviewService
-  ) { }
-
-  @Input() fsmContext: ApplicationWizardMachineContext;
+  ) { super(fsm); }
 
   ngOnInit() {
-    if (this.fsmContext) {
-      // this.templateId = this.fsmContext.templateId;
-      // TODO: here display the selected topology
-    }
 
     this.loadTopologies();
     // add a debounceTimed suscription to avoid bakend mass attack
