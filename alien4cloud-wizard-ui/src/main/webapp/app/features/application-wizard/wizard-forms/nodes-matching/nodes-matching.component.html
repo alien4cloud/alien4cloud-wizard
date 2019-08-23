@@ -3,8 +3,14 @@
     <mat-expansion-panel
       *ngFor="let e of fsmContext.deploymentTopology.availableSubstitutions.availableSubstitutions | keyvalue;">
       <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ e.key }}
+
+        <mat-panel-title xLayout="row" >
+          <div fxFlex="10%">
+            <mat-icon matTooltip="Node matching" >widgets</mat-icon>
+          </div>
+          <div fxFlex="40%">
+            {{ e.key }}
+          </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-radio-group (change)="changeSubstitution(e.key, $event)" aria-label="Select an option" fxLayout="column" [value]="fsmContext.deploymentTopology.topology.substitutedNodes[e.key]">
@@ -14,9 +20,29 @@
         </mat-radio-button>
       </mat-radio-group>
     </mat-expansion-panel>
+
+    <mat-expansion-panel
+      *ngFor="let e of  fsmContext.deploymentTopology.availableSubstitutions.availablePoliciesSubstitutions | keyvalue;">
+      <mat-expansion-panel-header>
+        <mat-panel-title fxLayout="row">
+          <div fxFlex="10%">
+            <mat-icon  matTooltip="Policy matching">tune</mat-icon>
+          </div>
+          <div  fxFlex="40%">
+            {{ e.key }}
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-radio-group (change)="changePoliciesSubstitution(e.key, $event)" aria-label="Select an option"
+        fxLayout="column" [value]="fsmContext.deploymentTopology.topology.substitutedPolicies[e.key]">
+        <mat-radio-button *ngFor="let resourceTemplateId of e.value" [value]="resourceTemplateId">
+          <!-- TODO: use a shared templateComponent to properly display a node template -->
+          {{ fsmContext.deploymentTopology.availableSubstitutions.substitutionsPoliciesTemplates[resourceTemplateId].name }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-expansion-panel>
   </mat-accordion>
 </div>
-<w4c-wizard-control [fsmContext]="fsmContext"
+<w4c-wizard-control [fsmContext]="fsmContext" 
                     [forwardFn]="doCompleteMatching.bind(this)">
 </w4c-wizard-control>
-
