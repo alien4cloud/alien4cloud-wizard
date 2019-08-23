@@ -25,6 +25,14 @@ export class NodesMatchingComponent extends WizardFormComponent {
       .subscribe(dto => { this.fsmContext.deploymentTopology = dto; });
   }
 
+  changePoliciesSubstitution(policyId: string, e: MatRadioChange) {
+    console.log(`Substitution has changed for ${policyId}:`, e.value);
+    this.deploymentTopologyService
+      .updatePoliciesSubstitution(this.fsmContext.application.id, this.fsmContext.environment.id, policyId, e.value)
+      .subscribe(dto => { this.fsmContext.deploymentTopology = dto; }
+      );
+  }
+
   doCompleteMatching() {
     this.fsm.send(new OnMatchingCompleted(this.fsmContext.deploymentTopology));
   }

@@ -242,7 +242,8 @@ export class AppplicationWizardMachineService {
       hasMetapropertiesConfig: context => context.applicationMetapropertiesConfiguration != undefined,
       deploymentTopologyHasInputs: context => context.deploymentTopology && context.deploymentTopology.topology.inputs && lodash.size(context.deploymentTopology.topology.inputs) > 0,
       deploymentTopologyHasInputArtifacts: context => context.deploymentTopology && context.deploymentTopology.topology.inputArtifacts && lodash.size(context.deploymentTopology.topology.inputArtifacts) > 0,
-      shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology),
+      shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology.availableSubstitutions.availableSubstitutions) 
+        || this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology.availableSubstitutions.availablePoliciesSubstitutions),
       canUndeploy: context => context.deployment && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED
         || context.deploymentStatus === DeploymentStatus.FAILURE

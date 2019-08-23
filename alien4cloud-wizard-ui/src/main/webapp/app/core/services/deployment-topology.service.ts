@@ -68,13 +68,13 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
    * Given a DeploymentTopologyDTO, return true if at least 1 node has several available substitution.
    * @param deploymentTopology
    */
-  hasMultipleAvailableSubstitutions(deploymentTopology: DeploymentTopologyDTO): boolean {
+  hasMultipleAvailableSubstitutions( substitutions : Map<string,Set<String>>): boolean {
     let result: boolean = false;
     // FIXME: more efficient way to do this in a functionnal way ?
-    _.forEach(deploymentTopology.availableSubstitutions.availableSubstitutions, (proposals, nodeName) => {
-      console.log("Exploring substitutions for node : ", nodeName);
+    _.forEach(substitutions, (proposals, nodeName) => {
+      console.log("Exploring substitutions : ", nodeName);
       if (_.isArray(proposals) && _.size(proposals) > 1) {
-        console.log("More than 1 substitution available for node", nodeName);
+        console.log("More than 1 substitution available", nodeName);
         result = true;
       }
     });
@@ -84,6 +84,13 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
   updateSubstitution(applicationId: string, environmentId: string, nodeId: string, locationResourceTemplateId: string): Observable<DeploymentTopologyDTO> {
     let urlParams = {applicationId: applicationId, environmentId: environmentId, nodeId: nodeId};
     let url = this.getUrl("/substitutions/@{nodeId}", urlParams);
+    let params = {"locationResourceTemplateId": locationResourceTemplateId};
+    return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, {}, {params}));
+  }
+
+  updatePoliciesSubstitution(applicationId: string, environmentId: string, policyId: string, locationResourceTemplateId: string): Observable<DeploymentTopologyDTO> {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId, policyId: policyId};
+    let url = this.getUrl("/policies/@{policyId}/substitution", urlParams);
     let params = {"locationResourceTemplateId": locationResourceTemplateId};
     return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, {}, {params}));
   }
@@ -100,7 +107,6 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
     // }
     return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, formData));
   }
-
 }
 
 /**
