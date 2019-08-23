@@ -34,6 +34,7 @@ export class LocationSelectionComponent extends WizardFormComponent implements O
  }
 
   selectLocation(locationId: string) {
+    console.log("Selected location is ", locationId)
     let item = this.locationItems.get(locationId);
     if (!item.ready) {
       // the location is not ready, just do nothing

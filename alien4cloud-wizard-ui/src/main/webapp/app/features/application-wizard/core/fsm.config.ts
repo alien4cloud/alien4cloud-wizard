@@ -347,7 +347,7 @@ export const applicationWizardMachineConfig: MachineConfig<
         ],
         DoSelectLocation: {
           target: 'locationSelected',
-          actions: ['assignLocationId']
+          actions: ['assignLocation']
         },
         DoCancelWizard: {
           target: 'deleteApplicationForm'
