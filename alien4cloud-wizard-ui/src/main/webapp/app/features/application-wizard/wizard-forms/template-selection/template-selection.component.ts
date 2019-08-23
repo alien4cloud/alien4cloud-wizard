@@ -24,12 +24,8 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
 
   query = null;
 
-  // MatPaginator Output
-  pageEvent: PageEvent;
-
   // a form control to bind to search input
   searchField: FormControl = new FormControl();
-
 
   public topologyTemplates: Topology[];
   overview: TopologyOverview;
@@ -54,7 +50,7 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
 
   private loadTopologies() {
     this.isLoading = true;
-    this.topologyService.search(this.query).subscribe((data) => {
+    this.topologyService.search(0, 10000, this.query).subscribe((data) => {
       this.topologyTemplates = data.data;
       //this.length = data.totalResults;
       this.isLoading = false;
