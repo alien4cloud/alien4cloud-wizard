@@ -87,12 +87,7 @@ export class LoginService {
 
     if (environment.production) {
       // we call the logout url only in production environment
-      this.http.get(environment.urlPrefix + '/logout', {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }),
-        // observe: 'response' // uncomment of you what the whole response http : data will be accessed by data.body
-      }).subscribe(
+      this.http.get(environment.urlPrefix + '/logout').subscribe(
         data => {
           console.log("Logout called with success", data);
         },
