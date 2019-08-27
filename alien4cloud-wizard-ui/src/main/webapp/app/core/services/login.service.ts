@@ -84,6 +84,23 @@ export class LoginService {
   logout(currentRoute?: string) {
     this.currentRoute = currentRoute;
     this.clearToken();
+
+    if (environment.production) {
+      // we call the logout url only in production environment
+      this.http.get(environment.urlPrefix + '/logout', {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }),
+        // observe: 'response' // uncomment of you what the whole response http : data will be accessed by data.body
+      }).subscribe(
+        data => {
+          console.log("Logout called with success", data);
+        },
+        error => {
+          console.log("Logout called with error", error);
+        }
+      );
+    }
     // and redirect to login route
     this.router.navigate(["login"]);
   }
