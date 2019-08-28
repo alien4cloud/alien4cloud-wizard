@@ -48,3 +48,27 @@ export interface MonitoredDeploymentDTO {
   deployment: Deployment;
   workflowExpectedStepInstanceCount: Map<string, number>;
 }
+
+
+  
+export interface InstanceInformation {
+  /**
+   * The textual representation of the state of the instance.
+   */
+  state :string ;
+  /**
+   * The effective representation of the state of the instance (SUCCESS, PROCESSING, FAILURE).
+   */
+  instanceStatus: InstanceStatus ;
+  /** Values of attributes for this instance. */
+  attributes : Map<string, string> ;
+  /** Additional properties specific from the container. */
+  runtimeProperties: Map<string ,string> ;
+  /** Available operations outputs for this node instance */
+  /** do not serialize */
+  operationsOutputs:Map<string ,string> ;
+}
+
+export enum InstanceStatus {
+  SUCCESS = 'SUCCESS', PROCESSING = 'PROCESSING', FAILURE='FAILURE', MAINTENANCE='MAINTENANCE'
+}

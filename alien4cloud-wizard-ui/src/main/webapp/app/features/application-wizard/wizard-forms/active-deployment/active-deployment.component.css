@@ -32,3 +32,12 @@ table.deployment-infos {
 .deployment-workflow-button {
   width: 150px;
 }
+
+.attributes-infos {
+  width: 100%;
+}
+
+.text-primary {
+  color: #428bca;
+}
+

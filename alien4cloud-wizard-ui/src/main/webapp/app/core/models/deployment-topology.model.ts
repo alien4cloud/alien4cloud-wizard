@@ -100,3 +100,12 @@ export enum TaskCode {
   /** Specific code for cloudify */
   CFY_MULTI_RELATIONS = "CFY_MULTI_RELATIONS"
 }
+
+
+export interface TopologyDTO extends AbstractTopologyDTO<Topology>{
+  lastOperationIndex :number ;
+  delegateTye : string ;
+  //operations : AbstractEditorOperation[];
+  //dependancyConflicts : DependancyConflictDTO[];
+  //archiveContentTree : TreeNode ;
+}
