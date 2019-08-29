@@ -3,7 +3,6 @@
       <a *ngFor="let locationItem  of locationItems | keyvalue; let active = false"
         class="locations-component-list-item"
         [ngClass]="{'locations-component-list-item-disabled': !locationItem.value.ready , 'locations-component-list-autoselected-item': selectedLocationId === locationItem.key }"
-        href="typescript:void(0)"
         (mouseover)="active = true"
         (mouseout)="active = false"
         (click)="selectLocation(locationItem.key)" >
