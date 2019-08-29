@@ -20,7 +20,7 @@ export class WebsocketSubscriptionManager {
   private deployementStatusChangeSubject = new ReplaySubject<DeploymentStatusChangeEvent>(1);
   public deployementStatusChange = this.deployementStatusChangeSubject.asObservable();
 
-  private static stompChannelBaseUrl: string = environment.urlPrefix + "/rest/w4cAlienEndPoint";
+  private static STOMP_CHANNEL_BASE_URL: string = (environment.production) ? "/rest/alienEndPoint" : environment.urlPrefix + "/rest/w4cAlienEndPoint";
 
   constructor(
     private localStorage: LocalStorageService) {
@@ -36,10 +36,14 @@ export class WebsocketSubscriptionManager {
    */
   registerEnvironmentStatusChannel(environmentId: string): Observable<PaaSDeploymentStatusMonitorEvent> {
 
-    // get the JWT token from local storage
-    const token = this.localStorage.retrieve('jwt_token');
+    let url = WebsocketSubscriptionManager.STOMP_CHANNEL_BASE_URL;
+    if (!environment.production) {
+      // get the JWT token from local storage
+      const token = this.localStorage.retrieve('jwt_token');
+      url += "?jwtToken=" + token;
+    }
+    let ws = new SockJS(url);
 
-    let ws = new SockJS(WebsocketSubscriptionManager.stompChannelBaseUrl + "?jwtToken=" + token);
     return new Observable<any>(observer => {
       const conn = Stomp.over(ws);
       conn.connect({}, () => {

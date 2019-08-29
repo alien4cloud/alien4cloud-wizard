@@ -23,7 +23,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    console.log("Environment is production ? : ", environment.production);
     if (environment.production) {
       // No interceptor att all in production
       return next.handle(request);
