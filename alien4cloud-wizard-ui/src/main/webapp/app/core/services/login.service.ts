@@ -90,14 +90,16 @@ export class LoginService {
       this.http.get(environment.urlPrefix + '/logout').subscribe(
         data => {
           console.log("Logout called with success", data);
+          window.location.assign("../");
         },
         error => {
           console.log("Logout called with error", error);
         }
       );
+    } else {
+      // and redirect to login route
+      this.router.navigate(["login"]);
     }
-    // and redirect to login route
-    this.router.navigate(["login"]);
   }
 
 }
