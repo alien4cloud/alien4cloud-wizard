@@ -14,7 +14,7 @@ export class DeploymentStatusButtonLabel implements PipeTransform {
         break;
       }
       default: {
-        return "Undeploy"
+        return "Manage"
         break;
       }
     }

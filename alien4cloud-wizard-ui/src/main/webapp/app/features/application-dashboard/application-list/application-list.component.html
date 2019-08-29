@@ -46,7 +46,7 @@
         <!-- TODO: translate status -->
         <mat-icon *ngIf="overview" [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
           matTooltip="{{overview.deploymentStatus}}">lens</mat-icon>
-        <button mat-button
+        <button mat-stroked-button color="primary"
           (click)="openWizard()">{{ (overview) ? (overview.deploymentStatus | w4cDeploymentStatusButtonLabel) : '' }}</button>
       </mat-action-row>
     </mat-expansion-panel>

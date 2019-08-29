@@ -156,7 +156,8 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     });
   }
 
-  launchWorkflow() {
+  launchWorkflow(event: any) {
+    event.stopPropagation();
     let workflow = this.workflowFormCtrl.value;
     this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, workflow).subscribe(executionId => {
       console.log(`Execution ID for workflow ${workflow} is ${executionId}`);

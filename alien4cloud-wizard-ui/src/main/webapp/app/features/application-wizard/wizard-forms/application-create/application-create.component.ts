@@ -29,6 +29,14 @@ export class ApplicationCreateComponent extends WizardFormComponent implements O
   }
 
   ngOnInit() {
+
+    this.applicationNameFormCtrl.valueChanges.pipe(debounceTime(500)).subscribe(value => {
+      if (!this.fsmContext.application) {
+        // The archive name can not be changed for an existing application
+        this.archiveName = _.capitalize(_.camelCase(value));
+      }
+    });
+
     if (this.fsmContext.application) {
       this.applicationNameFormCtrl.setValue(this.fsmContext.application.name);
       this.applicationDescription = this.fsmContext.application.description;
@@ -39,12 +47,6 @@ export class ApplicationCreateComponent extends WizardFormComponent implements O
       this.applicationDescription = this.fsmContext.topologyTemplate.description;
     }
 
-    this.applicationNameFormCtrl.valueChanges.pipe(debounceTime(500)).subscribe(value => {
-      if (!this.fsmContext.application) {
-        // The archive name can not be changed for an existing application
-        this.archiveName = _.capitalize(_.camelCase(value));
-      }
-    });
   }
 
   ngAfterContentInit(): void {

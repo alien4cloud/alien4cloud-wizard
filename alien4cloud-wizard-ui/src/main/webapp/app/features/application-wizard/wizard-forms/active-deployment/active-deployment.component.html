@@ -94,7 +94,7 @@
 
 <ng-template #customButtons>
   <div fxLayout="row">
-    <w4c-wizard-button enableOnGuard="canUndeploy" [fsmContext]="fsmContext" (click)="launchWorkflow()" [label]="workflowFormCtrl.value" matIconName="play_circle_outline"></w4c-wizard-button>
+    <w4c-wizard-button enableOnGuard="canUndeploy" [fsmContext]="fsmContext" (click)="launchWorkflow($event)" [label]="workflowFormCtrl.value" matIconName="play_circle_outline"></w4c-wizard-button>
   </div>
 </ng-template>
 
