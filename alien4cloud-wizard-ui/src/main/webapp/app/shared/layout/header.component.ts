@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService, HealthService, StyleManager} from '@app/core';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'w4c-layout-header',
@@ -17,6 +18,8 @@ export class LHeaderComponent implements OnInit {
   isAuthenticated: boolean;
   // indicates if the A4C webapp is reachable
   isConnected: boolean;
+
+  isProduction = environment.production;
 
   ngOnInit() {
     this.loginService.isAuthenticated.subscribe(
@@ -57,6 +60,10 @@ export class LHeaderComponent implements OnInit {
 
   logout() {
     this.loginService.logout();
+  }
+
+  a4cRedirect() {
+    window.location.assign("../");
   }
 
 }

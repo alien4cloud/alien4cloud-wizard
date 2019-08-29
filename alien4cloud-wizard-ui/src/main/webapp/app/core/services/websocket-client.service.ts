@@ -21,17 +21,20 @@ export enum SocketClientState {
 })
 export class WebsocketClientService implements OnDestroy {
 
-  private static STOMP_CHANNEL_BASE_URL: string = environment.urlPrefix + "/rest/w4cAlienEndPoint";
+  private static STOMP_CHANNEL_BASE_URL: string = (environment.production) ? "/rest/alienEndPoint" : environment.urlPrefix + "/rest/w4cAlienEndPoint";
 
   private client: any;
   private state: BehaviorSubject<SocketClientState>;
 
   constructor(private localStorage: LocalStorageService) {
 
-    // get the JWT token from local storage
-    const token = this.localStorage.retrieve('jwt_token');
-
-    let ws = new SockJS(WebsocketClientService.STOMP_CHANNEL_BASE_URL + "?jwtToken=" + token);
+    let url = WebsocketClientService.STOMP_CHANNEL_BASE_URL;
+    if (!environment.production) {
+      // get the JWT token from local storage
+      const token = this.localStorage.retrieve('jwt_token');
+      url += "?jwtToken=" + token;
+    }
+    let ws = new SockJS(url);
 
     this.client = Stomp.over(ws);
     this.state = new BehaviorSubject<SocketClientState>(SocketClientState.ATTEMPTING);
