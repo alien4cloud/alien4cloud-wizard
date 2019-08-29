@@ -29,6 +29,7 @@ export class WebsocketClientService implements OnDestroy {
   constructor(private localStorage: LocalStorageService) {
 
     console.log("Environment is production ? : ", environment.production);
+    console.log("Environment : ", JSON.stringify(environment));
     let url = WebsocketClientService.STOMP_CHANNEL_BASE_URL;
     if (!environment.production) {
       // get the JWT token from local storage
