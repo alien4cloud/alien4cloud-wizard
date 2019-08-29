@@ -19,7 +19,7 @@
         <mat-icon>exit_to_app</mat-icon>
         <span>Login</span>
       </button>
-      <button mat-menu-item [disabled]="!isAuthenticated" (click)="logout()">
+      <button mat-menu-item [disabled]="!isProduction && !isAuthenticated" (click)="logout()">
         <mat-icon>power_settings_new</mat-icon>
         <span>Logout</span>
       </button>
