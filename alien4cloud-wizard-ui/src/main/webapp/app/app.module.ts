@@ -25,6 +25,7 @@ import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import {AuthInterceptor, StyleManager} from '@app/core';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -72,6 +73,10 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+    },
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
     }
   ],
   bootstrap: [AppComponent]
