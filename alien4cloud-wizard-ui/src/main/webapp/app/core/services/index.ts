@@ -19,3 +19,4 @@ export * from './workflow-execution.service';
 export * from './meta-properties.service';
 export * from './application-meta-property.service';
 export * from './settings.service';
+export * from './runtime.service';

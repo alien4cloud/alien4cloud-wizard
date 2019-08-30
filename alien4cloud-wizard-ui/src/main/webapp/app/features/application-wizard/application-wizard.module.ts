@@ -23,6 +23,7 @@ import { WizardControlComponent } from './wizard-control/wizard-control.componen
 import { DeleteApplicationFormComponent } from './wizard-forms/delete-application-form/delete-application-form.component';
 import { DeploymentArtifactsComponent } from './wizard-forms/deployment-artifacts/deployment-artifacts.component';
 import {TranslateModule} from "@ngx-translate/core";
+import { LinkyModule } from 'angular-linky';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {TranslateModule} from "@ngx-translate/core";
     NgxGraphModule,
     NgxChartsModule,
     HeroLoaderModule,
-    TranslateModule
+    TranslateModule,
+    LinkyModule
   ],
   providers: [AppplicationWizardMachineService],
   entryComponents: [

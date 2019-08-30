@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Deployment} from '@app/core/models';
+import {Deployment, InstanceInformation} from '@app/core/models';
 import {GenericService} from "@app/core/services/generic.service";
 import {Observable} from "rxjs";
 
@@ -51,5 +51,17 @@ export class ApplicationDeploymentService extends GenericService {
       })
     }));
   }
+
+  getInstanceInformation(applicationId: string, environmentId: string) : Observable<Map<string,InstanceInformation[]>>{
+    let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
+    let url = GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/deployment/informations", params);
+    return this.handleResult<Map<string,[]>>(this.http.get(url, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      })
+    }));
+  }
+  
+
 
 }

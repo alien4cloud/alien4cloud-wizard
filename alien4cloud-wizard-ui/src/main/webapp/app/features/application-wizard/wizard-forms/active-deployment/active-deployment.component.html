@@ -111,6 +111,36 @@
 2. add this to the  <w4c-wizard-control/> tag
 [buttonHookTemplate]="customButtons"
 -->
+
+
+<div fxLayout="row" fxLayoutAlign="start start" *ngIf="fsmContext.deploymentStatus !== 'UNDEPLOYED' && topologyDTO && topologyDTO.topology && topologyDTO.topology.outputAttributes && instanceInformations">
+  <div class="attributes-infos">
+    <table class="mat-table attributes-infos">
+      <tr class="mat-row"
+        *ngFor="let node of instanceInformations | w4cFilterTopologyNodes :topologyDTO.topology.outputAttributes | keyvalue">
+        <td class="mat-cell deployment-info" >
+          <span>{{node.key}}</span>
+        </td>
+        <td class="mat-cell deployment-info"  *ngIf="topologyDTO.topology.outputAttributes[node.key] && node.value" >
+          <ul >
+            <li *ngFor="let instance of node.value | keyvalue">
+              instance {{instance.key}}
+              <ul>
+                <li 
+                  *ngFor="let attribute of instance.value.attributes | w4cFilterTopologyNodesAttributes : topologyDTO.topology.outputAttributes[node.key] | keyvalue; let k = index">
+                  {{attribute.key}}  : 
+                  <span *ngIf="attribute.value" class="text-primary" [innerHTML]="attribute.value | linky"></span>
+                  <em class="text-primary" *ngIf="!attribute.value">N/A</em>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
   <w4c-wizard-control [fsmContext]="fsmContext"
                       backwardGuard="canDeploy"
                       backwardAltLabel="Deploy"

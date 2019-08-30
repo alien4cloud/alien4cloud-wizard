@@ -10,7 +10,10 @@ import {
   ExecutionStatus,
   MonitoredDeploymentDTO,
   Task, Workflow,
-  WorkflowExecutionDTO
+  WorkflowExecutionDTO,
+  InstanceInformation,
+  TopologyDTO,
+  RuntimeService
 } from "@app/core";
 import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
@@ -40,13 +43,19 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
   workflowFormCtrl = new FormControl();
   workflows = new Set<string>();
 
+  //make lodash usable from template
+  lodash = _ ;
+  instanceInformations: Map<string,InstanceInformation[]>;
+  topologyDTO : TopologyDTO ;
+
   constructor(
     protected fsm: AppplicationWizardMachineService,
     private monitorDeploymentService: MonitorDeploymentService,
     private deploymentWorkflowExecutionService: DeploymentWorkflowExecutionService,
     private applicationDeploymentService: ApplicationDeploymentService,
     private websocketService: WebsocketSubscriptionManager,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private runtimeService: RuntimeService
   ) {
     super(fsm);
   }
@@ -64,6 +73,9 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
           } else {
             console.log(`The status received (${this.fsmContext.deploymentStatus}) is a NOT pending status do nothing`);
           }
+          
+          //update topology attributes
+          this.getInstanceInformation() ;
         }
       }
     );
@@ -84,6 +96,10 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
         this.workflowFormCtrl.setValue(this.workflows.values().next().value);
       }
     }
+
+    this.getDeployedTopology();
+    this.getInstanceInformation() ;
+
 
   }
 
@@ -168,6 +184,19 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
   deleteApplication() {
     this.fsm.send(new DoCancelWizard());
+  }
+
+
+  getInstanceInformation() {
+    this.applicationDeploymentService.getInstanceInformation(this.fsmContext.application.id, this.fsmContext.environment.id).subscribe(instancesInfos => {
+      this.instanceInformations = instancesInfos;
+    });
+  }
+
+  getDeployedTopology() {
+    this.runtimeService.getDeployedTopology(this.fsmContext.application.id, this.fsmContext.environment.id).subscribe(deplyopedTopology => {
+      this.topologyDTO = deplyopedTopology;
+    });
   }
 
 }

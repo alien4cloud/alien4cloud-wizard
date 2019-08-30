@@ -5,7 +5,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
 import {A4cMaterialModule} from './a4c-material.module';
 import {SvgNodeTypeImageSourceDirective} from './directives';
-import {ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, TrimNamePipe, DeploymentStatusButtonLabel} from './pipes';
+import {ToscaTypeShortNamePipe, ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, TrimNamePipe, DeploymentStatusButtonLabel, FilterTopologyNodesPipe , FilterTopologyNodesAttributesPipe} from './pipes';
 import {
   LoginComponent,
   TopologyOverviewComponent,
@@ -28,6 +28,8 @@ import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
     ToscaIdArchiveExtractorPipe,
+    FilterTopologyNodesPipe,
+    FilterTopologyNodesAttributesPipe,
     SvgNodeTypeImageSourceDirective,
     ManageFormFocusDirective,
     TrimNamePipe,
@@ -55,13 +57,15 @@ import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
     ToscaIdArchiveExtractorPipe,
+    FilterTopologyNodesPipe,
+    FilterTopologyNodesAttributesPipe,
     SvgNodeTypeImageSourceDirective,
     ManageFormFocusDirective,
     TrimNamePipe,
     DeploymentStatusButtonLabel
   ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA]
-  providers: [ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe, DeploymentStatusButtonLabel, StyleManager],
+  providers: [ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe, DeploymentStatusButtonLabel, StyleManager, FilterTopologyNodesPipe, FilterTopologyNodesAttributesPipe],
 })
 export class SharedModule {
   static forRoot() {
