@@ -94,6 +94,7 @@ export class LoginService {
         },
         error => {
           console.log("Logout called with error", error);
+          window.location.assign("../");
         }
       );
     } else {
