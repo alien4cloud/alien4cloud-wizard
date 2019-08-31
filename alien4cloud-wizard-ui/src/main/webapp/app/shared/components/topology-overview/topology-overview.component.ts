@@ -16,7 +16,7 @@ export class TopologyOverviewComponent {
     private topologyGraphService: TopologyGraphService) {
   }
 
-  modulesDisplayedColumns = ['icon', 'name', 'version', 'metaproperties'];
+  modulesDisplayedColumns = ['icon', 'nodeName', 'typeName', 'version', 'metaproperties'];
 
   /**
    * Inidicates if the graph view should be displayed.

@@ -14,11 +14,23 @@
 
 .modules {
   height: 200px;
-  overflow-y: scroll;
+  //
   padding: 5px;
   margin: 5px;
 }
 
+.modules-table {
+  overflow-y: scroll;
+  height: 150px;
+  max-height: 150px;
+}
+
 .title {
   margin: 6px;
+}
+
+.meta-chip {
+  font-size: 10px;
+  min-height: 22px;
+
 }

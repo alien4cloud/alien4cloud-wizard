@@ -3,7 +3,8 @@ import {Application, ApplicationEnvironment, MetaProperty, NodeType, TopologyGra
 export interface TopologyOverview {
   description: string;
   namedMetaProperties: MetaProperty[];
-  modules: ApplicationModule[];
+  componentCategories: string[];
+  componentsPerCategory: Map<string, ApplicationModule[]>;
   topologyId: string;
   topologyVersion: string;
 }
@@ -15,6 +16,7 @@ export interface ApplicationOverview extends TopologyOverview {
 }
 
 export interface ApplicationModule {
+  nodeName: string;
   nodeType: NodeType;
   namedMetaProperties: MetaProperty[];
 }
