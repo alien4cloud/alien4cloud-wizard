@@ -152,7 +152,7 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         }
 
         //Activate  action on Form     
-        this.stepFormContainer.activateAcionOnForm();
+        this.stepFormContainer.unblur();
 
       } else {
         // nothing to do here: a state is not always a form state.
@@ -160,7 +160,7 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         // this.stepFormContainer.renderSpinner();
         
         //Desactivate action on Form 
-        this.stepFormContainer.desactivateAcionOnForm();
+        this.stepFormContainer.blur();
       }
     }, () => {}, () => {
       console.log("Machine is completed");

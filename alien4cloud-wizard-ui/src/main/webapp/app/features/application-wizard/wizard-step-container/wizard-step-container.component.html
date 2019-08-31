@@ -2,10 +2,28 @@
   <div [ngClass]="{'disableForm': isDisabled}">
     <div class="w4cStepComponentContainer">
       <mat-card *ngIf="wizardFormStep">
-        <mat-card-header>
-          <mat-card-title>{{ wizardFormStep.stepLabel }}</mat-card-title>
-          <mat-card-subtitle>{{ wizardFormStep.description }}</mat-card-subtitle>
-        </mat-card-header>
+        <div fxLayout="row" fxLayoutAlign="space-between start">
+          <div fxLayout="column">
+            <div class="mat-card-title">{{ wizardFormStep.stepLabel }}</div>
+            <div class="mat-card-subtitle">{{ wizardFormStep.description }}</div>
+          </div>
+          <div class="deployment-infos" *ngIf="wizardForm && wizardForm.fsmContext">
+            <table class="context-infos">
+              <tr *ngIf="wizardForm.fsmContext.application">
+                <td class="context-label" align="right">Application: </td>
+                <td class="context-data">{{ wizardForm.fsmContext.application.name }}</td>
+              </tr>
+              <tr *ngIf="wizardForm.fsmContext.deploymentTopology">
+                <td class="context-label" align="right">Version: </td>
+                <td class="context-data">{{ wizardForm.fsmContext.deploymentTopology.topology.versionId }}</td>
+              </tr>
+              <tr *ngIf="wizardForm.fsmContext.environment">
+                <td class="context-label" align="right">Environment: </td>
+                <td class="context-data">{{ wizardForm.fsmContext.environment.name }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </mat-card>
       <ng-template w4cStepComponent></ng-template>
     </div>

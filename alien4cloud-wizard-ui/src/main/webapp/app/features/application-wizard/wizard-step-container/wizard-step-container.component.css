@@ -13,3 +13,13 @@
   /*z-index: 1;*/
 }
 
+td.context-label {
+  padding: 5px;
+  width: 100px;
+}
+
+td.context-data {
+  font-weight: bold;
+}
+
+

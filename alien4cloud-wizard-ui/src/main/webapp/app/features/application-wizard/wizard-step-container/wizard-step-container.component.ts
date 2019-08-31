@@ -56,11 +56,11 @@ export class WizardStepContainerComponent implements OnInit {
     this.wizardForm.fsmContext = fsmContext;
   }
 
-  desactivateAcionOnForm() {
+  blur() {
     this.isDisabled = true;     
   }
 
-  activateAcionOnForm(){
+  unblur(){
     this.isDisabled = false;
   }
 
