@@ -20,6 +20,8 @@ export class WizardStepContainerComponent implements OnInit {
 
   wizardFormStep: WizardFormStep;
 
+  isDisabled : boolean = false ;
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver
   ) { }
@@ -52,6 +54,14 @@ export class WizardStepContainerComponent implements OnInit {
 
   setContext(fsmContext: ApplicationWizardMachineContext) {
     this.wizardForm.fsmContext = fsmContext;
+  }
+
+  desactivateAcionOnForm() {
+    this.isDisabled = true;     
+  }
+
+  activateAcionOnForm(){
+    this.isDisabled = false;
   }
 
 }

@@ -150,10 +150,17 @@ export class WizardMainComponent implements OnInit, OnDestroy {
           // we have to set the fsmContext to the current form
           this.stepFormContainer.setContext(this.currentFsmContext);
         }
+
+        //Activate  action on Form     
+        this.stepFormContainer.activateAcionOnForm();
+
       } else {
         // nothing to do here: a state is not always a form state.
         console.log(`${data.value} is not a form state !`);
         // this.stepFormContainer.renderSpinner();
+        
+        //Desactivate action on Form 
+        this.stepFormContainer.desactivateAcionOnForm();
       }
     }, () => {}, () => {
       console.log("Machine is completed");

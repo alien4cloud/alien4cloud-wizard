@@ -129,8 +129,8 @@
                 <li 
                   *ngFor="let attribute of instance.value.attributes | w4cFilterTopologyNodesAttributes : topologyDTO.topology.outputAttributes[node.key] | keyvalue; let k = index">
                   {{attribute.key}}  : 
-                  <span *ngIf="attribute.value" class="text-primary" [innerHTML]="attribute.value | linky"></span>
-                  <em class="text-primary" *ngIf="!attribute.value">N/A</em>
+                  <span *ngIf="attribute.value" class="w4c-topology-attributes-values" [innerHTML]="attribute.value | linky : {phone: false}"></span>
+                  <em class="w4c-topology-attributes-values" *ngIf="!attribute.value">N/A</em>
                 </li>
               </ul>
             </li>

@@ -4,3 +4,12 @@
   margin-left: 10px;
   margin-right: 5px;
 }
+
+.disableForm{
+  cursor: not-allowed;
+  pointer-events:none;
+  opacity: 0.4;/* in Chrome and FireFox */ 
+  filter: alpha(opacity=50); /* in IE */
+  /*z-index: 1;*/
+}
+
