@@ -1,4 +1,4 @@
-<button mat-stroked-button [disabled]="!isEnabled()" (click)="click.emit($event)">
+<button mat-stroked-button [disabled]="!isEnabled()" (click)="onClick($event)">
   <mat-icon *ngIf="matIconName && !matIconAtEnd">{{ matIconName }}</mat-icon>
   {{ label }}
   <mat-icon *ngIf="matIconName && matIconAtEnd">{{ matIconName }}</mat-icon>

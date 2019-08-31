@@ -64,15 +64,20 @@ export class WizardControlComponent implements OnInit {
   }
 
   _backward() {
-    if (this.backwardFn) {
-      this.backwardFn.call(this);
-    } else {
-      // default behavior for Back button is to send a GoBack event.
-      this.fsm.send(new GoBack());
+    if (this._backwardEnabled()) {
+      if (this.backwardFn) {
+        this.backwardFn.call(this);
+      } else {
+        // default behavior for Back button is to send a GoBack event.
+        this.fsm.send(new GoBack());
+      }
     }
   }
 
   _cancel(event: any) {
+    if (!this._cancelEnabled()) {
+      return;
+    }
     if (this.cancelFn) {
       this.cancelFn.call(this, event);
     } else {
@@ -82,7 +87,9 @@ export class WizardControlComponent implements OnInit {
   }
 
   _forward(event: any) {
-    this.forwardFn.call(this, event);
+    if (this._forwardEnabled()) {
+      this.forwardFn.call(this, event);
+    }
   }
 
   _forwardEnabled(): boolean {
