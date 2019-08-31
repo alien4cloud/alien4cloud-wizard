@@ -26,9 +26,9 @@ export const wizardDefinition: WizardFormStep[] = [
   {stepLabel: "Artifacts", component: DeploymentArtifactsComponent, fsmStateName: "deploymentInputArtifactsForm", description: "Input artifacts are files that can be associated to deployemnts and used by some components of the deployed application."},
   {stepLabel: "Select target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm", description: "The target AKA location is where your application will be deployed."},
   {stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm", description: "Some abstract nodes need to be replaced by concrete implementations provided by the location."},
-  {stepLabel: "Deploy application", component: DeploymentValidationComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
-  {stepLabel: "Active deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm", description: "Monitor the current deployment's workflow, and undeploy the application when it's deployed."},
-  {stepLabel: "Delete application", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm", description: "Delete or leave the application."}
+  {stepLabel: "Validation", component: DeploymentValidationComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
+  {stepLabel: "Manage deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm", description: "Monitor the current deployment's workflow, undeploy the application when it's deployed, display logs, trigger workflow executions."},
+  {stepLabel: "Exit", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm", description: "Delete or leave the application."}
 ];
 
 @Injectable({
