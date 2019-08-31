@@ -13,7 +13,7 @@ export class LHeaderComponent implements OnInit {
     private healthService: HealthService,
     /** Style manager is injected so that it is built. */
     private styleManager: StyleManager,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   // indicates if the user is logged in
