@@ -23,24 +23,21 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (environment.production) {
-      // No interceptor att all in production
-      return next.handle(request);
-    }
-
     // for jwauth endpoint we don't want to intercept
     if (!request || !request.url || request.url.indexOf(environment.urlPrefix + "/rest/jwtauth") > -1) {
       return next.handle(request);
     }
 
-    // add the JWT token to header
-    const token = this.localStorage.retrieve('jwt_token');
-    if (!!token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: 'Bearer ' + token
-        }
-      });
+    if (!environment.production) {
+      // add the JWT token to header (only in development)
+      const token = this.localStorage.retrieve('jwt_token');
+      if (!!token) {
+        request = request.clone({
+          setHeaders: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+      }
     }
 
     // handle the request and intercept auth error

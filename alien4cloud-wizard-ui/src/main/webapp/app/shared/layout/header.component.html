@@ -27,6 +27,7 @@
 
     </mat-menu>
     <mat-icon *ngIf="!isProduction" color="{{ (isConnected) ? 'default' : 'warn' }}" matTooltip="{{ getStatusText() }}">{{ getStatusIcon() }}</mat-icon>
+    <div class="username" *ngIf="authService.userStatus">{{authService.userStatus.username}}</div>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>

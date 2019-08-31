@@ -19,3 +19,4 @@ export * from './environment-type.enum';
 export * from './monitor-event.model';
 export * from './location-resource-template.model';
 export * from './workflow.model';
+export * from './user.model';

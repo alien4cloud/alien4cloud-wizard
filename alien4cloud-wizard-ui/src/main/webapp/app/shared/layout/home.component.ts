@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {HealthService} from "@app/core";
+import {AuthService, HealthService, User, UserStatus} from "@app/core";
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,8 @@ export class HomeComponent implements OnInit {
   isConnected: boolean;
 
   constructor(
-    healthService: HealthService
+    healthService: HealthService,
+    private authService: AuthService
   ) {
     healthService.isConnected.subscribe(
       (connected) => {
@@ -59,6 +60,17 @@ export class HomeComponent implements OnInit {
     this.features.push(wizard);
     this.features.push(modules);
     this.features.push(settings);
+
+    this.authService.$userStatus.subscribe(userStatus => {
+      if (userStatus) {
+        dashboard.allowed = true;
+        wizard.allowed = User.canCreateApp(userStatus.roles);
+        settings.allowed = true;
+      } else {
+        this.features.forEach(feature => feature.allowed = false);
+        settings.allowed = true;
+      }
+    })
 
   }
 

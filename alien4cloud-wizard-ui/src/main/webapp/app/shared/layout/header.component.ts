@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService, HealthService, StyleManager} from '@app/core';
+import {LoginService, HealthService, StyleManager, AuthService} from '@app/core';
 import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'w4c-layout-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class LHeaderComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private healthService: HealthService,
     /** Style manager is injected so that it is built. */
-    public styleManager: StyleManager
+    private styleManager: StyleManager,
+    private authService: AuthService
   ) {}
 
   // indicates if the user is logged in
