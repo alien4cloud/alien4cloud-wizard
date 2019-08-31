@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="wizard-control mat-app-background mat-card">
-  <w4c-wizard-button (click)="_backward()"
+  <w4c-wizard-button (click)="_backward($event)"
                      *ngIf="displayBackward"
                      [enableOnGuard]="backwardGuard"
                      [enabledFn]="_backwardEnabled.bind(this)"

@@ -2,6 +2,7 @@ import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {DoCancelWizard, GoBack} from "@app/features/application-wizard/core/fsm.events";
+import {WizardButtonComponent} from "@app/features/application-wizard/wizard-button/wizard-button.component";
 
 /**
  * A control panel for the wizard.
@@ -63,18 +64,21 @@ export class WizardControlComponent implements OnInit {
   ngOnInit() {
   }
 
-  _backward() {
-    if (this._backwardEnabled()) {
-      if (this.backwardFn) {
-        this.backwardFn.call(this);
-      } else {
-        // default behavior for Back button is to send a GoBack event.
-        this.fsm.send(new GoBack());
-      }
+  _backward(event: any) {
+    event.stopPropagation();
+    if (!this._backwardEnabled()) {
+      return;
+    }
+    if (this.backwardFn) {
+      this.backwardFn.call(this);
+    } else {
+      // default behavior for Back button is to send a GoBack event.
+      this.fsm.send(new GoBack());
     }
   }
 
   _cancel(event: any) {
+    event.stopPropagation();
     if (!this._cancelEnabled()) {
       return;
     }
@@ -87,37 +91,32 @@ export class WizardControlComponent implements OnInit {
   }
 
   _forward(event: any) {
-    if (this._forwardEnabled()) {
-      this.forwardFn.call(this, event);
+    event.stopPropagation();
+    if (!this._forwardEnabled()) {
+      return;
     }
+    this.forwardFn.call(this, event);
   }
 
   _forwardEnabled(): boolean {
     if (!this.forwardFn) {
       return false;
-    } else if (this.forwardEnabledFn) {
-      return this.forwardEnabledFn.call(this);
-    } else {
-      return true;
     }
+    return WizardButtonComponent.isButtonUnabled(this.forwardEnabledFn, this.fsm, this.fsmContext, this.forwardGuard);
   }
 
   _cancelEnabled(): boolean {
-    if (this.cancelEnabledFn) {
-      return this.cancelEnabledFn.call(this);
-    } else {
-      return true;
-    }
+    return WizardButtonComponent.isButtonUnabled(this.cancelEnabledFn, this.fsm, this.fsmContext, this.cancelGuard);
   }
 
   _backwardEnabled(): boolean {
+    // console.log(" backwardEnabledFn is ", JSON.stringify(this.backwardEnabledFn));
     if (!this.displayBackward) {
       return false;
-    } else if (this.backwardEnabledFn) {
-      return this.backwardEnabledFn.call(this);
-    } else {
-      return true;
     }
+    return WizardButtonComponent.isButtonUnabled(this.backwardEnabledFn, this.fsm, this.fsmContext, this.backwardGuard);
   }
+
+
 
 }

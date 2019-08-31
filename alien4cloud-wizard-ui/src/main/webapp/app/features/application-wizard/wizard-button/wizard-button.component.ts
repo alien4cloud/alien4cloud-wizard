@@ -49,33 +49,37 @@ export class WizardButtonComponent implements OnInit {
   }
 
   isEnabled() : boolean {
-    let enabledFnResult = true;
-    if (this.enabledFn) {
-      enabledFnResult = this.enabledFn.call(this);
-    }
-    if (!enabledFnResult) {
-      return false;
-    }
-    let guardResult = this.callFsmGuard();
-    return guardResult;
+    return WizardButtonComponent.isButtonUnabled(this.enabledFn, this.fsm, this.fsmContext, this.enableOnGuard);
   }
 
-  private callFsmGuard(): boolean {
-    if (!this.enableOnGuard) {
+  public static isButtonUnabled(enabledFn: Function, fsm: AppplicationWizardMachineService, fsmContext: ApplicationWizardMachineContext, guardName: string) {
+    let result = true;
+    if (enabledFn) {
+      // console.log("Calling backwardEnabledFn");
+      result = enabledFn.call(this);
+    }
+    if (result && guardName) {
+      result = WizardButtonComponent.callFsmGuard(fsm, fsmContext, guardName);
+    }
+    return result;
+  }
+
+  public static callFsmGuard(fsm: AppplicationWizardMachineService, fsmContext: ApplicationWizardMachineContext, guardName: string): boolean {
+    if (!guardName) {
       // no guard is configured for this button, returning true
       return true;
     }
-    if (!this.fsm.machineOptions.guards) {
-      console.log("No guards on FSM, returning true by default");
+    if (!fsm.machineOptions.guards) {
+      // console.log("No guards on FSM, returning true by default");
       return true;
     }
-    if (!this.fsm.machineOptions.guards[this.enableOnGuard]) {
-      console.log(`No guards named ${this.enableOnGuard} on FSM, returning true by default`);
+    if (!fsm.machineOptions.guards[guardName]) {
+      // console.log(`No guards named ${guardName} on FSM, returning true by default`);
       return true;
     }
     try {
-      let guardResult = this.fsm.machineOptions.guards[this.enableOnGuard].call(this, this.fsmContext);
-      console.log(`FSM guard ${this.enableOnGuard} returned ${guardResult}`);
+      let guardResult = fsm.machineOptions.guards[guardName].call(this, fsmContext);
+      // console.log(`FSM guard ${guardName} returned ${guardResult}`);
       return guardResult;
     } catch (e) {
       console.error("Error occurred while using guard to enable/disable the button, returning true", e);
