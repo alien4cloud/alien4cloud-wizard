@@ -12,10 +12,6 @@ const routes: Routes = [
     loadChildren: () => import('./features/application-dashboard/application-dashboard.module').then(mod => mod.ApplicationDashboardModule)
   },
   {
-    path: 'topology-graph/:topologyId/:topologyVersion',
-    loadChildren: () => import('./features/topology-graph/topology-graph.module').then(mod => mod.TopologyGraphModule)
-  },
-  {
     path: 'new-wizard',
     loadChildren: () => import('./features/application-wizard/application-wizard.module').then(mod => mod.ApplicationWizardModule)
   },

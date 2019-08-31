@@ -50,7 +50,6 @@
             ],
             "scripts": [],
             "lazyModules": [
-              "src/main/webapp/app/features/topology-graph/topology-graph.module",
               "src/main/webapp/app/features/fsm-graph/fsm-graph.module"
             ]
           },

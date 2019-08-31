@@ -2,7 +2,7 @@
   <div fxFlex="50%" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <span class="w4c-title title">Description</span>
-      <button mat-button (click)="switchGraphView()" color="primary">
+      <button mat-button (click)="switchGraphView()" [matTooltip]="(displayGraph) ? 'Show description' : 'Show graph'" color="primary">
         <mat-icon *ngIf="!displayGraph">photo</mat-icon>
         <mat-icon *ngIf="displayGraph">format_align_justify</mat-icon>
       </button>
@@ -11,7 +11,7 @@
       <span>{{ overview.description }}</span>
     </div>
     <div *ngIf="displayGraph" class="desciption w4c-borders" fxFlex="100%">
-      <hero-loader moduleName="src/main/webapp/app/features/topology-graph/topology-graph.module#TopologyGraphModule"></hero-loader>
+      <w4c-topology-graph-viewer></w4c-topology-graph-viewer>
     </div>
   </div>
   <div fxFlex="50%" fxLayout="column">

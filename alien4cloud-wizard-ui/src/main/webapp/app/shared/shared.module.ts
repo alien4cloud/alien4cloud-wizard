@@ -15,6 +15,9 @@ import {HeroLoaderModule} from "@herodevs/hero-loader";
 import {PropertyEditorComponent} from "@app/shared/components/property-editor/property-editor.component";
 import {StyleManager} from "@app/core";
 import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus.directive";
+import {NgxGraphModule} from "@swimlane/ngx-graph";
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {TopologyGraphViewerComponent} from "@app/shared/components/topology-graph-viewer/topology-graph-viewer.component";
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -23,6 +26,7 @@ import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus
 @NgModule({
   declarations: [
     TopologyOverviewComponent,
+    TopologyGraphViewerComponent,
     PropertyEditorComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,
@@ -43,7 +47,9 @@ import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    HeroLoaderModule
+    HeroLoaderModule,
+    NgxGraphModule,
+    NgxChartsModule,
   ],
   exports: [
     A4cMaterialModule,
@@ -52,6 +58,7 @@ import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus
     FormsModule,
     ReactiveFormsModule,
     TopologyOverviewComponent,
+    TopologyGraphViewerComponent,
     PropertyEditorComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,
