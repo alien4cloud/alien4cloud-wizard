@@ -1,6 +1,7 @@
 import {Type} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
+import {ExecutionStatus, Task} from "@app/core";
 
 /**
  * This represents a step of the wizard.
@@ -36,5 +37,13 @@ export abstract class WizardFormComponent {
   constructor(protected fsm: AppplicationWizardMachineService) {
   }
 
+}
+
+export class ProgessBarData {
+  public workflowInProgress: boolean;
+  public workflowName: string;
+  public progress: number;
+  public status: ExecutionStatus;
+  public current: Task;
 }
 

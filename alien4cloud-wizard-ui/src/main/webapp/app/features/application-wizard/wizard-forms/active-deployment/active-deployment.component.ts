@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, OnDestroy, AfterViewInit} from '@angular/core';
-import {WizardFormComponent} from '../../core/wizard.model';
+import {ProgessBarData, WizardFormComponent} from '../../core/wizard.model';
 import {AppplicationWizardMachineService} from '../../core/fsm.service';
 import {Subscription} from 'rxjs'
 import {MonitorDeploymentService} from "@app/core/services/monitor-deployment.service";
@@ -33,8 +33,7 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
   // @Input()
   // fsmContext: ApplicationWizardMachineContext;
 
-  workflowInProgress: boolean = false;
-  progessBarData: ProgessBarData;
+  // workflowInProgress: boolean = false;
 
   private monitoredDeployment: MonitoredDeploymentDTO;
   private wsSubscription: Subscription;
@@ -82,6 +81,8 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     );
 
     if (this.fsmContext.deploymentStatus && DeploymentStatus.isPendingStatus(this.fsmContext.deploymentStatus)) {
+      this.fsmContext.progessBarData = new ProgessBarData();
+      this.fsmContext.progessBarData.workflowInProgress = true;
       this.monitorWorkflow();
     }
 
@@ -119,14 +120,13 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
         let deploymentId = e.deployment.id;
         console.log("Motitored deployement: ", JSON.stringify(e));
         this.monitoredDeployment = e;
-        this.workflowInProgress = true;
         // now poll the deployment
         this.workflowMonitoringSubscription = this.deploymentWorkflowExecutionService.monitorWorkflowExecution(deploymentId).subscribe(dto => {
           console.log("Returned execution: ", JSON.stringify(dto));
           this.updateProgessData(dto);
         }, error => {
         }, () => {
-          this.workflowInProgress = false;
+          this.fsmContext.progessBarData.workflowInProgress = false;
         });
       });
     }
@@ -138,13 +138,13 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
       return;
     }
 
-    if (!this.progessBarData) {
-      this.progessBarData = new ProgessBarData();
-    }
+    // if (!this.fsmContext.progessBarData) {
+    //   this.fsmContext.progessBarData = new ProgessBarData();
+    // }
 
-    this.progessBarData.workflowName = wfExecution.execution.workflowName;
-    this.progessBarData.current = wfExecution.lastKnownExecutingTask;
-    this.progessBarData.status = wfExecution.execution.status;
+    this.fsmContext.progessBarData.workflowName = wfExecution.execution.workflowName;
+    this.fsmContext.progessBarData.current = wfExecution.lastKnownExecutingTask;
+    this.fsmContext.progessBarData.status = wfExecution.execution.status;
 
     let progress = (wfExecution.actualKnownStepInstanceCount * 100) / this.monitoredDeployment.workflowExpectedStepInstanceCount[wfExecution.execution.workflowName];
     if (wfExecution.execution.status.toString() == 'SUCCEEDED') {
@@ -154,7 +154,7 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
         progress = 90;
       }
     }
-    this.progessBarData.progress = progress;
+    this.fsmContext.progessBarData.progress = progress;
   }
 
   openUndeployDialog(event: any): void {
@@ -168,6 +168,8 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.fsmContext.progessBarData = new ProgessBarData();
+        this.fsmContext.progessBarData.workflowInProgress = true;
         this.fsm.send(new DoSubmitUndeployment());
       }
     });
@@ -176,9 +178,10 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
   launchWorkflow(event: any) {
     event.stopPropagation();
     // let workflow = this.workflowFormCtrl.value;
+    this.fsmContext.progessBarData = new ProgessBarData();
+    this.fsmContext.progessBarData.workflowInProgress = true;
     this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, this.nextWorkflow).subscribe(executionId => {
       console.log(`Execution ID for workflow ${this.nextWorkflow} is ${executionId}`);
-      this.workflowInProgress = true;
       this.monitorWorkflow();
     });
   }
@@ -202,9 +205,3 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
 }
 
-export class ProgessBarData {
-  public workflowName: string;
-  public progress: number;
-  public status: ExecutionStatus;
-  public current: Task;
-}

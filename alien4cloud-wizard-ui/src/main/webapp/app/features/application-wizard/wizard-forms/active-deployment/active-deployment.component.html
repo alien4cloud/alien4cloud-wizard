@@ -4,7 +4,7 @@
     <mat-tab label="Monitor">
       <div fxLayout="row" fxLayoutAlign="center center">
         <div fxLayout="column" fxLayoutAlign="center center" class="deployment-monitor mat-app-background">
-          <div *ngIf="!workflowInProgress; else deploying" fxLayout="row" fxFlex="100%">
+          <div *ngIf="!fsmContext.progessBarData; else deploying" fxLayout="row" fxFlex="100%">
             <h4>No workflow in progress</h4>
           </div>
         </div>
@@ -54,17 +54,8 @@
 </div>
 
 <ng-template #deploying>
-  <div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" class="w4c-full-width">
-    <span *ngIf="workflowInProgress && !progessBarData">Workflow initialization</span>
-    <span *ngIf="workflowInProgress && progessBarData">Workflow "{{ progessBarData.workflowName }}" in progress ({{ progessBarData.progress.toFixed(0) }} %)</span>
-    <span *ngIf="!workflowInProgress && progessBarData">Workflow "{{ progessBarData.workflowName }}" executed ({{ progessBarData.status }})</span>
-    <mat-progress-bar *ngIf="workflowInProgress && !progessBarData" mode="indeterminate"></mat-progress-bar>
-    <mat-progress-bar *ngIf="progessBarData" mode="determinate" value="{{ progessBarData.progress }}"
-                      [color]="(progessBarData.status && progessBarData.status.toString() == 'FAILED') ? 'warn' : 'primary'">
-    </mat-progress-bar>
-<!--    <span *ngIf="progessBarData">Wf: {{ progessBarData.workflowName }} - status: {{ progessBarData.status }} - -->
-<!--        progess:-->
-<!--      {{ progessBarData.progress }}</span>-->
+  <div class="w4c-full-width">
+    <w4c-workflow-progress-bar [fsmContext]="fsmContext"></w4c-workflow-progress-bar>
   </div>
 </ng-template>
 

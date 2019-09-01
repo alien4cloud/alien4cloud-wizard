@@ -1,0 +1,9 @@
+<div fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" class="w4c-full-width" class="workflowProgressBarContainer">
+  <span *ngIf="fsmContext.progessBarData.workflowInProgress && !fsmContext.progessBarData.progress">Workflow initialization</span>
+  <span *ngIf="fsmContext.progessBarData.workflowInProgress && fsmContext.progessBarData.progress">Workflow "{{ fsmContext.progessBarData.workflowName }}" in progress ({{ fsmContext.progessBarData.progress.toFixed(0) }} %)</span>
+  <span *ngIf="!fsmContext.progessBarData.workflowInProgress">Workflow "{{ fsmContext.progessBarData.workflowName }}" executed ({{ fsmContext.progessBarData.status }})</span>
+  <mat-progress-bar *ngIf="!fsmContext.progessBarData.progress" mode="indeterminate"></mat-progress-bar>
+  <mat-progress-bar *ngIf="fsmContext.progessBarData.progress" mode="determinate" value="{{ fsmContext.progessBarData.progress }}"
+                    [color]="(fsmContext.progessBarData.status && fsmContext.progessBarData.status.toString() == 'FAILED') ? 'warn' : 'primary'">
+  </mat-progress-bar>
+</div>

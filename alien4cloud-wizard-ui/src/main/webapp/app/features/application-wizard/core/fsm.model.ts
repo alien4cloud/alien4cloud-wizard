@@ -6,6 +6,7 @@ import {
   LocationMatch,
   MetaPropConfiguration, Topology
 } from '@app/core';
+import {ProgessBarData} from "@app/features/application-wizard/core/wizard.model";
 
 /**
  * Specify the schema of our state machine configuration.
@@ -90,4 +91,9 @@ export interface ApplicationWizardMachineContext {
    * The active deployment status if exist.
    */
   deploymentStatus: DeploymentStatus;
+
+  /**
+   * The active deployment progress data if exist.
+   */
+  progessBarData: ProgessBarData;
 }

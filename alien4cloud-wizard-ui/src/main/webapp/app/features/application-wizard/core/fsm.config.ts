@@ -23,7 +23,8 @@ export const context: ApplicationWizardMachineContext = {
   errorMessage: undefined,
   locations: undefined,
   deployment: undefined,
-  deploymentStatus: undefined
+  deploymentStatus: undefined,
+  progessBarData: undefined
 };
 
 /**
@@ -414,7 +415,8 @@ export const applicationWizardMachineConfig: MachineConfig<
       },
       on: {
         OnDeploymentSubmitSuccess: {
-          target: 'activeDeploymentForm'
+          target: 'activeDeploymentForm',
+          actions: ['initProgress']
         },
         OnDeploymentSubmitError: {
           target: 'deploymentForm',

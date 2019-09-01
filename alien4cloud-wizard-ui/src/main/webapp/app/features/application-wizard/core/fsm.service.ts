@@ -43,6 +43,7 @@ import {
   TopologyService
 } from "@app/core";
 import * as lodash from 'lodash';
+import {ProgessBarData} from "@app/features/application-wizard/core/wizard.model";
 
 /**
  * Manages the machine initialization.
@@ -275,6 +276,7 @@ export class AppplicationWizardMachineService {
         _.locations = undefined;
         _.deployment = undefined;
         _.deploymentStatus = undefined;
+        _.progessBarData = undefined;
       },
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
         topologyTemplate: event.topology
@@ -341,6 +343,10 @@ export class AppplicationWizardMachineService {
         ).subscribe(dto => {
           _.deploymentTopology = dto;
         })
+      },
+      initProgress: (_) => {
+        _.progessBarData = new ProgessBarData();
+        _.progessBarData.workflowInProgress = true;
       }
 
     }

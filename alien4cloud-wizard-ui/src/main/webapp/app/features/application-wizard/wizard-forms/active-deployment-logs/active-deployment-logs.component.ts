@@ -97,7 +97,7 @@ export class ActiveDeploymentLogsComponent implements OnInit, OnDestroy {
     } catch(err) { }
   }
 
-  private scrollChanged(event: any) {
+  scrollChanged(event: any) {
     if (this.scrollingToBottom) {
       return;
     }

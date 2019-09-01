@@ -25,6 +25,7 @@ import { DeploymentArtifactsComponent } from './wizard-forms/deployment-artifact
 import {TranslateModule} from "@ngx-translate/core";
 import { LinkyModule } from 'angular-linky';
 import { ActiveDeploymentLogsComponent } from './wizard-forms/active-deployment-logs/active-deployment-logs.component';
+import { WorkflowProgressBarComponent } from './wizard-forms/workflow-progress-bar/workflow-progress-bar.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ActiveDeploymentLogsComponent } from './wizard-forms/active-deployment-
     WizardControlComponent,
     DeleteApplicationFormComponent,
     DeploymentArtifactsComponent,
-    ActiveDeploymentLogsComponent
+    ActiveDeploymentLogsComponent,
+    WorkflowProgressBarComponent
   ],
   imports: [
     SharedModule,
