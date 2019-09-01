@@ -2,11 +2,20 @@
 
   <mat-tab-group class="w4c-full-width">
     <mat-tab label="Monitor">
-      <div fxLayout="row" fxLayoutAlign="center center">
+      <div fxLayout="row" fxLayoutAlign="center center" class="w4c-full-width" fxFlex="100%">
         <div fxLayout="column" fxLayoutAlign="center center" class="deployment-monitor mat-app-background">
           <div *ngIf="!fsmContext.progessBarData; else deploying" fxLayout="row" fxFlex="100%">
             <h4>No workflow in progress</h4>
           </div>
+          <ng-template #deploying>
+            <w4c-workflow-graph-viewer
+              [topology]="fsmContext.deploymentTopology.topology"
+              workflow="install"
+              [workflowExecutionChange]="$workflowExecutionDTO"
+              [deploymentTopology]="fsmContext.deploymentTopology"
+            >
+            </w4c-workflow-graph-viewer>
+          </ng-template>
         </div>
       </div>
       <div>
@@ -52,19 +61,6 @@
   </mat-tab-group>
 
 </div>
-
-<ng-template #deploying>
-  <div class="w4c-full-width">
-    <w4c-workflow-progress-bar [fsmContext]="fsmContext"></w4c-workflow-progress-bar>
-  </div>
-</ng-template>
-
-
-
-
-
-
-
 
 <!-- You can add custom buttons in the wizard control like below
 1. Add a ng-template

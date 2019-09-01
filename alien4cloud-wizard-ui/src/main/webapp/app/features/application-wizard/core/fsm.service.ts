@@ -39,11 +39,10 @@ import {
   DeploymentStatus,
   DeploymentTopologyService,
   LocationMatchingService,
-  MetaPropertiesService,
+  MetaPropertiesService, ProgessBarData,
   TopologyService
 } from "@app/core";
 import * as lodash from 'lodash';
-import {ProgessBarData} from "@app/features/application-wizard/core/wizard.model";
 
 /**
  * Manages the machine initialization.

@@ -39,11 +39,5 @@ export abstract class WizardFormComponent {
 
 }
 
-export class ProgessBarData {
-  public workflowInProgress: boolean;
-  public workflowName: string;
-  public progress: number;
-  public status: ExecutionStatus;
-  public current: Task;
-}
+
 

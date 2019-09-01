@@ -1,4 +1,4 @@
-import {Topology} from './topology.model';
+  import {Topology} from './topology.model';
 import {AbstractPropertyValue, CSARDependency, DeploymentArtifact, NodeType} from "@app/core";
 import {
   DeploymentSubstitutionConfiguration,

@@ -2,11 +2,10 @@ import {
   Application,
   ApplicationEnvironment, ApplicationEnvironmentDTO, Deployment,
   DeploymentStatus,
-  DeploymentTopologyDTO, Location,
+  DeploymentTopologyDTO, ExecutionStatus, Location,
   LocationMatch,
-  MetaPropConfiguration, Topology
+  MetaPropConfiguration, ProgessBarData, Task, Topology
 } from '@app/core';
-import {ProgessBarData} from "@app/features/application-wizard/core/wizard.model";
 
 /**
  * Specify the schema of our state machine configuration.
@@ -97,3 +96,4 @@ export interface ApplicationWizardMachineContext {
    */
   progessBarData: ProgessBarData;
 }
+

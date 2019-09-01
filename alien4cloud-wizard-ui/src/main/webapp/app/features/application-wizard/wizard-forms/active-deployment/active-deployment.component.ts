@@ -1,26 +1,23 @@
-import {Component, OnInit, Input, OnDestroy, AfterViewInit} from '@angular/core';
-import {ProgessBarData, WizardFormComponent} from '../../core/wizard.model';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {WizardFormComponent} from '../../core/wizard.model';
 import {AppplicationWizardMachineService} from '../../core/fsm.service';
-import {Subscription} from 'rxjs'
+import {Observable, ReplaySubject, Subscription} from 'rxjs'
 import {MonitorDeploymentService} from "@app/core/services/monitor-deployment.service";
 import {DeploymentWorkflowExecutionService} from "@app/core/services/workflow-execution.service";
 import {
   ApplicationDeploymentService,
   DeploymentStatus,
-  ExecutionStatus,
   MonitoredDeploymentDTO,
-  Task, Workflow,
   WorkflowExecutionDTO,
   InstanceInformation,
   TopologyDTO,
-  RuntimeService
+  RuntimeService, ProgessBarData
 } from "@app/core";
 import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
 import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '@app/shared';
-import {FormControl} from "@angular/forms";
 import * as _ from "lodash";
 
 @Component({
@@ -30,23 +27,21 @@ import * as _ from "lodash";
 })
 export class ActiveDeploymentComponent extends WizardFormComponent implements OnInit, OnDestroy {
 
-  // @Input()
-  // fsmContext: ApplicationWizardMachineContext;
-
-  // workflowInProgress: boolean = false;
-
   private monitoredDeployment: MonitoredDeploymentDTO;
   private wsSubscription: Subscription;
   private workflowMonitoringSubscription: Subscription;
 
-  // workflowFormCtrl = new FormControl();
   workflows = new Set<string>();
   nextWorkflow: string = undefined;
 
   //make lodash usable from template
   lodash = _ ;
   instanceInformations: Map<string,InstanceInformation[]>;
-  topologyDTO : TopologyDTO ;
+  topologyDTO: TopologyDTO ;
+
+  // necessary to braodcast workflow exec change events
+  private workflowExecutionDTOSubject = new ReplaySubject<WorkflowExecutionDTO>(1);
+  $workflowExecutionDTO: Observable<WorkflowExecutionDTO> = this.workflowExecutionDTOSubject.asObservable();
 
   constructor(
     protected fsm: AppplicationWizardMachineService,
@@ -122,7 +117,7 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
         this.monitoredDeployment = e;
         // now poll the deployment
         this.workflowMonitoringSubscription = this.deploymentWorkflowExecutionService.monitorWorkflowExecution(deploymentId).subscribe(dto => {
-          console.log("Returned execution: ", JSON.stringify(dto));
+          // console.log("Returned execution: ", JSON.stringify(dto));
           this.updateProgessData(dto);
         }, error => {
         }, () => {
@@ -137,6 +132,8 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     if (!wfExecution.execution) {
       return;
     }
+
+    this.workflowExecutionDTOSubject.next(wfExecution);
 
     // if (!this.fsmContext.progessBarData) {
     //   this.fsmContext.progessBarData = new ProgessBarData();

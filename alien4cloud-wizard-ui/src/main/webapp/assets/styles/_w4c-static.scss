@@ -54,7 +54,6 @@ $text-primary: #428bca;
   color: $text-primary;
 }
 
-
 // Logs
 
 .w4c-logLevel-INFO {
@@ -68,4 +67,39 @@ $text-primary: #428bca;
 }
 .w4c-logLevel-DEBUG {
   color: $text-muted;
+}
+
+// Step status
+
+.w4c-WfStepStatus-node-UNKNOWN {
+  fill: white;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-node-STARTED {
+  fill: $text-primary;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-node-COMPLETED_SUCCESSFULL {
+  fill: $text-success;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-node-COMPLETED_WITH_ERROR {
+  fill: $text-danger;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-txt-UNKNOWN {
+  fill: $text-muted;
+  stroke: $text-muted;
+}
+.w4c-WfStepStatus-txt-STARTED {
+  fill: white;
+  stroke: white;
+}
+.w4c-WfStepStatus-txt-COMPLETED_SUCCESSFULL {
+  fill: white;
+  stroke: white;
+}
+.w4c-WfStepStatus-txt-COMPLETED_WITH_ERROR {
+  fill: white;
+  stroke: white;
 }

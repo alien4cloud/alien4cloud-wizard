@@ -1,5 +1,5 @@
 import {
-  PropertyDefinition,
+  PropertyDefinition
 } from '@app/core/models';
 
 export interface Workflow {
@@ -27,7 +27,7 @@ export interface WorkflowStep {
   /** Filter definition for optional steps. */
   // filter: AbstractConditionClause[];
   /** The list of activities to call in a sequence as part of that workflow step. */
-  // activities: AbstractWorkflowActivity[];
+  activities: AbstractWorkflowActivity[];
   /** The steps to trigger (in parallel if multiple) if the workflow step has been executed correctly. */
   onSuccess: Set<string>;
   /** The steps to trigger (in parallel if multiple) if the workflow step has failed. */
@@ -56,4 +56,26 @@ export interface RelationshipWorkflowStep extends WorkflowStep {
 }
 
 export interface SimpleStep extends WorkflowStep {
+}
+
+
+export interface AbstractWorkflowActivity {
+  representation: string;
+}
+
+export interface CallOperationWorkflowActivity extends AbstractWorkflowActivity {
+  interfaceName: string;
+  operationName: string;
+}
+
+export interface SetStateWorkflowActivity extends AbstractWorkflowActivity {
+  stateName: string;
+}
+
+export interface InlineWorkflowActivity extends AbstractWorkflowActivity {
+  inline: string;
+}
+
+export interface DelegateWorkflowActivity extends AbstractWorkflowActivity {
+  delegate: string;
 }

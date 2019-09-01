@@ -1,3 +1,5 @@
+import {WorkflowStepInstance} from "@app/core";
+
 export interface Execution {
   id : string;
   deploymentId: string;
@@ -16,12 +18,6 @@ export enum ExecutionStatus {
   SUCCEEDED = "SUCCEEDED",
   CANCELLED = "CANCELLED",
   FAILED = "FAILED"
-}
-
-export enum WorkflowExecutionStepStatus {
-  STARTED = "STARTED",
-  COMPLETED_SUCCESSFULL = "COMPLETED_SUCCESSFULL",
-  COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR"
 }
 
 export interface Task {
@@ -49,7 +45,60 @@ export interface WorkflowExecutionDTO {
   execution: Execution;
   actualKnownStepInstanceCount: number;
   lastKnownExecutingTask: Task;
-  stepStatus: any;
-  stepInstances: any;
-  stepTasks: any;
+  stepStatus: Map<string, WorkflowExecutionStepStatus>;
+  stepInstances: Map<string, WorkflowStepInstance[]>;
+  stepTasks: Map<string, Task[]>;
+}
+
+export class ProgessBarData {
+  public workflowInProgress: boolean;
+  public workflowName: string;
+  public progress: number;
+  public status: ExecutionStatus;
+  public current: Task;
+}
+
+export enum WorkflowExecutionStepStatus {
+  UNKNOWN = "UNKNOWN",
+  STARTED = "STARTED",
+  COMPLETED_SUCCESSFULL = "COMPLETED_SUCCESSFULL",
+  COMPLETED_WITH_ERROR = "COMPLETED_WITH_ERROR"
+}
+
+export enum WorkflowStepInstanceStatus {
+  STARTED = "STARTED",
+  COMPLETED = "COMPLETED"
+}
+
+export interface WorkflowStepInstance {
+  /** Unique id of the step instance. */
+  id: string;
+
+  /** The name if the step in the workflow. */
+  stepId: string;
+
+  deploymentId: string;
+
+  /** The ID of the execution. **/
+  executionId: string;
+
+  /** The id of the node. **/
+  nodeId: string;
+
+  /** The id of the node instance. **/
+  instanceId: string;
+
+  /** The id of the target node (if this step is related to a relationship). **/
+  targetNodeId: string;
+
+  /** The id of the target node instance (if this step is related to a relationship). **/
+  targetInstanceId: string;
+
+  /** The name of the operation (provided by the orchestrator). **/
+  operationName: string;
+
+  /** Indicates if this step has failed tasks. */
+  hasFailedTasks: boolean;
+
+  status: WorkflowStepInstanceStatus;
 }

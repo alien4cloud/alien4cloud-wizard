@@ -23,7 +23,7 @@ export class FsmGraphViewerComponent implements OnInit {
 
   private zoomLevel: number;
 
-  @ViewChild('mainDiv', {static: true}) mainDiv: ElementRef;
+  // @ViewChild('mainDiv', {static: true}) mainDiv: ElementRef;
 
   constructor(
     private fsm: AppplicationWizardMachineService,

@@ -18,6 +18,7 @@ import {ManageFormFocusDirective} from "@app/shared/directives/manage-form-focus
 import {NgxGraphModule} from "@swimlane/ngx-graph";
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {TopologyGraphViewerComponent} from "@app/shared/components/topology-graph-viewer/topology-graph-viewer.component";
+import {WorkflowGraphViewerComponent} from "@app/shared/components/workflow-graph-viewer/workflow-graph-viewer.component";
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -27,6 +28,7 @@ import {TopologyGraphViewerComponent} from "@app/shared/components/topology-grap
   declarations: [
     TopologyOverviewComponent,
     TopologyGraphViewerComponent,
+    WorkflowGraphViewerComponent,
     PropertyEditorComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,
@@ -59,6 +61,7 @@ import {TopologyGraphViewerComponent} from "@app/shared/components/topology-grap
     ReactiveFormsModule,
     TopologyOverviewComponent,
     TopologyGraphViewerComponent,
+    WorkflowGraphViewerComponent,
     PropertyEditorComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,
