@@ -55,3 +55,17 @@ $text-primary: #428bca;
 }
 
 
+// Logs
+
+.w4c-logLevel-INFO {
+  color: $text-primary;
+}
+.w4c-logLevel-WARN {
+  color: $text-warning;
+}
+.w4c-logLevel-ERROR {
+  color: $text-danger;
+}
+.w4c-logLevel-DEBUG {
+  color: $text-muted;
+}

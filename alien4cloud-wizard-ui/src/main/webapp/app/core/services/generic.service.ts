@@ -17,13 +17,13 @@ export abstract class GenericService {
   protected getParametrizedUrl(templatedUrl: string, urlParams?: any) : string {
     let url = templatedUrl;
     if (urlParams) {
-      console.log("url before replacement: ", url);
+      // console.log("url before replacement: ", url);
       Object.entries(urlParams).forEach(([name, value]) => {
-        console.log(`Entry ${name}: ${value}`);
+        // console.log(`Entry ${name}: ${value}`);
         url = _.replace(url, `\@\{${name}\}`, value.toString());
-        console.log("url: ", url);
+        // console.log("url: ", url);
       });
-      console.log("url after replacement: ", url);
+      // console.log("url after replacement: ", url);
       // TODO: throw an error if the url still contain some @{param} ...
     }
     return url;

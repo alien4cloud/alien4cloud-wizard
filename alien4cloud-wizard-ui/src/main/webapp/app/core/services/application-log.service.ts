@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
 import {
-  BasicSearchRequest,
+  BasicSearchRequest, ExecutionStatus,
   MultipleDataResult,
   PaaSDeploymentLog,
-  SortConfiguration
+  SortConfiguration, WorkflowExecutionDTO
 } from "@app/core/models";
 import {GenericResourceService} from "@app/core/services";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs";
+import {Observable, ReplaySubject, timer} from "rxjs";
+import {concatMap, filter, map, take} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'

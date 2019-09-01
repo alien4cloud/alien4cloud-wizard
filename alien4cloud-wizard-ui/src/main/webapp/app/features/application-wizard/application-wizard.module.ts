@@ -24,6 +24,7 @@ import { DeleteApplicationFormComponent } from './wizard-forms/delete-applicatio
 import { DeploymentArtifactsComponent } from './wizard-forms/deployment-artifacts/deployment-artifacts.component';
 import {TranslateModule} from "@ngx-translate/core";
 import { LinkyModule } from 'angular-linky';
+import { ActiveDeploymentLogsComponent } from './wizard-forms/active-deployment-logs/active-deployment-logs.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LinkyModule } from 'angular-linky';
     NodesMatchingComponent,
     WizardControlComponent,
     DeleteApplicationFormComponent,
-    DeploymentArtifactsComponent
+    DeploymentArtifactsComponent,
+    ActiveDeploymentLogsComponent
   ],
   imports: [
     SharedModule,

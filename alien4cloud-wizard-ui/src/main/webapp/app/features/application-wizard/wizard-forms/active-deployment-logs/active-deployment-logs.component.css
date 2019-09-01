@@ -1,0 +1,6 @@
+.logsViewer {
+  font-size: 10px;
+  height: 400px;
+  overflow-y: scroll;
+  padding: 5px;
+}

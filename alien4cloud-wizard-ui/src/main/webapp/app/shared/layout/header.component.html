@@ -23,8 +23,6 @@
         <mat-icon>power_settings_new</mat-icon>
         <span>Logout</span>
       </button>
-
-
     </mat-menu>
     <mat-icon *ngIf="!isProduction" color="{{ (isConnected) ? 'default' : 'warn' }}" matTooltip="{{ getStatusText() }}">{{ getStatusIcon() }}</mat-icon>
     <div class="username" *ngIf="authService.userStatus">{{authService.userStatus.username}}</div>

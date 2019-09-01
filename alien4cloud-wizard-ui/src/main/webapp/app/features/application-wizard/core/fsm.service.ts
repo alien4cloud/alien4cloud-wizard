@@ -248,7 +248,13 @@ export class AppplicationWizardMachineService {
         context.deploymentStatus === DeploymentStatus.DEPLOYED
         || context.deploymentStatus === DeploymentStatus.FAILURE
         || context.deploymentStatus === DeploymentStatus.UPDATE_FAILURE
+        || context.deploymentStatus === DeploymentStatus.UPDATED
         || context.deploymentStatus === DeploymentStatus.DEPLOYMENT_IN_PROGRESS),
+      canLaunchWorkflow: context => context.deployment && (
+        context.deploymentStatus === DeploymentStatus.DEPLOYED
+        || context.deploymentStatus === DeploymentStatus.FAILURE
+        || context.deploymentStatus === DeploymentStatus.UPDATE_FAILURE
+        || context.deploymentStatus === DeploymentStatus.UPDATED),
       canDeploy: context => context.deployment && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
       canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
       canCancelWithoutDeleting: context => context.application == undefined,

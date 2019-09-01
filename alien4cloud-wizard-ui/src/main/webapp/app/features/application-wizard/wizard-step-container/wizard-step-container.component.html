@@ -7,7 +7,7 @@
             <div class="mat-card-title">{{ wizardFormStep.stepLabel }}</div>
             <div class="mat-card-subtitle">{{ wizardFormStep.description }}</div>
           </div>
-          <div class="deployment-infos" *ngIf="wizardForm && wizardForm.fsmContext">
+          <div *ngIf="wizardForm && wizardForm.fsmContext">
             <table class="context-infos">
               <tr *ngIf="wizardForm.fsmContext.application">
                 <td class="context-label" align="right">Application: </td>
@@ -20,6 +20,13 @@
               <tr *ngIf="wizardForm.fsmContext.environment">
                 <td class="context-label" align="right">Environment: </td>
                 <td class="context-data">{{ wizardForm.fsmContext.environment.name }}</td>
+              </tr>
+              <tr *ngIf="wizardForm && wizardForm.fsmContext && wizardForm.fsmContext.deploymentStatus">
+                <td class="context-label" align="right">
+                  <mat-icon inline="true" [ngClass]="'w4c-deployment-status-' + wizardForm.fsmContext.deploymentStatus"
+                            matTooltip="{{ wizardForm.fsmContext.deploymentStatus }}">lens</mat-icon>
+                </td>
+                <td class="context-data">{{ wizardForm.fsmContext.deploymentStatus }}</td>
               </tr>
             </table>
           </div>

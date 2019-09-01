@@ -1,79 +1,55 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form">
 
-    <div fxLayout="row" fxLayoutAlign="start start">
-      <div class="deployment-infos">
-        <table class="mat-table deployment-infos">
-          <tr class="mat-row">
-           <td class="mat-cell deployment-info" align="right">
-             <mat-icon [ngClass]="'w4c-deployment-status-' + fsmContext.deploymentStatus"
-                       matTooltip="{{fsmContext.deploymentStatus}}">lens</mat-icon>
-           </td>
-           <td class="mat-cell deployment-info">{{ fsmContext.deploymentStatus }}</td>
-          </tr>
-          <tr class="mat-row">
-           <td class="mat-cell deployment-label" align="right">Environment</td>
-           <td class="mat-cell deployment-info">{{ fsmContext.environment.name }}</td>
-          </tr>
-          <tr class="mat-row">
-           <td class="mat-cell deployment-label" align="right">Version</td>
-           <td class="mat-cell deployment-info">{{ fsmContext.deployment.versionId }}</td>
-          </tr>
-        </table>
-      </div>
-      <div fxLayout="column" fxLayoutAlign="center center" class="deployment-monitor mat-app-background">
-        <div *ngIf="!workflowInProgress && false; else deploying" fxLayout="row" fxFlex="100%">
-          <h2>No workflow in progress</h2>
-        </div>
-        <div>
-<!--          <span>Here we'll put logs</span>-->
+  <mat-tab-group class="w4c-full-width">
+    <mat-tab label="Monitor">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div fxLayout="column" fxLayoutAlign="center center" class="deployment-monitor mat-app-background">
+          <div *ngIf="!workflowInProgress; else deploying" fxLayout="row" fxFlex="100%">
+            <h4>No workflow in progress</h4>
+          </div>
         </div>
       </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" class="deployment-workflow mat-app-background">
-      <div class="deployment-label">Workflows: </div>
-      <mat-select
-        *ngIf="fsmContext.deploymentTopology && fsmContext.deploymentTopology.topology && fsmContext.deploymentTopology.topology.workflows"
-        [formControl]="workflowFormCtrl"
-      >
-        <mat-option *ngFor="let wf of workflows"
-                    [value]="wf">
-          {{ wf }}
-        </mat-option>
-      </mat-select>
-<!--      <button mat-stroked-button [disabled]="workflowInProgress && false" (click)="launchWorkflow()" class="deployment-workflow-button">-->
-<!--        <mat-icon>play_circle_outline</mat-icon>Launch-->
-<!--      </button>-->
-    </div>
-<!--      <span>Here will go workflow trigger</span>-->
-    <div>
-      <div class="mat-error">{{fsmContext.errorMessage}}</div>
-    </div>
-
-<!--    <mat-grid-list cols="2" rowHeight="400px" gutterSize="10" >-->
-<!--    <mat-grid-tile>-->
-<!--      <mat-grid-tile-header>sdfdsfds</mat-grid-tile-header>-->
-<!--      1-->
-<!--    </mat-grid-tile>-->
-<!--    <mat-grid-tile>2</mat-grid-tile>-->
-<!--    <mat-grid-tile>3</mat-grid-tile>-->
-<!--    <mat-grid-tile>4</mat-grid-tile>-->
-<!--  </mat-grid-list>-->
-
-<!--  <mat-grid-list cols="2" rowHeight="1:1">-->
-<!--    <mat-grid-tile rowspan="2">-->
-<!--      <span>Deployment status : {{ fsmContext.deploymentStatus }}</span>-->
-<!--    </mat-grid-tile>-->
-<!--    <mat-grid-tile>-->
-<!--      <div *ngIf="!workflowInProgress; else deploying" fxLayout="row" fxFlex="100%">-->
-<!--        <h2>No workflow in progress</h2>-->
-<!--      </div>-->
-<!--    </mat-grid-tile>-->
-<!--    <mat-grid-tile><span>Here we'll put logs</span></mat-grid-tile>-->
-<!--    <mat-grid-tile colspan="2"><span>Here will go workflow trigger</span></mat-grid-tile>-->
-<!--    <mat-grid-tile colspan="2">-->
-<!--      <div class="mat-error">{{fsmContext.errorMessage}}</div>-->
-<!--    </mat-grid-tile>-->
-<!--  </mat-grid-list>-->
+      <div>
+        <div class="mat-error">{{fsmContext.errorMessage}}</div>
+      </div>
+    </mat-tab>
+    <!-- Outputs -->
+    <mat-tab label="Outputs" *ngIf="fsmContext.deploymentStatus !== 'UNDEPLOYED' && topologyDTO && topologyDTO.topology && topologyDTO.topology.outputAttributes && instanceInformations">
+      <div fxLayout="row" fxLayoutAlign="start start" >
+        <div class="attributes-infos">
+          <table class="mat-table attributes-infos">
+            <tr class="mat-row"
+                *ngFor="let node of instanceInformations | w4cFilterTopologyNodes :topologyDTO.topology.outputAttributes | keyvalue">
+              <td class="mat-cell deployment-info" >
+                <span>{{node.key}}</span>
+              </td>
+              <td class="mat-cell deployment-info"  *ngIf="topologyDTO.topology.outputAttributes[node.key] && node.value" >
+                <ul >
+                  <li *ngFor="let instance of node.value | keyvalue">
+                    instance {{instance.key}}
+                    <ul>
+                      <li
+                        *ngFor="let attribute of instance.value.attributes | w4cFilterTopologyNodesAttributes : topologyDTO.topology.outputAttributes[node.key] | keyvalue; let k = index">
+                        {{attribute.key}}  :
+                        <span *ngIf="attribute.value" class="w4c-topology-attributes-values" [innerHTML]="attribute.value | linky : {phone: false}"></span>
+                        <em class="w4c-topology-attributes-values" *ngIf="!attribute.value">N/A</em>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Logs">
+      <ng-template matTabContent>
+        <w4c-active-deployment-logs [fsmContext]="fsmContext"></w4c-active-deployment-logs>
+      </ng-template>
+    </mat-tab>
+    <!-- Logs -->
+  </mat-tab-group>
 
 </div>
 
@@ -92,11 +68,12 @@
   </div>
 </ng-template>
 
-<ng-template #customButtons>
-  <div fxLayout="row">
-    <w4c-wizard-button enableOnGuard="canUndeploy" [fsmContext]="fsmContext" (click)="launchWorkflow($event)" [label]="workflowFormCtrl.value" matIconName="play_circle_outline"></w4c-wizard-button>
-  </div>
-</ng-template>
+
+
+
+
+
+
 
 <!-- You can add custom buttons in the wizard control like below
 1. Add a ng-template
@@ -112,42 +89,28 @@
 [buttonHookTemplate]="customButtons"
 -->
 
+<mat-menu #menu="matMenu">
+  <button *ngFor="let wf of workflows" mat-menu-item (click)="nextWorkflow = wf">
+    <span>{{ wf }}</span>
+  </button>
+</mat-menu>
 
-<div fxLayout="row" fxLayoutAlign="start start" *ngIf="fsmContext.deploymentStatus !== 'UNDEPLOYED' && topologyDTO && topologyDTO.topology && topologyDTO.topology.outputAttributes && instanceInformations">
-  <div class="attributes-infos">
-    <table class="mat-table attributes-infos">
-      <tr class="mat-row"
-        *ngFor="let node of instanceInformations | w4cFilterTopologyNodes :topologyDTO.topology.outputAttributes | keyvalue">
-        <td class="mat-cell deployment-info" >
-          <span>{{node.key}}</span>
-        </td>
-        <td class="mat-cell deployment-info"  *ngIf="topologyDTO.topology.outputAttributes[node.key] && node.value" >
-          <ul >
-            <li *ngFor="let instance of node.value | keyvalue">
-              instance {{instance.key}}
-              <ul>
-                <li 
-                  *ngFor="let attribute of instance.value.attributes | w4cFilterTopologyNodesAttributes : topologyDTO.topology.outputAttributes[node.key] | keyvalue; let k = index">
-                  {{attribute.key}}  : 
-                  <span *ngIf="attribute.value" class="w4c-topology-attributes-values" [innerHTML]="attribute.value | linky : {phone: false}"></span>
-                  <em class="w4c-topology-attributes-values" *ngIf="!attribute.value">N/A</em>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </td>
-      </tr>
-    </table>
+<ng-template #customButtons>
+  <div fxLayout="row" *ngIf="workflows.size > 0" >
+    <button mat-stroked-button [matMenuTriggerFor]="menu">
+      <mat-icon>playlist_play</mat-icon>
+    </button>
+    <w4c-wizard-button enableOnGuard="canLaunchWorkflow" [fsmContext]="fsmContext" (click)="launchWorkflow($event)" [label]="nextWorkflow" matIconName="play_arrow"></w4c-wizard-button>
   </div>
-</div>
+</ng-template>
 
-  <w4c-wizard-control [fsmContext]="fsmContext"
-                      backwardGuard="canDeploy"
-                      backwardAltLabel="Deploy"
-                      cancelGuard="canUndeploy"
-                      cancelLabel="Undeploy"
-                      [cancelFn]="openUndeployDialog.bind(this)"
-                      forwardGuard="canDeploy"
-                      [forwardFn]="deleteApplication.bind(this)"
-                      [buttonHookTemplate]="customButtons">
-  </w4c-wizard-control>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    backwardGuard="canDeploy"
+                    backwardAltLabel="Deploy"
+                    cancelGuard="canUndeploy"
+                    cancelLabel="Undeploy"
+                    [cancelFn]="openUndeployDialog.bind(this)"
+                    forwardGuard="canDeploy"
+                    [forwardFn]="deleteApplication.bind(this)"
+                    [buttonHookTemplate]="customButtons">
+</w4c-wizard-control>

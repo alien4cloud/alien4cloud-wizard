@@ -3,7 +3,7 @@
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <span class="w4c-title title">Description</span>
       <button mat-button (click)="switchGraphView()" [matTooltip]="(displayGraph) ? 'Show description' : 'Show graph'" color="primary">
-        <mat-icon *ngIf="!displayGraph">photo</mat-icon>
+        <mat-icon *ngIf="!displayGraph">visibility</mat-icon>
         <mat-icon *ngIf="displayGraph">format_align_justify</mat-icon>
       </button>
     </div>
@@ -66,8 +66,9 @@
                     <ng-container *ngFor="let namedMetaProperty of element.namedMetaProperties;">
                       <mat-chip
                         *ngIf="namedMetaProperty.value"
-                        matTooltip="{{namedMetaProperty.configuration.description}}" class="meta-chip">
-                        {{namedMetaProperty.configuration.name}}: {{namedMetaProperty.value}}
+                        [matTooltip]="namedMetaProperty.configuration.name + ((namedMetaProperty.configuration.description) ? ': ' + namedMetaProperty.configuration.description : '')"
+                        class="meta-chip">
+                        {{namedMetaProperty.value}}
                       </mat-chip>
                     </ng-container>
                   </mat-chip-list>

@@ -40,8 +40,9 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
   private wsSubscription: Subscription;
   private workflowMonitoringSubscription: Subscription;
 
-  workflowFormCtrl = new FormControl();
+  // workflowFormCtrl = new FormControl();
   workflows = new Set<string>();
+  nextWorkflow: string = undefined;
 
   //make lodash usable from template
   lodash = _ ;
@@ -91,9 +92,9 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
         this.workflows.add(key);
       }
       if (this.workflows.has("run")) {
-        this.workflowFormCtrl.setValue("run");
+        this.nextWorkflow = "run";
       } else if (this.workflows.size > 0) {
-        this.workflowFormCtrl.setValue(this.workflows.values().next().value);
+        this.nextWorkflow = this.workflows.values().next().value;
       }
     }
 
@@ -174,9 +175,9 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
   launchWorkflow(event: any) {
     event.stopPropagation();
-    let workflow = this.workflowFormCtrl.value;
-    this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, workflow).subscribe(executionId => {
-      console.log(`Execution ID for workflow ${workflow} is ${executionId}`);
+    // let workflow = this.workflowFormCtrl.value;
+    this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, this.nextWorkflow).subscribe(executionId => {
+      console.log(`Execution ID for workflow ${this.nextWorkflow} is ${executionId}`);
       this.workflowInProgress = true;
       this.monitorWorkflow();
     });

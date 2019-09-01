@@ -16,10 +16,12 @@
 td.context-label {
   padding: 5px;
   width: 100px;
+  font-size: 12px;
 }
 
 td.context-data {
   font-weight: bold;
+  font-size: 12px;
 }
 
 
