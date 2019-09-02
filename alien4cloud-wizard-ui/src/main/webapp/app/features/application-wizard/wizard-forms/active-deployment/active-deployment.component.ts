@@ -19,6 +19,7 @@ import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.m
 import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '@app/shared';
 import * as _ from "lodash";
+import {WizardButtonComponent} from "@app/features/application-wizard/wizard-button/wizard-button.component";
 
 @Component({
   selector: 'w4c-active-deployment',
@@ -96,8 +97,6 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
     this.getDeployedTopology();
     this.getInstanceInformation() ;
-
-
   }
 
   ngOnDestroy(): void {
@@ -126,7 +125,6 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
       });
     }
   }
-
 
   private updateProgessData(wfExecution: WorkflowExecutionDTO) {
     if (!wfExecution.execution) {
@@ -174,7 +172,9 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
   launchWorkflow(event: any) {
     event.stopPropagation();
-    // let workflow = this.workflowFormCtrl.value;
+    if (!WizardButtonComponent.callFsmGuard(this.fsm, this.fsmContext, "canLaunchWorkflow")) {
+      return;
+    }
     this.fsmContext.progessBarData = new ProgessBarData();
     this.fsmContext.progessBarData.workflowInProgress = true;
     this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, this.nextWorkflow).subscribe(executionId => {
@@ -186,7 +186,6 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
   deleteApplication() {
     this.fsm.send(new DoCancelWizard());
   }
-
 
   getInstanceInformation() {
     this.applicationDeploymentService.getInstanceInformation(this.fsmContext.application.id, this.fsmContext.environment.id).subscribe(instancesInfos => {
