@@ -8,7 +8,6 @@ export * from './health.service';
 export * from './location-matching.service';
 export * from './login.service';
 export * from './style-manager';
-export * from './topology-graph.service';
 export * from './topology-overview.service';
 export * from './topology.service';
 export * from './deployment-topology.service';

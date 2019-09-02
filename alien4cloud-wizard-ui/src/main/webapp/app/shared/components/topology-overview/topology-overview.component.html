@@ -11,7 +11,7 @@
       <span>{{ overview.description }}</span>
     </div>
     <div *ngIf="displayGraph" class="desciption w4c-borders" fxFlex="100%">
-      <w4c-topology-graph-viewer></w4c-topology-graph-viewer>
+      <w4c-topology-graph-viewer [overview]="overview"></w4c-topology-graph-viewer>
     </div>
   </div>
   <div fxFlex="50%" fxLayout="column">

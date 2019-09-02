@@ -5,7 +5,7 @@ import {
   PolicyTemplate,
   PropertyDefinition,
   Version,
-  DeploymentArtifact, Workflow
+  DeploymentArtifact, Workflow, NodeType
 } from '@app/core/models';
 
 export interface Topology extends HasTags {
@@ -32,4 +32,22 @@ export interface Topology extends HasTags {
   empty: boolean;
   id: string;
   metaProperties: Map<string, string>;
+}
+
+export interface AbstractTopologyDTO<T extends Topology> {
+  topology : T ;
+  nodeTypes: Map<string, NodeType>;
+  // FIXME: create classes
+  // relationshipTypes: Map<string, RelationshipType>;
+  // capabilityTypes: Map<string, CapabilityType>;
+  // dataTypes: Map<string, DataType>;
+  // policyTypes: Map<string, PolicyType>;
+}
+
+export interface TopologyDTO extends AbstractTopologyDTO<Topology>{
+  lastOperationIndex :number ;
+  delegateTye : string ;
+  //operations : AbstractEditorOperation[];
+  //dependancyConflicts : DependancyConflictDTO[];
+  //archiveContentTree : TreeNode ;
 }

@@ -1,12 +1,17 @@
-import {Application, ApplicationEnvironment, MetaProperty, NodeType, TopologyGraph} from "@app/core/models";
+import {
+  Application,
+  ApplicationEnvironment,
+  MetaProperty,
+  NodeType,
+  TopologyDTO
+} from "@app/core/models";
 
 export interface TopologyOverview {
   description: string;
   namedMetaProperties: MetaProperty[];
   componentCategories: string[];
   componentsPerCategory: Map<string, ApplicationModule[]>;
-  topologyId: string;
-  topologyVersion: string;
+  topologyDTO: TopologyDTO;
 }
 
 export interface ApplicationOverview extends TopologyOverview {

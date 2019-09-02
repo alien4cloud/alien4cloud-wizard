@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {TopologyOverview, TopologyGraphService} from "@app/core";
+import {TopologyOverview} from "@app/core";
 
 @Component({
   selector: 'w4c-topology-overview',
@@ -12,8 +12,7 @@ export class TopologyOverviewComponent {
   @Input() overview: TopologyOverview;
 
   constructor(
-    private router: Router,
-    private topologyGraphService: TopologyGraphService) {
+    private router: Router) {
   }
 
   modulesDisplayedColumns = ['icon', 'nodeName', 'typeName', 'version', 'metaproperties'];
@@ -29,9 +28,6 @@ export class TopologyOverviewComponent {
    */
   switchGraphView() {
     this.displayGraph = !this.displayGraph;
-    if (this.displayGraph) {
-      this.topologyGraphService.setTopology(this.overview.topologyId, this.overview.topologyVersion);
-    }
   }
 
 }

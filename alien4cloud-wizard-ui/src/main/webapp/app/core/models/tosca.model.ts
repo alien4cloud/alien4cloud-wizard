@@ -14,11 +14,9 @@ export interface AbstractInheritableToscaType extends AbstractToscaType {
 }
 
 export interface AbstractInstantiableToscaType extends AbstractInheritableToscaType {
-
 }
 
 export interface NodeType extends AbstractInstantiableToscaType {
-
 }
 
 export interface AbstractTemplate extends HasTags, HasProperties {
@@ -35,7 +33,7 @@ export interface AbstractInstantiableTemplate extends AbstractTemplate {
 
 export interface NodeTemplate extends AbstractInstantiableTemplate {
   // requirements: Map<string, Requirement>;
-  // relationships: Map<string, RelationshipTemplate>;
+  relationships: Map<string, RelationshipTemplate>;
   // capabilities: Map<string, Capability>;
   isDanglingRequirement: boolean;
   nodeFilter: NodeFilter;
@@ -46,4 +44,11 @@ export interface NodeTemplate extends AbstractInstantiableTemplate {
 export interface PolicyTemplate extends AbstractTemplate {
   targets: string[];
   // triggers: Map<string, PolicyTrigger>;
+}
+
+export interface RelationshipTemplate extends AbstractInstantiableTemplate {
+  target: string;
+  requirementName: string;
+  requirementType: string;
+  targetedCapabilityName: string;
 }

@@ -1,20 +1,10 @@
-  import {Topology} from './topology.model';
+import {AbstractTopologyDTO, Topology} from './topology.model';
 import {AbstractPropertyValue, CSARDependency, DeploymentArtifact, NodeType} from "@app/core";
 import {
   DeploymentSubstitutionConfiguration,
   LocationResourceTemplate,
   PolicyLocationResourceTemplate
 } from "./location-resource-template.model";
-
-export interface AbstractTopologyDTO<T extends Topology> {
-  topology : T ;
-  nodeTypes: Map<string, NodeType>;
-  // FIXME: create classes
-  // relationshipTypes: Map<string, RelationshipType>;
-  // capabilityTypes: Map<string, CapabilityType>;
-  // dataTypes: Map<string, DataType>;
-  // policyTypes: Map<string, PolicyType>;
-}
 
 export interface DeploymentTopologyDTO extends AbstractTopologyDTO<DeploymentTopology> {
   locationPolicies: Map<string, string>;
@@ -99,13 +89,4 @@ export enum TaskCode {
 
   /** Specific code for cloudify */
   CFY_MULTI_RELATIONS = "CFY_MULTI_RELATIONS"
-}
-
-
-export interface TopologyDTO extends AbstractTopologyDTO<Topology>{
-  lastOperationIndex :number ;
-  delegateTye : string ;
-  //operations : AbstractEditorOperation[];
-  //dependancyConflicts : DependancyConflictDTO[];
-  //archiveContentTree : TreeNode ;
 }

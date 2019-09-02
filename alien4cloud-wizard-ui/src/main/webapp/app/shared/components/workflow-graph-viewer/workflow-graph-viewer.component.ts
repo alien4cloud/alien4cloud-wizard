@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 import {Observable, Subject} from "rxjs";
 import {graphlib} from "dagre";
 import Graph = graphlib.Graph;
+import {GraphUtils} from "@app/shared/utils/graph-utils";
 
 @Component({
   selector: 'w4c-workflow-graph-viewer',
@@ -87,20 +88,9 @@ export class WorkflowGraphViewerComponent implements OnInit {
       }
     }
     // now that we have a graph, let's remove state steps in it
-    _.forEach(g.nodes(), n => {
-      console.log(`examining step ${n}`);
+    g = GraphUtils.filterGraph(g, n => {
       let step = <WorkflowStep>wf.steps[n];
-      if (step.activities && step.activities.length > 0 && step.activities[0]['stateName']) {
-        console.log(`step ${n} is a state step`);
-        _.forEach(g.predecessors(n), p => {
-          console.log(`Predecessor ${p}`);
-          _.forEach(g.successors(n), s => {
-            console.log(`Successor ${s}`);
-            g.setEdge(`${p}`, `${s}`);
-          });
-        });
-        g.removeNode(n);
-      }
+      return step.activities && step.activities.length > 0 && step.activities[0]['stateName'];
     });
     // now build the displayable graph
     this.graph = new WfGraph();
@@ -125,9 +115,7 @@ export class WorkflowGraphViewerComponent implements OnInit {
       this.graph.nodes.push(node);
     });
     _.forEach(g.edges(), e => {
-      if (e.v !== "undefined" && e.w !== "undefined") {
-        this.graph.edges.push(new WfGraphEdge(e.v + "_" + e.w, e.v, e.w, []));
-      }
+      this.graph.edges.push(new WfGraphEdge(e.v + "_" + e.w, e.v, e.w, []));
     });
     console.log("WF Graph ", JSON.stringify(this.graph));
   }
