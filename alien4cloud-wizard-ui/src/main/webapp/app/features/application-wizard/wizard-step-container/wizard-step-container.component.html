@@ -6,7 +6,7 @@
           <div fxLayout="column">
             <div class="mat-card-title">{{ wizardFormStep.stepLabel }}</div>
             <div class="mat-card-subtitle">{{ wizardFormStep.description }}</div>
-            <w4c-workflow-progress-bar *ngIf="wizardForm.fsmContext.progessBarData" [fsmContext]="wizardForm.fsmContext"></w4c-workflow-progress-bar>
+            <w4c-workflow-progress-bar *ngIf="wizardForm.fsmContext && wizardForm.fsmContext.progessBarData" [fsmContext]="wizardForm.fsmContext"></w4c-workflow-progress-bar>
           </div>
           <div *ngIf="wizardForm && wizardForm.fsmContext">
             <table class="context-infos">
