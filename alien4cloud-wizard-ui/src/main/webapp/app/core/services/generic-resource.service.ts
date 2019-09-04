@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {TranslateService} from "@ngx-translate/core";
 import {MultipleDataResult} from "@app/core";
 import {GenericService} from "@app/core/services/generic.service";
+import { FacetedSearchResult } from '../models';
 
 export abstract class GenericResourceService<T> extends GenericService {
 
@@ -52,6 +53,33 @@ export abstract class GenericResourceService<T> extends GenericService {
     let data = {"from": from, "size": size, "query": query, "filters": filters};
     // TODO: use option to replace @{stuffs}
     return this.handleResult<MultipleDataResult<T>>(this.http.post(this.getUrl("", urlParams) + "/search", data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'A4C-Agent': 'Wizard_UI'
+      }),
+    }));
+  }
+
+
+  facetedSearch(from?: number, size?: number, query?: string,type?:string, filters?: any,urlParams?: any): Observable<FacetedSearchResult<T>> {
+    if (!from) {
+      from = 0;
+    }
+    if (!size) {
+      size = 20;
+    }
+    if (!query) {
+      query = "";
+    }
+    if (!type) {
+      type = "";
+    }    
+    if (!filters) {
+      filters = {};
+    }
+    let data = {"from": from, "size": size, "query": query, "type": type, "filters": filters};
+    // TODO: use option to replace @{stuffs}
+    return this.handleResult<FacetedSearchResult<T>>(this.http.post(this.getUrl("", urlParams) + "/search", data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
         'A4C-Agent': 'Wizard_UI'

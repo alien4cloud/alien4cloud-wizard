@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./features/settings/settings.module').then(mod => mod.SettingsModule)
   },
+  {
+    path: 'catalog',
+    loadChildren: () => import('./features/catalog/catalog.module').then(mod => mod.CatalogModule)
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes/*, { enableTracing: true } */)],

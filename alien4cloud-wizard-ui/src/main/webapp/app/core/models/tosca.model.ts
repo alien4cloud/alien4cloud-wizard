@@ -17,6 +17,15 @@ export interface AbstractInstantiableToscaType extends AbstractInheritableToscaT
 }
 
 export interface NodeType extends AbstractInstantiableToscaType {
+  capabilities : CapabilityDefinition[];
+  requirements: RequirementDefinition[];
+  defaultCapabilities : string[];
+  alienScore : number;
+  /** When the type is created from a topology template (substitution), contains the topology id. */
+  substitutionTopologyId :string ;
+  /** Portability information. */
+  portability : Map<String, AbstractPropertyValue> ;
+  metaProperties : Map<String, String> ;
 }
 
 export interface AbstractTemplate extends HasTags, HasProperties {
@@ -51,4 +60,10 @@ export interface RelationshipTemplate extends AbstractInstantiableTemplate {
   requirementName: string;
   requirementType: string;
   targetedCapabilityName: string;
+}
+
+export interface CapabilityDefinition {
+}
+
+export interface RequirementDefinition {
 }

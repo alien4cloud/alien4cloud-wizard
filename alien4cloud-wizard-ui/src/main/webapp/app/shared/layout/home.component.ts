@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
       "Browse platform components catalog and display details about components.",
       "view_module",
       "/catalog",
-      false
+      true
     );
     let settings = new Feature(
       "Settings",
