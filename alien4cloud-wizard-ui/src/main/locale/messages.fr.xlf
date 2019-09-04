@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="f16f7d1a9da52ba860fb1c814ef7041a272fd880" datatype="html">
+        <source>Welcome to Wizard4Cloud !</source>
+        <target>Bienvenue sur Wizard4Cloud !</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3db6ec86c32b85bd258c80439c962c6ef50a0a33" datatype="html">
+        <source>From here you can access following features:</source>
+        <target>D'ici, vous pouvez acceder aux fonctionnalités suivantes:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

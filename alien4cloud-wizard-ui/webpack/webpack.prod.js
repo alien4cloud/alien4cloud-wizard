@@ -24,7 +24,7 @@ module.exports = webpackMerge.strategy(mergeStrategy)(commonConfig({ env: ENV })
     // You have to enable it in Terser config below and in tsconfig-aot.json as well
     // devtool: 'source-map',
     resolve: {
-        extensions: [ '.prod.ts','.ts', '.js']
+        extensions: [ '.prod.ts','.ts', '.js' ]
     },
     entry: {
         polyfills: './src/main/webapp/app/polyfills',
@@ -37,7 +37,8 @@ module.exports = webpackMerge.strategy(mergeStrategy)(commonConfig({ env: ENV })
         chunkFilename: 'app/[id].[hash].chunk.js'
     },
     module: {
-        rules: [{
+        rules: [
+        {
             test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
             loader: '@ngtools/webpack'
         },
@@ -147,7 +148,12 @@ module.exports = webpackMerge.strategy(mergeStrategy)(commonConfig({ env: ENV })
         new AngularCompilerPlugin({
             mainPath: utils.root('src/main/webapp/app/main.ts'),
             tsConfigPath: utils.root('tsconfig-aot.json'),
-            sourceMap: true
+            sourceMap: true,
+            // Locale configuration
+            i18nInFile: "./src/main/locale/messages.fr.xlf",
+            i18nInFormat: "xlf",
+            i18nInMissingTranslations: "ignore",
+            locale: "fr",
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true,
