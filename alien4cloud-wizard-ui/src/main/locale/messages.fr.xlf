@@ -1,27 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="fr">
     <body>
       <trans-unit id="f16f7d1a9da52ba860fb1c814ef7041a272fd880" datatype="html">
-        <source>Welcome to Wizard4Cloud !</source>
-        <target>Bienvenue sur Wizard4Cloud !</target>
+        <source>Welcome to Wizard4Cloud !</source><target state="new">Welcome to Wizard4Cloud !</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3db6ec86c32b85bd258c80439c962c6ef50a0a33" datatype="html">
-        <source>From here you can access following features:</source>
-        <target>D'ici, vous pouvez acceder aux fonctionnalités suivantes:</target>
+        <source>From here you can access following features:</source><target state="new">From here you can access following features:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
-      </trans-unit><trans-unit id="70d0c35964e16a9c56036325ec0e600f7dd69f36" datatype="html">
+      </trans-unit>
+      <trans-unit id="70d0c35964e16a9c56036325ec0e600f7dd69f36" datatype="html">
         <source>This wizard will guide throw the necessary steps in order to create a new application from a template.</source><target state="new">This wizard will guide throw the necessary steps in order to create a new application from a template.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/welcome/welcome.component.html</context>
           <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="53876fa21cd8bbfa0641ea200e97b4153517ac59" datatype="html">
+        <source>You can skip displaying this page in the  </source><target state="new">You can skip displaying this page in the  </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/welcome/welcome.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8f63587295e9cc6b75f662d2343f1c0da85adc8e" datatype="html">
+        <source>settings</source><target state="new">settings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/welcome/welcome.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="216065a76eda382e233b8a2c032bd74da4947906" datatype="html">
+        <source>page</source><target state="new">page</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/welcome/welcome.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b7b39498ee5cdf521239fa29a5df8b52fae9f792" datatype="html">
+        <source>No workflow in progress</source><target state="new">No workflow in progress</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="036a7702632b485afb0e2f33a3533937ea3eeef3" datatype="html">
+        <source>Monitor</source><target state="new">Monitor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="93883f08c5e22b14770da46e1a5b724bab7d43fb" datatype="html">
+        <source>Outputs</source><target state="new">Outputs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="eb3d5aefff38a814b76da74371cbf02c0789a1ef" datatype="html">
+        <source>Logs</source><target state="new">Logs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4db7bf67a39f76089ea86039e0e21e63073d1ec3" datatype="html">
+        <source>Undeploy</source><target state="new">Undeploy</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="624e3ea18d96942f265ca7bc184002f5bd36d6e6" datatype="html">
+        <source>Search for ...</source><target state="new">Search for ...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment-logs/active-deployment-logs.component.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
     </body>

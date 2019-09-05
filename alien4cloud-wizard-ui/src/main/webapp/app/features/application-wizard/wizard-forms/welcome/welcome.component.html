@@ -1,7 +1,7 @@
 <div fxLayout="column" class="w4c-wizard-form">
   <p i18n>This wizard will guide throw the necessary steps in order to create a new application from a template.</p>
   <p>
-    You can skip displaying this page in the  <a [routerLink]="['/settings']">settings</a> page.
+    <ng-container i18n>You can skip displaying this page in the  </ng-container><a [routerLink]="['/settings']"><ng-container i18n>settings</ng-container></a>&nbsp;<ng-container i18n>page</ng-container>.
   </p>
 </div>
 <w4c-wizard-control [fsmContext]="fsmContext"

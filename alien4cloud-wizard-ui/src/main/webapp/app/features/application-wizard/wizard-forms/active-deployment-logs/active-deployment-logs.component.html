@@ -3,13 +3,13 @@
   <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" fxFlex="70%">
     <mat-icon>search</mat-icon>
     <mat-form-field fxFlex="50%">
-      <input matInput placeholder="Search for ..." [formControl]="searchField">
+      <input matInput i18n-placeholder placeholder="Search for ..." [formControl]="searchField">
     </mat-form-field>
   </div>
   <div>
     <button mat-stroked-button
             (click)="deleteLogs()"
-            matTooltip="Clear logs">
+            i18n-matToolTip matTooltip="Clear logs">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-stroked-button disabled="true" matTooltip="Autorefresh indicator">
