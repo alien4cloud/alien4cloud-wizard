@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="en">
     <body>
       <trans-unit id="f16f7d1a9da52ba860fb1c814ef7041a272fd880" datatype="html">
-        <source>Welcome to Wizard4Cloud !</source>
-        <target>Bienvenue sur Wizard4Cloud !</target>
+        <source>Welcome to Wizard4Cloud !</source><target state="final">Welcome to Wizard4Cloud !</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3db6ec86c32b85bd258c80439c962c6ef50a0a33" datatype="html">
-        <source>From here you can access following features:</source>
-        <target>D'ici, vous pouvez acceder aux fonctionnalités suivantes:</target>
+        <source>From here you can access following features:</source><target state="final">From here you can access following features:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
-      </trans-unit><trans-unit id="70d0c35964e16a9c56036325ec0e600f7dd69f36" datatype="html">
-        <source>This wizard will guide throw the necessary steps in order to create a new application from a template.</source><target state="new">This wizard will guide throw the necessary steps in order to create a new application from a template.</target>
+      </trans-unit>
+      <trans-unit id="70d0c35964e16a9c56036325ec0e600f7dd69f36" datatype="html">
+        <source>This wizard will guide throw the necessary steps in order to create a new application from a template.</source><target state="final">This wizard will guide throw the necessary steps in order to create a new application from a template.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/welcome/welcome.component.html</context>
           <context context-type="linenumber">2</context>
