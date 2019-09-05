@@ -1,6 +1,6 @@
 <div fxLayout="column" class="w4c-wizard-form">
 
-  <w4c-filtered-search-bar [isLoading$]="isLoading$" [facets$]="facets$" (onSearch)="searchTopology($event)"></w4c-filtered-search-bar>
+  <w4c-filtered-search-bar [isLoading$]="isLoading$" [facets$]="facets$" (onSearch)="searchTopologies($event)"></w4c-filtered-search-bar>
 
   <mat-accordion>
     <mat-expansion-panel *ngFor="let topology of topologyTemplates; let isOpenned = false"
