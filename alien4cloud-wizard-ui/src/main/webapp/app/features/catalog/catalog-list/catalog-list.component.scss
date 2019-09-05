@@ -1,0 +1,38 @@
+.mat-card {
+  font-size: 15px;
+  height: 250px;
+  width: 230px;
+}
+
+/*
+From old alien
+*/
+.catalog-cell {
+  width: 250px;
+  height: 250px;
+  position: relative;
+  display: inline-block;
+  margin: 0 8px 8px 0;
+  vertical-align: top;
+  text-align: left;
+}
+
+.catalog-element-info {
+  height: 250px;
+  width :250px ;
+  overflow: hidden;
+}
+
+.small .catalog-element-info {
+  max-height: 80px;
+}
+.meta-chip {
+  font-size: 10px;
+  min-height: 22px;
+  text-align: center
+}
+
+
+
+
+

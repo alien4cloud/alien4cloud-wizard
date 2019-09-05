@@ -5,3 +5,4 @@ export * from './trim-name.pipe';
 export * from './deployment-status-button-label.pipe';
 export * from './filter-topology-nodes.pipe';
 export * from './filter-topology-nodes-attributes.pipe';
+export * from './split-and-get.pipe';

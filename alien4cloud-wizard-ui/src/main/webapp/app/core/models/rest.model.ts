@@ -2,6 +2,7 @@
 export interface MultipleDataResult<T> {
   data: T[];
   totalResults: number;
+  types : String[] ;
 }
 
 /**
@@ -30,4 +31,13 @@ export class BasicSearchRequest {
 export class SortConfiguration {
   sortBy: string;
   ascending: boolean;
+}
+
+export interface FacetedSearchResult<T> extends MultipleDataResult<T> {
+  facets : Map<String, FacetedSearchFacet[]> ;
+}
+
+export class FacetedSearchFacet  {
+  facetValue : string;
+  count : number;
 }
