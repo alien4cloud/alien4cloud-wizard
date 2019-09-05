@@ -1,5 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FacetedSearchFacet, FilteredSearchRequest, NodeType} from '@app/core';
+import {
+  FacetedSearchFacet,
+  FilteredSearchRequest,
+  MetaPropConfiguration,
+  MetaPropertiesService,
+  NodeType
+} from '@app/core';
 import {CatalogService, ComponentSearchRequest, QueryComponentType} from '@app/core/services/catalog.service';
 import {ReplaySubject} from "rxjs";
 import * as _ from 'lodash';
@@ -23,13 +29,26 @@ export class CatalogListComponent implements OnInit {
   private facetsSubject = new ReplaySubject<Map<string, FacetedSearchFacet[]>>(1);
   facets$ = this.facetsSubject.asObservable();
 
+  metaPropConfiguration: Map<string, MetaPropConfiguration> = new Map();
+
   catalogs: NodeType[];
 
   constructor(
-    private catalogService: CatalogService
+    private catalogService: CatalogService,
+    private metaPropertiesService: MetaPropertiesService
   ) { }
 
   ngOnInit() {
+    this.metaPropertiesService.search({from: 0, size: 1000, query: "", filters: {"target":["component"]}})
+      .subscribe(
+        metaprops => {
+          if (metaprops.totalResults > 0) {
+            metaprops.data.forEach(value => {
+              this.metaPropConfiguration.set(value.id, value);
+            });
+          }
+        }
+      )
     this.searchInCatalog(new FilteredSearchRequest());
   }
 
@@ -48,4 +67,5 @@ export class CatalogListComponent implements OnInit {
       this.isLoadingSubject.next(false);
     })
   }
+
 }

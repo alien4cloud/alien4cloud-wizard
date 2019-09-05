@@ -29,7 +29,7 @@
                   <mat-chip
                     *ngIf="namedMetaProperty.value"
                     class="meta-chip"
-                    [matTooltip]="namedMetaProperty.key">
+                    [matTooltip]="(metaPropConfiguration.get(namedMetaProperty.key)) ? metaPropConfiguration.get(namedMetaProperty.key).name : ''">
                     {{namedMetaProperty.value}}
                   </mat-chip>
                 </ng-container>
