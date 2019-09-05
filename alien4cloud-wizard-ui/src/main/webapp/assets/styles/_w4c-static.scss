@@ -103,3 +103,9 @@ $text-primary: #428bca;
   fill: white;
   stroke: white;
 }
+
+.mat-tab-label {
+  min-width: 15px !important;
+  max-height: 24px !important;
+  font-size: 12px !important;
+}
