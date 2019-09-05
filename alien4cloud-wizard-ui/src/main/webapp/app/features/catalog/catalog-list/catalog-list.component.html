@@ -20,10 +20,10 @@
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <div style="overflow-y:scroll; height:80px;margin-top: 10px;color: grey;text-align: center;">
+            <div class ="description" style="overflow-y:scroll; overflow-x:hidden ;height:80px;margin-top: 10px;color: grey;text-align: center;">
               {{catalog.description}}
             </div>
-            <div class="metaproperties" style="overflow-y:scroll;height:60px;margin-top: 12px;text-align: center;">
+            <div class="metaproperties" style="overflow-y:scroll;overflow-x:hidden ; height:60px;margin-top: 12px;text-align: center;">
               <mat-chip-list>
                 <ng-container *ngFor="let namedMetaProperty of catalog.metaProperties | keyvalue;">
                   <mat-chip
