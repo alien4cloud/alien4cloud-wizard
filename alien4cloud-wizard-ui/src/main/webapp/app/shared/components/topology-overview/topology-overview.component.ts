@@ -15,7 +15,7 @@ export class TopologyOverviewComponent {
     private router: Router) {
   }
 
-  modulesDisplayedColumns = ['icon', 'nodeName', 'typeName', 'version', 'metaproperties'];
+  modulesDisplayedColumns = ['icon', 'nodeName', 'typeName', 'metaproperties'];
 
   /**
    * Inidicates if the graph view should be displayed.
