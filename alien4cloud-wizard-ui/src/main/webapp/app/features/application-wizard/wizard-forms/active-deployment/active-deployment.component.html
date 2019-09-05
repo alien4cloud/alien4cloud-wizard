@@ -93,7 +93,7 @@
 
 <w4c-wizard-control [fsmContext]="fsmContext"
                     backwardGuard="canDeploy"
-                    backwardAltLabel="Deploy"
+                    i18n-backwardAltLabel backwardAltLabel="Deploy"
                     cancelGuard="canUndeploy"
                     i18n-cancelLabel cancelLabel="Undeploy"
                     [cancelFn]="openUndeployDialog.bind(this)"

@@ -2,9 +2,9 @@
   <div fxLayout="column" fxLayoutAlign="center center">
     <div class="mat-error">{{fsmContext.errorMessage}}</div>
     <div>
-      <p><span>Application : {{fsmContext.application.name}} </span></p>
-      <p><span>Version : {{fsmContext.deploymentTopology.topology.archiveVersion}} </span></p>
-      <p><span>Location : {{fsmContext.location.name}}</span></p>
+      <p><span>Application : </span><span>{{fsmContext.application.name}}</span></p>
+      <p><span>Version : </span><span>{{fsmContext.deploymentTopology.topology.archiveVersion}}</span></p>
+      <p><span>Location : </span><span>{{fsmContext.location.name}}</span></p>
     </div>
   </div>
 
@@ -16,6 +16,6 @@
     </mat-chip-list>
   </div>
 </div>
-<w4c-wizard-control [fsmContext]="fsmContext" [forwardFn]="deployApp.bind(this)" forwardAltLabel="deploy !"
+<w4c-wizard-control [fsmContext]="fsmContext" [forwardFn]="deployApp.bind(this)" i18n-forwardAltLabel forwardAltLabel="deploy !"
   forwardGuard="canSubmitDeployment">
 </w4c-wizard-control>

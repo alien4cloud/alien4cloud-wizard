@@ -1,7 +1,7 @@
 <div *ngIf="overview; else loadingOverview" fxLayout="row" fxFlex="100%">
   <div fxFlex="50%" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="space-between center">
-      <span class="w4c-title title">Description</span>
+      <span class="w4c-title title" i18n>Description</span>
       <button mat-button (click)="switchGraphView()" [matTooltip]="(displayGraph) ? 'Show description' : 'Show graph'" color="primary">
         <mat-icon *ngIf="!displayGraph">visibility</mat-icon>
         <mat-icon *ngIf="displayGraph">format_align_justify</mat-icon>
@@ -15,7 +15,7 @@
     </div>
   </div>
   <div fxFlex="50%" fxLayout="column">
-    <span class="w4c-title title">Meta-properties</span>
+    <span class="w4c-title title" i18n>Meta-properties</span>
     <div class="metaproperties w4c-borders mat-app-background">
       <mat-chip-list>
         <ng-container *ngFor="let namedMetaProperty of overview.namedMetaProperties;">

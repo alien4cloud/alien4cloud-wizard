@@ -2,7 +2,25 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template" target-language="en">
     <body>
-      <trans-unit id="f16f7d1a9da52ba860fb1c814ef7041a272fd880" datatype="html">
+      <trans-unit id="eec715de352a6b114713b30b640d319fa78207a0" datatype="html">
+        <source>Description</source><target state="final">Description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/topology-overview/topology-overview.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="3a03f1e186db1a9f0055447a38b0b5973d1980fc" datatype="html">
+        <source>Meta-properties</source><target state="final">Meta-properties</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/topology-overview/topology-overview.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit><trans-unit id="bfd850d15f7ef38cad5474865a080071644c6d82" datatype="html">
+        <source>Reset to default value</source><target state="final">Reset to default value</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/property-editor/property-editor.component.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit><trans-unit id="f16f7d1a9da52ba860fb1c814ef7041a272fd880" datatype="html">
         <source>Welcome to Wizard4Cloud !</source><target state="final">Welcome to Wizard4Cloud !</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
@@ -43,6 +61,30 @@
           <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/welcome/welcome.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
+      </trans-unit><trans-unit id="8767b108d1bec1c596c78ba18572a2a021987973" datatype="html">
+        <source>Nom de l'application</source><target state="final">Nom de l'application</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/application-create/application-create.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="1e752c545fa387b8f1b654dec7324f07d395e90c" datatype="html">
+        <source>Application archive name</source><target state="final">Application archive name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/application-create/application-create.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit><trans-unit id="20e4d1e568760d1a084890e5d5e7236f78df57b3" datatype="html">
+        <source>Application description</source><target state="final">Application description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/application-create/application-create.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit><trans-unit id="bc4df23fa9c8731c8d7bd558135ef38d463862d6" datatype="html">
+        <source>deploy !</source><target state="final">deploy !</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/deployment-validation/deployment-validation.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="b7b39498ee5cdf521239fa29a5df8b52fae9f792" datatype="html">
         <source>No workflow in progress</source><target state="final">No workflow in progress</target>
@@ -71,6 +113,12 @@
           <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
           <context context-type="linenumber">55</context>
         </context-group>
+      </trans-unit><trans-unit id="e112bb358cec46f73f6fb9e45928b123a2d7f80c" datatype="html">
+        <source>Deploy</source><target state="final">Deploy</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="4db7bf67a39f76089ea86039e0e21e63073d1ec3" datatype="html">
         <source>Undeploy</source><target state="final">Undeploy</target>
@@ -78,12 +126,119 @@
           <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment/active-deployment.component.html</context>
           <context context-type="linenumber">98</context>
         </context-group>
+      </trans-unit><trans-unit id="b951116214e31287f25ffb5ba5a0add6ec500a61" datatype="html">
+        <source>
+    You have cancelled this wizard, or have reached it's end, but an application still exists.
+  </source><target state="final">
+    You have cancelled this wizard, or have reached it's end, but an application still exists.
+  </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/delete-application-form/delete-application-form.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit><trans-unit id="6d8624e154df63701a6b9f63677b88beb1b1abd7" datatype="html">
+        <source>
+    You can delete this application or leave the wizard without deleting it.
+    You'll then be able find it in the Dashboard and re-open this wizard later.
+  </source><target state="final">
+    You can delete this application or leave the wizard without deleting it.
+    You'll then be able find it in the Dashboard and re-open this wizard later.
+  </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/delete-application-form/delete-application-form.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="e7d6cf2a18926042e999f9907866ab543145e194" datatype="html">
+        <source>Leave without deleting</source><target state="final">Leave without deleting</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/delete-application-form/delete-application-form.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit><trans-unit id="790dca5c03ad7f288b97a6fced5929d309ad298e" datatype="html">
+        <source>Delete the application</source><target state="final">Delete the application</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/delete-application-form/delete-application-form.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit><trans-unit id="dc75033a5238fdc4f462212c847a45ba8018a3fd" datatype="html">
+        <source>Download</source><target state="final">Download</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/deployment-artifacts/deployment-artifacts.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit><trans-unit id="8a0bda4c47f10b2423ff183acefbf70d4ab52ea2" datatype="html">
+        <source>Clear logs</source><target state="final">Clear logs</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment-logs/active-deployment-logs.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit><trans-unit id="cc7436a0fb883012580e17463b5c925f3e2be8fc" datatype="html">
+        <source>Autoscrolling indicator / activator</source><target state="final">Autoscrolling indicator / activator</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment-logs/active-deployment-logs.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit><trans-unit id="49f394c5e08f82b2aeda4260f78fadd1c0a973cb" datatype="html">
+        <source>Workflow </source><target state="final">Workflow </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/workflow-progress-bar/workflow-progress-bar.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/workflow-progress-bar/workflow-progress-bar.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit><trans-unit id="d5eb5b86b0fdabcf39d06efdc05a432d936dc5f8" datatype="html">
+        <source> in progress </source><target state="final"> in progress </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/workflow-progress-bar/workflow-progress-bar.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit><trans-unit id="0e77862bc552f8f7eedadab9d8809f5bcb20697e" datatype="html">
+        <source>Workflow initialization</source><target state="final">Workflow initialization</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/workflow-progress-bar/workflow-progress-bar.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="eea9fc7572782c0b4ecedbf355fed00d6e4060bb" datatype="html">
+        <source> executed </source><target state="final"> executed </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/workflow-progress-bar/workflow-progress-bar.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="624e3ea18d96942f265ca7bc184002f5bd36d6e6" datatype="html">
         <source>Search for ...</source><target state="final">Search for ...</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/shared/components/filtered-search-bar/filtered-search-bar.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment-logs/active-deployment-logs.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
+        <source>Login</source><target state="final">Login</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment-logs/active-deployment-logs.component.html</context>
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/login/login.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
+        <source>Username</source><target state="final">Username</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/login/login.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit><trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
+        <source>Password</source><target state="final">Password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/login/login.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit><trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
+        <source>Cancel</source><target state="final">Cancel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit><trans-unit id="be5c752b58791dd799bc5d5482d4351e06f18673" datatype="html">
+        <source>Ok</source><target state="final">Ok</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/components/confirmation-dialog/confirmation-dialog.component.html</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
     </body>

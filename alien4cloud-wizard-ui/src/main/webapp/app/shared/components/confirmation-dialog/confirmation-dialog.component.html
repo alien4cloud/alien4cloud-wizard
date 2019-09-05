@@ -3,6 +3,6 @@
   <p>{{data.message}}</p>
 </div>
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" class="w4c-dialog-action">
-  <button mat-stroked-button (click)="onNoClick()">Cancel</button>
-  <button mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+  <button mat-stroked-button (click)="onNoClick()" i18n>Cancel</button>
+  <button mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial i18n>Ok</button>
 </div>

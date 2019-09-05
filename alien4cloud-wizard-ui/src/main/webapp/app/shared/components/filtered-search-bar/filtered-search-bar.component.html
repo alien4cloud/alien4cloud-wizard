@@ -2,7 +2,7 @@
 
   <mat-icon>search</mat-icon>
   <mat-form-field fxFlex="50%">
-    <input matInput placeholder="{{ (isLoading)?'Searching for ...':'Search for ...'}}" [formControl]="searchField"
+    <input matInput i18n-placeholder placeholder="Search for ..." [formControl]="searchField"
            id="filteredSearchInput" [matAutocomplete]="filters" (keydown.enter)="search()">
     <mat-chip-list #chipList>
       <mat-chip *ngFor="let activeFilter of activeFilters; let i = index"

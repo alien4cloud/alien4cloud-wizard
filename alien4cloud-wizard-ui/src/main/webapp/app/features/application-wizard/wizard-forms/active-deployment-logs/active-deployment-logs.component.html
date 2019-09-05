@@ -9,7 +9,7 @@
   <div>
     <button mat-stroked-button
             (click)="deleteLogs()"
-            i18n-matToolTip matTooltip="Clear logs">
+            i18n-matTooltip matTooltip="Clear logs">
       <mat-icon>delete</mat-icon>
     </button>
     <button mat-stroked-button disabled="true" matTooltip="Autorefresh indicator">
@@ -17,7 +17,7 @@
     </button>
     <button mat-stroked-button
             (click)="autoscrollingDisabled = !autoscrollingDisabled"
-            matTooltip="Autoscrolling indicator / activator">
+            i18n-matTooltip matTooltip="Autoscrolling indicator / activator">
       <mat-icon [color]="(autoscrollingDisabled) ? '' : 'accent'">vertical_align_bottom</mat-icon>
     </button>
   </div>
