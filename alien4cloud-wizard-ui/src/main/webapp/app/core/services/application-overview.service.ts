@@ -18,7 +18,4 @@ export class ApplicationOverviewService extends GenericResourceService<Applicati
     super(http, translate, "/wizard/applications/overview")
   }
 
-  search(from?: number, size?: number, query?: string, options?: any): Observable<MultipleDataResult<ApplicationOverview>> {
-    throw new Error("Not implemented !");
-  }
 }

@@ -144,10 +144,7 @@ export class AppplicationWizardMachineService {
       ),
       searchEnvironments: (_, event) =>
         this.applicationEnvironmentService.search(
-          0,
-          50,
-          "",
-          {},
+          {from: 0, size: 50, query: ""},
           { applicationId: _.application.id }
         ).pipe(
           map(environments => {
@@ -309,7 +306,7 @@ export class AppplicationWizardMachineService {
           })
       },
       fetchApplicationMetaProperties: (_) => {
-        this.metaPropertiesService.search(0, 1000, "", {"target":["application"]})
+        this.metaPropertiesService.search({from: 0, size: 1000, query: "", filters: {"target":["application"]}})
           .subscribe(
             metaprops => {
               if (metaprops.totalResults > 0) {
@@ -320,11 +317,7 @@ export class AppplicationWizardMachineService {
           )
       },
       fetchEnvironments: (_) => {
-        this.applicationEnvironmentService.search(
-          0,
-          50,
-          "",
-          {},
+        this.applicationEnvironmentService.search({from: 0, size: 50, query: ""},
           { applicationId: _.application.id }
         ).subscribe(environments => {
           _.environments = environments.data;

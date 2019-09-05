@@ -20,7 +20,7 @@ import {WizardFormStep} from "@app/features/application-wizard/core/wizard.model
 @Component({
   selector: 'w4c-wizard-main',
   templateUrl: './wizard-main.component.html',
-  styleUrls: ['./wizard-main.component.css']
+  styleUrls: ['./wizard-main.component.scss']
 })
 export class WizardMainComponent implements OnInit, OnDestroy {
 

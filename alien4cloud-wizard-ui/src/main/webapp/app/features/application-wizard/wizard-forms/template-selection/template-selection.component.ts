@@ -4,10 +4,18 @@ import {ApplicationWizardMachineContext} from "@app/features/application-wizard/
 import {DoSelectTemplate} from "@app/features/application-wizard/core/fsm.events";
 import {PageEvent} from "@angular/material";
 import {FormControl} from "@angular/forms";
-import {TopologyOverview, Topology, TopologyService, TopologyOverviewService} from "@app/core";
+import {
+  TopologyOverview,
+  Topology,
+  TopologyService,
+  TopologyOverviewService,
+  FacetedSearchFacet,
+  FilteredSearchRequest
+} from "@app/core";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
 import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.model";
+import {ReplaySubject, Subscription} from "rxjs";
 
 @Component({
   selector: 'w4c-template-selection',
@@ -20,12 +28,13 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
   lodash = _;
 
   // indicates data loading
-  isLoading: boolean = false;
+  private isLoadingSubject = new ReplaySubject<boolean>(1);
+  isLoading$ = this.isLoadingSubject.asObservable();
 
-  query = null;
+  private facetsSubject = new ReplaySubject<Map<string, FacetedSearchFacet[]>>(1);
+  facets$ = this.facetsSubject.asObservable();
 
-  // a form control to bind to search input
-  searchField: FormControl = new FormControl();
+  private request: FilteredSearchRequest = new FilteredSearchRequest();
 
   public topologyTemplates: Topology[];
   overview: TopologyOverview;
@@ -37,23 +46,20 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
   ) { super(fsm); }
 
   ngOnInit() {
-
     this.loadTopologies();
-    // add a debounceTimed suscription to avoid bakend mass attack
-    this.searchField.valueChanges
-      .pipe(debounceTime(1000))
-      .subscribe(term => {
-        this.query = term;
-        this.loadTopologies();
-      });
+  }
+
+  searchTopologies(request: FilteredSearchRequest) {
+    this.request = request;
+    this.loadTopologies();
   }
 
   private loadTopologies() {
-    this.isLoading = true;
-    this.topologyService.search(0, 10000, this.query).subscribe((data) => {
+    this.isLoadingSubject.next(true);
+    this.topologyService.search(this.request).subscribe((data) => {
       this.topologyTemplates = data.data;
-      //this.length = data.totalResults;
-      this.isLoading = false;
+      this.facetsSubject.next(data.facets);
+      this.isLoadingSubject.next(false);
     })
   }
 

@@ -1,8 +1,16 @@
 
 export interface MultipleDataResult<T> {
+  types: string[];
   data: T[];
   totalResults: number;
-  types : String[] ;
+  queryDuration: number;
+  from: number;
+  to: number;
+}
+
+export interface FacetedSearchFacet {
+  facetValue: string;
+  count: number;
 }
 
 /**
@@ -28,13 +36,17 @@ export class BasicSearchRequest {
   size: number;
 }
 
+export class FilteredSearchRequest extends BasicSearchRequest {
+  filters?: any;
+}
+
 export class SortConfiguration {
   sortBy: string;
   ascending: boolean;
 }
 
 export interface FacetedSearchResult<T> extends MultipleDataResult<T> {
-  facets : Map<String, FacetedSearchFacet[]> ;
+  facets : Map<string, FacetedSearchFacet[]> ;
 }
 
 export class FacetedSearchFacet  {

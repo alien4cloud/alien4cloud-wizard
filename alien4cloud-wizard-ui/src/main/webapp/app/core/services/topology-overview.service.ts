@@ -18,8 +18,4 @@ export class TopologyOverviewService extends GenericResourceService<TopologyOver
     super(http, translate, "/wizard/topologies/overview")
   }
 
-  search(from?: number, size?: number, query?: string, options?: any): Observable<MultipleDataResult<TopologyOverview>> {
-    throw new Error("Not implemented !");
-  }
-
 }

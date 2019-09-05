@@ -1,13 +1,6 @@
 <div fxLayout="column">
 
-  <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
-    <mat-icon>search</mat-icon>
-    <mat-form-field fxFlex="50%">
-      <input matInput placeholder="{{ (isLoading)?'Searching for ...':'Search for ...'}}" [formControl]="searchField"
-        id="applicationDashboardSearchInput">
-    </mat-form-field>
-    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
-  </div>
+  <w4c-filtered-search-bar [isLoading$]="isLoading$" [facets$]="facets$" (onSearch)="searchApplications($event)"></w4c-filtered-search-bar>
 
   <mat-accordion>
     <mat-expansion-panel *ngFor="let application of applications; let isOpenned = false"

@@ -21,8 +21,8 @@
         <ng-container *ngFor="let namedMetaProperty of overview.namedMetaProperties;">
           <mat-chip
             *ngIf="namedMetaProperty.value"
-            matTooltip="{{namedMetaProperty.configuration.description}}" class="meta-chip">
-            {{namedMetaProperty.configuration.name}}: {{namedMetaProperty.value}}
+            [matTooltip]="namedMetaProperty.configuration.name + ((namedMetaProperty.configuration.description) ? ' (' + namedMetaProperty.configuration.description + ')' : '')" class="meta-chip">
+            {{namedMetaProperty.value}}
           </mat-chip>
         </ng-container>
       </mat-chip-list>

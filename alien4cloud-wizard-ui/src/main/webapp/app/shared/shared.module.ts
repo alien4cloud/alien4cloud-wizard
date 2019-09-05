@@ -19,6 +19,7 @@ import {NgxGraphModule} from "@swimlane/ngx-graph";
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {TopologyGraphViewerComponent} from "@app/shared/components/topology-graph-viewer/topology-graph-viewer.component";
 import {WorkflowGraphViewerComponent} from "@app/shared/components/workflow-graph-viewer/workflow-graph-viewer.component";
+import {FilteredSearchBarComponent} from "@app/shared/components/filtered-search-bar/filtered-search-bar.component";
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -30,6 +31,7 @@ import {WorkflowGraphViewerComponent} from "@app/shared/components/workflow-grap
     TopologyGraphViewerComponent,
     WorkflowGraphViewerComponent,
     PropertyEditorComponent,
+    FilteredSearchBarComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,
     ToscaTypeImageSrcPipe,
@@ -63,6 +65,7 @@ import {WorkflowGraphViewerComponent} from "@app/shared/components/workflow-grap
     TopologyOverviewComponent,
     TopologyGraphViewerComponent,
     WorkflowGraphViewerComponent,
+    FilteredSearchBarComponent,
     PropertyEditorComponent,
     LoginComponent,
     ToscaTypeShortNamePipe,

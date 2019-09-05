@@ -1,12 +1,6 @@
 <div fxLayout="column" class="w4c-wizard-form">
-  <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
-    <mat-form-field fxFlex="50%">
-      <mat-label>Search for ...</mat-label>
-      <input matInput [formControl]="searchField" id="applicationDashboardSearchInput">
-      <mat-icon matSuffix>search</mat-icon>
-    </mat-form-field>
-    <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
-  </div>
+
+  <w4c-filtered-search-bar [isLoading$]="isLoading$" [facets$]="facets$" (onSearch)="searchTopology($event)"></w4c-filtered-search-bar>
 
   <mat-accordion>
     <mat-expansion-panel *ngFor="let topology of topologyTemplates; let isOpenned = false"

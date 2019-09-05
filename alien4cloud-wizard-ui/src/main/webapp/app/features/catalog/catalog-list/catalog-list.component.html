@@ -1,49 +1,43 @@
 <div fxLayout="column">
-    <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
-        <mat-icon>search</mat-icon>
-        <mat-form-field fxFlex="50%">
-            <input matInput placeholder="{{ (isLoading)?'Searching for ...':'Search for ...'}}"
-                [formControl]="searchField" id="catalogs">
-        </mat-form-field>
-        <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
-    </div>
 
-    <div style="text-align: center;margin-top: 5px;">
-        <div class="catalog-cell w4c-borders" *ngFor=" let catalog of catalogs">
-            <div class="catalog-element-info">
-                <mat-card style="display: inline-block; vertical-align:  top">
-                    <mat-card-header fxLayoutAlign="space-between top" >
-                        <div mat-card-avatar>
-                            <img src="{{catalog|toscaTypeImageSrc}}" style="background-size: cover;">
-                        </div>
-                        <mat-card-title fxLayoutAlign="top" >
-                                <span matTooltip="{{catalog.elementId}}">
-                                    {{catalog.elementId | w4cSplitAndGet:'.':'last' | slice:0:12 }}{{ (catalog.elementId | w4cSplitAndGet:'.':'last')?.length > 12 ? '...' : ''}}
-                                </span>
-                        </mat-card-title>
-                        <mat-card-subtitle>
-                                {{catalog.archiveVersion}}
-                        </mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content>       
-                        <div style="overflow-y:scroll; height:80px;margin-top: 10px;color: grey;text-align: center;">
-                                {{catalog.description}}
-                        </div>
-                        <div class="metaproperties" style="overflow-y:scroll;height:60px;margin-top: 12px;text-align: center;" >
-                          <mat-chip-list>
-                            <ng-container *ngFor="let namedMetaProperty of catalog.metaProperties | keyvalue;">
-                              <mat-chip
-                                *ngIf="namedMetaProperty.value"
-                                 class="meta-chip"
-                                 matTooltip="Metaproperty">
-                                 {{namedMetaProperty.value}}
-                              </mat-chip>
-                            </ng-container>
-                          </mat-chip-list>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
+  <w4c-filtered-search-bar [isLoading$]="isLoading$" [facets$]="facets$" (onSearch)="searchInCatalog($event)"></w4c-filtered-search-bar>
+
+  <div style="text-align: center;margin-top: 5px;">
+    <div class="catalog-cell w4c-borders" *ngFor=" let catalog of catalogs">
+      <div class="catalog-element-info">
+        <mat-card style="display: inline-block; vertical-align:  top">
+          <mat-card-header fxLayoutAlign="space-between top">
+            <div mat-card-avatar>
+              <img src="{{catalog|toscaTypeImageSrc}}" style="background-size: cover;">
             </div>
-        </div>
+            <mat-card-title fxLayoutAlign="top">
+              <span matTooltip="{{catalog.elementId}}">
+                {{catalog.elementId | w4cSplitAndGet:'.':'last' | slice:0:12 }}{{ (catalog.elementId | w4cSplitAndGet:'.':'last')?.length > 12 ? '...' : ''}}
+              </span>
+            </mat-card-title>
+            <mat-card-subtitle [matTooltip]="catalog.archiveName">
+              {{catalog.archiveVersion}}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="overflow-y:scroll; height:80px;margin-top: 10px;color: grey;text-align: center;">
+              {{catalog.description}}
+            </div>
+            <div class="metaproperties" style="overflow-y:scroll;height:60px;margin-top: 12px;text-align: center;">
+              <mat-chip-list>
+                <ng-container *ngFor="let namedMetaProperty of catalog.metaProperties | keyvalue;">
+                  <mat-chip
+                    *ngIf="namedMetaProperty.value"
+                    class="meta-chip"
+                    [matTooltip]="namedMetaProperty.key">
+                    {{namedMetaProperty.value}}
+                  </mat-chip>
+                </ng-container>
+              </mat-chip-list>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
+  </div>
 </div>

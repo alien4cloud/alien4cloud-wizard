@@ -1,12 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {debounceTime, mergeMap} from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 import * as _ from 'lodash';
-import {Application, ApplicationOverview, ApplicationOverviewService, ApplicationService, ApplicationEnvironmentService, ApplicationEnvironmentDTO, ApplicationEnvironment} from "@app/core";
+import {
+  Application,
+  ApplicationOverview,
+  ApplicationOverviewService,
+  ApplicationService,
+  ApplicationEnvironmentService,
+  ApplicationEnvironmentDTO,
+  FacetedSearchFacet, FilteredSearchRequest
+} from "@app/core";
 import {Router} from "@angular/router";
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
-import {Subscription} from "rxjs";
+import {ReplaySubject, Subscription} from "rxjs";
 import {environment} from '../../../../environments/environment';
+import {ToscaTypeShortNamePipe} from "@app/shared";
 
 @Component({
   selector: 'app-application-list',
@@ -20,7 +28,8 @@ export class ApplicationListComponent implements OnInit {
     private applicationOverviewService: ApplicationOverviewService,
     private applicationEnvironmentService: ApplicationEnvironmentService,
     private router: Router,
-    private websocketService: WebsocketSubscriptionManager
+    private websocketService: WebsocketSubscriptionManager,
+    private toscaTypeShortNamePipe: ToscaTypeShortNamePipe
   ) {
   }
 
@@ -30,35 +39,28 @@ export class ApplicationListComponent implements OnInit {
   applications: Application[];
   overview: ApplicationOverview;
 
-
   applicationEnvironments: Map<string, ApplicationEnvironmentDTO[]>;
 
   // Paginator config
   length = 100;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  query = null;
+  // query = null;
   pageIndex = 0;
 
-  // a form control to bind to search input
-  searchField: FormControl = new FormControl();
-
   // indicates data loading
-  isLoading: boolean = false;
+  private isLoadingSubject = new ReplaySubject<boolean>(1);
+  isLoading$ = this.isLoadingSubject.asObservable();
+
+  private facetsSubject = new ReplaySubject<Map<string, FacetedSearchFacet[]>>(1);
+  facets$ = this.facetsSubject.asObservable();
 
   private statusMonitorEventSubscription: Subscription;
 
+  private request: FilteredSearchRequest = new FilteredSearchRequest();
+
   ngOnInit() {
     this.loadApplications(0);
-
-    // add a debounceTimed suscription to avoid bakend mass attack
-    this.searchField.valueChanges
-      .pipe(debounceTime(1000))
-      .subscribe(term => {
-        this.query = term;
-        this.pageIndex = 0;
-        this.loadApplications(0);
-      });
 
     this.websocketService.deployementStatusChange.subscribe(e => {
       console.log(`Status changed to ${e.status} for deployment ${e.environmentId}`);
@@ -74,25 +76,39 @@ export class ApplicationListComponent implements OnInit {
         });
       }
     });
+
   }
 
   getApplicationImageUrl(application: Application) {
     return environment.urlPrefix + `/img?id=${application.imageId}&quality=QUALITY_64`
   }
 
+  searchApplications(request: FilteredSearchRequest) {
+    this.request = request;
+    this.loadApplications(0);
+  }
+
   private loadApplications(from: number) {
-    this.isLoading = true;
-    this.applicationService.search(from, this.pageSize, this.query).pipe(mergeMap(data => {
-      this.applications = data.data;
-      this.length = data.totalResults;
-      let applicationIds: string[] = this.applications.map(application => application.id);
-      console.log("Applications IDs array length ", applicationIds.length);
-      this.isLoading = false;
-      return this.applicationEnvironmentService.getEnvironmentApplications(applicationIds)
-    })).subscribe((data) => {
-      console.log("Received environments data: ", JSON.stringify(data))
-      this.applicationEnvironments = data;
-    });
+    this.isLoadingSubject.next(true);
+    let request = this.request;
+    request.from = from;
+    request.size = this.pageSize;
+    this.applicationService.search(request)
+      .pipe(
+      mergeMap(data => {
+        this.applications = data.data;
+        this.length = data.totalResults;
+        this.facetsSubject.next(data.facets);
+        let applicationIds: string[] = this.applications.map(application => application.id);
+        console.log("Applications IDs array length ", applicationIds.length);
+        this.isLoadingSubject.next(false);
+        return this.applicationEnvironmentService.getEnvironmentApplications(applicationIds)
+      })
+      ).subscribe((data) => {
+        console.log("Received environments data: ", JSON.stringify(data))
+        this.applicationEnvironments = data;
+      }
+    );
   }
 
   /**
