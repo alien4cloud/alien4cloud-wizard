@@ -34,9 +34,12 @@ From old alien
 
 
 .description::-webkit-scrollbar {
-  background: hidden ;
+  background: transparent ;
 }
 
+.metaproperties::-webkit-scrollbar{
+  background: transparent ;
+}
 
 
 
