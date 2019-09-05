@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 import {FacetedSearchFacet, FilteredSearchRequest, NodeType} from '@app/core';
 import {CatalogService, ComponentSearchRequest, QueryComponentType} from '@app/core/services/catalog.service';
-import {debounceTime} from "rxjs/operators";
 import {ReplaySubject} from "rxjs";
-
+import * as _ from 'lodash';
 
 @Component({
   selector: 'w4c-catalog-list',
@@ -14,6 +12,9 @@ import {ReplaySubject} from "rxjs";
 export class CatalogListComponent implements OnInit {
 
   private request: ComponentSearchRequest = new ComponentSearchRequest();
+
+  // make lodash usable from template
+  private lodash = _;
 
   // indicates data loading
   private isLoadingSubject = new ReplaySubject<boolean>(1);

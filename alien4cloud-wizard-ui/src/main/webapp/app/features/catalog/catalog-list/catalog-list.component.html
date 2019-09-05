@@ -12,7 +12,7 @@
             </div>
             <mat-card-title fxLayoutAlign="top">
               <span matTooltip="{{catalog.elementId}}">
-                {{catalog.elementId | w4cSplitAndGet:'.':'last' | slice:0:12 }}{{ (catalog.elementId | w4cSplitAndGet:'.':'last')?.length > 12 ? '...' : ''}}
+                {{ lodash.truncate(catalog.elementId | w4cToscaTypeShortName, {'length': 12}) }}
               </span>
             </mat-card-title>
             <mat-card-subtitle [matTooltip]="catalog.archiveName">

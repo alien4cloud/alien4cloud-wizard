@@ -2,7 +2,7 @@ import {AfterContentInit, Component, ElementRef, Input, OnInit, Renderer} from '
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {DoCreateApplication, DoUpdateApplication, GoBack} from "@app/features/application-wizard/core/fsm.events";
-import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, TrimNamePipe} from "@app/shared";
+import {ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe} from "@app/shared";
 import {FormControl} from "@angular/forms";
 import {debounceTime} from "rxjs/operators";
 import * as _ from "lodash";
