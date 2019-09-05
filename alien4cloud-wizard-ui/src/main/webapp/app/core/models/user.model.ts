@@ -31,4 +31,19 @@ export namespace User {
     }
     return false;
   }
+
+  /**
+   * Decide if a user can create an app depending on its roles.
+   */
+  export function canBrowseModules(roles: Role[]) : boolean {
+    if (!roles || roles.length == 0) {
+      return false;
+    }
+    for (let i=0; i < roles.length; i++) {
+      if (roles[i] == Role.ADMIN || roles[i] == Role.COMPONENTS_BROWSER || roles[i] == Role.COMPONENTS_MANAGER || roles[i] == Role.ARCHITECT) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

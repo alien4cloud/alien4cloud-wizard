@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
       "/new-wizard",
       true
     );
-    let modules = new Feature(
+    let catalog = new Feature(
       "Catalog",
       "Browse platform components catalog and display details about components.",
       "view_module",
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit {
 
     this.features.push(dashboard);
     this.features.push(wizard);
-    this.features.push(modules);
+    this.features.push(catalog);
     this.features.push(settings);
 
     this.authService.$userStatus.subscribe(userStatus => {
@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
         dashboard.allowed = true;
         wizard.allowed = User.canCreateApp(userStatus.roles);
         settings.allowed = true;
+        catalog.allowed = User.canBrowseModules(userStatus.roles);
       } else {
         this.features.forEach(feature => feature.allowed = false);
         settings.allowed = true;
