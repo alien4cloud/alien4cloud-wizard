@@ -9,15 +9,15 @@
   <div>
     <button mat-stroked-button
             (click)="deleteLogs()"
-            i18n-matTooltip matTooltip="Clear logs">
+            [matTooltip]="'Wizard.Forms.ActiveDeploymentLogs.ClearLogs' | translate">
       <mat-icon>delete</mat-icon>
     </button>
-    <button mat-stroked-button disabled="true" matTooltip="Autorefresh indicator">
+    <button mat-stroked-button disabled="true" [matTooltip]="'Wizard.Forms.ActiveDeploymentLogs.Autorefresh' | translate">
       <mat-icon [color]="(isPolling) ? 'accent' : ''">cached</mat-icon>
     </button>
     <button mat-stroked-button
             (click)="autoscrollingDisabled = !autoscrollingDisabled"
-            i18n-matTooltip matTooltip="Autoscrolling indicator / activator">
+            [matTooltip]="'Wizard.Forms.ActiveDeploymentLogs.Autoscrolling' | translate">
       <mat-icon [color]="(autoscrollingDisabled) ? '' : 'accent'">vertical_align_bottom</mat-icon>
     </button>
   </div>

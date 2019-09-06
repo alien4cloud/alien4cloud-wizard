@@ -16,6 +16,6 @@
     </mat-chip-list>
   </div>
 </div>
-<w4c-wizard-control [fsmContext]="fsmContext" [forwardFn]="deployApp.bind(this)" i18n-forwardAltLabel forwardAltLabel="deploy !"
+<w4c-wizard-control [fsmContext]="fsmContext" [forwardFn]="deployApp.bind(this)" [forwardAltLabel]="'Wizard.Forms.DeploymentValidationComponent.Deploy' | translate"
   forwardGuard="canSubmitDeployment">
 </w4c-wizard-control>

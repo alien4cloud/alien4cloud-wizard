@@ -9,14 +9,14 @@
            <tr>
              <td>
                <mat-form-field appearance="outline">
-                 <mat-label i18n>Username</mat-label>
+                 <mat-label>{{ 'shared.Login.Username' | translate }}</mat-label>
                <input matInput  [(ngModel)]="username" id="username" name="username" required>
                </mat-form-field>
              </td>
            </tr>
            <tr>
            <td><mat-form-field appearance="outline">
-              <mat-label i18n>Password</mat-label>
+              <mat-label>{{ 'shared.Login.Password' | translate }}</mat-label>
              <input matInput  [(ngModel)]="password" type="password" name="password" required>
            </mat-form-field></td>
          </tr></table>
@@ -24,7 +24,7 @@
        <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
      </mat-card-content>
      <mat-card-actions>
-       <button mat-stroked-button (click)="login()" color="primary">Login</button>
+       <button mat-stroked-button (click)="login()" color="primary">{{ 'shared.Login.Login' | translate }}</button>
      </mat-card-actions>
    </mat-card>
 </div>

@@ -1,8 +1,7 @@
 <div fxLayout="row" flex fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
-
   <mat-icon>search</mat-icon>
   <mat-form-field fxFlex="50%">
-    <input matInput i18n-placeholder placeholder="Search for ..." [formControl]="searchField"
+    <input matInput [placeholder]="'shared.FilteredSearchBar.SearchFor' | translate" [formControl]="searchField"
            id="filteredSearchInput" [matAutocomplete]="filters" (keydown.enter)="search()">
     <mat-chip-list #chipList>
       <mat-chip *ngFor="let activeFilter of activeFilters; let i = index"
@@ -12,11 +11,9 @@
         {{activeFilter.displayName}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-
     </mat-chip-list>
   </mat-form-field>
   <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
-
   <mat-autocomplete #filters="matAutocomplete" (optionSelected)="filterSelected($event)" >
     <mat-optgroup *ngFor="let filter of filteredFilters$ | async" [label]="filter.displayName">
       <mat-option *ngFor="let valueItem of filter.valueItems" [value]="valueItem">
@@ -31,5 +28,4 @@
       </mat-option>
     </mat-optgroup>
   </mat-autocomplete>
-
 </div>

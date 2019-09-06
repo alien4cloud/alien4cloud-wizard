@@ -158,10 +158,10 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     event.stopPropagation();
     let title = "";
     let msg = "";
-    this.translate.get("Wizard.Forms.ActiveDeploymentComponent.Undeploy.Title").subscribe(
+    this.translate.get("Wizard.Forms.ActiveDeploymentComponent.UndeployDialog.Title").subscribe(
      value => {
        title = value;
-       this.translate.get("Wizard.Forms.ActiveDeploymentComponent.Undeploy.Message").subscribe( value1 => {
+       this.translate.get("Wizard.Forms.ActiveDeploymentComponent.UndeployDialog.Message").subscribe( value1 => {
          msg = value1;
          const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
            width: '35%',

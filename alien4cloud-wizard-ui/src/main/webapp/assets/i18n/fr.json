@@ -256,19 +256,27 @@
       },
       "DeploymentValidationComponent": {
         "stepTitle": "Validation",
-        "stepDescription": "Vérifie que le déploiement est prêt à être lancé."
+        "stepDescription": "Vérifie que le déploiement est prêt à être lancé.",
+        "Deploy": "activer !"
       },
       "ActiveDeploymentComponent": {
         "stepTitle": "Gérer le déploiement",
         "stepDescription": "Surveillance, affichage des logs et déclenchement des exécutions.",
-        "Undeploy" : {
+        "UndeployDialog" : {
           "Title": "Désactivation de l'application",
           "Message": "Confirmez-vous que vous souhaitez désactiver l'application ?"
         },
         "NoWorkflowInProgress": "Pas de workflow en cours",
         "Monitor": "Surveillance",
         "Outputs": "Données de sortie",
-        "Logs": "Journaux"
+        "Logs": "Journaux",
+        "Deploy": "Activer",
+        "Undeploy": "Désactiver"
+      },
+      "ActiveDeploymentLogs": {
+        "ClearLogs": "Nettoyer",
+        "Autoscrolling": "Autoscrolling",
+        "Autorefresh": "Rafraichissement automatique"
       },
       "DeleteApplicationFormComponent": {
         "stepTitle": "Fin",
@@ -314,6 +322,19 @@
     "TopologyOverview": {
       "ShowGraph": "Voir le graphe",
       "ShowDescription": "Voir la description"
+    },
+    "FilteredSearchBar": {
+      "SearchFor": "Rechercher ..."
+    },
+    "Header": {
+      "FullApp": "Application complète",
+      "Login": "Connexion",
+      "Logout": "Déconnexion"
+    },
+    "Login": {
+      "Username": "Nom d'utilisateur",
+      "Password": "Mot de passe",
+      "Login": "S'authentifier"
     }
   }
 }

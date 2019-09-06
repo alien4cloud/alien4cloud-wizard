@@ -256,19 +256,27 @@
       },
       "DeploymentValidationComponent": {
         "stepTitle": "Validation",
-        "stepDescription": "Check if the application is ready to deploy and deploy it."
+        "stepDescription": "Check if the application is ready to deploy and deploy it.",
+        "Deploy": "deploy !"
       },
       "ActiveDeploymentComponent": {
         "stepTitle": "Manage deployment",
         "stepDescription": "Monitor the current deployment's workflow, undeploy the application when it's deployed, display logs, trigger workflow executions.",
-        "Undeploy" : {
+        "UndeployDialog" : {
           "Title": "Undeploy Application",
           "Message": "Do you confirm you want to undeploy of this application ?"
         },
         "NoWorkflowInProgress": "No workflow in progress",
         "Monitor": "Monitor",
         "Outputs": "Outputs",
-        "Logs": "Logs"
+        "Logs": "Logs",
+        "Deploy": "Deploy",
+        "Undeploy": "Undeploy"
+      },
+      "ActiveDeploymentLogs": {
+        "ClearLogs": "Clear logs",
+        "Autoscrolling": "Autoscrolling indicator / activator",
+        "Autorefresh": "Autorefresh indicator"
       },
       "DeleteApplicationFormComponent": {
         "stepTitle": "Exit",
@@ -314,6 +322,19 @@
     "TopologyOverview": {
       "ShowGraph": "Show graph",
       "ShowDescription": "Show description"
+    },
+    "FilteredSearchBar": {
+      "SearchFor": "Search for ..."
+    },
+    "Header": {
+      "FullApp": "Full app",
+      "Login": "Login",
+      "Logout": "Logout"
+    },
+    "Login": {
+      "Username": "Username",
+      "Password": "Password",
+      "Login": "Login"
     }
   }
 }

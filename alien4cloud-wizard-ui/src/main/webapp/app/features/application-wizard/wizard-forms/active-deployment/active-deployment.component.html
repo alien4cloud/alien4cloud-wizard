@@ -93,9 +93,9 @@
 
 <w4c-wizard-control [fsmContext]="fsmContext"
                     backwardGuard="canDeploy"
-                    i18n-backwardAltLabel backwardAltLabel="Deploy"
+                    [backwardAltLabel]="'Wizard.Forms.ActiveDeploymentComponent.Deploy' | translate"
                     cancelGuard="canUndeploy"
-                    i18n-cancelLabel cancelLabel="Undeploy"
+                    [cancelLabel]="'Wizard.Forms.ActiveDeploymentComponent.Undeploy' | translate"
                     [cancelFn]="openUndeployDialog.bind(this)"
                     forwardGuard="canDeploy"
                     [forwardFn]="deleteApplication.bind(this)"
