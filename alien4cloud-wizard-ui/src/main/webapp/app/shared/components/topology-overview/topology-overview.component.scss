@@ -1,13 +1,13 @@
 .desciption {
   height: 320px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
   margin: 5px;
 }
 
 .metaproperties {
   height: 100px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 5px;
   margin: 5px;
 }
@@ -20,7 +20,7 @@
 }
 
 .modules-table {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 150px;
   max-height: 150px;
 }
