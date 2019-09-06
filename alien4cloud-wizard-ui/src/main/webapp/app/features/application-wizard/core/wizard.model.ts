@@ -1,17 +1,11 @@
 import {Type} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
-import {ExecutionStatus, Task} from "@app/core";
 
 /**
  * This represents a step of the wizard.
  */
 export interface WizardFormStep {
-  id: string;
-  /**
-   * What to display in the stepper label.
-   */
-  stepLabel: string;
   /**
    * The component itself.
    */
@@ -20,10 +14,6 @@ export interface WizardFormStep {
    * The FSM state name it relies to.
    */
   fsmStateName: string;
-  /**
-   * Explanation of the step.
-   */
-  description: string;
 }
 
 /**
