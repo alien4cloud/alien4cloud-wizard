@@ -332,6 +332,7 @@
       "Logout": "Logout"
     },
     "Login": {
+      "Title": "Authentication",
       "Username": "Username",
       "Password": "Password",
       "Login": "Login"

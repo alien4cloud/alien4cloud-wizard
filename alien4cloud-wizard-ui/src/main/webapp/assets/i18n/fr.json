@@ -332,6 +332,7 @@
       "Logout": "Déconnexion"
     },
     "Login": {
+      "Title": "Authentification",
       "Username": "Nom d'utilisateur",
       "Password": "Mot de passe",
       "Login": "S'authentifier"
