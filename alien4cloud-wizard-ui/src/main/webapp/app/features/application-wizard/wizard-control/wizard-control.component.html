@@ -4,14 +4,14 @@
                      [enableOnGuard]="backwardGuard"
                      [enabledFn]="_backwardEnabled.bind(this)"
                      [fsmContext]="fsmContext"
-                     [label]="(backwardAltLabel) ? 'Back: ' + backwardAltLabel : 'Back'"
+                     [label]="(backwardAltLabel) ? ('Wizard.Control.Back' | translate) + ': ' + backwardAltLabel : 'Wizard.Control.Back' | translate"
                      matIconName="fast_rewind">
   </w4c-wizard-button>
   <w4c-wizard-button (click)="_cancel($event)"
                      [enableOnGuard]="cancelGuard"
                      [enabledFn]="_cancelEnabled.bind(this)"
                      [fsmContext]="fsmContext"
-                     [label]="(cancelLabel) ? cancelLabel : 'Cancel'"
+                     [label]="(cancelLabel) ? cancelLabel : 'Wizard.Control.Cancel' | translate"
                      matIconName="stop">
   </w4c-wizard-button>
   <!-- A container where a parent can insert buttons if needed. -->
@@ -20,7 +20,7 @@
                      [enableOnGuard]="forwardGuard"
                      [enabledFn]="_forwardEnabled.bind(this)"
                      [fsmContext]="fsmContext"
-                     [label]="(forwardAltLabel) ? 'Next: ' + forwardAltLabel : 'Next'"
+                     [label]="(forwardAltLabel) ? ('Wizard.Control.Next' | translate) + ': ' + forwardAltLabel : 'Wizard.Control.Next' | translate"
                      matIconName="fast_forward"
                      [matIconAtEnd]="true">
   </w4c-wizard-button>

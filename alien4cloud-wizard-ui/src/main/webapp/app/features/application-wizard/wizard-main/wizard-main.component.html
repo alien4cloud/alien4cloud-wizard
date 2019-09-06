@@ -5,7 +5,7 @@
   <div fxLayout="row" fxLayoutAlign="center start" class="w4c-full-width" >
     <mat-vertical-stepper [linear]="true" #applicationWizardStepper>
       <mat-step *ngFor="let step of steps;" editable="false" completed="false">
-        <ng-template matStepLabel>{{ step.stepLabel }}</ng-template>
+        <ng-template matStepLabel>{{ 'Wizard.Forms.' + step.component.name + ".stepTitle" | translate }}</ng-template>
       </mat-step>
     </mat-vertical-stepper>
     <div fxLayout="column" fxLayoutAlign="center center" fxFlex="100%">

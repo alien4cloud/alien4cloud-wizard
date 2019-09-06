@@ -191,9 +191,56 @@
   },
   "Wizard": {
     "Forms": {
+      "WelcomeComponent": {
+        "stepTitle": "Bienvenue",
+        "stepDescription": ""
+      },
       "TemplateSelectionComponent": {
+        "stepTitle": "Choix du modèle",
+        "stepDescription": "Le modèle choisi sera utilisé pour créer l'application.",
         "Use": "Utiliser"
+      },
+      "ApplicationCreateComponent": {
+        "stepTitle": "Création de l'application",
+        "stepDescription": "Vous devez renseigner a minima le nom que vous souhaitez donner à votre application."
+      },
+      "ApplicationMetapropertiesComponent": {
+        "stepTitle": "Meta-données",
+        "stepDescription": "Les méta-données à renseigner pour une application sont définies par l'administrateur. Certaines peuvent être obligatoires."
+      },
+      "DeploymentInputsComponent": {
+        "stepTitle": "Propriétés d'entrée",
+        "stepDescription": "Les propriétés d'entrée doivent être définies avant le déploiement : elles peuvent changer le comportement du déploiement."
+      },
+      "DeploymentArtifactsComponent": {
+        "stepTitle": "Artefacts d'entrée",
+        "stepDescription": "Les artefacts sont des fichiers qui peuvent être associés au déploiement et utilisés par certains composants déployés."
+      },
+      "LocationSelectionComponent": {
+        "stepTitle": "Cible de déploiement",
+        "stepDescription": "La cible de déploiement correspond à l'infrastructure dans lequel votre déploiement va être opéré."
+      },
+      "NodesMatchingComponent": {
+        "stepTitle": "Remplacement de noeuds",
+        "stepDescription": "Certains noeud ou politiques peuvent être rempmlacées par des implémentations fournies par la cible du déploiement."
+      },
+      "DeploymentValidationComponent": {
+        "stepTitle": "Validation",
+        "stepDescription": "Vérifie que le déploiement est prêt à être opéré."
+      },
+      "ActiveDeploymentComponent": {
+        "stepTitle": "Gérer le déploiement",
+        "stepDescription": "Surveiller le déploiement, afficher les logs et déclencher des exécutions."
+      },
+      "DeleteApplicationFormComponent": {
+        "stepTitle": "Fin",
+        "stepDescription": "Supprime ou laisse l'application en l'état."
       }
+    },
+    "Control": {
+      "Next": "Suivant",
+      "Back": "Retour",
+      "Cancel": "Annuler"
     }
   },
   "Global": {

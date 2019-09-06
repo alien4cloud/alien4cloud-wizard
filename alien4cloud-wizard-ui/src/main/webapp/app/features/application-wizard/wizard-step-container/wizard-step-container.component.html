@@ -4,8 +4,8 @@
       <mat-card *ngIf="wizardFormStep">
         <div fxLayout="row" fxLayoutAlign="space-between start">
           <div fxLayout="column">
-            <div class="mat-card-title">{{ wizardFormStep.stepLabel }}</div>
-            <div class="mat-card-subtitle">{{ wizardFormStep.description }}</div>
+            <div class="mat-card-title">{{ 'Wizard.Forms.' + wizardFormStep.component.name + ".stepTitle" | translate }}</div>
+            <div class="mat-card-subtitle">{{ 'Wizard.Forms.' + wizardFormStep.component.name + ".stepDescription" | translate }}</div>
             <w4c-workflow-progress-bar *ngIf="wizardForm.fsmContext && wizardForm.fsmContext.progessBarData" [fsmContext]="wizardForm.fsmContext"></w4c-workflow-progress-bar>
           </div>
           <div *ngIf="wizardForm && wizardForm.fsmContext">

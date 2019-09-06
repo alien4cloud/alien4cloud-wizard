@@ -7,6 +7,7 @@ import {ExecutionStatus, Task} from "@app/core";
  * This represents a step of the wizard.
  */
 export interface WizardFormStep {
+  id: string;
   /**
    * What to display in the stepper label.
    */

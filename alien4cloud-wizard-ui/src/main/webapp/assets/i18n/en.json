@@ -191,9 +191,56 @@
   },
   "Wizard": {
     "Forms": {
+      "WelcomeComponent": {
+        "stepTitle": "Welcome",
+        "stepDescription": ""
+      },
       "TemplateSelectionComponent": {
-        "Use": "Use"
+        "stepTitle": "Pick a template",
+        "stepDescription": "The template will be used to create the application.",
+        "Use": "Utiliser"
+      },
+      "ApplicationCreateComponent": {
+        "stepTitle": "Fill application details",
+        "stepDescription": "At least the application name is required to create an application."
+      },
+      "ApplicationMetapropertiesComponent": {
+        "stepTitle": "Fill meta-properties",
+        "stepDescription": "Meta-properties are defined by the administrator and should be required."
+      },
+      "DeploymentInputsComponent": {
+        "stepTitle": "Fill inputs",
+        "stepDescription": "Inputs are properties that are set before the deployment, they can change the application behavior."
+      },
+      "DeploymentArtifactsComponent": {
+        "stepTitle": "Artifacts",
+        "stepDescription": "Input artifacts are files that can be associated to deployemnts and used by some components of the deployed application."
+      },
+      "LocationSelectionComponent": {
+        "stepTitle": "Select target",
+        "stepDescription": "The target AKA location is where your application will be deployed."
+      },
+      "NodesMatchingComponent": {
+        "stepTitle": "Matching",
+        "stepDescription": "Some abstract nodes or policies need to be replaced by concrete implementations provided by the location."
+      },
+      "DeploymentValidationComponent": {
+        "stepTitle": "Validation",
+        "stepDescription": "Check if the application is ready to deploy and deploy it."
+      },
+      "ActiveDeploymentComponent": {
+        "stepTitle": "Manage deployment",
+        "stepDescription": "Monitor the current deployment's workflow, undeploy the application when it's deployed, display logs, trigger workflow executions."
+      },
+      "DeleteApplicationFormComponent": {
+        "stepTitle": "Exit",
+        "stepDescription": "Delete or leave the application."
       }
+    },
+    "Control": {
+      "Next": "Next",
+      "Back": "Back",
+      "Cancel": "Cancel"
     }
   },
   "Global": {

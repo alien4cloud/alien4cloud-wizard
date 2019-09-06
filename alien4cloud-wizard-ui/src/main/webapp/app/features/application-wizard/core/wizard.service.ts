@@ -18,17 +18,17 @@ import {DeploymentArtifactsComponent} from "@app/features/application-wizard/wiz
  */
 export const wizardDefinition: WizardFormStep[] = [
   // This first step is not related to any FSM state.
-  {stepLabel: "Welcome", component: WelcomeComponent, fsmStateName: "", description: ""},
-  {stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm", description: "The template will be used to create the application."},
-  {stepLabel: "Fill application details", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm", description: "At least the application name is required to create an application."},
-  {stepLabel: "Fill meta-properties", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm", description: "Meta-properties are defined by the administrator and should be required."},
-  {stepLabel: "Fill inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm", description: "Inputs are properties that are set before the deployment, they can change the application behavior."},
-  {stepLabel: "Artifacts", component: DeploymentArtifactsComponent, fsmStateName: "deploymentInputArtifactsForm", description: "Input artifacts are files that can be associated to deployemnts and used by some components of the deployed application."},
-  {stepLabel: "Select target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm", description: "The target AKA location is where your application will be deployed."},
-  {stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm", description: "Some abstract nodes need to be replaced by concrete implementations provided by the location."},
-  {stepLabel: "Validation", component: DeploymentValidationComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
-  {stepLabel: "Manage deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm", description: "Monitor the current deployment's workflow, undeploy the application when it's deployed, display logs, trigger workflow executions."},
-  {stepLabel: "Exit", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm", description: "Delete or leave the application."}
+  {id: "", stepLabel: "Welcome", component: WelcomeComponent, fsmStateName: "", description: ""},
+  {id: "", stepLabel: "Pick a template", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm", description: "The template will be used to create the application."},
+  {id: "", stepLabel: "Fill application details", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm", description: "At least the application name is required to create an application."},
+  {id: "", stepLabel: "Fill meta-properties", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm", description: "Meta-properties are defined by the administrator and should be required."},
+  {id: "", stepLabel: "Fill inputs", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm", description: "Inputs are properties that are set before the deployment, they can change the application behavior."},
+  {id: "", stepLabel: "Artifacts", component: DeploymentArtifactsComponent, fsmStateName: "deploymentInputArtifactsForm", description: "Input artifacts are files that can be associated to deployemnts and used by some components of the deployed application."},
+  {id: "", stepLabel: "Select target", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm", description: "The target AKA location is where your application will be deployed."},
+  {id: "", stepLabel: "Matching", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm", description: "Some abstract nodes need to be replaced by concrete implementations provided by the location."},
+  {id: "", stepLabel: "Validation", component: DeploymentValidationComponent, fsmStateName: "deploymentForm", description: "Check if the application is ready to deploy and deploy it."},
+  {id: "", stepLabel: "Manage deployment", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm", description: "Monitor the current deployment's workflow, undeploy the application when it's deployed, display logs, trigger workflow executions."},
+  {id: "", stepLabel: "Exit", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm", description: "Delete or leave the application."}
 ];
 
 @Injectable({
