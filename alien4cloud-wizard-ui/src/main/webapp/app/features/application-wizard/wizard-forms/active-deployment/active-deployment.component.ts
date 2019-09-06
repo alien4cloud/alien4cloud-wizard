@@ -87,7 +87,7 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     // we filter workflows that have steps and exclude install and uninstall
     for (const [key, wf] of Object.entries(this.fsmContext.deploymentTopology.topology.workflows)) {
       console.log(`Workflow ${key} : ${wf.name}`);
-      if (key != "install" && key != "uninstall" && key != "stop" && key != "start" && _.size(wf['steps']) > 0) {
+      if (key != "install" && key != "uninstall" && key != "stop" && key != "start" && key != "cancel" && _.size(wf['steps']) > 0) {
         this.workflows.add(key);
       }
       if (this.workflows.has("run")) {

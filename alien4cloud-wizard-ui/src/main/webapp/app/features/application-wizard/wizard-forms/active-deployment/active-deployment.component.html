@@ -5,7 +5,7 @@
       <div fxLayout="row" fxLayoutAlign="center center" class="w4c-full-width" fxFlex="100%">
         <div fxLayout="column" fxLayoutAlign="center center" class="deployment-monitor mat-app-background">
           <div *ngIf="!fsmContext.progessBarData; else deploying" fxLayout="row" fxFlex="100%">
-            <h4 i18n>No workflow in progress</h4>
+            <h4>{{ 'Wizard.Forms.ActiveDeploymentComponent.NoWorkflowInProgress' }}</h4>
           </div>
           <ng-template #deploying>
             <w4c-workflow-graph-viewer

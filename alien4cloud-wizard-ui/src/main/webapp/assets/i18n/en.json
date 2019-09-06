@@ -189,6 +189,30 @@
       "Manage": "Manage"
     }
   },
+  "ENTITY" : {
+    "EXECUTION" : {
+      "WORKFLOW" : "Workflow",
+      "STATUS" : {
+        "VALUES" : {
+          "SUCCEEDED" : "Succeeded",
+          "FAILED" : "Failed",
+          "RUNNING" : "Running",
+          "CANCELLED" : "Cancelled"
+        }
+      }
+    },
+    "TASK" : {
+      "STATUS" : {
+        "VALUES" : {
+          "STARTED" : "Started",
+          "SUCCEEDED" : "Succeeded",
+          "FAILED" : "Failed",
+          "SCHEDULED" : "Scheduled",
+          "CANCELLED" : "Cancelled"
+        }
+      }
+    }
+  },
   "Wizard": {
     "Forms": {
       "WelcomeComponent": {
@@ -240,7 +264,8 @@
         "Undeploy" : {
           "Title": "Undeploy Application",
           "Message": "Do you confirm you want to undeploy of this application ?"
-        }
+        },
+        "NoWorkflowInProgress": "No workflow in progress"
       },
       "DeleteApplicationFormComponent": {
         "stepTitle": "Exit",
@@ -258,6 +283,11 @@
       "Next": "Next",
       "Back": "Back",
       "Cancel": "Cancel"
+    },
+    "WorkflowProgressBar": {
+      "WorkflowInProgess": "Workflow {{workflowName}} in progress ({{progress}}%)",
+      "WorkflowExecuted": "Workflow {{workflowName}} executed",
+      "WorkflowInit": "Workflow initialization"
     }
   },
   "Global": {

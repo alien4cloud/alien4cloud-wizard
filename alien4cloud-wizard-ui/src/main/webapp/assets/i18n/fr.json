@@ -189,6 +189,30 @@
       "Manage": "Gérer"
     }
   },
+  "ENTITY" : {
+    "EXECUTION" : {
+      "WORKFLOW" : "Workflow",
+      "STATUS" : {
+        "VALUES" : {
+          "SUCCEEDED" : "Succès",
+          "FAILED" : "Echec",
+          "RUNNING" : "En cours",
+          "CANCELLED" : "Annulée"
+        }
+      }
+    },
+    "TASK" : {
+      "STATUS" : {
+        "VALUES" : {
+          "STARTED" : "Démarrée",
+          "SUCCEEDED" : "Succès",
+          "FAILED" : "Echec",
+          "SCHEDULED" : "Programmée",
+          "CANCELLED" : "Annulée"
+        }
+      }
+    }
+  },
   "Wizard": {
     "Forms": {
       "WelcomeComponent": {
@@ -240,7 +264,8 @@
         "Undeploy" : {
           "Title": "Désactivation de l'application",
           "Message": "Confirmez-vous que vous souhaitez désactiver l'application ?"
-        }
+        },
+        "NoWorkflowInProgress": "Pas de workflow en cours"
       },
       "DeleteApplicationFormComponent": {
         "stepTitle": "Fin",
@@ -258,6 +283,11 @@
       "Next": "Suivant",
       "Back": "Retour",
       "Cancel": "Annuler"
+    },
+    "WorkflowProgressBar": {
+      "WorkflowInProgess": "Workflow {{workflowName}} en cours ({{progress}}%)",
+      "WorkflowExecuted": "Workflow {{workflowName}} exécuté",
+      "WorkflowInit": "Initialisation du workflow"
     }
   },
   "Global": {
@@ -277,7 +307,7 @@
       "SetDefault" : "Réinitialiser à la valeur par défaut"
     },
     "TopologyOverview": {
-      "ShowGraph": "Voir le graph",
+      "ShowGraph": "Voir le graphe",
       "ShowDescription": "Voir la description"
     }
   }
