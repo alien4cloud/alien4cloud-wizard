@@ -6,13 +6,13 @@
     <div class="catalog-cell w4c-borders" *ngFor=" let catalog of catalogs">
       <div class="catalog-element-info">
         <mat-card style="display: inline-block; vertical-align:  top">
-          <mat-card-header fxLayoutAlign="space-between top">
+          <mat-card-header fxLayoutAlign="start top">
             <div mat-card-avatar>
-              <img src="{{catalog|toscaTypeImageSrc}}" style="background-size: cover;">
+              <img src="{{catalog|toscaTypeImageSrc}}" class="catalog-component-icon">
             </div>
             <mat-card-title fxLayoutAlign="top">
               <span matTooltip="{{catalog.elementId}}">
-                {{ lodash.truncate(catalog.elementId | w4cToscaTypeShortName, {'length': 12}) }}
+                {{ lodash.truncate(catalog.elementId | w4cToscaTypeShortName, {'length': 17}) }}
               </span>
             </mat-card-title>
             <mat-card-subtitle [matTooltip]="catalog.archiveName">
@@ -20,10 +20,10 @@
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <div class ="description" style="overflow-y:auto; overflow-x:hidden ;height:80px;margin-top: 10px;color: grey;text-align: center;">
+            <div class="description">
               {{catalog.description}}
             </div>
-            <div class="metaproperties" style="overflow-y:auto;overflow-x:hidden ; height:60px;margin-top: 12px;text-align: center;">
+            <div class="metaproperties">
               <mat-chip-list>
                 <ng-container *ngFor="let namedMetaProperty of catalog.metaProperties | keyvalue;">
                   <mat-chip
