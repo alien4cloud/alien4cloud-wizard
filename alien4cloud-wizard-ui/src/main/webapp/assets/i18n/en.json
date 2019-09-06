@@ -193,7 +193,8 @@
     "Forms": {
       "WelcomeComponent": {
         "stepTitle": "Welcome",
-        "stepDescription": ""
+        "stepDescription": "",
+        "welcomeMessage": "You can skip displaying this page in"
       },
       "TemplateSelectionComponent": {
         "stepTitle": "Pick a template",

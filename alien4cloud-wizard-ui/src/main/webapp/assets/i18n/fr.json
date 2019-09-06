@@ -193,7 +193,8 @@
     "Forms": {
       "WelcomeComponent": {
         "stepTitle": "Bienvenue",
-        "stepDescription": ""
+        "stepDescription": "",
+        "welcomeMessage": "Vous pouvez désactiver cette étape dans"
       },
       "TemplateSelectionComponent": {
         "stepTitle": "Choix du modèle",
