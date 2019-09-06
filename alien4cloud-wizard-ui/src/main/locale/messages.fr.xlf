@@ -26,19 +26,13 @@
       </trans-unit><trans-unit id="f16f7d1a9da52ba860fb1c814ef7041a272fd880" datatype="html">
         <source>Welcome to Wizard4Cloud !</source>
         <target state="new">Bienvenue !</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context><context context-type="linenumber">3</context></context-group></trans-unit>
       <trans-unit id="3db6ec86c32b85bd258c80439c962c6ef50a0a33" datatype="html">
         <source>From here you can access following features:</source>
         <target state="new">Depuis cette page, vous pouvez accéder aux fonctionnalités suivantes :</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/shared/layout/home.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit>
       <trans-unit id="70d0c35964e16a9c56036325ec0e600f7dd69f36" datatype="html">
         <source>This wizard will guide throw the necessary steps in order to create a new application from a template.</source>
         <target state="new">Ce guide va vous aider à travers toutes les étapes pour activer une application depuis un modèle.</target>
@@ -219,11 +213,8 @@
         
       <context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/shared/components/filtered-search-bar/filtered-search-bar.component.html</context><context context-type="linenumber">5</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/features/application-wizard/wizard-forms/active-deployment-logs/active-deployment-logs.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <source>Login</source><target state="new">Authentification</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/main/webapp/app/shared/components/login/login.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-      </trans-unit><trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/shared/components/login/login.component.html</context><context context-type="linenumber">4</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/main/webapp/app/shared/layout/header.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit><trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
         <source>Username</source><target state="new">Nom d'utilisateur</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/shared/components/login/login.component.html</context>
@@ -246,6 +237,24 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/main/webapp/app/shared/components/confirmation-dialog/confirmation-dialog.component.html</context>
           <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit><trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
+        <source>Settings</source><target state="new">Paramètres</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/layout/header.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit><trans-unit id="be23407d05fa22cea5a8ec633ec96678107ded0a" datatype="html">
+        <source>Full app</source><target state="new">Application complète</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/layout/header.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit><trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+        <source>Logout</source><target state="new">Déconnexion</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/main/webapp/app/shared/layout/header.component.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
     </body>

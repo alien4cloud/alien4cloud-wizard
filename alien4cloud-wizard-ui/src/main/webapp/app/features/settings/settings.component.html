@@ -6,7 +6,7 @@
       [propertyDefinition]="settingDefinition.setting"
       [formGroup]="settingsForm"
       [id]="lodash.capitalize(lodash.camelCase(settingDefinition.setting.id))"
-      [label]="settingDefinition.setting.label"
+      label="{{ settingDefinition.setting.id + '.label' | translate }}"
       [value]="settingDefinition.value"
       (valueChange)="settingChanged(settingDefinition.setting.id, $event)">
     </w4c-property-editor>

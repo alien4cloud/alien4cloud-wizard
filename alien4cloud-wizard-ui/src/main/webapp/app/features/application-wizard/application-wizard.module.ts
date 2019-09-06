@@ -55,7 +55,7 @@ import { WorkflowProgressBarComponent } from './wizard-forms/workflow-progress-b
     NgxGraphModule,
     NgxChartsModule,
     HeroLoaderModule,
-    TranslateModule,
+    TranslateModule.forChild(),
     LinkyModule
   ],
   providers: [AppplicationWizardMachineService],

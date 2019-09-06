@@ -26,6 +26,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {TopologyGraphViewerComponent} from "@app/shared/components/topology-graph-viewer/topology-graph-viewer.component";
 import {WorkflowGraphViewerComponent} from "@app/shared/components/workflow-graph-viewer/workflow-graph-viewer.component";
 import {FilteredSearchBarComponent} from "@app/shared/components/filtered-search-bar/filtered-search-bar.component";
+import {TranslateModule} from "@ngx-translate/core";
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -79,7 +80,8 @@ import {FilteredSearchBarComponent} from "@app/shared/components/filtered-search
     FilterTopologyNodesAttributesPipe,
     SvgNodeTypeImageSourceDirective,
     ManageFormFocusDirective,
-    DeploymentStatusButtonLabel
+    DeploymentStatusButtonLabel,
+    TranslateModule
   ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA]
   providers: [ToscaTypeImageSrcPipe, ToscaIdArchiveExtractorPipe, ToscaTypeShortNamePipe, DeploymentStatusButtonLabel, StyleManager, FilterTopologyNodesPipe, FilterTopologyNodesAttributesPipe],

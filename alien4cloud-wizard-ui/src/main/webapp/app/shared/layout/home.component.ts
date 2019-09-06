@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {AuthService, HealthService, User, UserStatus} from "@app/core";
+import {Component, OnInit} from '@angular/core';
+import {AuthService, HealthService, User} from "@app/core";
 
 @Component({
   selector: 'app-home',
@@ -28,29 +27,28 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     // this list will probably partially come from backend
     let dashboard = new Feature(
-      "Dashboard",
-      "List all applications, view deployment status, view meta-data, view applications' modules ...",
+      "dashboard",
       "dashboard",
       "/application-dashboard",
       true
     );
+
     let wizard = new Feature(
-      "Application Wizard",
-      "Create a new application from a template, step by step.",
+      "wizard",
       "create_new_folder",
       "/new-wizard",
       true
     );
+
     let catalog = new Feature(
-      "Catalog",
-      "Browse platform components catalog and display details about components.",
+      "catalog",
       "view_module",
       "/catalog",
       true
     );
+
     let settings = new Feature(
-      "Settings",
-      "Setup few options about this application (look'n feel, features ...).",
+      "settings",
       "settings",
       "/settings",
       true
@@ -80,8 +78,7 @@ export class HomeComponent implements OnInit {
 export class Feature {
   public active: boolean;
   constructor(
-    public name: string,
-    public description: string,
+    public id: string,
     public iconName: string,
     public activationLink: string,
     public allowed: boolean

@@ -1,1 +1,172 @@
-TODO
+{
+  "ERRORS" : {
+    "100" : "Authentification requise",
+    "101" : "Erreur d'authentification, vérifiez vos login et mot de passe",
+    "102" : "Droits insuffisants pour ce module ou cette ressource",
+    "200" : "Erreur inattendue lors de l'analyse du CSAR",
+    "300" : "Erreur inattendue lors de l'accès au service d'indexation de CSAR",
+    "352" : {
+      "MESSAGE" : "Configuration du plugin incorrect",
+      "TITLE" : "Erreur du plugin"
+    },
+    "371" : {
+      "MESSAGE" : "La valeur {{value}} pour le paramètre {{name}} de type {{type}} est invalide",
+      "TITLE" : "Erreur lors de l'execution de l'opération {{operation}}"
+    },
+    "372" : "Erreur dans la nomenclature des noms de déploiement.",
+    "373" : "Erreur inattendue lorsde l'activation / désactivationdu mode maintenance",
+    "374" : "L'une de vos méta-propriété est vide et n'as pas de valeur pas défaut.",
+    "375" : {
+      "MESSAGE" : "L'orchestrateur a rencontré une erreur lors de l'opération de redimensionnement.",
+      "TITLE" : "Erreur du plugin"
+    },
+    "390" : "Il est interdit de supprimer le dernier utilisateur ayant les droits d'administration.",
+    "391" : "Il est interdit de supprimer le role ADMIN du dernier utilisateur ayant les droits d'administration.",
+    "400" : "Erreur inattendue lors de l'accès au référentiel de CSAR",
+    "401" : "Vous devez être connecté pour éffectuer cette opération. Vous allez être automatiquement redirigé.",
+    "500" : "Erreur inconnue",
+    "501" : "Paramètre illégal",
+    "502" : "Cet objet existe déjà sur le serveur",
+    "503" : "L'upload de l'image a rencontré une erreur inattendue",
+    "504" : "Cet objet n'existe pas sur le serveur",
+    "507" : "La suppression de cet objet n'est pas autorisée parce qu'il est encore utilisé par d'autres objets",
+    "508" : {
+      "MESSAGE" : "Impossible d'effectuer cette action car la resource est utilisée par d'autres objets",
+      "TITLE" : "Resource utilisée"
+    },
+    "509" : "Operation non supportée",
+    "601" : "Le déploiement de l'application a échoué",
+    "602" : "L'Arrêt de l'application a échoué",
+    "604" : "Une application doit nécéssairement avoir au moins un environnement",
+    "605" : "Le format de version saisie est invalide",
+    "607" : "Un environnement déployé ne peut être supprimé",
+    "608" : "Seules les applications version en SNAPSHOT peuvent être modifiés",
+    "609" : "Fournisseur PaaS inaccessible après le déclenchement du déploiement",
+    "610" : "Une application doit nécéssairement avoir au moins une version",
+    "611" : "Un environnement d'application doit nécéssairement avoir une version d'applivation.",
+    "612" : "Le cloud d'un environnement ne peut pas être modifié lorsqu'il est déployé.",
+    "613" : "Conflit détecté sur l'Id PaaS généré. Vérifiez les noms de vos applications. (Voir <a target='_blank'href = 'http://alien4cloud.github.io/#/documentation/user_guide/cloud_management.html'>http://alien4cloud.github.io/#/documentation/user_guide/cloud_management.html, naming policy</a>, pour plus de details)",
+    "615" : "Une archive avec le même nom existe déjà.",
+    "616" : "Vous n'êtes pas autorisé à cloner ce dépôt Git. Veuillez vérifier vos identifiants.",
+    "617" : "Aucune modification a été détecté depuis le dernier import, celui-ci n'a pas été réalisé.",
+    "618" : "Nom incorrect. Il est recommandé d'utiliser des caractères alpha-numérique de l'alphabet latin classique et le underscrore.",
+    "619" : {
+      "TITLE" : "Workflow execution",
+      "MESSAGE" : "Workflow {{workflowId}} fails to be executed."
+    },
+    "620" : "Un objet déployé ne peut être renommé.",
+    "650" : "Au moins deux de vos Compute ont un conflit de nom.",
+    "651" : "Un BlockStorage ne peut pas avoir un volumeId lorsque le cloud a l'option 'deletable' d'activée.",
+    "680" : "Le repository Git n'existe pas ou n'est pas valide.",
+    "681" : "Le repository Git requiert un merge manuel.",
+    "682" : "Le repository Git n'est pas dans un status 'SAFE', Veuillez corriger son état manuellement.",
+    "750" : "Concurrence dans le processus d'édition",
+    "800" : {
+      "equal" : "Valeur constante égale à {{reference}}",
+      "greaterOrEqual" : "La valeur doit être >= {{reference}}",
+      "greaterThan" : "La valeur doit être > {{reference}}",
+      "inRange" : "La valeur doit être comprise dans [ {{reference}} ]",
+      "length" : "La taille de la valeur doit être {{reference}}",
+      "lessOrEqual" : "La valeur doit être <= {{reference}}",
+      "lessThan" : "La valeur doit être < {{reference}}",
+      "maxLength" : "La taille maximale de la valeur est {{reference}}",
+      "minLength" : "La taille minimale de la valeur est {{reference}}",
+      "pattern" : "La valeur doit respecter le modèle {{reference}}",
+      "validValues" : "La valeur doit être comprise dans [ {{reference}} ]"
+    },
+    "803" : "Conflit de version",
+    "804" : "{{value}} n'est pas du type {{type}}",
+    "805" : {
+      "MESSAGE" : "Un ou plusieurs paramètres sont obligatoires : {{value}}",
+      "TITLE" : "Erreur lors de l'execution de l'opération {{operation}}"
+    },
+    "807" : "Seule la topologie d'une version SNAPSHOT peut être modifiée",
+    "808" : "Le nom ne respecte pas le format attendu",
+    "820" : "Référence cyclique : un template de topologie ne peut pas s'auto-référencer",
+    "830" : "Une version releasée ne peut référencer des dépendances SNAPSHOT",
+    "831" : "Cette version ne peut être renomée car elle est déjà utilisée par ailleur",
+    "850" : "Cette opération n'est pas permise sur ce type de workflow",
+    "860" : "La topologie séléctionnée a besoin d'être réconciliée",
+    "870" : "La topologie séléctionnée n'est pas utilisable parce qu'elle ne sera pas visible dans le context de l'application",
+    "INTERNAL" : "Erreur interne",
+    "SERVER_LOG" : {
+      "MISSING_VARIABLES" : "Variables manquantes: {{variables}}. Veuillez contacter le manager de l'application.",
+      "PREDEFINED_INPUTS_CONSTRAINT_VIOLATION" : "Violation de contrainte sur l'input prédéfini <{{inputName}}>: ",
+      "PREDEFINED_INPUTS_TYPE_VIOLATION" : "Incompatibilité de type sur l'input prédéfini <{{name}}>: La valeur doit être de type {{type}}",
+      "UNRESOLVABLE_PREDEFINED_INPUTS" : "Inputs prédéfini non resolvables: {{unresolvableInputs}}. Veuillez contacter le manager de l'application."
+    },
+    "UNKNOWN" : "Erreur inconnue"
+  },
+  "TASK": {
+    "PROPERTIES": "Missing required propertie(s) or  error in  propertie(s)!",
+    "LOG": "Errors about logs",
+    "EMPTY": "Topologie vide",
+    "IMPLEMENT_RELATIONSHIP": "Certaines relations ne sont pas implémentées",
+    "SATISFY_LOWER_BOUND": "SATISFY_LOWER_BOUND",
+    "SCALABLE_CAPABILITY_INVALID": "SCALABLE_CAPABILITY_INVALID",
+    "NODE_FILTER_INVALID": "Filtre de noeud invalide",
+    "WORKFLOW_INVALID": "Worklow invalide",
+    "ARTIFACT_INVALID": "Artifact invalide",
+    "DEPRECATED_NODE": "Noeud déprécié",
+    "MISSING_VARIABLES": "Variables manquantes",
+    "UNRESOLVABLE_PREDEFINED_INPUTS": "Données d'entrée prédéfinies introuvables",
+    "PREDEFINED_INPUTS_CONSTRAINT_VIOLATION": "Contraintes sur données d'entrée prédéfinies non satisfaites",
+    "PREDEFINED_INPUTS_TYPE_VIOLATION": "Violation de type sur les donnée d'entrée",
+    "INPUT_PROPERTY": "Donnée d'entrée",
+    "INPUT_ARTIFACT_INVALID": "Artefact de donnée d'entrée invalide",
+    "LOCATION_POLICY": "Politique de location",
+    "LOCATION_UNAUTHORIZED": "Cible de déploiement non authorisée",
+    "LOCATION_DISABLED": "Cible de déploiement désactivée",
+    "NO_NODE_MATCHES": "Noeud abstrait non remplacé",
+    "NODE_NOT_SUBSTITUTED": "Noeud non substitué",
+    "FORBIDDEN_OPERATION": "Opération non authorisée",
+    "IMPLEMENT": "Implémentation manquante",
+    "REPLACE": "Remplacement de noeud requis",
+    "ORCHESTRATOR_PROPERTY": "Propriété d'orchestrateur",
+    "CFY_MULTI_RELATIONS": "CFY_MULTI_RELATIONS"
+  },
+  "Feature": {
+    "dashboard": {
+      "label": "Tableau de bord",
+      "description": "Explorer les applications, voir les status de déploiement, les meta-données, les modules composants les applications."
+    },
+    "wizard": {
+      "label": "Assistant",
+      "description": "Créer une nouvelle application depuis un modèle, pas à pas."
+    },
+    "catalog": {
+      "label": "Catalogue",
+      "description": "Parcourir le catalogue des composants et afficher des détails les concernant."
+    },
+    "settings": {
+      "label": "Paramètres",
+      "description": "Réglages concernant l'application (aspect, options)."
+    }
+  },
+  "Setting": {
+    "themeName": {
+      "label": "Thème graphique",
+      "description": "Choisissez le thème que vous souhaitez appliquer."
+    },
+    "showFsmGrzph": {
+      "label": "Montrer le graph de machine à état (FSM)",
+      "description": "Choisissez si vous souhaitez afficher le diagramme d'état de la machine à état qui gère le wizard."
+    },
+    "fsmGraphHeight": {
+      "label": "Hauteur du panel pour la FSM",
+      "description": "Hauteur du panel pour la FSM."
+    },
+    "fsmGraphWidth": {
+      "label": "Largeur du panel pour la FSM",
+      "description": "Largeur du panel pour la FSM."
+    },
+    "fsmGraphZoomLevel": {
+      "label": "Niveau de zoom pour la FSM",
+      "description": "Niveau de zoom pour la FSM."
+    },
+    "displayWizardWelcome": {
+      "label": "Afficher la page de bienvenue dans l'assistant",
+      "description": "Désactivez cette option si vous souhaitez masquer la première étape de l'assistant."
+    }
+  }
+}

@@ -83,6 +83,6 @@ export function createTranslateLoader(http: HttpClient) {
 })
 export class AppModule {
   constructor(overlayContainer: OverlayContainer) {
-    overlayContainer.getContainerElement().classList.add('solution-dark-theme');
+    // overlayContainer.getContainerElement().classList.add('solution-dark-theme');
   }
 }

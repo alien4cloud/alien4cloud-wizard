@@ -7,21 +7,21 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['/settings']">
         <mat-icon>settings</mat-icon>
-        <span>Settings</span>
+        <span>{{ 'Feature.settings.label' | translate }}</span>
       </button>
       <mat-divider *ngIf="isProduction"></mat-divider>
       <button *ngIf="isProduction" mat-menu-item (click)="a4cRedirect()">
         <mat-icon>settings_overscan</mat-icon>
-        <span>Full app</span>
+        <span i18n>Full app</span>
       </button>
       <mat-divider></mat-divider>
       <button *ngIf="!isProduction" mat-menu-item [disabled]="isAuthenticated" [routerLink]="['/login']">
         <mat-icon>exit_to_app</mat-icon>
-        <span>Login</span>
+        <span i18n>Login</span>
       </button>
       <button mat-menu-item [disabled]="!isProduction && !isAuthenticated" (click)="logout()">
         <mat-icon>power_settings_new</mat-icon>
-        <span>Logout</span>
+        <span i18n>Logout</span>
       </button>
     </mat-menu>
     <mat-icon *ngIf="!isProduction" color="{{ (isConnected) ? 'default' : 'warn' }}" matTooltip="{{ getStatusText() }}">{{ getStatusIcon() }}</mat-icon>

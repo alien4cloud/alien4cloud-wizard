@@ -1,5 +1,8 @@
 <h3>
-  <div class="home-component-feature-list-summary"><ng-container i18n>Welcome to Wizard4Cloud !</ng-container>&nbsp;<ng-container i18n>From here you can access following features:</ng-container></div>
+  <div class="home-component-feature-list-summary">
+    <ng-container i18n>Welcome to Wizard4Cloud !</ng-container>&nbsp;
+    <ng-container i18n>From here you can access following features:</ng-container>
+  </div>
 </h3>
 <div class="home-component-feature-list">
   <a *ngFor="let feature of features"
@@ -11,9 +14,9 @@
     <mat-card class="home-component-feature-list-card">
       <mat-card-header fxLayoutAlign="space-between center" class="home-component-feature-list-header">
         <mat-icon *ngIf="feature.active || true" [color]="(feature.active) ? 'primary' : ''" flex class="featureIcon">{{feature.iconName}}</mat-icon>
-        <mat-card-title [ngClass]="{'w4c-primary-text-A200': feature.active}" flex>{{feature.name}}</mat-card-title>
+        <mat-card-title [ngClass]="{'w4c-primary-text-A200': feature.active}" flex>{{ 'Feature.' + feature.id + '.label' | translate }}</mat-card-title>
       </mat-card-header>
-      <mat-card-content class="home-component-feature-list-card-summary">{{feature.description}}</mat-card-content>
+      <mat-card-content class="home-component-feature-list-card-summary">{{ 'Feature.' + feature.id + '.description' | translate }}</mat-card-content>
     </mat-card>
   </a>
 </div>
