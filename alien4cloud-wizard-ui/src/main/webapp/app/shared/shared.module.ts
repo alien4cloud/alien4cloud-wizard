@@ -60,6 +60,7 @@ import {TranslateModule} from "@ngx-translate/core";
     HeroLoaderModule,
     NgxGraphModule,
     NgxChartsModule,
+    TranslateModule.forChild()
   ],
   exports: [
     A4cMaterialModule,

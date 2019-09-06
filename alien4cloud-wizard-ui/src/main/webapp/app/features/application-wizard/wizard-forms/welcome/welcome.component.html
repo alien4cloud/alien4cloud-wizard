@@ -1,7 +1,9 @@
 <div fxLayout="column" class="w4c-wizard-form">
-  <p i18n>This wizard will guide throw the necessary steps in order to create a new application from a template.</p>
   <p>
-    {{ 'Wizard.Forms.WelcomeComponent.welcomeMessage' | translate }} <a [routerLink]="['/settings']">{{ 'Feature.settings.label' | translate }}</a>.
+    {{ 'Wizard.Forms.WelcomeComponent.welcomeMessage' | translate }}
+  </p>
+  <p>
+    {{ 'Wizard.Forms.WelcomeComponent.desactivateMessage' | translate }} <a [routerLink]="['/settings']">{{ 'Feature.settings.label' | translate }}</a>.
   </p>
 </div>
 <w4c-wizard-control [fsmContext]="fsmContext"

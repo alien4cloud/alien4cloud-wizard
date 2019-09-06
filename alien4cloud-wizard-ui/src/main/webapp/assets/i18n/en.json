@@ -194,7 +194,8 @@
       "WelcomeComponent": {
         "stepTitle": "Welcome",
         "stepDescription": "",
-        "welcomeMessage": "You can skip displaying this page in"
+        "welcomeMessage": "This wizard will guide throw the necessary steps in order to create a new application from a template.",
+        "desactivateMessage": "You can skip displaying this page in"
       },
       "TemplateSelectionComponent": {
         "stepTitle": "Pick a template",
@@ -203,7 +204,9 @@
       },
       "ApplicationCreateComponent": {
         "stepTitle": "Fill application details",
-        "stepDescription": "At least the application name is required to create an application."
+        "stepDescription": "At least the application name is required to create an application.",
+        "applicationName": "Application name",
+        "archiveName": "Archive name"
       },
       "ApplicationMetapropertiesComponent": {
         "stepTitle": "Fill meta-properties",
@@ -255,6 +258,16 @@
   "Global": {
     "Application": "Application",
     "Environment": "Environment",
-    "Version": "Version"
+    "Version": "Version",
+    "MetaProperties": "Meta-properties",
+    "Description": "Description"
+  },
+  "shared": {
+    "Home": {
+      "Welcome": "Welcome to Wizard4Cloud ! <p>From here you can access following features:</p>"
+    },
+    "PropertyEditor": {
+      "SetDefault" : "Reset to default value"
+    }
   }
 }

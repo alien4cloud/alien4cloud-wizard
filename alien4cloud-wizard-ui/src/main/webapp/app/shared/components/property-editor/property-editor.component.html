@@ -79,7 +79,7 @@
 
   <!-- Switch to default value button -->
   <button [disabled]="!pfd.definition.default" mat-button matSuffix mat-icon-button
-          i18n-matTooltip matTooltip="Reset to default value"
+          matTooltip="{{ 'shared.PropertyEditor.SetDefault' | translate }}"
           (click)="resetDefault()">
     <mat-icon>refresh</mat-icon>
   </button>

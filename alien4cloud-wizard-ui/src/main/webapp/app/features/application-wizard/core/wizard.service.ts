@@ -16,17 +16,17 @@ import {DeploymentArtifactsComponent} from "@app/features/application-wizard/wiz
  */
 export const wizardDefinition: WizardFormStep[] = [
   // This first step is not related to any FSM state.
-  {component: WelcomeComponent, fsmStateName: ""},
-  {component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
-  {component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
-  {component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm"},
-  {component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm"},
-  {component: DeploymentArtifactsComponent, fsmStateName: "deploymentInputArtifactsForm"},
-  {component: LocationSelectionComponent, fsmStateName: "locationSelectionForm"},
-  {component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm"},
-  {component: DeploymentValidationComponent, fsmStateName: "deploymentForm"},
-  {component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"},
-  {component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm"}
+  {id:"WelcomeComponent", component: WelcomeComponent, fsmStateName: ""},
+  {id:"TemplateSelectionComponent", component: TemplateSelectionComponent, fsmStateName: "templateSelectionForm"},
+  {id:"ApplicationCreateComponent", component: ApplicationCreateComponent, fsmStateName: "applicationCreateForm"},
+  {id:"ApplicationMetapropertiesComponent", component: ApplicationMetapropertiesComponent, fsmStateName: "applicationMetapropertiesForm"},
+  {id:"DeploymentInputsComponent", component: DeploymentInputsComponent, fsmStateName: "deploymentInputsForm"},
+  {id:"DeploymentArtifactsComponent", component: DeploymentArtifactsComponent, fsmStateName: "deploymentInputArtifactsForm"},
+  {id:"LocationSelectionComponent", component: LocationSelectionComponent, fsmStateName: "locationSelectionForm"},
+  {id:"NodesMatchingComponent", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm"},
+  {id:"DeploymentValidationComponent", component: DeploymentValidationComponent, fsmStateName: "deploymentForm"},
+  {id:"ActiveDeploymentComponent", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"},
+  {id:"DeleteApplicationFormComponent", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm"}
 ];
 
 @Injectable({

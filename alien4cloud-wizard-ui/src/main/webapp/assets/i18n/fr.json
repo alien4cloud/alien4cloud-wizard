@@ -194,7 +194,8 @@
       "WelcomeComponent": {
         "stepTitle": "Bienvenue",
         "stepDescription": "",
-        "welcomeMessage": "Vous pouvez désactiver cette étape dans"
+        "welcomeMessage": "Ce guide va vous aider à travers toutes les étapes pour activer une application depuis un modèle.",
+        "desactivateMessage": "Vous pouvez désactiver cette étape dans"
       },
       "TemplateSelectionComponent": {
         "stepTitle": "Choix du modèle",
@@ -203,7 +204,9 @@
       },
       "ApplicationCreateComponent": {
         "stepTitle": "Création de l'application",
-        "stepDescription": "Vous devez renseigner a minima le nom que vous souhaitez donner à votre application."
+        "stepDescription": "Vous devez renseigner a minima le nom que vous souhaitez donner à votre application.",
+        "applicationName": "Nom de l'application",
+        "archiveName": "Nom de l'archive"
       },
       "ApplicationMetapropertiesComponent": {
         "stepTitle": "Meta-données",
@@ -255,6 +258,16 @@
   "Global": {
     "Application": "Application",
     "Environment": "Environnement",
-    "Version": "Version"
+    "Version": "Version",
+    "MetaProperties": "Meta-données",
+    "Description": "Description"
+  },
+  "shared": {
+    "Home": {
+      "Welcome": "Bienvenue !"
+    },
+    "PropertyEditor": {
+      "SetDefault" : "Réinitialiser à la valeur par défaut"
+    }
   }
 }

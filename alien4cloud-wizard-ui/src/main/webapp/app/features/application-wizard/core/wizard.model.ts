@@ -6,6 +6,7 @@ import {AppplicationWizardMachineService} from "@app/features/application-wizard
  * This represents a step of the wizard.
  */
 export interface WizardFormStep {
+  id: string;
   /**
    * The component itself.
    */
