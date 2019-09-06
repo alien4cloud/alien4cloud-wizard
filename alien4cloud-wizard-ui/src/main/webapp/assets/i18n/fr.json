@@ -132,7 +132,7 @@
     },
     "wizard": {
       "label": "Assistant",
-      "description": "Créer une nouvelle application depuis un modèle, pas à pas."
+      "description": "Créer une nouvelle application depuis un modèle en mode pas à pas."
     },
     "catalog": {
       "label": "Catalogue",
@@ -199,14 +199,16 @@
       },
       "TemplateSelectionComponent": {
         "stepTitle": "Choix du modèle",
-        "stepDescription": "Le modèle choisi sera utilisé pour créer l'application.",
-        "Use": "Utiliser"
+        "stepDescription": "Le modèle choisi sera utilisé pour instancier l'application.",
+        "Use": "Instancier"
       },
       "ApplicationCreateComponent": {
         "stepTitle": "Création de l'application",
         "stepDescription": "Vous devez renseigner a minima le nom que vous souhaitez donner à votre application.",
         "applicationName": "Nom de l'application",
-        "archiveName": "Nom de l'archive"
+        "archiveName": "Nom de l'archive",
+        "createNext": "créer l'application",
+        "updateNext" : "mettre à jour l'application"
       },
       "ApplicationMetapropertiesComponent": {
         "stepTitle": "Meta-données",
@@ -222,7 +224,7 @@
       },
       "LocationSelectionComponent": {
         "stepTitle": "Cible de déploiement",
-        "stepDescription": "La cible de déploiement correspond à l'infrastructure dans lequel votre déploiement va être opéré."
+        "stepDescription": "La cible de déploiement correspond à l'infrastructure dans laquelle votre déploiement va être opéré."
       },
       "NodesMatchingComponent": {
         "stepTitle": "Remplacement de noeuds",
@@ -230,11 +232,11 @@
       },
       "DeploymentValidationComponent": {
         "stepTitle": "Validation",
-        "stepDescription": "Vérifie que le déploiement est prêt à être opéré."
+        "stepDescription": "Vérifie que le déploiement est prêt à être lancé."
       },
       "ActiveDeploymentComponent": {
         "stepTitle": "Gérer le déploiement",
-        "stepDescription": "Surveiller le déploiement, afficher les logs et déclencher des exécutions.",
+        "stepDescription": "Surveillance, affichage des logs et déclenchement des exécutions.",
         "Undeploy" : {
           "Title": "Désactivation de l'application",
           "Message": "Confirmez-vous que vous souhaitez désactiver l'application ?"
@@ -243,10 +245,13 @@
       "DeleteApplicationFormComponent": {
         "stepTitle": "Fin",
         "stepDescription": "Supprime ou laisse l'application en l'état.",
+        "message": "Vous avez annulé cet assistant, ou atteint sa fin, mais votre application existe toujours.<p>Vous pouvez supprimer cette application ou quitter simplement l'assistant. Vous pourrez la trouver dans le tableau de bord et réouvrir l'assistant plus tard.</p>",
         "Delete" : {
           "Title": "Suppression de l'application",
           "Message": "Confirmez-vous que vous souhaitez supprimer cette application ?"
-        }
+        },
+        "Leave": "Quitter sans supprimer",
+        "Delete": "Supprimer l'application"
       }
     },
     "Control": {
@@ -260,7 +265,9 @@
     "Environment": "Environnement",
     "Version": "Version",
     "MetaProperties": "Meta-données",
-    "Description": "Description"
+    "Description": "Description",
+    "Download": "Télécharger",
+    "Orchestrator" : "Orchestrateur"
   },
   "shared": {
     "Home": {
@@ -268,6 +275,10 @@
     },
     "PropertyEditor": {
       "SetDefault" : "Réinitialiser à la valeur par défaut"
+    },
+    "TopologyOverview": {
+      "ShowGraph": "Show graph",
+      "ShowDescription": "Show description"
     }
   }
 }

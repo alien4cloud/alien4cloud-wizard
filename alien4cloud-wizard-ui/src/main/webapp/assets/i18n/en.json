@@ -206,7 +206,9 @@
         "stepTitle": "Fill application details",
         "stepDescription": "At least the application name is required to create an application.",
         "applicationName": "Application name",
-        "archiveName": "Archive name"
+        "archiveName": "Archive name",
+        "createNext": "create application",
+        "updateNext" : "update application"
       },
       "ApplicationMetapropertiesComponent": {
         "stepTitle": "Fill meta-properties",
@@ -243,10 +245,13 @@
       "DeleteApplicationFormComponent": {
         "stepTitle": "Exit",
         "stepDescription": "Delete or leave the application.",
+        "message": "You have cancelled this wizard, or have reached it's end, but an application still exists.<p>You can delete this application or leave the wizard without deleting it. You'll then be able find it in the Dashboard and re-open this wizard later.</p>",
         "Delete" : {
           "Title": "Delete Application",
           "Message": "Do you confim you want to delete this application ?"
-        }
+        },
+        "Leave": "Leave without deleting",
+        "Delete": "Delete the application"
       }
     },
     "Control": {
@@ -260,7 +265,9 @@
     "Environment": "Environment",
     "Version": "Version",
     "MetaProperties": "Meta-properties",
-    "Description": "Description"
+    "Description": "Description",
+    "Download": "Download",
+    "Orchestrator" : "Orchestrator"
   },
   "shared": {
     "Home": {
@@ -268,6 +275,10 @@
     },
     "PropertyEditor": {
       "SetDefault" : "Reset to default value"
+    },
+    "TopologyOverview": {
+      "ShowGraph": "Voir le graph",
+      "ShowDescription": "Voir la description"
     }
   }
 }

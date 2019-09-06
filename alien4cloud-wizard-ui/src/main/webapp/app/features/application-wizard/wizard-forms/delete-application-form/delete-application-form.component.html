@@ -1,17 +1,11 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form">
-  <p i18n>
-    You have cancelled this wizard, or have reached it's end, but an application still exists.
-  </p>
-  <p i18n>
-    You can delete this application or leave the wizard without deleting it.
-    You'll then be able find it in the Dashboard and re-open this wizard later.
-  </p>
+  <p [innerHTML]="'Wizard.Forms.DeleteApplicationFormComponent.message' | translate"></p>
   <div class="mat-error">{{fsmContext.errorMessage}}</div>
 </div>
 <w4c-wizard-control [fsmContext]="fsmContext"
                     [forwardFn]="openDialog.bind(this)"
-                    i18n-cancelLabel cancelLabel="Leave without deleting"
-                    i18n-forwardAltLabel forwardAltLabel="Delete the application"
+                    [cancelLabel]="'Wizard.Forms.DeleteApplicationFormComponent.Leave' | translate"
+                    [forwardAltLabel]="'Wizard.Forms.DeleteApplicationFormComponent.Delete' | translate"
                     forwardGuard="hasntActiveEnvironment"
                     [displayBackward]="false">
 </w4c-wizard-control>
