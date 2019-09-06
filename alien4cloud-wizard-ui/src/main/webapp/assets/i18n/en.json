@@ -277,8 +277,8 @@
       "SetDefault" : "Reset to default value"
     },
     "TopologyOverview": {
-      "ShowGraph": "Voir le graph",
-      "ShowDescription": "Voir la description"
+      "ShowGraph": "Show graph",
+      "ShowDescription": "Show description"
     }
   }
 }

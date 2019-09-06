@@ -2,7 +2,7 @@
   <div fxFlex="50%" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <span class="w4c-title title">{{ 'Global.Description' | translate }}</span>
-      <button mat-button (click)="switchGraphView()" [matTooltip]="(displayGraph) ? 'shared.TopologyOverview.ShowDescription' | translate : 'shared.TopologyOverview.ShowGraph' | translate" color="primary">
+      <button mat-button (click)="switchGraphView()" [matTooltip]="(displayGraph) ? ('shared.TopologyOverview.ShowDescription' | translate) : ('shared.TopologyOverview.ShowGraph' | translate)" color="primary">
         <mat-icon *ngIf="!displayGraph">visibility</mat-icon>
         <mat-icon *ngIf="displayGraph">format_align_justify</mat-icon>
       </button>
