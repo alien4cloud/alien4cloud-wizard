@@ -168,5 +168,37 @@
       "label": "Afficher la page de bienvenue dans l'assistant",
       "description": "Désactivez cette option si vous souhaitez masquer la première étape de l'assistant."
     }
+  },
+  "DEPLOYMENT" : {
+    "STATUS" : {
+      "DEPLOYED" : "Activé",
+      "DEPLOYMENT_IN_PROGRESS" : "Activation en cours",
+      "FAILURE" : "Echec",
+      "INIT_DEPLOYMENT" : "Initialisation du déploiement",
+      "UNDEPLOYED" : "Désactivé",
+      "UNDEPLOYMENT_IN_PROGRESS" : "Désactivation en cours",
+      "UNKNOWN" : "Inconnu",
+      "UPDATED" : "Mis à jour",
+      "UPDATE_DEPLOYMENT" : "Déploiement en cours de modification",
+      "UPDATE_FAILURE" : "Echec de la mise à jour",
+      "UPDATE_IN_PROGRESS" : "Déploiement en cours de modification",
+      "WARNING" : "Alerte"
+    },
+    "Action": {
+      "Deploy": "Activer",
+      "Manage": "Gérer"
+    }
+  },
+  "Wizard": {
+    "Forms": {
+      "TemplateSelectionComponent": {
+        "Use": "Utiliser"
+      }
+    }
+  },
+  "Global": {
+    "Application": "Application",
+    "Environment": "Environnement",
+    "Version": "Version"
   }
 }

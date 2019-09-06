@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApplicationEnvironmentDTO } from '@app/core';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'w4c-deployment-status-piechart',
@@ -19,7 +20,7 @@ export class DeploymentStatusPiechartComponent implements OnInit {
   colorScheme = {domain: [] };
   environments: Array<any> = [];
 
-  constructor() {
+  constructor(private translate: TranslateService) {
     // FIXME : we should be able to use our CSS instead
     this.colorsByStatus = new Map<string, string>();
     this.colorsByStatus.set("DEPLOYED", '#468847');
@@ -36,7 +37,9 @@ export class DeploymentStatusPiechartComponent implements OnInit {
 
   ngOnInit() {
     this.applicationEnvironmentDTO.map(item => {
-      this.environments.push({"name": item.name + " \n " + item.status, "value": 1})
+      let model = {"name": item.name + " \n " + item.status, "value": 1, "environment": item};
+      this.translate.get('DEPLOYMENT.STATUS.' + item.status).subscribe(value => model.name = item.name + ": " + value);
+      this.environments.push(model)
       this.colorScheme.domain.push(this.colorsByStatus.get(item.status));
     });
   }

@@ -30,7 +30,7 @@
       </mat-expansion-panel-header>
       <w4c-topology-overview *ngIf="isOpenned" [overview]="overview"></w4c-topology-overview>
       <mat-action-row>
-        <button mat-stroked-button color="primary" (click)="selectTemplate(topology)">Select</button>
+        <button mat-stroked-button color="primary" (click)="selectTemplate(topology)">{{ 'Wizard.Forms.TemplateSelectionComponent.Use' | translate }}</button>
       </mat-action-row>
 
     </mat-expansion-panel>

@@ -168,5 +168,37 @@
       "label": "Display Welcome page in Wizard",
       "description": "Disable this option if you want to skip the welcome page in the wizard."
     }
+  },
+  "DEPLOYMENT" : {
+    "STATUS" : {
+      "DEPLOYED" : "Deployed",
+      "DEPLOYMENT_IN_PROGRESS" : "Deployment in progress",
+      "FAILURE" : "Failed",
+      "INIT_DEPLOYMENT" : "Deployment init",
+      "UNDEPLOYED" : "Undeployed",
+      "UNDEPLOYMENT_IN_PROGRESS" : "Undeployment in progress",
+      "UNKNOWN" : "Unknown",
+      "UPDATED" : "Updated",
+      "UPDATE_DEPLOYMENT" : "Deployment update",
+      "UPDATE_FAILURE" : "Update failed",
+      "UPDATE_IN_PROGRESS" : "Deployment update in progress",
+      "WARNING" : "Warning"
+    },
+    "Action": {
+      "Deploy": "Deploy",
+      "Manage": "Manage"
+    }
+  },
+  "Wizard": {
+    "Forms": {
+      "TemplateSelectionComponent": {
+        "Use": "Use"
+      }
+    }
+  },
+  "Global": {
+    "Application": "Application",
+    "Environment": "Environment",
+    "Version": "Version"
   }
 }

@@ -38,9 +38,9 @@
       <mat-action-row fxLayout="row" fxLayoutAlign="end center">
         <!-- TODO: translate status -->
         <mat-icon *ngIf="overview" [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
-          matTooltip="{{overview.deploymentStatus}}">lens</mat-icon>
+          matTooltip="{{ 'DEPLOYMENT.STATUS.' + overview.deploymentStatus | translate }}">lens</mat-icon>
         <button mat-stroked-button color="primary"
-          (click)="openWizard()">{{ (overview) ? (overview.deploymentStatus | w4cDeploymentStatusButtonLabel) : '' }}</button>
+          (click)="openWizard()">{{ (overview) ? ( ('DEPLOYMENT.Action.' + (overview.deploymentStatus | w4cDeploymentStatusButtonLabel)) | translate) : '' }}</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>
