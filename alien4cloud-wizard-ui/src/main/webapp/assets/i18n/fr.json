@@ -231,11 +231,19 @@
       },
       "ActiveDeploymentComponent": {
         "stepTitle": "Gérer le déploiement",
-        "stepDescription": "Surveiller le déploiement, afficher les logs et déclencher des exécutions."
+        "stepDescription": "Surveiller le déploiement, afficher les logs et déclencher des exécutions.",
+        "Undeploy" : {
+          "Title": "Désactivation de l'application",
+          "Message": "Confirmez-vous que vous souhaitez désactiver l'application ?"
+        }
       },
       "DeleteApplicationFormComponent": {
         "stepTitle": "Fin",
-        "stepDescription": "Supprime ou laisse l'application en l'état."
+        "stepDescription": "Supprime ou laisse l'application en l'état.",
+        "Delete" : {
+          "Title": "Suppression de l'application",
+          "Message": "Confirmez-vous que vous souhaitez supprimer cette application ?"
+        }
       }
     },
     "Control": {

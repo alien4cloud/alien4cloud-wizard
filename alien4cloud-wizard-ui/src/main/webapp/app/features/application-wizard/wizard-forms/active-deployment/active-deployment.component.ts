@@ -20,6 +20,7 @@ import {MatDialog} from '@angular/material';
 import {ConfirmationDialogComponent} from '@app/shared';
 import * as _ from "lodash";
 import {WizardButtonComponent} from "@app/features/application-wizard/wizard-button/wizard-button.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'w4c-active-deployment',
@@ -51,7 +52,8 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     private applicationDeploymentService: ApplicationDeploymentService,
     private websocketService: WebsocketSubscriptionManager,
     private dialog: MatDialog,
-    private runtimeService: RuntimeService
+    private runtimeService: RuntimeService,
+    private translate: TranslateService
   ) {
     super(fsm);
   }
@@ -154,20 +156,29 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
   openUndeployDialog(event: any): void {
     event.stopPropagation();
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '35%',
-      data: {
-        actionDescription: "Application undeployment",
-        message: "Do you confirm the undeployment of this application?"
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.fsmContext.progessBarData = new ProgessBarData();
-        this.fsmContext.progessBarData.workflowInProgress = true;
-        this.fsm.send(new DoSubmitUndeployment());
-      }
-    });
+    let title = "";
+    let msg = "";
+    this.translate.get("Wizard.Forms.ActiveDeploymentComponent.Undeploy.Title").subscribe(
+     value => {
+       title = value;
+       this.translate.get("Wizard.Forms.ActiveDeploymentComponent.Undeploy.Message").subscribe( value1 => {
+         msg = value1;
+         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+           width: '35%',
+           data: {
+             actionDescription: title,
+             message: msg
+           }
+         });
+         dialogRef.afterClosed().subscribe(result => {
+           if (result) {
+             this.fsmContext.progessBarData = new ProgessBarData();
+             this.fsmContext.progessBarData.workflowInProgress = true;
+             this.fsm.send(new DoSubmitUndeployment());
+           }
+         });
+       })
+     });
   }
 
   launchWorkflow(event: any) {
