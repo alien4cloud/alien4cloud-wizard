@@ -21,6 +21,6 @@
 <w4c-wizard-control [fsmContext]="fsmContext"
                     [displayBackward]="false"
                     [forwardFn]="createApp.bind(this)"
-                    [forwardAltLabel]="(fsmContext.application) ? 'Wizard.Forms.ApplicationCreateComponent.updateNext' | translate : 'Wizard.Forms.ApplicationCreateComponent.createNext' | translate"
+                    [forwardAltLabel]="(fsmContext.application) ? ('Wizard.Forms.ApplicationCreateComponent.updateNext' | translate) : ('Wizard.Forms.ApplicationCreateComponent.createNext' | translate)"
                     class="w4c-full-width">
 </w4c-wizard-control>
