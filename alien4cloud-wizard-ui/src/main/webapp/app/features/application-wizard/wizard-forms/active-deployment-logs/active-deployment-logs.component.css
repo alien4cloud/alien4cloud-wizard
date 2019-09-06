@@ -4,3 +4,9 @@
   overflow-y: scroll;
   padding: 5px;
 }
+
+.logLine {
+  white-space: pre-line; 
+  word-wrap: break-word;
+} 
+
