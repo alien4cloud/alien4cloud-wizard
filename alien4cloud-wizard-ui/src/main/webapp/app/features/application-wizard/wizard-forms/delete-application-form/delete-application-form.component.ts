@@ -25,10 +25,10 @@ export class DeleteApplicationFormComponent extends WizardFormComponent {
     event.stopPropagation();
     let title = "";
     let msg = "";
-    this.translate.get("Wizard.Forms.DeleteApplicationFormComponent.Delete.Title").subscribe(
+    this.translate.get("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Title").subscribe(
       value => {
         title = value;
-        this.translate.get("Wizard.Forms.DeleteApplicationFormComponent.Delete.Message").subscribe(value1 => {
+        this.translate.get("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Message").subscribe(value1 => {
           msg = value1;
           const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
             width: '35%',
@@ -45,7 +45,6 @@ export class DeleteApplicationFormComponent extends WizardFormComponent {
 
         })
       });
-    event.stopPropagation();
   }
 
 }

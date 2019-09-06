@@ -2,42 +2,38 @@
 
   <w4c-filtered-search-bar [isLoading$]="isLoading$" [facets$]="facets$" (onSearch)="searchInCatalog($event)"></w4c-filtered-search-bar>
 
-  <div style="text-align: center;margin-top: 5px;">
-    <div class="catalog-cell w4c-borders" *ngFor=" let catalog of catalogs">
-      <div class="catalog-element-info">
-        <mat-card style="display: inline-block; vertical-align:  top">
-          <mat-card-header fxLayoutAlign="start top">
-            <div mat-card-avatar>
-              <img src="{{catalog|toscaTypeImageSrc}}" class="catalog-component-icon">
-            </div>
-            <mat-card-title fxLayoutAlign="top">
+  <div class="catalog-component-list">
+    <mat-card *ngFor=" let catalog of catalogs">
+      <mat-card-header fxLayoutAlign="start top">
+        <div mat-card-avatar>
+          <img src="{{catalog|toscaTypeImageSrc}}" class="catalog-component-icon">
+        </div>
+        <mat-card-title fxLayoutAlign="top">
               <span matTooltip="{{catalog.elementId}}">
-                {{ lodash.truncate(catalog.elementId | w4cToscaTypeShortName, {'length': 17}) }}
+                {{ lodash.truncate(catalog.elementId | w4cToscaTypeShortName, {'length': 15}) }}
               </span>
-            </mat-card-title>
-            <mat-card-subtitle [matTooltip]="catalog.archiveName">
-              {{catalog.archiveVersion}}
-            </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="description">
-              {{catalog.description}}
-            </div>
-            <div class="metaproperties">
-              <mat-chip-list>
-                <ng-container *ngFor="let namedMetaProperty of catalog.metaProperties | keyvalue;">
-                  <mat-chip
-                    *ngIf="namedMetaProperty.value"
-                    class="meta-chip"
-                    [matTooltip]="(metaPropConfiguration.get(namedMetaProperty.key)) ? metaPropConfiguration.get(namedMetaProperty.key).name : ''">
-                    {{namedMetaProperty.value}}
-                  </mat-chip>
-                </ng-container>
-              </mat-chip-list>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
+        </mat-card-title>
+        <mat-card-subtitle [matTooltip]="catalog.archiveName">
+          {{catalog.archiveVersion}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayoutAlign="space-between start">
+        <div class="catalog-description">
+          {{catalog.description}}
+        </div>
+        <div class="w4c-full-width catalog-meta-prop" fxLayoutAlign="end end">
+          <mat-chip-list>
+            <ng-container *ngFor="let namedMetaProperty of catalog.metaProperties | keyvalue;">
+              <mat-chip
+                *ngIf="namedMetaProperty.value"
+                class="meta-chip"
+                [matTooltip]="(metaPropConfiguration.get(namedMetaProperty.key)) ? metaPropConfiguration.get(namedMetaProperty.key).name : ''">
+                {{namedMetaProperty.value}}
+              </mat-chip>
+            </ng-container>
+          </mat-chip-list>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

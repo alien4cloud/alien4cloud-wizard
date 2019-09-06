@@ -265,13 +265,16 @@
           "Title": "Désactivation de l'application",
           "Message": "Confirmez-vous que vous souhaitez désactiver l'application ?"
         },
-        "NoWorkflowInProgress": "Pas de workflow en cours"
+        "NoWorkflowInProgress": "Pas de workflow en cours",
+        "Monitor": "Surveillance",
+        "Outputs": "Données de sortie",
+        "Logs": "Journaux"
       },
       "DeleteApplicationFormComponent": {
         "stepTitle": "Fin",
         "stepDescription": "Supprime ou laisse l'application en l'état.",
         "message": "Vous avez annulé cet assistant, ou atteint sa fin, mais votre application existe toujours.<p>Vous pouvez supprimer cette application ou quitter simplement l'assistant. Vous pourrez la trouver dans le tableau de bord et réouvrir l'assistant plus tard.</p>",
-        "Delete" : {
+        "DeleteDialog" : {
           "Title": "Suppression de l'application",
           "Message": "Confirmez-vous que vous souhaitez supprimer cette application ?"
         },
@@ -297,11 +300,13 @@
     "MetaProperties": "Meta-données",
     "Description": "Description",
     "Download": "Télécharger",
-    "Orchestrator" : "Orchestrateur"
+    "Orchestrator" : "Orchestrateur",
+    "Ok" : "Ok",
+    "Cancel" : "Annuler"
   },
   "shared": {
     "Home": {
-      "Welcome": "Bienvenue !"
+      "Welcome": ""
     },
     "PropertyEditor": {
       "SetDefault" : "Réinitialiser à la valeur par défaut"

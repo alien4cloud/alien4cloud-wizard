@@ -1,42 +1,48 @@
 .mat-card {
-  font-size: 15px;
-  height: 250px;
-  width: 230px;
+  font-size: 12px;
+  height: 210px;
+  width: 180px;
+  padding: 10px;
+  margin: 10px;
 }
 
 .catalog-component-icon {
-  height: 40px;
+  //height: 40px;
   width: 40px;
 }
-/*
-From old alien
-*/
-.catalog-cell {
-  width: 250px;
-  height: 250px;
-  position: relative;
-  display: inline-block;
-  margin: 0 8px 8px 0;
-  vertical-align: top;
-  text-align: left;
+
+.catalog-description {
+  height: 100px;
+  padding: 5px;
+  overflow: auto;
 }
 
-.catalog-element-info {
-  height: 250px;
-  width :250px ;
-  overflow: hidden;
+.catalog-meta-prop {
+  height: 50px;
+  overflow: auto;
 }
 
-.small .catalog-element-info {
-  max-height: 80px;
-}
+
 .meta-chip {
-  font-size: 10px;
-  min-height: 22px;
+  font-size: 8px;
+  min-height: 18px;
   text-align: center
 }
 
+.mat-card-header .mat-card-title {
+  font-size: 16px;
+}
 
+.catalog-component-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: center;
+}
+
+.mat-card-subtitle, .mat-card-content {
+  font-size: 10px;
+}
 
 
 

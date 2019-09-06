@@ -1,11 +1,11 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form">
 
   <mat-tab-group class="w4c-full-width">
-    <mat-tab i18n-label label="Monitor">
+    <mat-tab [label]="'Wizard.Forms.ActiveDeploymentComponent.Monitor' | translate">
       <div fxLayout="row" fxLayoutAlign="center center" class="w4c-full-width" fxFlex="100%">
         <div fxLayout="column" fxLayoutAlign="center center" class="deployment-monitor mat-app-background">
           <div *ngIf="!fsmContext.progessBarData; else deploying" fxLayout="row" fxFlex="100%">
-            <h4>{{ 'Wizard.Forms.ActiveDeploymentComponent.NoWorkflowInProgress' }}</h4>
+            <h4>{{ 'Wizard.Forms.ActiveDeploymentComponent.NoWorkflowInProgress' | translate }}</h4>
           </div>
           <ng-template #deploying>
             <w4c-workflow-graph-viewer
@@ -23,7 +23,7 @@
       </div>
     </mat-tab>
     <!-- Outputs -->
-    <mat-tab i18n-label label="Outputs" *ngIf="fsmContext.deploymentStatus !== 'UNDEPLOYED' && topologyDTO && topologyDTO.topology && topologyDTO.topology.outputAttributes && instanceInformations">
+    <mat-tab [label]="'Wizard.Forms.ActiveDeploymentComponent.Outputs' | translate" *ngIf="fsmContext.deploymentStatus !== 'UNDEPLOYED' && topologyDTO && topologyDTO.topology && topologyDTO.topology.outputAttributes && instanceInformations">
       <div fxLayout="row" fxLayoutAlign="start start" >
         <div class="attributes-infos">
           <table class="mat-table attributes-infos">
@@ -52,7 +52,7 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab i18n-label label="Logs">
+    <mat-tab [label]="'Wizard.Forms.ActiveDeploymentComponent.Logs' | translate">
       <ng-template matTabContent>
         <w4c-active-deployment-logs [fsmContext]="fsmContext"></w4c-active-deployment-logs>
       </ng-template>
