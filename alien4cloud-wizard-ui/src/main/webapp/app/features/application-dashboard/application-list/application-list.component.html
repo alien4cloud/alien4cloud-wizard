@@ -17,7 +17,7 @@
                 <mat-icon>airplay</mat-icon>
               </ng-template>
             </div>
-            <div fxFlex="25%">{{ application.name }}</div>
+            <div fxFlex="25%" [matTooltip]="application.name">{{ lodash.truncate(application.name, 40) }}</div>
             <div fxFlex="70%">
               <span *ngIf="!isOpenned" class="mat-expansion-panel-header-description">
                 {{ lodash.truncate(application.description, {'length': 100, 'separator': ' '}) }}

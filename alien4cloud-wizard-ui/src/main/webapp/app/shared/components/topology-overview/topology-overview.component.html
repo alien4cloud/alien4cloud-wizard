@@ -34,8 +34,8 @@
             <table mat-table [dataSource]="overview.componentsPerCategory[componentCategory]" fxFlex class="w4c-full-width ">
               <ng-container matColumnDef="nodeName">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element">
-                  {{element.nodeName}}
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.nodeName">
+                  {{ lodash.truncate(element.nodeName, 30)}}
                 </td>
               </ng-container>
               <ng-container matColumnDef="typeName">

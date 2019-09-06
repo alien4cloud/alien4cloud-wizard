@@ -1,6 +1,7 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {TopologyOverview} from "@app/core";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'w4c-topology-overview',
@@ -11,6 +12,9 @@ import {TopologyOverview} from "@app/core";
 export class TopologyOverviewComponent {
 
   @Input() overview: TopologyOverview;
+
+  // make lodash usable from template
+  private lodash = _;
 
   constructor(
     private router: Router) {
