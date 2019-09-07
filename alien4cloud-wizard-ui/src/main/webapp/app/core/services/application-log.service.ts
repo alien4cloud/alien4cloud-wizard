@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {
-  BasicSearchRequest, ExecutionStatus,
+  BasicSearchRequest, ExecutionStatus, FacetedSearchResult,
   MultipleDataResult,
   PaaSDeploymentLog,
   SortConfiguration, WorkflowExecutionDTO
@@ -23,10 +23,10 @@ export class ApplicationLogService extends GenericResourceService<PaaSDeployment
     super(http, translate, "/applications/@{applicationId}")
   }
 
-  searchEnvironmentLogs(applicationId: string, applicationEnvironmentId: string, searchLogRequest: SearchLogRequest): Observable<MultipleDataResult<PaaSDeploymentLog>> {
+  searchEnvironmentLogs(applicationId: string, applicationEnvironmentId: string, searchLogRequest: SearchLogRequest): Observable<FacetedSearchResult<PaaSDeploymentLog>> {
     let urlParams = {applicationId: applicationId, applicationEnvironmentId: applicationEnvironmentId};
     let url = this.getUrl("/environments/@{applicationEnvironmentId}/logs/search", urlParams);
-    return this.handleResult<MultipleDataResult<PaaSDeploymentLog>>(this.http.post(url, searchLogRequest));
+    return this.handleResult<FacetedSearchResult<PaaSDeploymentLog>>(this.http.post(url, searchLogRequest));
   }
 
 }

@@ -1,10 +1,11 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ApplicationWizardMachineContext} from "@app/features/application-wizard/core/fsm.model";
 import {ApplicationLogService, SearchLogRequest} from "@app/core/services/application-log.service";
-import {PaaSDeploymentLog} from "@app/core";
+import {FacetedSearchFacet, FilteredSearchRequest, PaaSDeploymentLog} from "@app/core";
 import * as _ from "lodash";
 import {FormControl} from "@angular/forms";
 import {debounceTime} from "rxjs/operators";
+import {ReplaySubject} from "rxjs";
 
 @Component({
   selector: 'w4c-active-deployment-logs',
@@ -18,9 +19,6 @@ export class ActiveDeploymentLogsComponent implements OnInit, OnDestroy {
 
   @ViewChild('logsViewer', {static: true})
   private logsViewer: ElementRef;
-
-  // the search field for querying logs
-  searchField: FormControl = new FormControl();
 
   // indicates if the polling is active.
   isPolling = true;
@@ -43,6 +41,9 @@ export class ActiveDeploymentLogsComponent implements OnInit, OnDestroy {
   private lastLogOffset: number = 0;
   private lastLogLength: number = 0;
 
+  private facetsSubject = new ReplaySubject<Map<string, FacetedSearchFacet[]>>(1);
+  facets$ = this.facetsSubject.asObservable();
+
   constructor(private applicationLogService: ApplicationLogService) { }
 
   ngOnInit() {
@@ -50,12 +51,14 @@ export class ActiveDeploymentLogsComponent implements OnInit, OnDestroy {
     this.searchLogRequest.from = 0;
     this.searchLogRequest.size = 10000;
     this.fetchLogs();
+  }
 
-    this.searchField.valueChanges
-      .pipe(debounceTime(1000))
-      .subscribe(term => {
-        this.searchLogRequest.query = term;
-      });
+  searchLogs(request: FilteredSearchRequest) {
+    this.searchLogRequest.filters = request.filters;
+    this.searchLogRequest.query = request.query;
+    this.deleteLogs();
+    this.searchLogRequest.from = 0;
+    this.searchLogRequest.size = 10000;
   }
 
   private fetchLogs() {
@@ -69,6 +72,7 @@ export class ActiveDeploymentLogsComponent implements OnInit, OnDestroy {
         console.log(`logs size: ${value.data.length} / ${value.totalResults}`);
         this.lastLogLength = value.data.length;
         this.logs = value.data;
+        this.facetsSubject.next(value.facets);
         setTimeout(()  => this.scrollToBottom(), 10);
         setTimeout(()  => this.fetchLogs(), 1000);
       });
