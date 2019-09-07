@@ -4,14 +4,14 @@
     <mat-form-field class="w4c-full-width">
       <input matInput placeholder="{{ 'Wizard.Forms.ApplicationCreateComponent.applicationName' | translate }}" [formControl]="applicationNameFormCtrl" name="applicationName" id="applicationName" required>
     </mat-form-field>
-    <mat-form-field class="w4c-full-width" *ngIf="!this.fsmContext.application">
-      <input matInput
-             placeholder="{{ 'Wizard.Forms.ApplicationCreateComponent.archiveName' | translate }}"
-             [(ngModel)]="archiveName"
-             name="archiveName"
-             [disabled]="(fsmContext.application) ? true : false"
-             required>
-    </mat-form-field>
+<!--    <mat-form-field class="w4c-full-width" *ngIf="!this.fsmContext.application">-->
+<!--      <input matInput-->
+<!--             placeholder="{{ 'Wizard.Forms.ApplicationCreateComponent.archiveName' | translate }}"-->
+<!--             [(ngModel)]="archiveName"-->
+<!--             name="archiveName"-->
+<!--             [disabled]="(fsmContext.application) ? true : false"-->
+<!--             required>-->
+<!--    </mat-form-field>-->
     <mat-form-field class="w4c-full-width" floatLabel="never">
       <textarea matInput [placeholder]="'Global.Description' | translate" rows="4" [(ngModel)]="applicationDescription"
         name="applicationDescription"></textarea>

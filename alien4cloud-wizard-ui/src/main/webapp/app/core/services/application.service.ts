@@ -5,6 +5,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Observable, of} from "rxjs";
 import {Execution} from '../models/execution.model';
 import {GenericResourceService} from "@app/core/services/generic-resource.service";
+import {GenericService} from "@app/core/services/generic.service";
 import {catchError} from "rxjs/operators";
 
 @Injectable({
@@ -57,6 +58,12 @@ export class ApplicationService extends GenericResourceService<Application> {
       console.log("====== Error catched", JSON.stringify(err));
       throw new Error(this.translate.instant("ERRORS." + err['error']['error']['code']));
     })));
+  }
+
+  getApplicationNameSuggestion(applicationName: string): Observable<String> {
+    let urlParams = {applicationName: applicationName};
+    let url = GenericService.BASE_URL + this.getParametrizedUrl("/wizard/applications/suggestion/@{applicationName}", urlParams);
+    return this.handleResult<String>(this.http.get(url));
   }
 
 }

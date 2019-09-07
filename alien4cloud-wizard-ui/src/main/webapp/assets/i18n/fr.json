@@ -167,6 +167,10 @@
     "displayWizardWelcome": {
       "label": "Afficher la page de bienvenue dans l'assistant",
       "description": "Désactivez cette option si vous souhaitez masquer la première étape de l'assistant."
+    },
+    "appplicationNamePrefix" : {
+      "label": "Prefixe de nom d'application",
+      "description": "Associé au nom du modèle lors de la création d'une nouvelle application."
     }
   },
   "DEPLOYMENT" : {

@@ -18,6 +18,7 @@ export class SettingsService {
   public static FSM_GRAPH_WIDTH_SETTING: string = "Setting.fsmGraphWidth";
   public static FSM_GRAPH_ZOOM_LEVEL: string = "Setting.fsmGraphZoomLevel";
   public static WIZARD_SHOWS_WELCOME: string = "Setting.displayWizardWelcome";
+  public static APPLICATION_NAME_PREFIX: string = "Setting.appplicationNamePrefix";
 
   settings: Map<string, Setting> = new Map<string, Setting>();
 
@@ -72,6 +73,13 @@ export class SettingsService {
     displayWizardWelcome.default = new ScalarPropertyValue('true');
     displayWizardWelcome.enabled = true;
     this.settings.set(displayWizardWelcome.id, displayWizardWelcome);
+
+    let appplicationNamePrefix = new Setting();
+    appplicationNamePrefix.id = SettingsService.APPLICATION_NAME_PREFIX;
+    appplicationNamePrefix.type = 'string';
+    appplicationNamePrefix.default = new ScalarPropertyValue('App');
+    appplicationNamePrefix.enabled = true;
+    this.settings.set(appplicationNamePrefix.id, appplicationNamePrefix);
   }
 
   setSetting(key: string, value: any) {

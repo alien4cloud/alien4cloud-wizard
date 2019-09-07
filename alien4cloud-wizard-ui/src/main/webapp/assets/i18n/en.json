@@ -167,6 +167,10 @@
     "displayWizardWelcome": {
       "label": "Display Welcome page in Wizard",
       "description": "Disable this option if you want to skip the welcome page in the wizard."
+    },
+    "appplicationNamePrefix" : {
+      "label": "Application name prefix",
+      "description": "Will be used below the template name when creating an application."
     }
   },
   "DEPLOYMENT" : {
