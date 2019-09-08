@@ -26,6 +26,7 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
 import {AuthInterceptor, StyleManager} from '@app/core';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {CookieService} from "ngx-cookie-service";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -77,7 +78,8 @@ export function createTranslateLoader(http: HttpClient) {
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }
+    },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
