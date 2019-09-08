@@ -144,6 +144,10 @@
     }
   },
   "Setting": {
+    "language": {
+      "label": "Langue",
+      "description": "Choisissez la langue d'affichage des écrans de cette application."
+    },
     "themeName": {
       "label": "Thème graphique",
       "description": "Choisissez le thème que vous souhaitez appliquer."

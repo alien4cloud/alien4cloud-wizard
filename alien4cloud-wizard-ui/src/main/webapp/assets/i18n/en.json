@@ -144,6 +144,10 @@
     }
   },
   "Setting": {
+    "language": {
+      "label": "Language",
+      "description": "Choose the language used in this application's views."
+    },
     "themeName": {
       "label": "Look'n feel theme",
       "description": "Choose the theme you want to apply."

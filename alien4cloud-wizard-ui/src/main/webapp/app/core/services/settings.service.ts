@@ -12,6 +12,7 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class SettingsService {
 
+  public static LANGUAGE: string = "Setting.language";
   public static THEME_NAME: string = "Setting.themeName";
   public static SHOW_FSM_GRAPH_SETTING: string = "Setting.showFsmGrzph";
   public static FSM_GRAPH_HEIGHT_SETTING: string = "Setting.fsmGraphHeight";
@@ -35,6 +36,14 @@ export class SettingsService {
     themeName.constraints = [{validValues: ['deeppurple-amber', 'indigo-pink', 'pink-bluegrey', 'purple-green']}];
     themeName.enabled = true;
     this.settings.set(themeName.id, themeName);
+
+    let language = new Setting();
+    language.id = SettingsService.LANGUAGE;
+    language.type = 'string';
+    language.default = new ScalarPropertyValue('fr');
+    language.constraints = [{validValues: ['fr', 'en']}];
+    language.enabled = true;
+    this.settings.set(language.id, language);
 
     let showFsmGrzph = new Setting();
     showFsmGrzph.id = SettingsService.SHOW_FSM_GRAPH_SETTING;
