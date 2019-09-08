@@ -62,7 +62,7 @@ export class DeploymentWorkflowExecutionService extends GenericResourceService<W
 
     let deploymentSubject = new ReplaySubject<WorkflowExecutionDTO>(1);
 
-    timer(500, 2000).pipe(
+    timer(500, 1000).pipe(
       concatMap(value => this.getById(deploymentId))
     ).pipe(
       map(x => {

@@ -1,11 +1,5 @@
 
 <div xLayout="row" fxLayoutAlign="space-between center">
-<!--  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" fxFlex="70%">-->
-<!--    <mat-icon>search</mat-icon>-->
-<!--    <mat-form-field fxFlex="50%">-->
-<!--      <input matInput i18n-placeholder placeholder="Search for ..." [formControl]="searchField">-->
-<!--    </mat-form-field>-->
-<!--  </div>-->
   <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" fxFlex="70%">
     <w4c-filtered-search-bar [facets$]="facets$" (onSearch)="searchLogs($event)" class="w4c-full-width"></w4c-filtered-search-bar>
   </div>

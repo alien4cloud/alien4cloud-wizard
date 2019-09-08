@@ -13,7 +13,7 @@ import {
   WfStepGraphNode
 } from "@app/shared/components/workflow-graph-viewer/workflow-graph.model";
 import * as _ from 'lodash';
-import {Observable, Subject} from "rxjs";
+import {Observable, ReplaySubject} from "rxjs";
 import {graphlib} from "dagre";
 import Graph = graphlib.Graph;
 import {GraphUtils} from "@app/shared/utils/graph-utils";
@@ -39,7 +39,8 @@ export class WorkflowGraphViewerComponent implements OnInit {
 
   graph: WfGraph;
 
-  panToNode$: Subject<string> = new Subject();
+  panToNode = new ReplaySubject<string>();
+  panToNode$: Observable<string> = this.panToNode.asObservable();
 
   // make lodash usable from template
   lodash = _;
@@ -61,7 +62,7 @@ export class WorkflowGraphViewerComponent implements OnInit {
           // TODO: for each step, find the graph node and set the status
           _.find(this.graph.nodes, {id: stepId})['status'] = stepStatusObj;
           if (stepStatusObj == WorkflowExecutionStepStatus.STARTED) {
-            this.panToNode$.next(stepId);
+            this.panToNode.next(stepId);
           }
         }
       });
