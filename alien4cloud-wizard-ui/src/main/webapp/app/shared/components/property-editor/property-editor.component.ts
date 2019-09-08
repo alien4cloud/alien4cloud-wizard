@@ -156,7 +156,8 @@ export class PropertyEditorComponent implements OnInit {
   /**
    * Reset to default value.
    */
-  resetDefault() {
+  resetDefault(event: any) {
+    event.stopPropagation();
     if (this.pfd.definition.default) {
       this.rawValue = this.pfd.definition.default;
       this.initValue();
@@ -171,7 +172,8 @@ export class PropertyEditorComponent implements OnInit {
     }
   }
 
-  displayDescription(): string {
+  displayDescription(event: any): string {
+    event.stopPropagation();
     return "";
   }
 	

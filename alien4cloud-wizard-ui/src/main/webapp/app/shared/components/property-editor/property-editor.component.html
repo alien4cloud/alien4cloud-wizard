@@ -80,14 +80,14 @@
   <!-- Switch to default value button -->
   <button [disabled]="!pfd.definition.default" mat-button matSuffix mat-icon-button
           matTooltip="{{ 'shared.PropertyEditor.SetDefault' | translate }}"
-          (click)="resetDefault()">
+          (click)="resetDefault($event)">
     <mat-icon>refresh</mat-icon>
   </button>
 
   <!-- Description icon (it's also a button to have the same size than others) -->
   <!-- TODO: display description in a modal or something more readable on click -->
   <button [disabled]="!pfd.definition.description" mat-button matSuffix mat-icon-button
-          (click)="displayDescription()"
+          (click)="displayDescription($event)"
           matTooltip="{{ pfd.definition.description }}">
     <mat-icon>help_outline</mat-icon>
   </button>
