@@ -18,10 +18,11 @@ export class AppComponent implements OnInit {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translateService.setDefaultLang("en");
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-
+    console.log("parsze ccokie : ", JSON.parse("\"fr-fr\""));
     let cookieLang = this.cookieService.get("NG_TRANSLATE_LANG_KEY");
     if (cookieLang) {
-      cookieLang = cookieLang.split("-")[0];
+      let jsonCookieLang = JSON.parse(cookieLang);
+      cookieLang = jsonCookieLang.split("-")[0];
       console.log("Language in cookie is : ", cookieLang);
     }
     let settingLang = this.settingsService.getSetting(SettingsService.LANGUAGE);
