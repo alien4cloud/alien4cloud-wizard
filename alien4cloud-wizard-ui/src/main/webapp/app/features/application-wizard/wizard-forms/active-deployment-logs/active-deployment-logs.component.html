@@ -22,12 +22,12 @@
 
 <div #logsViewer fxLayout="column" fxLayoutAlign="start start" class="logsViewer w4c-borders mat-app-background" (scroll)="scrollChanged($event)">
   <div *ngFor="let log of logs" class="logLine" [ngClass]="'w4c-logLevel-' + log.level">
-    <span>[{{ log.rawtimestamp }}] </span>
-    <span>[{{ log.level }}] </span>
-    <span>[{{ log.workflowId }}] </span>
-    <span>[{{ log.nodeId }}] </span>
-    <span>[{{ log.instanceId }}] </span>
-    <span>[{{ log.operationName }}] </span>
-    <span>[{{ log.content }}]</span>
+    <span>[{{ log.rawtimestamp }}]</span>
+    <span>[{{ log.level }}]</span>
+    <span>[{{ log.workflowId }}]</span>
+    <span>[{{ log.nodeId }}]</span>
+    <span>[{{ log.instanceId }}]</span>
+    <span>[{{ log.operationName }}]</span>
+    <span> {{ log.content }}</span>
   </div>
 </div>
