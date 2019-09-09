@@ -17,8 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translateService.setDefaultLang("en");
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    console.log("parsze ccokie : ", JSON.parse("\"fr-fr\""));
+    // get the language setting stored in cookie for A4C legacy (a JSON like "fr-fr" or "en-us" ...)
     let cookieLang = this.cookieService.get("NG_TRANSLATE_LANG_KEY");
     if (cookieLang) {
       let jsonCookieLang = JSON.parse(cookieLang);
@@ -32,6 +31,7 @@ export class AppComponent implements OnInit {
       this.settingsService.setSetting(SettingsService.LANGUAGE, cookieLang);
     }
     this.translateService.use(this.settingsService.getSetting(SettingsService.LANGUAGE));
+    // listen for change in settings
     this.settingsService.settingChange.subscribe(setting => {
       if (setting.id == SettingsService.LANGUAGE) {
         this.translateService.use(setting.value);
