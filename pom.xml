@@ -12,7 +12,6 @@
   <name>Alien4Cloud Wizard</name>
   
   <modules>
-    <module>alien4cloud-wizard-api</module>
     <module>alien4cloud-wizard-ui</module>
   </modules>
 
