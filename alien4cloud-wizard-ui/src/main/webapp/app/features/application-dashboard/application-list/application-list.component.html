@@ -35,12 +35,30 @@
       <!-- start of TopologyOverviewComponent -->
       <w4c-topology-overview *ngIf="isOpenned" [overview]="overview"></w4c-topology-overview>
       <!-- end of TopologyOverviewComponent -->
-      <mat-action-row fxLayout="row" fxLayoutAlign="end center">
-        <!-- TODO: translate status -->
-        <mat-icon *ngIf="overview" [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
-          matTooltip="{{ 'DEPLOYMENT.STATUS.' + overview.deploymentStatus | translate }}">lens</mat-icon>
-        <button mat-stroked-button color="primary"
-          (click)="openWizard()">{{ (overview) ? ( ('DEPLOYMENT.Action.' + (overview.deploymentStatus | w4cDeploymentStatusButtonLabel)) | translate) : '' }}</button>
+      <mat-action-row fxLayout="row" fxFlex="100%">
+          <div fxLayoutAlign="start center" fxFlex="50%" *ngIf="isOpenned && applicationEnvironments[application.id].length > 1">
+            <mat-form-field>
+              <mat-label>{{ 'Global.SwitchEnvironment' | translate }}</mat-label>
+              <mat-select [(value)]="selected" (selectionChange)="onApplicationEnvironmentSelection(application.id,selected)">
+                <mat-option *ngFor="let environment of applicationEnvironments[application.id]" [value]="environment.id">
+                  {{environment.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayoutAlign="end center" fxFlex="50%">
+            <div fxLayout="row" fxFlex="100%">
+              <!-- TODO: translate status -->
+              <div fxLayoutAlign="end center" fxFlex="80%">
+                <mat-icon *ngIf="overview" [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
+                  matTooltip="{{ 'DEPLOYMENT.STATUS.' + overview.deploymentStatus | translate }}">lens</mat-icon>
+              </div>
+              <div fxLayoutAlign="end center" fxFlex="20%" style= "margin-right:20px">
+                <button mat-stroked-button color="primary"
+                  (click)="openWizard()">{{ (overview) ? ( ('DEPLOYMENT.Action.' + (overview.deploymentStatus | w4cDeploymentStatusButtonLabel)) | translate) : '' }}</button>
+              </div>
+            </div>
+          </div>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

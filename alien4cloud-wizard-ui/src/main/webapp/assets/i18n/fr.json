@@ -318,7 +318,10 @@
     "Download": "Télécharger",
     "Orchestrator" : "Orchestrateur",
     "Ok" : "Ok",
-    "Cancel" : "Annuler"
+    "Cancel" : "Annuler",
+    "SwitchEnvironment" :"Changer d'environnement",
+    "CurrentEnvironment" :"Environnement actuel"
+
   },
   "shared": {
     "Home": {
