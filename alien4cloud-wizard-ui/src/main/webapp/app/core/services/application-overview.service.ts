@@ -18,4 +18,10 @@ export class ApplicationOverviewService extends GenericResourceService<Applicati
     super(http, translate, "/wizard/applications/overview")
   }
 
+
+  getApplicationEnvironmentOverview(applicationId : string , environmentId : string ) : Observable<ApplicationOverview> {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId};
+    let url = this.getUrl("/@{applicationId}/@{environmentId}", urlParams);
+    return this.handleResult<ApplicationOverview>(this.http.get(url));
+  } 
 }
