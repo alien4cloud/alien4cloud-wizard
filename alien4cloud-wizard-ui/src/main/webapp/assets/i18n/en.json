@@ -318,7 +318,9 @@
     "Download": "Download",
     "Orchestrator" : "Orchestrator",
     "Ok" : "Ok",
-    "Cancel" : "Cancel"
+    "Cancel" : "Cancel",
+    "SwitchEnvironment" :"Switch environment",
+    "CurrentEnvironment" :"Current environment"
   },
   "shared": {
     "Home": {

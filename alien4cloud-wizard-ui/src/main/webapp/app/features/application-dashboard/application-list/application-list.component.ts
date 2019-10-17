@@ -59,6 +59,8 @@ export class ApplicationListComponent implements OnInit {
 
   private request: FilteredSearchRequest = new FilteredSearchRequest();
 
+  private selected : string ;
+
   ngOnInit() {
     this.loadApplications(0);
 
@@ -76,7 +78,6 @@ export class ApplicationListComponent implements OnInit {
         });
       }
     });
-
   }
 
   getApplicationImageUrl(application: Application) {
@@ -133,6 +134,9 @@ export class ApplicationListComponent implements OnInit {
         this.overview.deploymentStatus = e.deploymentStatus;
       });
       this.overview = data;
+      
+      //dislpay Default Environment in input of selection
+      this.selected = this.overview.applicationEnvironment.id;
     });
   }
 
@@ -145,5 +149,15 @@ export class ApplicationListComponent implements OnInit {
     console.log("Routing to :", routeUrl)
     this.router.navigateByUrl(routeUrl);
   }
+
+  onApplicationEnvironmentSelection(applicationId : string , environmentId : string){
+    this.applicationOverviewService.getApplicationEnvironmentOverview(applicationId,environmentId).subscribe((data) => {
+      //update overview
+      this.overview = data;
+      //Display Environment selected in input of selection :
+      this.selected = this.overview.applicationEnvironment.id;
+    });
+  }
+  
 
 }
