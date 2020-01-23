@@ -175,6 +175,10 @@
     "appplicationNamePrefix" : {
       "label": "Prefixe de nom d'application",
       "description": "Associé au nom du modèle lors de la création d'une nouvelle application."
+    },
+    "redirectInNewTab" : {
+      "label": "Ouvrir les redirections dans un nouvel ongle",
+      "description": "Les redirections sont faite dans un nouvel onglet plutôt que dans la fenêtre courrante lorsque cette option est activée."
     }
   },
   "DEPLOYMENT" : {

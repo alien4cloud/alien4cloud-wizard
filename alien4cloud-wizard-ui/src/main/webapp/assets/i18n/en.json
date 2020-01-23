@@ -175,6 +175,10 @@
     "appplicationNamePrefix" : {
       "label": "Application name prefix",
       "description": "Will be used below the template name when creating an application."
+    },
+    "redirectInNewTab" : {
+      "label": "Open redirections in a new tab",
+      "description": "Redirection to external URLs are done an new tab rather than in the current one."
     }
   },
   "DEPLOYMENT" : {

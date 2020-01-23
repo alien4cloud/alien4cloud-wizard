@@ -48,6 +48,10 @@ export interface AbstractTask {
   source: string;
 }
 
+export interface RedirectionTask extends AbstractTask {
+  url: string;
+}
+
 export enum TaskCode {
   /* This code is to be used when a task is actually just there to dispatch a log message. */
   LOG = "LOG",
@@ -88,5 +92,7 @@ export enum TaskCode {
   ORCHESTRATOR_PROPERTY = "ORCHESTRATOR_PROPERTY",
 
   /** Specific code for cloudify */
-  CFY_MULTI_RELATIONS = "CFY_MULTI_RELATIONS"
+  CFY_MULTI_RELATIONS = "CFY_MULTI_RELATIONS",
+
+  REDIRECTION_REQUIRED = "REDIRECTION_REQUIRED"
 }

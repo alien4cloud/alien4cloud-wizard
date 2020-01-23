@@ -20,6 +20,7 @@ export class SettingsService {
   public static FSM_GRAPH_ZOOM_LEVEL: string = "Setting.fsmGraphZoomLevel";
   public static WIZARD_SHOWS_WELCOME: string = "Setting.displayWizardWelcome";
   public static APPLICATION_NAME_PREFIX: string = "Setting.appplicationNamePrefix";
+  public static REDIRECT_IN_NEW_TAB: string = "Setting.redirectInNewTab";
 
   settings: Map<string, Setting> = new Map<string, Setting>();
 
@@ -89,6 +90,13 @@ export class SettingsService {
     appplicationNamePrefix.default = new ScalarPropertyValue('App');
     appplicationNamePrefix.enabled = true;
     this.settings.set(appplicationNamePrefix.id, appplicationNamePrefix);
+
+    let redirectInNewTab = new Setting();
+    redirectInNewTab.id = SettingsService.REDIRECT_IN_NEW_TAB;
+    redirectInNewTab.type = 'boolean';
+    redirectInNewTab.default = new ScalarPropertyValue('false');
+    redirectInNewTab.enabled = true;
+    this.settings.set(redirectInNewTab.id, redirectInNewTab);
   }
 
   setSetting(key: string, value: any) {
