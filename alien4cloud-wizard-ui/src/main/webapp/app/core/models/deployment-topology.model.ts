@@ -50,6 +50,7 @@ export interface AbstractTask {
 
 export interface RedirectionTask extends AbstractTask {
   url: string;
+  backUrlParam: string;
 }
 
 export enum TaskCode {
