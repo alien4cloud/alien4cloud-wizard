@@ -43,10 +43,10 @@ export class DeploymentValidationComponent extends WizardFormComponent implement
             console.log("back url: ", backUrl);
             if (url.indexOf("?") > -1 ) {
               // URL has already params
-              url = url + "&" + task.backUrlParam + "=" + encodeURI(backUrl);
+              url = url + "&" + task.backUrlParam + "=" + encodeURIComponent(backUrl);
             } else {
               // URL don't have params
-              url = url + "?" + task.backUrlParam + "=" + encodeURI(backUrl);
+              url = url + "?" + task.backUrlParam + "=" + encodeURIComponent(backUrl);
             }
           }
           if (redirectInNewTab) {
