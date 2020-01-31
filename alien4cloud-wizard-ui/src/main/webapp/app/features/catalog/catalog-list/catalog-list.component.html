@@ -17,11 +17,16 @@
           {{catalog.archiveVersion}}
         </mat-card-subtitle>
       </mat-card-header>
-      <mat-card-content fxLayout="column" fxLayoutAlign="space-between start">
-        <div class="catalog-description" style="font-size: 10px; color:grey;">
+
+      <mat-divider></mat-divider>
+      
+      <mat-card-content fxLayout="column" fxLayoutAlign="space-between" class="w4c-full-width">
+       
+        <div class="catalog-description" [style.height]="(catalog.metaProperties | json) != '{}' ? '100px' : '150px'">
           {{catalog.description}}
         </div>
-        <div class="catalog-meta-prop" fxLayoutAlign="start start">
+        <mat-divider *ngIf="(catalog.metaProperties | json) != '{}'" [inset]="false" style="position: relative"></mat-divider>
+        <div class="catalog-meta-prop" >
           <mat-chip-list>
             <ng-container *ngFor="let namedMetaProperty of catalog.metaProperties | keyvalue;">
               <mat-chip

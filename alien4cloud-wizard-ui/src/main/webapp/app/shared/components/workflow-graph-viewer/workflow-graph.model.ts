@@ -27,6 +27,7 @@ export class WfTipGraphNode extends WfGraphNode {
 
 export class WfStepGraphNode extends WfGraphNode {
   label: string;
+  target: string;
   /** The WF step is an operation step. */
   operationStep: boolean;
   status: WorkflowExecutionStepStatus = WorkflowExecutionStepStatus.UNKNOWN;
@@ -34,10 +35,12 @@ export class WfStepGraphNode extends WfGraphNode {
   // stepNode = true;
   constructor(
     id: string,
-    label: string
+    label: string,
+    target: string
   ) {
     super(id);
     this.label = label;
+    this.target = target;
   }
 }
 
