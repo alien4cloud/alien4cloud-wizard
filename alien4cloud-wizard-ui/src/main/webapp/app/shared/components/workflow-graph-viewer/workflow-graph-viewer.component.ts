@@ -99,7 +99,7 @@ export class WorkflowGraphViewerComponent implements OnInit {
       console.log(`adding step ${n} to displayable graph`);
       let step = <WorkflowStep>wf.steps[n];
       console.log(`step ${n} has target ${step.target}`);
-      let node = new WfStepGraphNode(n, step.name);
+      let node = new WfStepGraphNode(n, step.name,step.target);
       if (step.activities && step.activities.length > 0) {
         let activity = <any>step.activities[0];
         if (activity.operationName) {
