@@ -7,7 +7,7 @@
 }
 
 .logLine {
-  white-space: pre-line; 
+  white-space: pre-line;
   word-wrap: break-word;
-} 
-
+  word-break: break-word;
+}
