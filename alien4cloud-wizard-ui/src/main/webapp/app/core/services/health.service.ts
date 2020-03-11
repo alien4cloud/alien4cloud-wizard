@@ -27,7 +27,7 @@ export class HealthService {
   }
 
   private healthCheck() {
-    return this.http.get(environment.urlPrefix + '/rest/admin/health').subscribe(
+    return this.http.get(environment.urlPrefix + '../rest/admin/health').subscribe(
       data => {
         // console.log("A4C is connected ", data);
         this.isConnectedSubject.next(true);
