@@ -23,7 +23,7 @@ export enum SocketClientState {
 })
 export class WebsocketClientService implements OnDestroy {
 
-  private static STOMP_CHANNEL_BASE_URL: string = (environment.production) ? "/rest/alienEndPoint" : environment.urlPrefix + "/rest/w4cAlienEndPoint";
+  private static STOMP_CHANNEL_BASE_URL: string = (environment.production) ? "rest/alienEndPoint" : environment.urlPrefix + "rest/w4cAlienEndPoint";
 
   private client: any;
   private state: BehaviorSubject<SocketClientState>;
