@@ -77,8 +77,7 @@ module.exports = (options) => ({
             chunks: ['polyfills', 'main', 'global'],
             chunksSortMode: 'manual',
             inject: 'body'
-        })
-        //,
-        //new BaseHrefWebpackPlugin({ baseHref: 'wizard/' })
+        }),
+        new BaseHrefWebpackPlugin({ baseHref: '/wizard/' })
     ]
 });
