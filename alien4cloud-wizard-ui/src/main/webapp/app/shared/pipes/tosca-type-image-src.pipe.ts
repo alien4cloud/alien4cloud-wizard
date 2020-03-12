@@ -13,7 +13,7 @@ export class ToscaTypeImageSrcPipe implements PipeTransform {
 
   transform(value: HasTags): string {
     let tagValue = _.get(_.find(value.tags, {name:'icon'}), 'value');
-    return environment.urlPrefix + `/img?id=${tagValue}&quality=QUALITY_64`;
+    return environment.urlPrefix + `../img?id=${tagValue}&quality=QUALITY_64`;
   }
 
 }
