@@ -55,7 +55,7 @@ export class LoginService {
     // FIXME: this is not url encoded
     var body = "user=" + credentials.username + "&password=" + credentials.password;
 
-    return this.http.post(environment.urlPrefix + '/rest/jwtauth', body, {
+    return this.http.post(environment.urlPrefix + '../rest/jwtauth', body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       }),
