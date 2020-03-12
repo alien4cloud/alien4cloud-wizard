@@ -81,7 +81,7 @@ export class ApplicationListComponent implements OnInit {
   }
 
   getApplicationImageUrl(application: Application) {
-    return environment.urlPrefix + `/img?id=${application.imageId}&quality=QUALITY_64`
+    return environment.urlPrefix + `../img?id=${application.imageId}&quality=QUALITY_64`
   }
 
   searchApplications(request: FilteredSearchRequest) {
