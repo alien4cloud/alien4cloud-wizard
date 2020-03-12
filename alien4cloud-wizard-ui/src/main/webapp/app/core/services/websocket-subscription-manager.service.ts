@@ -20,7 +20,7 @@ export class WebsocketSubscriptionManager {
   private deployementStatusChangeSubject = new ReplaySubject<DeploymentStatusChangeEvent>(1);
   public deployementStatusChange = this.deployementStatusChangeSubject.asObservable();
 
-  private static STOMP_CHANNEL_BASE_URL: string = (environment.production) ? "/rest/alienEndPoint" : environment.urlPrefix + "/rest/w4cAlienEndPoint";
+  private static STOMP_CHANNEL_BASE_URL: string = (environment.production) ? "rest/alienEndPoint" : environment.urlPrefix + "rest/w4cAlienEndPoint";
 
   constructor(
     private localStorage: LocalStorageService) {
