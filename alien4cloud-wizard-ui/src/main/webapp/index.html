@@ -14,7 +14,9 @@
     if (global === undefined) {
       var global = window;
     }
+    console.log("base-href: " + window['base-href']);
     window['base-href'] = window.location.pathname;
+    console.log("base-href: " + window['base-href']);
   </script>
 </head>
 <body class="mat-app-background">
