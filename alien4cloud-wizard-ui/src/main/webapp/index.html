@@ -5,7 +5,7 @@
   <title>Wizard 4 Cloud</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <base href="/">
+<!--  <base href="/">-->
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -13,10 +13,7 @@
     if (global === undefined) {
       var global = window;
     }
-    console.log("base-href: " + window['base-href']);
     window['base-href'] = window.location.pathname;
-    document.getElementsByTagName("base")[0].href = window.location.pathname;
-    console.log("base-href: " + window['base-href']);
   </script>
 </head>
 <body class="mat-app-background">
