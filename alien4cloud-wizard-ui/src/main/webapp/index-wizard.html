@@ -14,6 +14,13 @@
       var global = window;
     }
     window['base-href'] = window.location.pathname;
+    console.log("pathname: " + window.location.pathname);
+    window.onload = function() {
+      if (window.location.pathname.endsWith("/a4c/")) {
+        console.log("redirecting to : " + window.location.pathname + "index-a4c.html");
+        window.location.href = window.location.pathname + "index-a4c.html";
+      }
+    }
   </script>
 </head>
 <body class="mat-app-background">
