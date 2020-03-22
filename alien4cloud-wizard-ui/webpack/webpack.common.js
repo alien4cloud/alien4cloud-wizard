@@ -73,17 +73,16 @@ module.exports = (options) => ({
 			 { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
         ]),
         new HtmlWebpackPlugin({
-            template: './src/main/webapp/index.html',
+            template: './src/main/webapp/index-wizard.html',
+            filename: 'index.html',
             chunks: ['polyfills', 'main', 'global'],
-            chunksSortMode: 'manual',
-            inject: 'head', 'base': { 'href': '/wizard/' }
+            chunksSortMode: 'manual'
         }),
         new HtmlWebpackPlugin({
-          template: './src/main/webapp/index.html',
+          template: './src/main/webapp/index-a4c.html',
           filename: 'index-a4c.html',
           chunks: ['polyfills', 'main', 'global'],
-          chunksSortMode: 'manual',
-          inject: 'head', 'base': { 'href': '/a4c/wizard/' }
+          chunksSortMode: 'manual'
         })
         //,new BaseHrefWebpackPlugin({ baseHref: './wizard/' })
     ]
