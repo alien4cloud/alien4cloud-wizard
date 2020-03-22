@@ -76,14 +76,14 @@ module.exports = (options) => ({
             template: './src/main/webapp/index.html',
             chunks: ['polyfills', 'main', 'global'],
             chunksSortMode: 'manual',
-            inject: 'body', 'base': { 'href': '/wizard/' }
+            inject: 'head', 'base': { 'href': '/wizard/' }
         }),
         new HtmlWebpackPlugin({
           template: './src/main/webapp/index.html',
           filename: 'index-a4c.html',
           chunks: ['polyfills', 'main', 'global'],
           chunksSortMode: 'manual',
-          inject: 'body', 'base': { 'href': '/a4c/wizard/' }
+          inject: 'head', 'base': { 'href': '/a4c/wizard/' }
         })
         //,new BaseHrefWebpackPlugin({ baseHref: './wizard/' })
     ]
