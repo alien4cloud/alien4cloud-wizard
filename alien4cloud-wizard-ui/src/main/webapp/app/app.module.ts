@@ -25,7 +25,7 @@ import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import {AuthInterceptor, StyleManager} from '@app/core';
 import {HeroLoaderModule} from "@herodevs/hero-loader";
-import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {CookieService} from "ngx-cookie-service";
 
 export function createTranslateLoader(http: HttpClient) {
@@ -74,6 +74,10 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+    },
+    {
+      provide: APP_BASE_HREF,
+      useValue: window['base-href']
     },
     {
       provide: LocationStrategy,
