@@ -14,12 +14,15 @@
     }
     //window['base-href'] = window.location.pathname;
     //console.log("pathname: " + window.location.pathname);
-    //window.onload = function() {
-    //  if (window.location.pathname.indexOf("/a4c/") >= 0) {
-    //    console.log("redirecting to : " + window.location.href + "/index-a4c.html");
-    //    window.location.href = window.location.href + "/index-a4c.html";
-    //  }
-    //}
+    window.onload = function() {
+      if (window.location.pathname.indexOf("/a4c/") >= 0) {
+        console.log("redirecting to : " + window.location.href + "/index-a4c.html");
+        window.location.href = window.location.href + "/index-a4c.html";
+      } else {
+        console.log("redirecting to : " + window.location.href + "/index-a4c.html");
+        window.location.href = window.location.href + "/index-wizard.html";
+      }
+    }
   </script>
 </head>
 <body class="mat-app-background">

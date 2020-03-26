@@ -73,25 +73,20 @@ module.exports = (options) => ({
 			 { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
         ]),
         new HtmlWebpackPlugin({
-            template: './src/main/webapp/index-wizard.html',
-            filename: 'index.html',
-            chunks: ['polyfills', 'main', 'global'],
-            chunksSortMode: 'manual'
+          template: './src/main/webapp/index-base.html',
+          filename: 'index.html'
+        }),
+        new HtmlWebpackPlugin({
+          template: './src/main/webapp/index-wizard.html',
+          filename: 'index-wizard.html',
+          chunks: ['polyfills', 'main', 'global'],
+          chunksSortMode: 'manual'
         }),
         new HtmlWebpackPlugin({
           template: './src/main/webapp/index-a4c.html',
           filename: 'index-a4c.html',
           chunks: ['polyfills', 'main', 'global'],
           chunksSortMode: 'manual'
-        }),
-        new HtmlWebpackPlugin({
-          template: './src/main/webapp/index.jsp',
-          filename: 'wizard.jsp',
-          chunks: ['polyfills', 'main', 'global'],
-          chunksSortMode: 'manual',
-          templateParameters: {
-            base_href: '<%=base_href%>'
-          },
         })
         //,new BaseHrefWebpackPlugin({ baseHref: './wizard/' })
     ]
