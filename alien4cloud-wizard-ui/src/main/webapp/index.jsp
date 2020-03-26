@@ -1,4 +1,5 @@
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
   <meta charset="utf-8">
   <title>Wizard 4 Cloud</title>
