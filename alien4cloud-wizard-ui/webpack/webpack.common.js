@@ -88,7 +88,10 @@ module.exports = (options) => ({
           template: './src/main/webapp/index.jsp',
           filename: 'wizard.jsp',
           chunks: ['polyfills', 'main', 'global'],
-          chunksSortMode: 'manual'
+          chunksSortMode: 'manual',
+          templateParameters: {
+            base_href: '${base_href}'
+          },
         })
         //,new BaseHrefWebpackPlugin({ baseHref: './wizard/' })
     ]
