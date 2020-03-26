@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Wizard 4 Cloud</title>
 
-  <base href="/a4c/wizard/index-a4c.html">
+  <base href="${base_href}">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
