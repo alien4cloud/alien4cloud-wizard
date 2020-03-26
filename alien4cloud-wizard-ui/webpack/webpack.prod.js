@@ -162,7 +162,10 @@ module.exports = webpackMerge.strategy(mergeStrategy)(commonConfig({ env: ENV })
         new WorkboxPlugin.GenerateSW({
           clientsClaim: true,
           skipWaiting: true,
-        })
+        }),
+        new CopyWebpackPlugin([
+          { from: './src/main/webapp/index-base.html', to: 'index.html' }
+        ])
     ],
     mode: 'production'
 });

@@ -72,10 +72,10 @@ module.exports = (options) => ({
              { from: './src/main/webapp/assets/styles/built', to: 'assets/styles/built' },
 			 { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
         ]),
-        new HtmlWebpackPlugin({
+/*        new HtmlWebpackPlugin({
           template: './src/main/webapp/index-base.html',
           filename: 'index.html'
-        }),
+        }),*/
         new HtmlWebpackPlugin({
           template: './src/main/webapp/index-wizard.html',
           filename: 'index-wizard.html',
