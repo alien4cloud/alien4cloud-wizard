@@ -90,7 +90,7 @@ module.exports = (options) => ({
           chunks: ['polyfills', 'main', 'global'],
           chunksSortMode: 'manual',
           templateParameters: {
-            base_href: '${base_href}'
+            base_href: '<%=base_href%>'
           },
         })
         //,new BaseHrefWebpackPlugin({ baseHref: './wizard/' })
