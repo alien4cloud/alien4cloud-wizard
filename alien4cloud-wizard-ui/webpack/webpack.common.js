@@ -83,6 +83,12 @@ module.exports = (options) => ({
           filename: 'index-a4c.html',
           chunks: ['polyfills', 'main', 'global'],
           chunksSortMode: 'manual'
+        }),
+        new HtmlWebpackPlugin({
+          template: './src/main/webapp/index.jsp',
+          filename: 'wizard.jsp',
+          chunks: ['polyfills', 'main', 'global'],
+          chunksSortMode: 'manual'
         })
         //,new BaseHrefWebpackPlugin({ baseHref: './wizard/' })
     ]
