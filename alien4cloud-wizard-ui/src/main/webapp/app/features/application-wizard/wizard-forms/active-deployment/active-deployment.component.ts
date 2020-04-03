@@ -145,19 +145,20 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
   }
 
   private updateProgessData(wfExecution: WorkflowExecutionDTO) {
-    if (!wfExecution.execution) {
+    if (!wfExecution.execution || !wfExecution.execution.workflowName) {
       return;
     }
 
     this.workflowExecutionDTOSubject.next(wfExecution);
 
-    // if (!this.fsmContext.progessBarData) {
-    //   this.fsmContext.progessBarData = new ProgessBarData();
-    // }
+    if (!this.fsmContext.progessBarData) {
+      this.fsmContext.progessBarData = new ProgessBarData();
+    }
 
     this.fsmContext.progessBarData.workflowName = wfExecution.execution.workflowName;
     this.fsmContext.progessBarData.current = wfExecution.lastKnownExecutingTask;
     this.fsmContext.progessBarData.status = wfExecution.execution.status;
+    this.fsmContext.progessBarData.workflowInProgress = true;
 
     let progress = (wfExecution.actualKnownStepInstanceCount * 100) / this.monitoredDeployment.workflowExpectedStepInstanceCount[wfExecution.execution.workflowName];
     if (wfExecution.execution.status.toString() == 'SUCCEEDED') {
