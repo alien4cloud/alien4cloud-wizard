@@ -6,6 +6,7 @@ import {MonitorDeploymentService} from "@app/core/services/monitor-deployment.se
 import {DeploymentWorkflowExecutionService} from "@app/core/services/workflow-execution.service";
 import {
   ApplicationDeploymentService,
+  ApplicationEnvironmentService,
   DeploymentStatus,
   MonitoredDeploymentDTO,
   WorkflowExecutionDTO,
@@ -50,6 +51,7 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     private monitorDeploymentService: MonitorDeploymentService,
     private deploymentWorkflowExecutionService: DeploymentWorkflowExecutionService,
     private applicationDeploymentService: ApplicationDeploymentService,
+    private applicationEnvironmentService: ApplicationEnvironmentService,
     private websocketService: WebsocketSubscriptionManager,
     private dialog: MatDialog,
     private runtimeService: RuntimeService,
@@ -78,12 +80,6 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
       }
     );
 
-    if (this.fsmContext.deploymentStatus && DeploymentStatus.isPendingStatus(this.fsmContext.deploymentStatus)) {
-      this.fsmContext.progessBarData = new ProgessBarData();
-      this.fsmContext.progessBarData.workflowInProgress = true;
-      this.monitorWorkflow();
-    }
-
     // we filter workflows that have steps and exclude install and uninstall
     for (const [key, wf] of Object.entries(this.fsmContext.deploymentTopology.topology.workflows)) {
       console.log(`Workflow ${key} : ${wf.name}`);
@@ -99,6 +95,14 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
     this.getDeployedTopology();
     this.getInstanceInformation() ;
+
+    // sometimes the status has changed before the subscription to ws channel has been subscribed. In such case, just query the status.
+    if (!this.detectPendingDeploymentStatusChanged()) {
+      this.applicationEnvironmentService.getApplicationEnvironmentStatus(this.fsmContext.application.id, this.fsmContext.environment.id).subscribe(status => {
+        this.fsmContext.deploymentStatus = status;
+        this.detectPendingDeploymentStatusChanged();
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -109,9 +113,21 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     this.wsSubscription.unsubscribe();
   }
 
+  private detectPendingDeploymentStatusChanged(): boolean {
+    if (this.fsmContext.deploymentStatus && DeploymentStatus.isPendingStatus(this.fsmContext.deploymentStatus)) {
+      this.fsmContext.progessBarData = new ProgessBarData();
+      this.fsmContext.progessBarData.workflowInProgress = true;
+      this.monitorWorkflow();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   private monitorWorkflow() {
     if (!this.workflowMonitoringSubscription || this.workflowMonitoringSubscription.closed) {
       this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.application.id, this.fsmContext.environment.id).subscribe(e => {
+        console.log(e);
         console.log("deploymentID is : " + e.deployment.id);
         let deploymentId = e.deployment.id;
         console.log("Motitored deployement: ", JSON.stringify(e));
