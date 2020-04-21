@@ -21,10 +21,6 @@
       <id>github</id>
       <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
     </repository>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
-    </repository>
   </repositories>
 
   <distributionManagement>
