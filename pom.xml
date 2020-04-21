@@ -19,18 +19,18 @@
   <repositories>
     <repository>
       <id>github</id>
-      <url>https://maven.pkg.github.com/alien4cloud</url>
+      <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
     </repository>
   </repositories>
 
   <distributionManagement>
     <repository>
       <id>github</id>
-      <url>https://maven.pkg.github.com/alien4cloud</url>
+      <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
     </repository>
     <snapshotRepository>
       <id>github</id>
-      <url>https://maven.pkg.github.com/alien4cloud</url>
+      <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
     </snapshotRepository>
   </distributionManagement>
 
