@@ -18,19 +18,23 @@
 
   <repositories>
     <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
+      <id>pdl-releases</id>
+      <url>https://www.portaildulibre.fr/nexus/repository/opensource-releases</url>
+    </repository>
+    <repository>
+      <id>pdl-snapshots</id>
+      <url>https://www.portaildulibre.fr/nexus/repository/opensource-snapshots</url>
     </repository>
   </repositories>
 
   <distributionManagement>
     <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
+      <id>pdl-releases</id>
+      <url>https://www.portaildulibre.fr/nexus/repository/opensource-releases</url>
     </repository>
     <snapshotRepository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/alien4cloud/alien4cloud</url>
+      <id>pdl-snapshots</id>
+      <url>https://www.portaildulibre.fr/nexus/repository/opensource-snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
