@@ -67,27 +67,10 @@ module.exports = (options) => ({
             }
         }),
         new CopyWebpackPlugin([
-             { from: './src/main/webapp/content/', to: 'content' },
-             { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
-             { from: './src/main/webapp/assets/styles/built', to: 'assets/styles/built' },
-			 { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
-        ]),
-/*        new HtmlWebpackPlugin({
-          template: './src/main/webapp/index-base.html',
-          filename: 'index.html'
-        }),*/
-        new HtmlWebpackPlugin({
-          template: './src/main/webapp/index-wizard.html',
-          filename: 'index-wizard.html',
-          chunks: ['polyfills', 'main', 'global'],
-          chunksSortMode: 'manual'
-        }),
-        new HtmlWebpackPlugin({
-          template: './src/main/webapp/index-a4c.html',
-          filename: 'index-a4c.html',
-          chunks: ['polyfills', 'main', 'global'],
-          chunksSortMode: 'manual'
-        })
-        //,new BaseHrefWebpackPlugin({ baseHref: './wizard/' })
+            { from: './src/main/webapp/content/', to: 'content' },
+            { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
+            { from: './src/main/webapp/assets/styles/built', to: 'assets/styles/built' },
+            { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
+        ])
     ]
 });

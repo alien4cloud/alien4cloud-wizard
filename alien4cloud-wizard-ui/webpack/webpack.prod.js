@@ -165,7 +165,7 @@ module.exports = webpackMerge.strategy(mergeStrategy)(commonConfig({ env: ENV })
           skipWaiting: true,
         }),
         new CopyWebpackPlugin([
-          { from: './src/main/webapp/index-base.html', to: 'index.html' }
+          { from: './src/main/webapp/index-base.html', to: 'wizard.html' }
         ])
     ],
     mode: 'production'
