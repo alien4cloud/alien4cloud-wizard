@@ -67,10 +67,16 @@ module.exports = (options) => ({
             }
         }),
         new CopyWebpackPlugin([
-            { from: './src/main/webapp/content/', to: 'content' },
-            { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
-            { from: './src/main/webapp/assets/styles/built', to: 'assets/styles/built' },
-            { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
-        ])
+             { from: './src/main/webapp/content/', to: 'content' },
+             { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
+             { from: './src/main/webapp/assets/styles/built', to: 'assets/styles/built' },
+			 { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
+        ]),
+        new HtmlWebpackPlugin({
+          template: './src/main/webapp/wizard.html',
+          filename: 'wizard.html',
+          chunks: ['polyfills', 'main', 'global'],
+          chunksSortMode: 'manual'
+        })
     ]
 });
