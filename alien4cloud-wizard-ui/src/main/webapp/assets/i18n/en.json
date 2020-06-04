@@ -178,7 +178,7 @@
     },
     "redirectInNewTab" : {
       "label": "Open redirections in a new tab",
-      "description": "Redirection to external URLs are done an new tab rather than in the current one."
+      "description": "Redirection to external URLs are done in a new tab rather than in the current one."
     }
   },
   "DEPLOYMENT" : {
