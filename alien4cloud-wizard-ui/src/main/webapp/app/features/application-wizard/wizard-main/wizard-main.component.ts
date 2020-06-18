@@ -154,10 +154,11 @@ export class WizardMainComponent implements OnInit, OnDestroy {
         //Activate  action on Form     
         this.stepFormContainer.unblur();
 
+
       } else {
         // nothing to do here: a state is not always a form state.
         console.log(`${data.value} is not a form state !`);
-        this.stepFormContainer.renderSpinner();
+        //this.stepFormContainer.renderSpinner();
         
         //Desactivate action on Form 
         this.stepFormContainer.blur();
