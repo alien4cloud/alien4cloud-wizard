@@ -112,7 +112,7 @@ export class AppplicationWizardMachineService {
                       mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environment.id)
                         .pipe(
                           mergeMap(status =>
-                            this.runtimeService.getDeployedTopology(
+                            this.applicationDeploymentService.getActiveDeploymentTopology(
                               _.application.id,
                               _.environment.id
                             ).pipe(
