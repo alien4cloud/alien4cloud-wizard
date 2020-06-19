@@ -111,15 +111,15 @@ export class AppplicationWizardMachineService {
                       mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environment.id)
                         .pipe(
                           mergeMap(status =>
-                            this.deploymentTopologyService.getDeploymentTopology(
+                            this.applicationDeploymentService.getActiveDeploymentTopology(
                               _.application.id,
                               _.environment.id
                             ).pipe(
                               map(dto => {
-                                _.deploymentTopology = dto;
                                 if (deployment) {
                                   _.deployment = deployment;
                                   _.deploymentStatus = status;
+                                  _.deploymentTopology = dto;
                                   return new OnActiveDeploymentFound(deployment, status);
                                 } else {
                                   return new DoSelectEnvironment(_.environment);
@@ -134,6 +134,45 @@ export class AppplicationWizardMachineService {
                             return undefined;
                           })
                         )
+                        // .pipe(map(
+                        //   status => {
+                        //     _.deployment = deployment;
+                        //     _.deploymentStatus = status;
+                        //     if (deployment) {
+                        //       _.deployment = deployment;
+                        //       _.deploymentStatus = status;
+                        //       return new OnActiveDeploymentFound(deployment, status);
+                        //     } else {
+                        //       return new DoSelectEnvironment(_.environment);
+                        //     }
+                        //   }
+                        // ))
+                        //
+                        // .pipe(
+                        //   mergeMap(status =>
+                        //     this.deploymentTopologyService.getDeploymentTopology(
+                        //       _.application.id,
+                        //       _.environment.id
+                        //     ).pipe(
+                        //       map(dto => {
+                        //         //_.deploymentTopology = dto;
+                        //         if (deployment) {
+                        //           _.deployment = deployment;
+                        //           _.deploymentStatus = status;
+                        //           return new OnActiveDeploymentFound(deployment, status);
+                        //         } else {
+                        //           return new DoSelectEnvironment(_.environment);
+                        //         }
+                        //       })
+                        //     )
+                        //   ),
+                        //   catchError(err => {
+                        //     console.log("------------ Error catch by service : " + err);
+                        //     // return new DoSelectEnvironment(_.environmentId);
+                        //     // FIXME
+                        //     return undefined;
+                        //   })
+                        // )
                       )
                     )
                   }
@@ -163,13 +202,14 @@ export class AppplicationWizardMachineService {
         ).pipe(
           map(dto => {
             // assign the deployment topology
-            _.deploymentTopology = dto;
+            _.deploymentTopologyDTO = dto;
+            _.deploymentTopology = dto.topology;
             return new OnDeploymentTopologyFetched();
               // return new DoSearchLocation(dto);
           })
         ),
       searchLocations: (_, event) =>
-        this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environment.id)
+        this.locationMatchingService.match(_.deploymentTopologyDTO.topology.id, _.environment.id)
           .pipe(
             map(locations => {
               _.locations = locations;
@@ -188,7 +228,8 @@ export class AppplicationWizardMachineService {
             // assign the deployment topology
             // we have an assignation in the FSM config but we are not guaranteed that this assignation was done before the guard was called
             // that's why we assign directly here
-            _.deploymentTopology = deploymentTopologyDTO;
+            _.deploymentTopologyDTO = deploymentTopologyDTO;
+            _.deploymentTopology = deploymentTopologyDTO.topology;
             return new OnSelectLocationSuccesss(deploymentTopologyDTO);
           }))
       ,
@@ -237,10 +278,10 @@ export class AppplicationWizardMachineService {
     },
     guards: {
       hasMetapropertiesConfig: context => context.applicationMetapropertiesConfiguration != undefined,
-      deploymentTopologyHasInputs: context => context.deploymentTopology && context.deploymentTopology.topology.inputs && lodash.size(context.deploymentTopology.topology.inputs) > 0,
-      deploymentTopologyHasInputArtifacts: context => context.deploymentTopology && context.deploymentTopology.topology.inputArtifacts && lodash.size(context.deploymentTopology.topology.inputArtifacts) > 0,
-      shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology.availableSubstitutions.availableSubstitutions) 
-        || this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopology.availableSubstitutions.availablePoliciesSubstitutions),
+      deploymentTopologyHasInputs: context => context.deploymentTopologyDTO && context.deploymentTopologyDTO.topology.inputs && lodash.size(context.deploymentTopologyDTO.topology.inputs) > 0,
+      deploymentTopologyHasInputArtifacts: context => context.deploymentTopologyDTO && context.deploymentTopologyDTO.topology.inputArtifacts && lodash.size(context.deploymentTopologyDTO.topology.inputArtifacts) > 0,
+      shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopologyDTO.availableSubstitutions.availableSubstitutions)
+        || this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopologyDTO.availableSubstitutions.availablePoliciesSubstitutions),
       canUndeploy: context => context.deployment && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED
         || context.deploymentStatus === DeploymentStatus.FAILURE
@@ -253,7 +294,7 @@ export class AppplicationWizardMachineService {
         || context.deploymentStatus === DeploymentStatus.UPDATE_FAILURE
         || context.deploymentStatus === DeploymentStatus.UPDATED),
       canDeploy: context => context.deployment && context.deploymentStatus === DeploymentStatus.UNDEPLOYED,
-      canSubmitDeployment: context => context.deploymentTopology && context.deploymentTopology.validation && context.deploymentTopology.validation.valid,
+      canSubmitDeployment: context => context.deploymentTopologyDTO && context.deploymentTopologyDTO.validation && context.deploymentTopologyDTO.validation.valid,
       canCancelWithoutDeleting: context => context.application == undefined,
       applicationExists: context => context.application != undefined,
       hasntActiveEnvironment: context => context.environments && context.environments.filter(e => e.status != DeploymentStatus.UNDEPLOYED).length == 0
@@ -265,6 +306,7 @@ export class AppplicationWizardMachineService {
         _.applicationMetapropertiesConfiguration = undefined;
         _.application = undefined;
         _.environments = undefined;
+        _.deploymentTopologyDTO = undefined;
         _.deploymentTopology = undefined;
         _.environment = undefined;
         _.location = undefined;
@@ -297,10 +339,11 @@ export class AppplicationWizardMachineService {
       })),
       // FIXME: remove since it's useless ? (assignation is done in setLocationPolicies)
       assignDeploymentTopology: assign<ApplicationWizardMachineContext, OnSelectLocationSuccesss | OnMatchingCompleted>((_, event) => ({
-        deploymentTopology: event.deploymentTopologyDTO
+        deploymentTopologyDTO: event.deploymentTopologyDTO
       })),
       fetchLocations: (_) => {
-        this.locationMatchingService.match(_.deploymentTopology.topology.id, _.environment.id).subscribe(
+        var topologyId = _.environment.applicationId + ":" + _.environment.deployedVersion;
+         this.locationMatchingService.match(topologyId, _.environment.id).subscribe(
           locations => {
             _.locations = locations;
           })
@@ -333,7 +376,8 @@ export class AppplicationWizardMachineService {
           _.application.id,
           _.environment.id
         ).subscribe(dto => {
-          _.deploymentTopology = dto;
+          _.deploymentTopologyDTO = dto;
+          _.deploymentTopology = dto.topology;
         })
       },
       initProgress: (_) => {

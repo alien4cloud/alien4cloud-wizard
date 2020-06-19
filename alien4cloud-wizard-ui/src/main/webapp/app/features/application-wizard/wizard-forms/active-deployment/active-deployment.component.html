@@ -9,10 +9,10 @@
           </div>
           <ng-template #deploying>
             <w4c-workflow-graph-viewer
-              [topology]="fsmContext.deploymentTopology.topology"
+              [topology]="fsmContext.deploymentTopology"
               workflow="install"
               [workflowExecutionChange]="$workflowExecutionDTO"
-              [deploymentTopology]="fsmContext.deploymentTopology"
+              [deploymentTopology]="fsmContext.deploymentTopologyDTO"
             >
             </w4c-workflow-graph-viewer>
           </ng-template>

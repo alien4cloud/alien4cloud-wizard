@@ -1,7 +1,7 @@
 import {
   Application,
   ApplicationEnvironment, ApplicationEnvironmentDTO, Deployment,
-  DeploymentStatus,
+  DeploymentStatus, DeploymentTopology,
   DeploymentTopologyDTO, ExecutionStatus, Location,
   LocationMatch,
   MetaPropConfiguration, ProgessBarData, Task, Topology
@@ -63,7 +63,8 @@ export interface ApplicationWizardMachineContext {
   applicationMetapropertiesConfiguration: MetaPropConfiguration[];
 
   environments: ApplicationEnvironmentDTO[];
-  deploymentTopology: DeploymentTopologyDTO;
+  deploymentTopologyDTO: DeploymentTopologyDTO;
+  deploymentTopology: DeploymentTopology;
   errorMessage: string;
 
   /**

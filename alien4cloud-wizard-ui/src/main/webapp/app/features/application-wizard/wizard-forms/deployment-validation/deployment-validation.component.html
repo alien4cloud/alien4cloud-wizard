@@ -3,14 +3,14 @@
     <div class="mat-error">{{fsmContext.errorMessage}}</div>
     <div>
       <p><span>Application : </span><span>{{fsmContext.application.name}}</span></p>
-      <p><span>Version : </span><span>{{fsmContext.deploymentTopology.topology.archiveVersion}}</span></p>
+      <p><span>Version : </span><span>{{fsmContext.deploymentTopologyDTO.topology.archiveVersion}}</span></p>
       <p><span>Location : </span><span>{{fsmContext.location.name}}</span></p>
     </div>
   </div>
 
   <div fxLayoutAlign="center center">
-    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection" *ngIf="fsmContext.deploymentTopology.validation && fsmContext.deploymentTopology.validation.taskList">
-      <mat-chip *ngFor="let task of fsmContext.deploymentTopology.validation.taskList" selected color="warn">
+    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection" *ngIf="fsmContext.deploymentTopologyDTO.validation && fsmContext.deploymentTopologyDTO.validation.taskList">
+      <mat-chip *ngFor="let task of fsmContext.deploymentTopologyDTO.validation.taskList" selected color="warn">
         {{ 'TASK.' + task.code | translate}}
       </mat-chip>
     </mat-chip-list>

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Deployment, InstanceInformation} from '@app/core/models';
+import {Deployment, DeploymentTopology, InstanceInformation} from '@app/core/models';
 import {GenericService} from "@app/core/services/generic.service";
 import {Observable} from "rxjs";
 
@@ -27,6 +27,15 @@ export class ApplicationDeploymentService extends GenericService {
   getActiveDeployment(applicationId: string, environmentId: string): Observable<Deployment> {
     let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
     return this.handleResult<Deployment>(this.http.get(GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/active-deployment", params), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      })
+    }));
+  }
+
+  getActiveDeploymentTopology(applicationId: string, environmentId: string): Observable<DeploymentTopology> {
+    let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
+    return this.handleResult<DeploymentTopology>(this.http.get(GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/active-deployment-topology", params), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       })

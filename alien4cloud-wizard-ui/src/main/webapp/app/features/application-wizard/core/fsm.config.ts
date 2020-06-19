@@ -17,6 +17,7 @@ export const context: ApplicationWizardMachineContext = {
   applicationMetapropertiesConfiguration: undefined,
   application: undefined,
   environments: undefined,
+  deploymentTopologyDTO: undefined,
   deploymentTopology: undefined,
   environment: undefined,
   location: undefined,

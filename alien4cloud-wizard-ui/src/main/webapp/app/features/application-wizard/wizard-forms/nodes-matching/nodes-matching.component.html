@@ -1,7 +1,7 @@
 <div fxLayout="column" class="w4c-wizard-form">
   <mat-accordion>
     <mat-expansion-panel
-      *ngFor="let e of fsmContext.deploymentTopology.availableSubstitutions.availableSubstitutions | keyvalue;">
+      *ngFor="let e of fsmContext.deploymentTopologyDTO.availableSubstitutions.availableSubstitutions | keyvalue;">
       <mat-expansion-panel-header>
 
         <mat-panel-title xLayout="row" >
@@ -13,16 +13,16 @@
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-radio-group (change)="changeSubstitution(e.key, $event)" aria-label="Select an option" fxLayout="column" [value]="fsmContext.deploymentTopology.topology.substitutedNodes[e.key]">
+      <mat-radio-group (change)="changeSubstitution(e.key, $event)" aria-label="Select an option" fxLayout="column" [value]="fsmContext.deploymentTopologyDTO.topology.substitutedNodes[e.key]">
         <mat-radio-button *ngFor="let resourceTemplateId of e.value" [value]="resourceTemplateId">
           <!-- TODO: use a shared templateComponent to properly display a node template -->
-          {{ fsmContext.deploymentTopology.availableSubstitutions.substitutionsTemplates[resourceTemplateId].name }}
+          {{ fsmContext.deploymentTopologyDTO.availableSubstitutions.substitutionsTemplates[resourceTemplateId].name }}
         </mat-radio-button>
       </mat-radio-group>
     </mat-expansion-panel>
 
     <mat-expansion-panel
-      *ngFor="let e of  fsmContext.deploymentTopology.availableSubstitutions.availablePoliciesSubstitutions | keyvalue;">
+      *ngFor="let e of  fsmContext.deploymentTopologyDTO.availableSubstitutions.availablePoliciesSubstitutions | keyvalue;">
       <mat-expansion-panel-header>
         <mat-panel-title fxLayout="row">
           <div fxFlex="10%">
@@ -34,10 +34,10 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-radio-group (change)="changePoliciesSubstitution(e.key, $event)" aria-label="Select an option"
-        fxLayout="column" [value]="fsmContext.deploymentTopology.topology.substitutedPolicies[e.key]">
+        fxLayout="column" [value]="fsmContext.deploymentTopologyDTO.topology.substitutedPolicies[e.key]">
         <mat-radio-button *ngFor="let resourceTemplateId of e.value" [value]="resourceTemplateId">
           <!-- TODO: use a shared templateComponent to properly display a node template -->
-          {{ fsmContext.deploymentTopology.availableSubstitutions.substitutionsPoliciesTemplates[resourceTemplateId].name }}
+          {{ fsmContext.deploymentTopologyDTO.availableSubstitutions.substitutionsPoliciesTemplates[resourceTemplateId].name }}
         </mat-radio-button>
       </mat-radio-group>
     </mat-expansion-panel>

@@ -28,8 +28,8 @@ export class LocationSelectionComponent extends WizardFormComponent implements O
     this.fsmContext.locations.forEach(location => {
       this.locationItems.set(location.location.id, location);
     });
-    if (this.fsmContext.deploymentTopology.locationPolicies && this.fsmContext.deploymentTopology.locationPolicies['_A4C_ALL']) {
-      this.selectedLocationId = this.fsmContext.deploymentTopology.locationPolicies['_A4C_ALL'];
+    if (this.fsmContext.deploymentTopologyDTO.locationPolicies && this.fsmContext.deploymentTopologyDTO.locationPolicies['_A4C_ALL']) {
+      this.selectedLocationId = this.fsmContext.deploymentTopologyDTO.locationPolicies['_A4C_ALL'];
     }
  }
 

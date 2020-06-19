@@ -23,8 +23,8 @@ export class DeploymentArtifactsComponent extends WizardFormComponent implements
   ) { super(fsm); }
 
   ngOnInit() {
-    this.artifacts = this.fsmContext.deploymentTopology.topology.inputArtifacts;
-    this.artifacts = _.merge(this.artifacts, this.fsmContext.deploymentTopology.topology.uploadedInputArtifacts);
+    this.artifacts = this.fsmContext.deploymentTopologyDTO.topology.inputArtifacts;
+    this.artifacts = _.merge(this.artifacts, this.fsmContext.deploymentTopologyDTO.topology.uploadedInputArtifacts);
   }
 
   formIsValid() {

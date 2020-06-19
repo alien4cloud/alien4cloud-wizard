@@ -26,9 +26,9 @@ export class DeploymentValidationComponent extends WizardFormComponent implement
 
   ngOnInit() {
     const redirectInNewTab = this.settingsService.getSetting(SettingsService.REDIRECT_IN_NEW_TAB) == 'true';
-    console.log("taskList: ", this.fsmContext.deploymentTopology.validation.taskList);
-    if (this.fsmContext.deploymentTopology.validation.taskList) {
-      this.fsmContext.deploymentTopology.validation.taskList.filter(value => {
+    console.log("taskList: ", this.fsmContext.deploymentTopologyDTO.validation.taskList);
+    if (this.fsmContext.deploymentTopologyDTO.validation.taskList) {
+      this.fsmContext.deploymentTopologyDTO.validation.taskList.filter(value => {
         if (value.code == TaskCode.REDIRECTION_REQUIRED) {
           console.log("Redirection detected: ", value);
           console.log("Current url: ", window.location.href);

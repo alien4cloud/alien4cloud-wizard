@@ -22,19 +22,19 @@ export class NodesMatchingComponent extends WizardFormComponent {
     console.log(`Substitution has changed for ${nodeName}:`, e.value);
     this.deploymentTopologyService
       .updateSubstitution(this.fsmContext.application.id, this.fsmContext.environment.id, nodeName, e.value)
-      .subscribe(dto => { this.fsmContext.deploymentTopology = dto; });
+      .subscribe(dto => { this.fsmContext.deploymentTopologyDTO = dto; });
   }
 
   changePoliciesSubstitution(policyId: string, e: MatRadioChange) {
     console.log(`Substitution has changed for ${policyId}:`, e.value);
     this.deploymentTopologyService
       .updatePoliciesSubstitution(this.fsmContext.application.id, this.fsmContext.environment.id, policyId, e.value)
-      .subscribe(dto => { this.fsmContext.deploymentTopology = dto; }
+      .subscribe(dto => { this.fsmContext.deploymentTopologyDTO = dto; }
       );
   }
 
   doCompleteMatching() {
-    this.fsm.send(new OnMatchingCompleted(this.fsmContext.deploymentTopology));
+    this.fsm.send(new OnMatchingCompleted(this.fsmContext.deploymentTopologyDTO));
   }
 
 }

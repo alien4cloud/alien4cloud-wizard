@@ -14,9 +14,9 @@
                 <td class="context-label" align="right">{{ 'Global.Application' | translate }}: </td>
                 <td class="context-data">{{ wizardForm.fsmContext.application.name }}</td>
               </tr>
-              <tr *ngIf="wizardForm.fsmContext.deploymentTopology">
+              <tr *ngIf="wizardForm.fsmContext.deploymentTopologyDTO">
                 <td class="context-label" align="right">{{ 'Global.Version' | translate }}: </td>
-                <td class="context-data">{{ wizardForm.fsmContext.deploymentTopology.topology.versionId }}</td>
+                <td class="context-data">{{ wizardForm.fsmContext.deploymentTopologyDTO.topology.versionId }}</td>
               </tr>
               <tr *ngIf="wizardForm.fsmContext.environment">
                 <td class="context-label" align="right">{{ 'Global.Environment' | translate }}: </td>
