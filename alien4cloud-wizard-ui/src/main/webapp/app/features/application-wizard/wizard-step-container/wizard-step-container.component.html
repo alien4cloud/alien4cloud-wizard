@@ -33,6 +33,9 @@
           </div>
         </div>
       </mat-card>
+      <div *ngIf="isDisabled" fxLayout="row" fxLayoutAlign="center center">
+        <div  class="loader"></div>
+      </div>
       <ng-template w4cStepComponent></ng-template>
     </div>
   </div>
