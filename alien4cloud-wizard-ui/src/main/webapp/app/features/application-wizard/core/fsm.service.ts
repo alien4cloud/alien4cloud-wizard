@@ -36,10 +36,10 @@ import {
   ApplicationDeploymentService,
   ApplicationEnvironmentService,
   ApplicationService,
-  DeploymentStatus,
+  DeploymentStatus, DeploymentTopology,
   DeploymentTopologyService,
   LocationMatchingService,
-  MetaPropertiesService, ProgessBarData,
+  MetaPropertiesService, ProgessBarData, RuntimeService,
   TopologyService
 } from "@app/core";
 import * as lodash from 'lodash';
@@ -58,6 +58,7 @@ export class AppplicationWizardMachineService {
     private locationMatchingService: LocationMatchingService,
     private deploymentTopologyService: DeploymentTopologyService,
     private metaPropertiesService: MetaPropertiesService,
+    private runtimeService: RuntimeService,
     private router: Router
   ) { }
 
@@ -111,7 +112,7 @@ export class AppplicationWizardMachineService {
                       mergeMap(deployment => this.applicationEnvironmentService.getApplicationEnvironmentStatus(_.application.id, _.environment.id)
                         .pipe(
                           mergeMap(status =>
-                            this.applicationDeploymentService.getActiveDeploymentTopology(
+                            this.runtimeService.getDeployedTopology(
                               _.application.id,
                               _.environment.id
                             ).pipe(
@@ -119,7 +120,7 @@ export class AppplicationWizardMachineService {
                                 if (deployment) {
                                   _.deployment = deployment;
                                   _.deploymentStatus = status;
-                                  _.deploymentTopology = dto;
+                                  _.deploymentTopology = <DeploymentTopology>dto.topology;
                                   return new OnActiveDeploymentFound(deployment, status);
                                 } else {
                                   return new DoSelectEnvironment(_.environment);

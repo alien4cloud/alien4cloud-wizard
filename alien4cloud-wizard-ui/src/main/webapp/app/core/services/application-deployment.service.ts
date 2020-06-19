@@ -33,15 +33,6 @@ export class ApplicationDeploymentService extends GenericService {
     }));
   }
 
-  getActiveDeploymentTopology(applicationId: string, environmentId: string): Observable<DeploymentTopology> {
-    let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
-    return this.handleResult<DeploymentTopology>(this.http.get(GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/active-deployment-topology", params), {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8',
-      })
-    }));
-  }
-
   undeploy(applicationId: string, environmentId: string): Observable<Deployment> {
     let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId};
     return this.handleResult<Deployment>(this.http.delete(GenericService.BASE_URL+ this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/deployment", params), {
