@@ -61,9 +61,9 @@ export class WorkflowGraphViewerComponent implements OnInit {
           console.log(`step ${stepId} status ${stepStatusObj}`);
           // TODO: for each step, find the graph node and set the status
           _.find(this.graph.nodes, {id: stepId})['status'] = stepStatusObj;
-          if (stepStatusObj == WorkflowExecutionStepStatus.STARTED) {
-            this.panToNode.next(stepId);
-          }
+          // if (stepStatusObj == WorkflowExecutionStepStatus.STARTED) {
+          //   this.panToNode.next(stepId);
+          // }
         }
       });
     }
