@@ -87,7 +87,7 @@ export class SettingsService {
     let appplicationNamePrefix = new Setting();
     appplicationNamePrefix.id = SettingsService.APPLICATION_NAME_PREFIX;
     appplicationNamePrefix.type = 'string';
-    appplicationNamePrefix.default = new ScalarPropertyValue('App');
+    appplicationNamePrefix.default = new ScalarPropertyValue('');
     appplicationNamePrefix.enabled = true;
     this.settings.set(appplicationNamePrefix.id, appplicationNamePrefix);
 
