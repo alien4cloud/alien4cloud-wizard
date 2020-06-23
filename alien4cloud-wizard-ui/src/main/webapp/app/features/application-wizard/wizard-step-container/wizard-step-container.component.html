@@ -11,6 +11,10 @@
           <div *ngIf="wizardForm && wizardForm.fsmContext">
             <table class="context-infos">
               <tr *ngIf="wizardForm.fsmContext.application">
+                <td class="context-label" align="right">ID: </td>
+                <td class="context-data">{{ wizardForm.fsmContext.application.id }}</td>
+              </tr>
+              <tr *ngIf="wizardForm.fsmContext.application">
                 <td class="context-label" align="right">{{ 'Global.Application' | translate }}: </td>
                 <td class="context-data">{{ wizardForm.fsmContext.application.name }}</td>
               </tr>
