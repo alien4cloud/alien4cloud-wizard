@@ -4,6 +4,9 @@
     <mat-form-field class="w4c-full-width">
       <input matInput placeholder="{{ 'Wizard.Forms.ApplicationCreateComponent.applicationName' | translate }}" [formControl]="applicationNameFormCtrl" name="applicationName" id="applicationName" required>
     </mat-form-field>
+    <mat-form-field class="w4c-full-width">
+      <input matInput placeholder="ID" readonly="true" [formControl]="applicationIdFormCtrl" name="applicationId" id="applicationId">
+    </mat-form-field>
 <!--    <mat-form-field class="w4c-full-width" *ngIf="!this.fsmContext.application">-->
 <!--      <input matInput-->
 <!--             placeholder="{{ 'Wizard.Forms.ApplicationCreateComponent.archiveName' | translate }}"-->

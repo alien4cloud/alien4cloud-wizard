@@ -1,6 +1,6 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
-import {TopologyOverview} from "@app/core";
+import {ApplicationOverview, TopologyOverview} from "@app/core";
 import * as _ from 'lodash';
 
 @Component({
@@ -18,6 +18,14 @@ export class TopologyOverviewComponent {
 
   constructor(
     private router: Router) {
+  }
+
+  getId(overview: TopologyOverview) {
+    if ((overview as ApplicationOverview).application) {
+      return (<ApplicationOverview>overview).application.id;
+    } else {
+      return (<TopologyOverview>overview).topologyDTO.topology.id;
+    }
   }
 
   modulesDisplayedColumns = ['icon', 'nodeName', 'typeName', 'metaproperties'];

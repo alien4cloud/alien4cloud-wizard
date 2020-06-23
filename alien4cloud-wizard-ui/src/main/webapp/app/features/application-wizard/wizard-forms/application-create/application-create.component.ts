@@ -18,6 +18,7 @@ export class ApplicationCreateComponent extends WizardFormComponent implements O
 
   // applicationName: string;
   public applicationNameFormCtrl: FormControl = new FormControl();
+  public applicationIdFormCtrl: FormControl = new FormControl();
   public archiveName: string;
   public applicationDescription: string;
 
@@ -38,6 +39,7 @@ export class ApplicationCreateComponent extends WizardFormComponent implements O
       if (!this.fsmContext.application) {
         // The archive name can not be changed for an existing application
         this.archiveName = _.capitalize(_.camelCase(value));
+        this.applicationIdFormCtrl.setValue(this.archiveName);
       }
     });
 
