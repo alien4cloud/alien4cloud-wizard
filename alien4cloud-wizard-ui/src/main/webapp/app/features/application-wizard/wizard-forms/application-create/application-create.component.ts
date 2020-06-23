@@ -46,6 +46,7 @@ export class ApplicationCreateComponent extends WizardFormComponent implements O
     if (this.fsmContext.application) {
       this.applicationNameFormCtrl.setValue(this.fsmContext.application.name);
       this.applicationDescription = this.fsmContext.application.description;
+      this.applicationIdFormCtrl.setValue(this.fsmContext.application.id);
     } else {
       let suggestedApplicationName = this.settingsService.getSetting(SettingsService.APPLICATION_NAME_PREFIX) + this.w4cToscaTypeShortName.transform(this.w4cToscaIdArchiveExtractor.transform(this.fsmContext.topologyTemplate.id));
       this.applicationService.getApplicationNameSuggestion(suggestedApplicationName).subscribe(value => {
