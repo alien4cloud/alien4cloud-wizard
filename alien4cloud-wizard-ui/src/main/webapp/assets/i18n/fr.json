@@ -49,7 +49,7 @@
     "615" : "Une archive avec le même nom existe déjà.",
     "616" : "Vous n'êtes pas autorisé à cloner ce dépôt Git. Veuillez vérifier vos identifiants.",
     "617" : "Aucune modification a été détecté depuis le dernier import, celui-ci n'a pas été réalisé.",
-    "618" : "Nom incorrect. Il est recommandé d'utiliser des caractères alpha-numérique de l'alphabet latin classique et le underscrore.",
+    "618" : "ID incorrect. Il est recommandé d'utiliser des caractères alpha-numériques de l'alphabet latin classique et le underscrore.",
     "619" : {
       "TITLE" : "Workflow execution",
       "MESSAGE" : "Workflow {{workflowId}} fails to be executed."

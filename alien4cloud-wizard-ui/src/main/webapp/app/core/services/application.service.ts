@@ -31,7 +31,10 @@ export class ApplicationService extends GenericResourceService<Application> {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       }),
-    }));
+    }).pipe(catchError(err => {
+      console.log("====== Error catched", JSON.stringify(err));
+      throw new Error(this.translate.instant("ERRORS." + err['error']['error']['code']));
+    })));
   }
 
   updateApplication(id: string, name: string, description: string): Observable<void> {

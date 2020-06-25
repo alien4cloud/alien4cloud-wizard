@@ -49,7 +49,7 @@
     "615": "The archive name is already used.",
     "616": "You are not authorized to clone this Git repository. Please check your credentials.",
     "617": "No modification have been detected since the last import process",
-    "618": "Invalid name. It is recommended to use alphanumeric character from the basic Latin alphabet and the underscrore only.",
+    "618": "Invalid ID. Please use alphanumeric characters from the basic Latin alphabet and the underscrore only.",
     "619": {
       "TITLE": "Workflow execution",
       "MESSAGE": "Workflow {{workflowId}} fails to be executed."

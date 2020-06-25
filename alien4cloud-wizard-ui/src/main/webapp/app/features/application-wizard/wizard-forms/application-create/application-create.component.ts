@@ -16,10 +16,8 @@ import {ApplicationService, SettingsService} from "@app/core";
 })
 export class ApplicationCreateComponent extends WizardFormComponent implements OnInit, AfterContentInit {
 
-  // applicationName: string;
   public applicationNameFormCtrl: FormControl = new FormControl();
   public applicationIdFormCtrl: FormControl = new FormControl();
-  public archiveName: string;
   public applicationDescription: string;
 
   constructor(protected fsm: AppplicationWizardMachineService,
@@ -38,8 +36,7 @@ export class ApplicationCreateComponent extends WizardFormComponent implements O
     this.applicationNameFormCtrl.valueChanges.pipe(debounceTime(500)).subscribe(value => {
       if (!this.fsmContext.application) {
         // The archive name can not be changed for an existing application
-        this.archiveName = _.capitalize(_.camelCase(value));
-        this.applicationIdFormCtrl.setValue(this.archiveName);
+        this.applicationIdFormCtrl.setValue(_.capitalize(_.camelCase(value)));
       }
     });
 
@@ -66,7 +63,7 @@ export class ApplicationCreateComponent extends WizardFormComponent implements O
     if (this.fsmContext.application) {
       this.fsm.send(new DoUpdateApplication(this.fsmContext.application.id, this.applicationNameFormCtrl.value, this.applicationDescription));
     } else {
-      this.fsm.send(new DoCreateApplication(this.applicationNameFormCtrl.value, this.applicationDescription, this.archiveName));
+      this.fsm.send(new DoCreateApplication(this.applicationNameFormCtrl.value, this.applicationDescription, this.applicationIdFormCtrl.value));
     }
   }
 
