@@ -123,7 +123,8 @@
     "IMPLEMENT": "Implementation requise",
     "REPLACE": "Please replace node",
     "ORCHESTRATOR_PROPERTY": "Orchestrator property",
-    "CFY_MULTI_RELATIONS": "CFY_MULTI_RELATIONS"
+    "CFY_MULTI_RELATIONS": "CFY_MULTI_RELATIONS",
+    "REDIRECTION_REQUIRED": "Redirection required"
   },
   "Feature": {
     "dashboard": {

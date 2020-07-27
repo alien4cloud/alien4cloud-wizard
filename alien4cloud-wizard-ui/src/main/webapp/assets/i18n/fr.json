@@ -123,7 +123,8 @@
     "IMPLEMENT": "Implémentation manquante",
     "REPLACE": "Remplacement de noeud requis",
     "ORCHESTRATOR_PROPERTY": "Propriété d'orchestrateur",
-    "CFY_MULTI_RELATIONS": "CFY_MULTI_RELATIONS"
+    "CFY_MULTI_RELATIONS": "CFY_MULTI_RELATIONS",
+    "REDIRECTION_REQUIRED": "Redirection requise"
   },
   "Feature": {
     "dashboard": {
