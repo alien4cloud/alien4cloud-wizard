@@ -264,7 +264,7 @@
       },
       "NodesMatchingComponent": {
         "stepTitle": "Remplacement de noeuds",
-        "stepDescription": "Certains noeud ou politiques peuvent être rempmlacées par des implémentations fournies par la cible du déploiement."
+        "stepDescription": "Certains noeuds ou politiques peuvent être remplacés par des implémentations fournies par la cible du déploiement."
       },
       "DeploymentValidationComponent": {
         "stepTitle": "Validation",
