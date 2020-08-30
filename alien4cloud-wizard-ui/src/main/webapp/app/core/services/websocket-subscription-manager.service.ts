@@ -3,7 +3,7 @@ import * as SockJS from 'sockjs-client';
 import {Observable, ReplaySubject} from "rxjs";
 import {Stomp, StompHeaders} from '@stomp/stompjs';
 import {LocalStorageService} from "ngx-webstorage";
-import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
+import {AbstractPaaSWorkflowMonitorEvent, PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
 import {DeploymentStatusChangeEvent} from "@app/core/models/internal-event.model";
 import { environment } from '../../../environments/environment';
 
@@ -59,7 +59,38 @@ export class WebsocketSubscriptionManager {
         });
       });
       return () => {
-        console.log("Unsucribing WS channel");
+        console.log("Unsucribing WS channel (EnvironmentStatusChannel)");
+        conn.disconnect(null);
+      }
+    });
+  }
+
+  registerWorkflowEventChannel(deploymentId: string): Observable<AbstractPaaSWorkflowMonitorEvent> {
+
+    let url = WebsocketSubscriptionManager.STOMP_CHANNEL_BASE_URL;
+    if (!environment.production) {
+      // get the JWT token from local storage
+      const token = this.localStorage.retrieve('jwt_token');
+      url += "?jwtToken=" + token;
+    }
+    let ws = new SockJS(url);
+
+    return new Observable<any>(observer => {
+      const conn = Stomp.over(ws);
+      conn.connect({}, () => {
+        conn.subscribe("/topic/deployment-events/" + deploymentId + "/paasworkflowmonitorevent", message => {
+          let event = JSON.parse(message['body']);
+          let abstractPaaSWorkflowMonitorEvent = <AbstractPaaSWorkflowMonitorEvent>event;
+          if (abstractPaaSWorkflowMonitorEvent) {
+            observer.next(abstractPaaSWorkflowMonitorEvent);
+            //this.deployementStatusChangeSubject.next(new DeploymentStatusChangeEvent(environmentId, paaSDeploymentStatusMonitorEvent.deploymentStatus));
+          } else {
+            console.error("event is not a AbstractPaaSWorkflowMonitorEvent : TODO manage !");
+          }
+        });
+      });
+      return () => {
+        console.log("Unsucribing WS channel (WorkflowEventChannel)");
         conn.disconnect(null);
       }
     });

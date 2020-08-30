@@ -12,7 +12,7 @@ import {
   WorkflowExecutionDTO,
   InstanceInformation,
   TopologyDTO,
-  RuntimeService, ProgessBarData
+  RuntimeService, ProgessBarData, PaaSWorkflowStartedEvent
 } from "@app/core";
 import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
@@ -31,7 +31,8 @@ import {TranslateService} from "@ngx-translate/core";
 export class ActiveDeploymentComponent extends WizardFormComponent implements OnInit, OnDestroy {
 
   private monitoredDeployment: MonitoredDeploymentDTO;
-  private wsSubscription: Subscription;
+  private wsEnvironmentStatusChannelSubscription: Subscription;
+  private wsWorkflowEventChannelSubscription: Subscription;
   private workflowMonitoringSubscription: Subscription;
 
   workflows = new Set<string>();
@@ -62,7 +63,7 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
   ngOnInit() {
 
-    this.wsSubscription = this.websocketService.registerEnvironmentStatusChannel(this.fsmContext.environment.id).subscribe(event => {
+    this.wsEnvironmentStatusChannelSubscription = this.websocketService.registerEnvironmentStatusChannel(this.fsmContext.environment.id).subscribe(event => {
         console.log("Event received: ", event);
         let paaSDeploymentStatusMonitorEvent = <PaaSDeploymentStatusMonitorEvent>event;
         if (paaSDeploymentStatusMonitorEvent) {
@@ -79,6 +80,18 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
         }
       }
     );
+
+    this.wsWorkflowEventChannelSubscription = this.websocketService.registerWorkflowEventChannel(this.fsmContext.deployment.id).subscribe(event => {
+      console.log("Wf Event received: ", event);
+      if (event.eventType == "PaaSWorkflowStartedEvent") {
+        let paaSWorkflowStartedEvent = <PaaSWorkflowStartedEvent>event;
+        console.log(`Wf started Event received (${paaSWorkflowStartedEvent.workflowName})`);
+        this.monitorWorkflow();
+      } else if (!this.fsmContext.progessBarData || !this.fsmContext.progessBarData.workflowInProgress) {
+        // will occur when the user open this page while a workflow is running
+        this.monitorWorkflow();
+      }
+    });
 
     // we filter workflows that have steps and exclude install and uninstall
     for (const [key, wf] of Object.entries(this.fsmContext.deploymentTopology.workflows)) {
@@ -110,7 +123,8 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
       // FIXME: this does'nt seem to work. If I trigger a wf and leave the page (go Home), the polling still running !
       this.workflowMonitoringSubscription.unsubscribe();
     }
-    this.wsSubscription.unsubscribe();
+    this.wsEnvironmentStatusChannelSubscription.unsubscribe();
+    this.wsWorkflowEventChannelSubscription.unsubscribe();
   }
 
   private detectPendingDeploymentStatusChanged(): boolean {
@@ -126,11 +140,15 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
 
   private monitorWorkflow() {
     if (!this.workflowMonitoringSubscription || this.workflowMonitoringSubscription.closed) {
+
+      this.fsmContext.progessBarData = new ProgessBarData();
+      this.fsmContext.progessBarData.workflowInProgress = true;
+
       this.monitorDeploymentService.getMonitoredDeploymentDTO(this.fsmContext.application.id, this.fsmContext.environment.id).subscribe(e => {
         console.log(e);
         console.log("deploymentID is : " + e.deployment.id);
         let deploymentId = e.deployment.id;
-        console.log("Motitored deployement: ", JSON.stringify(e));
+        console.log("Monitored deployement: ", JSON.stringify(e));
         this.monitoredDeployment = e;
         // now poll the deployment
         this.workflowMonitoringSubscription = this.deploymentWorkflowExecutionService.monitorWorkflowExecution(deploymentId).subscribe(dto => {
@@ -203,11 +221,15 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     if (!WizardButtonComponent.callFsmGuard(this.fsm, this.fsmContext, "canLaunchWorkflow")) {
       return;
     }
+    if (this.fsmContext.progessBarData && this.fsmContext.progessBarData.workflowInProgress) {
+      // Avoid double launch, this can not be managed by guards
+      return;
+    }
     this.fsmContext.progessBarData = new ProgessBarData();
     this.fsmContext.progessBarData.workflowInProgress = true;
     this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, this.nextWorkflow).subscribe(executionId => {
       console.log(`Execution ID for workflow ${this.nextWorkflow} is ${executionId}`);
-      this.monitorWorkflow();
+      //this.monitorWorkflow();
     });
   }
 
