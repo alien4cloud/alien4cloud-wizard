@@ -12,7 +12,7 @@ import {
   WorkflowExecutionDTO,
   InstanceInformation,
   TopologyDTO,
-  RuntimeService, ProgessBarData, PaaSWorkflowStartedEvent
+  RuntimeService, ProgessBarData, PaaSWorkflowStartedEvent, WorkflowResetExecutionDTO
 } from "@app/core";
 import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
@@ -229,7 +229,6 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     this.fsmContext.progessBarData.workflowInProgress = true;
     this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, this.nextWorkflow).subscribe(executionId => {
       console.log(`Execution ID for workflow ${this.nextWorkflow} is ${executionId}`);
-      //this.monitorWorkflow();
     });
   }
 

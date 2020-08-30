@@ -45,6 +45,8 @@ export class WorkflowGraphViewerComponent implements OnInit {
   // make lodash usable from template
   lodash = _;
 
+  private lastExecutionId: string;
+
   constructor() { }
 
   ngOnInit() {
@@ -53,8 +55,9 @@ export class WorkflowGraphViewerComponent implements OnInit {
     }
     if (this.workflowExecutionChange) {
       this.workflowExecutionChange.subscribe(workflowExecutionDto => {
-        if (!this.workflow || workflowExecutionDto.execution.workflowId != this.workflow) {
+        if (!this.workflow || workflowExecutionDto.execution.workflowId != this.workflow || workflowExecutionDto.execution.id != this.lastExecutionId) {
           this.workflow = workflowExecutionDto.execution.workflowId;
+          this.lastExecutionId = workflowExecutionDto.execution.id;
           this.buildGraph(this.workflow);
         }
         for (const [stepId, stepStatusObj] of Object.entries(workflowExecutionDto.stepStatus)) {
