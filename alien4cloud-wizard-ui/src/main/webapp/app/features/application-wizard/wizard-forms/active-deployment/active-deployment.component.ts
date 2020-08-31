@@ -12,7 +12,7 @@ import {
   WorkflowExecutionDTO,
   InstanceInformation,
   TopologyDTO,
-  RuntimeService, ProgessBarData, PaaSWorkflowStartedEvent, WorkflowResetExecutionDTO
+  RuntimeService, ProgessBarData, PaaSWorkflowStartedEvent
 } from "@app/core";
 import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
@@ -216,13 +216,17 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
      });
   }
 
+  canLaunchWorkflow(): boolean {
+    if (this.fsmContext.progessBarData && this.fsmContext.progessBarData.workflowInProgress) {
+      // Avoid double launch, this can not be managed by guards
+      return false;
+    }
+    return true;
+  }
+
   launchWorkflow(event: any) {
     event.stopPropagation();
     if (!WizardButtonComponent.callFsmGuard(this.fsm, this.fsmContext, "canLaunchWorkflow")) {
-      return;
-    }
-    if (this.fsmContext.progessBarData && this.fsmContext.progessBarData.workflowInProgress) {
-      // Avoid double launch, this can not be managed by guards
       return;
     }
     this.fsmContext.progessBarData = new ProgessBarData();

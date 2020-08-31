@@ -87,7 +87,14 @@
     <button mat-stroked-button [matMenuTriggerFor]="menu">
       <mat-icon>playlist_play</mat-icon>
     </button>
-    <w4c-wizard-button enableOnGuard="canLaunchWorkflow" [fsmContext]="fsmContext" (click)="launchWorkflow($event)" [label]="nextWorkflow" matIconName="play_arrow"></w4c-wizard-button>
+    <w4c-wizard-button
+      [enabledFn]="canLaunchWorkflow.bind(this)"
+      enableOnGuard="canLaunchWorkflow"
+      [fsmContext]="fsmContext"
+      (click)="launchWorkflow($event)"
+      [label]="nextWorkflow"
+      matIconName="play_arrow">
+    </w4c-wizard-button>
   </div>
 </ng-template>
 
