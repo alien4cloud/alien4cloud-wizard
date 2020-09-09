@@ -9,6 +9,7 @@ import {AuthService, HealthService, User} from "@app/core";
 export class HomeComponent implements OnInit {
 
   features: Feature[] = [];
+  addons: Feature[] = [];
 
   // indicates if the A4C webapp is reachable
   isConnected: boolean;
@@ -30,28 +31,32 @@ export class HomeComponent implements OnInit {
       "dashboard",
       "dashboard",
       "/application-dashboard",
-      true
+      true,
+      false
     );
 
     let wizard = new Feature(
       "wizard",
       "create_new_folder",
       "/new-wizard",
-      true
+      true,
+      false
     );
 
     let catalog = new Feature(
       "catalog",
       "view_module",
       "/catalog",
-      true
+      true,
+      false
     );
 
     let settings = new Feature(
       "settings",
       "settings",
       "/settings",
-      true
+      true,
+      false
     );
 
     this.features.push(dashboard);
@@ -65,12 +70,22 @@ export class HomeComponent implements OnInit {
         wizard.allowed = User.canCreateApp(userStatus.roles);
         settings.allowed = true;
         catalog.allowed = User.canBrowseModules(userStatus.roles);
+        this.features.forEach(feature => feature.enabled = true);
+        this.addons.forEach(feature => feature.enabled = true);
       } else {
-        this.features.forEach(feature => feature.allowed = false);
-        settings.allowed = true;
+        this.features.forEach(feature => feature.enabled = false);
+        this.addons.forEach(feature => feature.enabled = false);
       }
     })
 
+    this.authService.getAddonFeatures().subscribe(features => {
+      features.forEach(feature => this.addons.push(feature));
+    })
+
+  }
+
+  openAddon(contextPath: string) {
+    window.location.assign("../" + contextPath);
   }
 
 }
@@ -81,6 +96,7 @@ export class Feature {
     public id: string,
     public iconName: string,
     public activationLink: string,
-    public allowed: boolean
+    public allowed: boolean,
+    public enabled: boolean
   ) { }
 }

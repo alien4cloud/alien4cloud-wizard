@@ -5,6 +5,7 @@ import {LoginService} from "@app/core/services/login.service";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {Observable, ReplaySubject} from "rxjs";
+import {Feature} from "@app/shared";
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,11 @@ export class AuthService extends GenericService {
   getLoginStatus(): Observable<UserStatus> {
     let url = GenericService.BASE_URL + "/auth/status";
     return this.handleResult<UserStatus>(this.http.get(url));
+  }
+
+  getAddonFeatures(): Observable<Feature[]> {
+    let url = GenericService.BASE_URL + "/wizard/addons";
+    return this.handleResult<Feature[]>(this.http.get(url));
   }
 
 }

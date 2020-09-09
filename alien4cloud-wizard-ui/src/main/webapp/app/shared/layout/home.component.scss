@@ -28,6 +28,7 @@
   &:hover, &:focus {
     //text-decoration: none;
     @include mat-elevation(8);
+    cursor: pointer;
   }
 }
 
