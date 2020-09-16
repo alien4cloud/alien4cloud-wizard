@@ -27,4 +27,12 @@
     color: white;
   }
 
+  // alternate mat-table row colors
+  .mat-row:nth-child(even){
+    background-color: mat-color($background, focused-button);
+  }
+  .mat-row:nth-child(odd){
+    background-color: mat-color($background);
+  }
+
 }
