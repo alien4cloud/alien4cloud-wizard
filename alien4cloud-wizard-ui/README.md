@@ -30,16 +30,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Wizard FSM
 
-Have al look to [Application Wizard Module readme](src/main/webapp/app/features/application-wizard/readme.md).
+Have al look to [Application Wizard Module readme](projects/wizard4cloud-ui/src/app/features/application-wizard/readme.md).
 
 ## Theming
 
-Some themes are in folder [src/main/webapp/assets/styles/custom-themes]()
-They are processed by [tools/build-themes.sh]() to generate css files in [src/main/webapp/assets/styles/built]() folder.
+Some themes are in folder [projects/wizard4cloud-ui/assets/styles/custom-themes]()
+They are processed by [tools/build-themes.sh]() to generate css files in [projects/wizard4cloud-ui/assets/styles/built]() folder.
 
-The file [src/main/webapp/assets/styles/_w4c-material-theme.scss]() contains a mixin that take a theme as argument. We should place here all css class definitions that we want to be theme dependant. We should not have css classes with colors out of here.
+The file [projects/wizard4cloud-ui/assets/styles/_w4c-material-theme.scss]() contains a mixin that take a theme as argument. We should place here all css class definitions that we want to be theme dependant. We should not have css classes with colors out of here.
 
-The file [src/main/webapp/assets/styles/_w4c-static.scss]() should contains css class that are not theme dependant (status colors ...).
+The file [projects/wizard4cloud-ui/assets/styles/_w4c-static.scss]() should contains css class that are not theme dependant (status colors ...).
 
 ## TODO
 

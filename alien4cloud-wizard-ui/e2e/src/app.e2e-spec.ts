@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to alien4cloud-new-ui!');
+    expect(page.getTitleText()).toEqual('Welcome to wizard4cloud-ui!');
   });
 
   afterEach(async () => {

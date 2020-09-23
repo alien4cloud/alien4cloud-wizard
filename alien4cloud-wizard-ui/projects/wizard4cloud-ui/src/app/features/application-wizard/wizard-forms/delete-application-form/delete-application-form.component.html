@@ -1,0 +1,11 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="w4c-wizard-form mat-body">
+  <p [innerHTML]="'Wizard.Forms.DeleteApplicationFormComponent.message' | translate"></p>
+  <div class="mat-error">{{fsmContext.errorMessage}}</div>
+</div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [forwardFn]="openDialog.bind(this)"
+                    [cancelLabel]="'Wizard.Forms.DeleteApplicationFormComponent.Leave' | translate"
+                    [forwardAltLabel]="'Wizard.Forms.DeleteApplicationFormComponent.Delete' | translate"
+                    forwardGuard="hasntActiveEnvironment"
+                    [displayBackward]="false">
+</w4c-wizard-control>

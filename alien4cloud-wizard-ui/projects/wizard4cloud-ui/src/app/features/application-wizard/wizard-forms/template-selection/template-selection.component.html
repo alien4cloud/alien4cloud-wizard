@@ -1,0 +1,39 @@
+<div fxLayout="column" class="w4c-wizard-form">
+
+  <w4c-filtered-search-bar [isLoading$]="isLoading$" [facets$]="facets$" (onSearch)="searchTopologies($event)"></w4c-filtered-search-bar>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let topology of topologyTemplates; let isOpenned = false"
+                         (opened)="openDetails(topology.id); isOpenned = true"
+                         (closed)="isOpenned = false"
+                         [ngClass]="{'mat-elevation-z14': isOpenned}">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div fxLayout="row" fxFlex="100%" fxLayoutAlign="start center" >
+            <div fxFlex="5%">
+<!--              TODO : retrieve the topology icon-->
+              <img *ngIf="false; else defaultIcon" src="{{topology|toscaTypeImageSrc}}"
+                   style="max-height:24px; max-width:24px; height:auto; width:auto;"
+                   >
+              <ng-template #defaultIcon>
+                <mat-icon>airplay</mat-icon>
+              </ng-template>
+            </div>
+            <div fxFlex="30%">{{ topology.archiveName|w4cToscaTypeShortName }}</div>
+            <div fxFlex="65%">
+              <span *ngIf="!isOpenned">
+                {{ lodash.truncate(topology.description, {'length': 100, 'separator': ' '}) }}
+              </span>
+            </div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <w4c-topology-overview *ngIf="isOpenned" [overview]="overview"></w4c-topology-overview>
+      <mat-action-row>
+        <button mat-stroked-button color="primary" (click)="selectTemplate(topology)">{{ 'Wizard.Forms.TemplateSelectionComponent.Use' | translate }}</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<w4c-wizard-control [fsmContext]="fsmContext" [displayBackward]="false"></w4c-wizard-control>

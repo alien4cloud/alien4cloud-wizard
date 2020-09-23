@@ -1,0 +1,38 @@
+/*td.deployment-info {*/
+/*  padding: 10px;*/
+/*}*/
+
+/*td.deployment-label {*/
+/*  font-weight: bold;*/
+/*  width: 100px;*/
+/*}*/
+
+/*.deployment-label {*/
+/*  padding: 20px;*/
+/*}*/
+
+/*table.deployment-infos {*/
+/*  width: 100%;*/
+/*}*/
+
+/*.deployment-infos {*/
+/*  width: 400px;*/
+/*}*/
+
+.deployment-monitor {
+  /*width: 1200px;*/
+  /*padding: 20px;*/
+}
+
+/*.deployment-workflow {*/
+/*  height: 50px;*/
+/*  width: 300px;*/
+/*}*/
+
+/*.deployment-workflow-button {*/
+/*  width: 150px;*/
+/*}*/
+
+.attributes-infos {
+  width: 100%;
+}

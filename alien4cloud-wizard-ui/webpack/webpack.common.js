@@ -9,9 +9,10 @@ const utils = require('./utils.js');
 module.exports = (options) => ({
     resolve: {
         extensions: [ '.ts', '.js'],
+        // ./ is added for library resolution
         modules: ['node_modules'],
         alias: {
-            app: utils.root('src/main/webapp/app/'),
+            app: utils.root('projects/wizard4cloud-ui/src/app/'),
             ...rxPaths()
         }
     },
@@ -67,13 +68,13 @@ module.exports = (options) => ({
             }
         }),
         new CopyWebpackPlugin([
-            { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
-            { from: './src/main/webapp/assets/images', to: 'assets/images' },
-            { from: './src/main/webapp/assets/styles/built', to: 'assets/styles/built' },
-			      { from: './src/main/webapp/assets/i18n', to: 'assets/i18n' }
+            { from: './projects/wizard4cloud-ui/favicon.ico', to: 'favicon.ico' },
+            { from: './projects/wizard4cloud-ui/assets/images', to: 'assets/images' },
+            { from: './projects/wizard4cloud-ui/assets/styles/built', to: 'assets/styles/built' },
+			      { from: './projects/wizard4cloud-ui/assets/i18n', to: 'assets/i18n' }
         ]),
         new HtmlWebpackPlugin({
-          template: './src/main/webapp/wizard.html',
+          template: './projects/wizard4cloud-ui/wizard.html',
           filename: 'wizard.html',
           chunks: ['polyfills', 'main', 'global'],
           chunksSortMode: 'manual'

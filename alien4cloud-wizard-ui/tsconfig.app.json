@@ -2,13 +2,34 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "paths": {
+      "@app/*": [
+        "projects/wizard4cloud-ui/src/app/*"
+      ],
+/*
+      "@env*/
+/*": [
+        "projects/wizard4cloud-ui/src/environments*/
+/*"
+      ],
+*/
+      "@cont/*": [
+        "projects/wizard4cloud-ui/content/*"
+      ],
+      "@alien4cloud/wizard4cloud-commons": [
+        "projects/wizard4cloud-commons/src"
+      ],
+      "@alien4cloud/wizard4cloud-commons/*": [
+        "projects/wizard4cloud-commons/src/*"
+      ]
+    }
   },
   "include": [
-    "src/main/webapp/**/*.ts"
+    "projects/wizard4cloud-ui/**/*.ts"
   ],
   "exclude": [
-    "src/main/webapp/test.ts",
-    "src/main/webapp/**/*.spec.ts"
+    "projects/wizard4cloud-ui/test.ts",
+    "projects/wizard4cloud-ui/**/*.spec.ts"
   ]
 }

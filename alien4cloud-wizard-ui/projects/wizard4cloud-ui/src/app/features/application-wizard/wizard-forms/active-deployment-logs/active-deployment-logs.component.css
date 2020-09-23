@@ -1,0 +1,13 @@
+.logsViewer {
+  font-size: 13px;
+  height: 350px;
+  overflow-y: auto;
+  padding: 5px;
+  font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.logLine {
+  white-space: pre-line;
+  word-wrap: break-word;
+  word-break: break-word;
+}

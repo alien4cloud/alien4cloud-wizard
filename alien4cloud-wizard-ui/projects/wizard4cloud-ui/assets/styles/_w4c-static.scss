@@ -1,0 +1,123 @@
+.w4c-full-width {
+  width: 100%;
+}
+
+.w4c-wizard-form {
+  //background-color: blue;
+  margin: 20px;
+}
+
+.w4c-fill-space {
+  flex: 1 1 auto;
+}
+
+// [[ A4C status color set : this should not be theme dependant
+$text-success: #468847;
+$text-muted: #999999;
+$text-warning: #c09853;
+// $text-danger: #953b39;
+$text-danger: rgb(197, 25, 25);
+$text-primary: #428bca;
+.w4c-deployment-status-DEPLOYED {
+  color: $text-success;
+}
+.w4c-deployment-status-UPDATED {
+  color: $text-success;
+}
+.w4c-deployment-status-UNDEPLOYED {
+  color: $text-muted;
+}
+.w4c-deployment-status-WARNING {
+  color: $text-warning;
+}
+.w4c-deployment-status-UPDATE_FAILURE {
+  color: $text-warning;
+}
+.w4c-deployment-status-FAILURE {
+  color: $text-danger;
+}
+.w4c-deployment-status-UNKNOWN {
+  color: black;
+}
+.w4c-deployment-status-DEPLOYMENT_IN_PROGRESS {
+  color: $text-primary;
+}
+.w4c-deployment-status-INIT_DEPLOYMENT {
+  color: $text-primary;
+}
+.w4c-deployment-status-UNDEPLOYMENT_IN_PROGRESS {
+  color: $text-primary;
+}
+// ]] A4C color set for status
+
+.w4c-topology-attributes-values {
+  color: $text-primary;
+}
+
+// Logs
+
+.w4c-logLevel-INFO {
+  color: $text-primary;
+}
+.w4c-logLevel-WARN {
+  color: $text-warning;
+}
+.w4c-logLevel-ERROR {
+  color: $text-danger;
+}
+.w4c-logLevel-DEBUG {
+  color: $text-muted;
+}
+
+// Step status
+
+.w4c-WfStepStatus-node-UNKNOWN {
+  fill: white;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-node-STARTED {
+  fill: $text-primary;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-node-COMPLETED_SUCCESSFULL {
+  fill: $text-success;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-node-COMPLETED_WITH_ERROR {
+  fill: $text-danger;
+  stroke: #7f7f7f;
+}
+.w4c-WfStepStatus-txt-UNKNOWN {
+  fill: $text-muted;
+  stroke: $text-muted;
+}
+.w4c-WfStepStatus-txt-STARTED {
+  fill: white;
+  stroke: white;
+}
+.w4c-WfStepStatus-txt-COMPLETED_SUCCESSFULL {
+  fill: white;
+  stroke: white;
+}
+.w4c-WfStepStatus-txt-COMPLETED_WITH_ERROR {
+  fill: white;
+  stroke: white;
+}
+
+.mat-tab-label {
+  min-width: 15px !important;
+  max-height: 24px !important;
+  font-size: 12px !important;
+}
+
+.home-spinner{
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  background: url("../images/spinner.gif");
+  background-size: 100%;
+}

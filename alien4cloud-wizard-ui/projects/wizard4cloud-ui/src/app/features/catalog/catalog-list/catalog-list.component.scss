@@ -1,0 +1,51 @@
+.mat-card {
+  font-size: 12px;
+  height: 210px;
+  width: 180px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.catalog-component-icon {
+  //height: 40px;
+  width: 40px;
+}
+
+.catalog-description {
+  padding: 5px;
+  overflow: auto;
+  overflow-wrap: break-word;
+  font-size: 10px; 
+  color:grey;
+}
+.catalog-meta-prop {
+  padding: 5px;
+  overflow: auto;
+  height: 35px;
+  margin-top: 8px;
+}
+
+
+.meta-chip {
+  font-size: 8px;
+  min-height: 18px;
+  text-align: center
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 14px;
+}
+
+.catalog-component-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  justify-content: center;
+}
+
+.mat-card-subtitle, .mat-card-content {
+  font-size: 10px;
+}
+
+
+

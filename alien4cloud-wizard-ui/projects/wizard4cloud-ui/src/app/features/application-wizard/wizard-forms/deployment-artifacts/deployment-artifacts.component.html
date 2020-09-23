@@ -1,0 +1,28 @@
+<div fxLayout="column" class="w4c-wizard-form">
+  <table class="mat-table">
+    <tr *ngFor="let artifactEntry of artifacts | keyvalue; let i = index"
+        class="mat-row">
+      <td class="mat-cell">{{ artifactEntry.key }}</td>
+      <td class="mat-cell">
+        <input type="file" (change)="uploadFile(artifactEntry.key, $event)"/>
+      </td>
+      <td class="mat-cell">{{ artifactEntry.value.artifactName }}</td>
+      <td class="mat-cell">
+        <button [disabled]="!artifactEntry.value.description"
+                mat-button mat-icon-button
+                matTooltip="{{ artifactEntry.value.description }}">
+          <mat-icon>help_outline</mat-icon>
+        </button>
+        <button [disabled]="!artifactEntry.value.artifactRef"
+                mat-button mat-icon-button
+                matTooltip="{{ 'Global.Download' | translate }}">
+          <mat-icon>save_alt</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [forwardFn]="doSubmitForm.bind(this)"
+                    [forwardEnabledFn]="formIsValid.bind(this)">
+</w4c-wizard-control>

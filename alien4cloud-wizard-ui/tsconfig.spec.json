@@ -8,11 +8,11 @@
     ]
   },
   "files": [
-    "src/main/webapp/test.ts",
-    "src/main/webapp/app/polyfills.ts"
+    "projects/wizard4cloud-ui/test.ts",
+    "projects/wizard4cloud-ui/src/app/polyfills.ts"
   ],
   "include": [
-    "src/main/webapp/**/*.spec.ts",
-    "src/main/webapp/**/*.d.ts"
+    "projects/wizard4cloud-ui/**/*.spec.ts",
+    "projects/wizard4cloud-ui/**/*.d.ts"
   ]
 }

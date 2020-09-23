@@ -1,0 +1,17 @@
+.fsmGraphViewer {
+  /*background-color: white;*/
+  /* FIXME: why ? */
+  /*width: 1200px;*/
+}
+
+.chart-container {
+  font-family: Verdana,Geneva,sans-serif;
+}
+
+.activated {
+  stroke: green;
+}
+
+.desactivated {
+  stroke: #7f7f7f;
+}

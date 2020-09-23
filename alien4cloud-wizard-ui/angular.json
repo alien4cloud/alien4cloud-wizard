@@ -3,62 +3,62 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "alien4cloud-new-ui": {
+    "wizard4cloud-ui": {
       "projectType": "application",
       "schematics": {},
       "root": "",
-      "sourceRoot": "src/main/webapp",
+      "sourceRoot": "projects/wizard4cloud-ui",
       "prefix": "w4c",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/alien4cloud-new-ui",
-            "index": "src/main/webapp/index.html",
-            "main": "src/main/webapp/app/main.ts",
-            "polyfills": "src/main/webapp/app/polyfills.ts",
+            "outputPath": "dist/wizard4cloud-ui",
+            "index": "projects/wizard4cloud-ui/index.html",
+            "main": "projects/wizard4cloud-ui/src/app/main.ts",
+            "polyfills": "projects/wizard4cloud-ui/src/app/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/main/webapp/favicon.ico",
-              "src/main/webapp/assets"
+              "projects/wizard4cloud-ui/favicon.ico",
+              "projects/wizard4cloud-ui/assets"
             ],
             "styles": [
               {
-                "input": "src/main/webapp/assets/styles/main.scss"
+                "input": "projects/wizard4cloud-ui/assets/styles/main.scss"
               },
               {
-                "input": "src/main/webapp/assets/styles/built/pink-bluegrey.css",
+                "input": "projects/wizard4cloud-ui/assets/styles/built/pink-bluegrey.css",
                 "lazy": true,
                 "bundleName": "pink-bluegrey"
               },
               {
-                "input": "src/main/webapp/assets/styles/built/deeppurple-amber.css",
+                "input": "projects/wizard4cloud-ui/assets/styles/built/deeppurple-amber.css",
                 "lazy": true,
                 "bundleName": "deeppurple-amber"
               },
               {
-                "input": "src/main/webapp/assets/styles/built/indigo-pink.css",
+                "input": "projects/wizard4cloud-ui/assets/styles/built/indigo-pink.css",
                 "lazy": true,
                 "bundleName": "indigo-pink"
               },
               {
-                "input": "src/main/webapp/assets/styles/built/purple-green.css",
+                "input": "projects/wizard4cloud-ui/assets/styles/built/purple-green.css",
                 "lazy": true,
                 "bundleName": "purple-green"
               }
             ],
             "scripts": [],
             "lazyModules": [
-              "src/main/webapp/app/features/fsm-graph/fsm-graph.module"
+              "projects/wizard4cloud-ui/src/app/features/fsm-graph/fsm-graph.module"
             ]
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/main/webapp/environments/environment.ts",
-                  "with": "src/main/webapp/environments/environment.prod.ts"
+                  "replace": "projects/wizard4cloud-ui/environments/environment.ts",
+                  "with": "projects/wizard4cloud-ui/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -83,52 +83,52 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "alien4cloud-new-ui:build"
+            "browserTarget": "wizard4cloud-ui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "alien4cloud-new-ui:build:production"
+              "browserTarget": "wizard4cloud-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "alien4cloud-new-ui:build"
+            "browserTarget": "wizard4cloud-ui:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/main/webapp/test.ts",
-            "polyfills": "src/main/webapp/app/polyfills.ts",
+            "main": "projects/wizard4cloud-ui/test.ts",
+            "polyfills": "projects/wizard4cloud-ui/src/app/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/main/webapp/favicon.ico",
-              "src/main/webapp/assets"
+              "projects/wizard4cloud-ui/favicon.ico",
+              "projects/wizard4cloud-ui/assets"
             ],
             "styles": [
               {
-                "input": "src/main/webapp/assets/main.scss"
+                "input": "projects/wizard4cloud-ui/assets/main.scss"
               },
               {
-                "input": "src/main/webapp/assets/pink-bluegrey.css",
+                "input": "projects/wizard4cloud-ui/assets/pink-bluegrey.css",
                 "lazy": true,
                 "bundleName": "pink-bluegrey"
               },
               {
-                "input": "src/main/webapp/assets/deeppurple-amber.css",
+                "input": "projects/wizard4cloud-ui/assets/deeppurple-amber.css",
                 "lazy": true,
                 "bundleName": "deeppurple-amber"
               },
               {
-                "input": "src/main/webapp/assets/indigo-pink.css",
+                "input": "projects/wizard4cloud-ui/assets/indigo-pink.css",
                 "lazy": true,
                 "bundleName": "indigo-pink"
               },
               {
-                "input": "src/main/webapp/assets/purple-green.css",
+                "input": "projects/wizard4cloud-ui/assets/purple-green.css",
                 "lazy": true,
                 "bundleName": "purple-green"
               }
@@ -153,15 +153,94 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "alien4cloud-new-ui:serve"
+            "devServerTarget": "wizard4cloud-ui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "alien4cloud-new-ui:serve:production"
+              "devServerTarget": "wizard4cloud-ui:serve:production"
             }
           }
         }
       }
-    }},
-  "defaultProject": "alien4cloud-new-ui"
+    },
+    "wizard4cloud-commons": {
+      "projectType": "library",
+      "root": "projects/wizard4cloud-commons",
+      "sourceRoot": "projects/wizard4cloud-commons/src",
+      "prefix": "w4c",
+      "architect": {
+        "build": {
+          "builder": "@linnenschmidt/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/wizard4cloud-commons/tsconfig.lib.json",
+            "project": "projects/wizard4cloud-commons/ng-package.json",
+            "assets": [
+              "src/assets",
+              {
+                "glob": "**",
+                "input": "../../projects/wizard4cloud-ui/assets/",
+                "output": "assets/"
+              }
+            ]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/wizard4cloud-commons/src/test.ts",
+            "tsConfig": "projects/wizard4cloud-commons/tsconfig.spec.json",
+            "karmaConfig": "projects/wizard4cloud-commons/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/wizard4cloud-commons/tsconfig.lib.json",
+              "projects/wizard4cloud-commons/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "testlib": {
+      "projectType": "library",
+      "root": "projects/testlib",
+      "sourceRoot": "projects/testlib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/testlib/tsconfig.lib.json",
+            "project": "projects/testlib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/testlib/src/test.ts",
+            "tsConfig": "projects/testlib/tsconfig.spec.json",
+            "karmaConfig": "projects/testlib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/testlib/tsconfig.lib.json",
+              "projects/testlib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "wizard4cloud-ui"
 }

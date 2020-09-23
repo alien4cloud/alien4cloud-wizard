@@ -11,16 +11,15 @@
     "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true,
     "outDir": "target/classes/static/app",
-    "lib": [ 
+    "lib": [
        "es2018",
        "dom"
     ],
     "typeRoots": ["node_modules/@types"],
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["src/main/webapp/app/*"],
-      "@env/*": ["src/main/webapp/environments/*"],
-      "@cont/*": ["src/main/webapp/content/*"]
+      "@app/*": ["projects/wizard4cloud-ui/src/app/*"],
+      "@env/*": ["projects/wizard4cloud-ui/src/environments/*"]
     },
     "importHelpers": true
   },

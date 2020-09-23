@@ -1,0 +1,28 @@
+<div fxLayout="column" class="w4c-wizard-form">
+  <div class="locations-component-list">
+      <a *ngFor="let locationItem  of locationItems | keyvalue; let active = false"
+        class="locations-component-list-item"
+        [ngClass]="{'locations-component-list-item-disabled': !locationItem.value.ready , 'locations-component-list-autoselected-item': selectedLocationId === locationItem.key }"
+        (mouseover)="active = true"
+        (mouseout)="active = false"
+        (click)="selectLocation(locationItem.key)" >
+        <mat-card class="locations-component-list-card">
+          <mat-card-header fxLayoutAlign="space-between center" class="locations-component-list-header">
+            <mat-icon *ngIf="selectedLocationId === locationItem.key || active"
+                      [color]="(selectedLocationId === locationItem.key) ? 'primary' : ''"
+                      class="selectIcon">done</mat-icon>
+            <mat-card-title [ngClass]="{'w4c-primary-text-A200': selectedLocationId === locationItem.key}"
+                            flex
+            >
+              {{ locationItem.value.location.name }}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="locations-component-list-card-summary">{{ 'Global.Orchestrator' | translate }} : {{ locationItem.value.orchestrator.name}}</mat-card-content>
+        </mat-card>
+      </a>
+  </div>
+</div>
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [forwardFn]="goForward.bind(this)"
+                    [forwardEnabledFn]="formIsValid.bind(this)">
+</w4c-wizard-control>

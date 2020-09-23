@@ -1,0 +1,33 @@
+<div>
+  <mat-toolbar color="primary" layout="fill">
+    <button mat-icon-button (click)="wizardRedirect()">
+      <mat-icon>home</mat-icon>
+    </button>
+    <span class="w4c-fill-space"></span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="settingsRedirect()">
+        <mat-icon>settings</mat-icon>
+        <span>{{ 'Feature.settings.label' | translate }}</span>
+      </button>
+      <mat-divider *ngIf="isProduction"></mat-divider>
+      <button *ngIf="isProduction" mat-menu-item (click)="a4cRedirect()">
+        <mat-icon>settings_overscan</mat-icon>
+        <span>{{ 'shared.Header.FullApp' | translate }}</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button *ngIf="!isProduction" mat-menu-item [disabled]="isAuthenticated" [routerLink]="['/login']">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>{{ 'shared.Header.Login' | translate }}</span>
+      </button>
+      <button mat-menu-item [disabled]="!isProduction && !isAuthenticated" (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>{{ 'shared.Header.Logout' | translate }}</span>
+      </button>
+    </mat-menu>
+    <mat-icon *ngIf="!isProduction" color="{{ (isConnected) ? 'default' : 'warn' }}" matTooltip="{{ getStatusText() }}">{{ getStatusIcon() }}</mat-icon>
+    <div class="username" *ngIf="authService.userStatus">{{authService.userStatus.username}}</div>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

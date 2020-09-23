@@ -28,9 +28,9 @@ module.exports = webpackMerge.strategy(mergeStrategy)(commonConfig({ env: ENV })
         extensions: [ '.prod.ts','.ts', '.js' ]
     },
     entry: {
-        polyfills: './src/main/webapp/app/polyfills',
-        global: './src/main/webapp/assets/styles/main.scss',
-        main: './src/main/webapp/app/main'
+        polyfills: './projects/wizard4cloud-ui/src/app/polyfills',
+        global: './projects/wizard4cloud-ui/assets/styles/main.scss',
+        main: './projects/wizard4cloud-ui/src/app/main'
     },
     output: {
         path: utils.root('target/classes/static/'),
@@ -147,14 +147,15 @@ module.exports = webpackMerge.strategy(mergeStrategy)(commonConfig({ env: ENV })
             filename: '../stats.html'
         }),
         new AngularCompilerPlugin({
-            mainPath: utils.root('src/main/webapp/app/main.ts'),
+            mainPath: utils.root('projects/wizard4cloud-ui/src/app/main.ts'),
+
             tsConfigPath: utils.root('tsconfig-aot.json'),
             sourceMap: true,
             // Locale configuration
-            i18nInFile: "./src/main/locale/messages.fr.xlf",
-            i18nInFormat: "xlf",
-            i18nInMissingTranslations: "ignore",
-            locale: "fr",
+            //i18nInFile: "./src/main/locale/messages.fr.xlf",
+            //i18nInFormat: "xlf",
+            //i18nInMissingTranslations: "ignore",
+            //locale: "fr",
         }),
         new webpack.LoaderOptionsPlugin({
             minimize: true,

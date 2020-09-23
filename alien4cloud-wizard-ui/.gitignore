@@ -48,5 +48,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# the cookie ignore 
-src/main/webapp/app/shared/shared-cookie/mycookie.service.ts
+# the cookie ignore
+projects/wizard4cloud-ui/src/app/shared/shared-cookie/mycookie.service.ts

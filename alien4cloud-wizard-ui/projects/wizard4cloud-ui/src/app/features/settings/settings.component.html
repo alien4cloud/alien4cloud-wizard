@@ -1,0 +1,14 @@
+<div class="settings-page" fxLayout="column" fxLayoutAlign="center center">
+<!--  (keydown.tab)="focusNext($event)" (keydown.shift.tab)="focusPrevious($event)" (focus)="onFocus($event)"-->
+  <form class="settings-form" [w4cManageFormFocus]="settingsForm">
+    <w4c-property-editor
+      *ngFor="let settingDefinition of settingDefinitions"
+      [propertyDefinition]="settingDefinition.setting"
+      [formGroup]="settingsForm"
+      [id]="lodash.capitalize(lodash.camelCase(settingDefinition.setting.id))"
+      label="{{ settingDefinition.setting.id + '.label' | translate }}"
+      [value]="settingDefinition.value"
+      (valueChange)="settingChanged(settingDefinition.setting.id, $event)">
+    </w4c-property-editor>
+  </form>
+</div>

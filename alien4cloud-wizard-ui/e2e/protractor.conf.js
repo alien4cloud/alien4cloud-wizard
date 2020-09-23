@@ -10,7 +10,7 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    './src/main/webapp/**/*.e2e-spec.ts'
+    './projects/wizard4cloud-ui/**/*.e2e-spec.ts'
   ],
   capabilities: {
     'browserName': 'chrome'

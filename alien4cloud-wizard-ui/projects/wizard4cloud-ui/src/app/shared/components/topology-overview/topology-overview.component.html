@@ -1,0 +1,92 @@
+<div *ngIf="overview; else loadingOverview" fxLayout="row" fxFlex="100%">
+  <div fxFlex="50%" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <span class="w4c-title title">ID: </span>
+        <span>{{ getId(overview) }}</span>
+      </div>
+      <button mat-button (click)="switchGraphView()" [matTooltip]="(displayGraph) ? ('shared.TopologyOverview.ShowDescription' | translate) : ('shared.TopologyOverview.ShowGraph' | translate)" color="primary">
+        <mat-icon *ngIf="!displayGraph">visibility</mat-icon>
+        <mat-icon *ngIf="displayGraph">format_align_justify</mat-icon>
+      </button>
+    </div>
+    <div *ngIf="!displayGraph" class="desciption w4c-borders mat-app-background">
+      <span>{{ overview.description }}</span>
+    </div>
+    <div *ngIf="displayGraph" class="desciption w4c-borders" fxFlex="100%">
+      <w4c-topology-graph-viewer [overview]="overview"></w4c-topology-graph-viewer>
+    </div>
+  </div>
+  <div fxFlex="50%" fxLayout="column">
+    <span class="w4c-title title">{{ 'Global.MetaProperties' | translate }}</span>
+    <div class="metaproperties w4c-borders mat-app-background">
+      <mat-chip-list>
+        <ng-container *ngFor="let namedMetaProperty of overview.namedMetaProperties;">
+          <mat-chip
+            *ngIf="namedMetaProperty.value"
+            [matTooltip]="namedMetaProperty.configuration.name + ((namedMetaProperty.configuration.description) ? ' (' + namedMetaProperty.configuration.description + ')' : '')" class="meta-chip">
+            {{namedMetaProperty.value}}
+          </mat-chip>
+        </ng-container>
+      </mat-chip-list>
+    </div>
+    <div class="modules w4c-borders">
+      <mat-tab-group>
+        <mat-tab *ngFor="let componentCategory of overview.componentCategories;" [label]="componentCategory" >
+          <div class="modules-table">
+            <table mat-table [dataSource]="overview.componentsPerCategory[componentCategory]" fxFlex class="w4c-full-width ">
+              <ng-container matColumnDef="nodeName">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.nodeName">
+                  {{ lodash.truncate(element.nodeName, 30)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="typeName">
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let element" >
+                  <div fxLayout="column">
+                    <div matTooltip="{{element.nodeType.description}}">
+                        {{element.nodeType.elementId|w4cToscaTypeShortName}} 
+                    </div>
+                      <div style="font-size: 10px; color:grey;" matTooltip="{{element.nodeType.archiveName}}:{{element.nodeType.archiveVersion}}">
+                          {{element.nodeType.archiveVersion}}
+                      </div>       
+                  </div> 
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="icon">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                  <img src="{{element.nodeType|toscaTypeImageSrc}}"
+                       style="max-height:24px; max-width:24px; height:auto; width:auto;"
+                       matTooltip="{{element.nodeType.elementId}}">
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="metaproperties">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                  <mat-chip-list>
+                    <ng-container *ngFor="let namedMetaProperty of element.namedMetaProperties;">
+                      <mat-chip
+                        *ngIf="namedMetaProperty.value"
+                        [matTooltip]="namedMetaProperty.configuration.name + ((namedMetaProperty.configuration.description) ? ': ' + namedMetaProperty.configuration.description : '')"
+                        class="meta-chip">
+                        {{namedMetaProperty.value}}
+                      </mat-chip>
+                    </ng-container>
+                  </mat-chip-list>
+                </td>
+              </ng-container>
+              <tr mat-row *matRowDef="let row; columns: modulesDisplayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+<ng-template #loadingOverview>
+  <div fxFlex="100%" fxLayout="row" fxLayoutAlign="center center">
+    <mat-spinner [diameter]="100"></mat-spinner>
+  </div>
+</ng-template>

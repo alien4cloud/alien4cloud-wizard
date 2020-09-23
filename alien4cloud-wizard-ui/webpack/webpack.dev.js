@@ -35,9 +35,9 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         historyApiFallback: true
     },
     entry: {
-        polyfills: './src/main/webapp/app/polyfills',
-        global: './src/main/webapp/assets/styles/main.scss',
-        main: './src/main/webapp/app/main'
+        polyfills: './projects/wizard4cloud-ui/src/app/polyfills',
+        global: './projects/wizard4cloud-ui/assets/styles/main.scss',
+        main: './projects/wizard4cloud-ui/src/app/main'
     },
     output: {
         path: utils.root('target/classes/static/'),
@@ -131,7 +131,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         }),
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)/,
-            path.resolve(__dirname, './src/main/webapp/')
+            path.resolve(__dirname, './projects/wizard4cloud-ui/')
         ),
         new writeFilePlugin(),
         new webpack.WatchIgnorePlugin([
