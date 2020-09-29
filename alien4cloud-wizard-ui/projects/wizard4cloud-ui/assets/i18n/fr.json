@@ -142,10 +142,6 @@
     "settings": {
       "label": "Paramètres",
       "description": "Réglages concernant l'application (aspect, options)."
-    },
-    "nexusInventoryExport": {
-      "label": "Export",
-      "description": "Exporter un/des cas d'usage(s), application(s) ou module(s)."
     }
   },
   "Setting": {
