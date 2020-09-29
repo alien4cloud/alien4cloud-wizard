@@ -12,6 +12,7 @@ export * from './lib/shared/w4c-material.module';
 export * from './lib/shared/components/confirmation-dialog/confirmation-dialog.component';
 export * from './lib/core/interceptors/authentication.interceptor';
 export * from './lib/core/services/generic.service';
+export * from './lib/core/services/init.service';
 export * from './lib/core/services/auth.service';
 export * from './lib/core/services/health.service';
 export * from './lib/core/services/redirection-provider-service';

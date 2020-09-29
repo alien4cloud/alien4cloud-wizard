@@ -3,3 +3,6 @@ target
 .tmp
 *.iml
 dist
+package-lock.json
+alien4cloud-wizard-ui/projects/wizard4cloud-commons/assets/images
+alien4cloud-wizard-ui/projects/wizard4cloud-commons/assets/styles

@@ -4,7 +4,6 @@ import {LoginRoutingModule} from "./login-routing.module";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
-import {HeroLoaderModule} from "@herodevs/hero-loader";
 import {W4cMaterialModule} from "../../shared/w4c-material.module";
 import {TranslateModule} from "@ngx-translate/core";
 
@@ -18,7 +17,6 @@ import {TranslateModule} from "@ngx-translate/core";
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    HeroLoaderModule,
     W4cMaterialModule,
     TranslateModule.forChild()
   ]

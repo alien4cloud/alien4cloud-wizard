@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Feature, User} from "@alien4cloud/wizard4cloud-commons";
-import {HealthService} from "@alien4cloud/wizard4cloud-commons";
-import {AuthService} from "@alien4cloud/wizard4cloud-commons";
+import {Feature, User, HealthService, AuthService} from "@alien4cloud/wizard4cloud-commons";
 
 @Component({
   selector: 'app-home',
@@ -78,11 +76,11 @@ export class HomeComponent implements OnInit {
         this.features.forEach(feature => feature.enabled = false);
         this.addons.forEach(feature => feature.enabled = false);
       }
-    })
+    });
 
     this.authService.getAddonFeatures().subscribe(features => {
       features.forEach(feature => this.addons.push(feature));
-    })
+    });
 
   }
 

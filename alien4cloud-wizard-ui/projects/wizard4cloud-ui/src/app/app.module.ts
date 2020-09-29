@@ -22,9 +22,14 @@ import {APP_BASE_HREF, HashLocationStrategy, LocationStrategy} from "@angular/co
 import {CookieService} from "ngx-cookie-service";
 import {W4cMaterialModule} from "@alien4cloud/wizard4cloud-commons";
 import {AuthInterceptor} from "@alien4cloud/wizard4cloud-commons";
+import {BOOTSTRAP_SETTINGS, BootstrapSettings} from "@alien4cloud/wizard4cloud-commons/lib/core/models/commons.model";
+import {MultiTranslateHttpLoader} from "ngx-translate-multi-http-loader";
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new MultiTranslateHttpLoader(http, [
+    {prefix: "./assets/i18n/", suffix: ".json"},
+    {prefix: "./assets/i18n/addons-", suffix: ".json"},
+  ]);
 }
 
 @NgModule({

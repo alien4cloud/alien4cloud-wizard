@@ -18,10 +18,10 @@
         "projects/wizard4cloud-ui/content/*"
       ],
       "@alien4cloud/wizard4cloud-commons": [
-        "projects/wizard4cloud-commons/src"
+        "dist/wizard4cloud-commons/"
       ],
       "@alien4cloud/wizard4cloud-commons/*": [
-        "projects/wizard4cloud-commons/src/*"
+        "dist/wizard4cloud-commons/*"
       ]
     }
   },

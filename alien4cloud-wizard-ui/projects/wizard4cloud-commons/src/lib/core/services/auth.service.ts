@@ -49,12 +49,12 @@ export class AuthService extends GenericService {
   }
 
   getLoginStatus(): Observable<UserStatus> {
-    let url = this.baseUrl + "/auth/status";
+    const url = this.baseUrl + "/auth/status";
     return this.handleResult<UserStatus>(this.http.get(url));
   }
 
   getAddonFeatures(): Observable<Feature[]> {
-    let url = this.baseUrl + "/wizard/addons";
+    const url = this.baseUrl + "/wizard/addons";
     return this.handleResult<Feature[]>(this.http.get(url));
   }
 
