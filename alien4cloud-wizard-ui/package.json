@@ -19,7 +19,7 @@
     "webpack:dev": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --inline --hot --port=9060 --watch-content-base --env.stats=minimal",
     "webpack:dev-verbose": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --inline --hot --port=9060 --watch-content-base --profile --progress --env.stats=normal",
     "webpack:prod:main": "npm run webpack -- --config webpack/webpack.prod.js --profile",
-    "webpack:prod": "npm run cleanup && npm run build-commons && run install-commons && npm run webpack:prod:main && npm run clean-www",
+    "webpack:prod": "npm run cleanup && npm run build-commons && npm run install-commons && npm run webpack:prod:main && npm run clean-www",
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
   },
