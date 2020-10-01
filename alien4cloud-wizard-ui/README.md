@@ -4,6 +4,19 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.3.
 
+You should run ```mvn install -DskipTests``` after the first checkout (in order to build the `wizard4cloud-commons` library).
+
+> :warning: Please don't commit the ```package.json``` with ``@alien4cloud/wizard4cloud-commons`` dependency (it will make the jenkins build fail). 
+> Simply ```mvn clean```before commit your changes.
+
+> :warning: We actually have an issue with the way we manage our angular workspace and the dependency
+> between [wizard4cloud-ui](projects/wizard4cloud-ui) and [wizard4cloud-commons](projects/wizard4cloud-commons).
+> If you have issues with this :
+> - remove ``@alien4cloud/wizard4cloud-commons`` dependency in [package.json](package.json).
+> - remove [./dist](./dist) folder.
+> - remove [./node_modules](./node_modules) folder.
+> - run ```mvn install -DskipTests``` 
+
 ### Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
