@@ -43,7 +43,7 @@
             <configuration>
               <filesets>
                 <fileset>
-                  <directory>node_modules/@alien4cloud</directory>
+                  <directory>dist</directory>
                 </fileset>
               </filesets>
             </configuration>
@@ -62,6 +62,29 @@
                 <configuration>
                   <nodeVersion>${node.version}</nodeVersion>
                   <npmVersion>${npm.version}</npmVersion>
+                </configuration>
+              </execution>
+
+              <execution>
+                <id>install node and npm (clean)</id>
+                <phase>pre-clean</phase>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+                <configuration>
+                  <nodeVersion>${node.version}</nodeVersion>
+                  <npmVersion>${npm.version}</npmVersion>
+                </configuration>
+              </execution>
+
+              <execution>
+                <id>npm uninstall wizard4cloud-commons</id>
+                <phase>pre-clean</phase>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>uninstall @alien4cloud/wizard4cloud-commons --save</arguments>
                 </configuration>
               </execution>
 
