@@ -57,7 +57,7 @@ export class WizardStepContainerComponent implements OnInit {
   }
 
   blur() {
-    this.isDisabled = true;     
+    this.isDisabled = true;
   }
 
   unblur(){

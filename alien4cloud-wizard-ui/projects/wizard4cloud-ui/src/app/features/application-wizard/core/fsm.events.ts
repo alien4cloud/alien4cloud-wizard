@@ -35,6 +35,8 @@ export type ApplicationWizardMachineEvents =
   DoSubmitDeployment|
   OnDeploymentSubmitSuccess |
   DoSubmitUndeployment|
+  DoAskForWorkflowInputs|
+  OnWorkflowLaunched|
   OnUndeploymentSubmitSuccess |
   OnUndeploymentSubmitError |
   OnDeploymentSubmitError |
@@ -101,6 +103,16 @@ export class OnDeploymentTopologyFetched {
 export class DoSelectLocation {
   readonly type = 'DoSelectLocation';
   constructor(public location: Location) {}
+}
+
+export class DoAskForWorkflowInputs {
+  readonly type = 'DoAskForWorkflowInputs';
+  constructor(public workflowId: string) {}
+}
+
+export class OnWorkflowLaunched {
+  readonly type = 'OnWorkflowLaunched';
+  constructor(public executionId: string) {}
 }
 
 export class OnSelectLocationSuccesss {

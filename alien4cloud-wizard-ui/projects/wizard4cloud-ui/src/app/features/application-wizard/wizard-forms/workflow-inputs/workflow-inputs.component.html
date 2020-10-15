@@ -1,0 +1,38 @@
+<div fxLayout="column" class="w4c-wizard-form">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <form class="inputs-form" [w4cManageFormFocus]="inputsForm">
+      <w4c-property-editor
+        *ngFor="let pfd of propertieFormDefitions;"
+        [propertyDefinition]="pfd.definition"
+        [formGroup]="inputsForm"
+        [id]="pfd.inputName"
+        [label]="pfd.inputName"
+        [value]="pfd.value"
+        (valueChange)="inputValueChanged(pfd, $event)">
+      </w4c-property-editor>
+    </form>
+  </div>
+</div>
+
+<ng-template #customButtons>
+  <div fxLayout="row">
+    <w4c-wizard-button
+      [fsmContext]="fsmContext"
+      (click)="reset($event)"
+      [label]="'Wizard.Forms.WorkflowInputsComponent.Reset' | translate"
+      matIconName="autorenew">
+    </w4c-wizard-button>
+  </div>
+</ng-template>
+
+<w4c-wizard-control [fsmContext]="fsmContext"
+                    [cancelFn]="clear.bind(this)"
+                    [cancelLabel]="'Wizard.Forms.WorkflowInputsComponent.Clear' | translate"
+                    [forwardFn]="doSubmitForm.bind(this)"
+                    [forwardEnabledFn]="formIsValid.bind(this)"
+                    [forwardAltLabel]="'Wizard.Forms.WorkflowInputsComponent.Launch' | translate"
+                    [buttonHookTemplate]="customButtons"
+>
+</w4c-wizard-control>
+
+

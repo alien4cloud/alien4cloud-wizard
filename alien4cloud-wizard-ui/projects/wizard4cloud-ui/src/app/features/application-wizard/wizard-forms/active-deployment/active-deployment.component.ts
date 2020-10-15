@@ -12,7 +12,7 @@ import {
   TopologyDTO,
   ProgessBarData, PaaSWorkflowStartedEvent
 } from "@app/core/models";
-import {DoCancelWizard, DoSubmitUndeployment} from '../../core/fsm.events';
+import {DoCancelWizard, DoAskForWorkflowInputs, DoSubmitUndeployment} from '../../core/fsm.events';
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {PaaSDeploymentStatusMonitorEvent} from "@app/core/models/monitor-event.model";
 import {MatDialog} from '@angular/material';
@@ -228,11 +228,16 @@ export class ActiveDeploymentComponent extends WizardFormComponent implements On
     if (!WizardButtonComponent.callFsmGuard(this.fsm, this.fsmContext, "canLaunchWorkflow")) {
       return;
     }
-    this.fsmContext.progessBarData = new ProgessBarData();
-    this.fsmContext.progessBarData.workflowInProgress = true;
-    this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, this.nextWorkflow).subscribe(executionId => {
-      console.log(`Execution ID for workflow ${this.nextWorkflow} is ${executionId}`);
-    });
+    if (this.fsmContext.deploymentTopology.workflows[this.nextWorkflow].inputs) {
+      console.log(`Workflow ${this.nextWorkflow} has inputs`);
+      this.fsm.send(new DoAskForWorkflowInputs(this.nextWorkflow));
+    } else {
+      this.fsmContext.progessBarData = new ProgessBarData();
+      this.fsmContext.progessBarData.workflowInProgress = true;
+      this.applicationDeploymentService.launchWorkflow(this.fsmContext.application.id, this.fsmContext.environment.id, this.nextWorkflow).subscribe(executionId => {
+        console.log(`Execution ID for workflow ${this.nextWorkflow} is ${executionId}`);
+      });
+    }
   }
 
   deleteApplication() {

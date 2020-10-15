@@ -25,6 +25,7 @@ export const context: ApplicationWizardMachineContext = {
   locations: undefined,
   deployment: undefined,
   deploymentStatus: undefined,
+  workflowId: undefined,
   progessBarData: undefined
 };
 
@@ -456,9 +457,28 @@ export const applicationWizardMachineConfig: MachineConfig<
           target: 'deploymentSubmitting',
           cond: 'canDeploy'
         },
+        DoAskForWorkflowInputs: {
+          target: 'workflowInputsForm',
+          actions: ['assignWorkflowId'],
+          cond: 'canLaunchWorkflow'
+        },
         DoCancelWizard: {
           target: 'deleteApplicationForm'
         }
+      }
+    },
+    workflowInputsForm: {
+      on: {
+        GoBack: [
+          {
+            target: 'activeDeploymentForm'
+          }
+        ],
+        OnWorkflowLaunched: [
+          {
+            target: 'activeDeploymentForm'
+          }
+        ]
       }
     },
     deleteApplicationForm: {

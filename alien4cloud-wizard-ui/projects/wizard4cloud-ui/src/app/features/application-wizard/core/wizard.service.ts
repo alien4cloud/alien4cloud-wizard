@@ -11,6 +11,7 @@ import {NodesMatchingComponent} from "@app/features/application-wizard/wizard-fo
 import {DeleteApplicationFormComponent} from "@app/features/application-wizard/wizard-forms/delete-application-form/delete-application-form.component";
 import {WizardFormStep} from "@app/features/application-wizard/core/wizard.model";
 import {DeploymentArtifactsComponent} from "@app/features/application-wizard/wizard-forms/deployment-artifacts/deployment-artifacts.component";
+import {WorkflowInputsComponent} from "@app/features/application-wizard/wizard-forms/workflow-inputs/workflow-inputs.component";
 /**
  * This is the configuration of our wizard. The step order is the same that this array order.
  */
@@ -26,6 +27,7 @@ export const wizardDefinition: WizardFormStep[] = [
   {id:"NodesMatchingComponent", component: NodesMatchingComponent, fsmStateName: "nodeMatchingForm"},
   {id:"DeploymentValidationComponent", component: DeploymentValidationComponent, fsmStateName: "deploymentForm"},
   {id:"ActiveDeploymentComponent", component: ActiveDeploymentComponent, fsmStateName: "activeDeploymentForm"},
+  {id:"WorkflowInputsComponent", component: WorkflowInputsComponent, fsmStateName: "workflowInputsForm"},
   {id:"DeleteApplicationFormComponent", component: DeleteApplicationFormComponent, fsmStateName: "deleteApplicationForm"}
 ];
 

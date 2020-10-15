@@ -286,6 +286,13 @@
         "Deploy": "Deploy",
         "Undeploy": "Undeploy"
       },
+      "WorkflowInputsComponent": {
+        "stepTitle": "Workflow inputs",
+        "stepDescription": "Define input values for workflow.",
+        "Reset": "Reset",
+        "Clear": "Clear",
+        "Launch": "Run"
+      },
       "ActiveDeploymentLogs": {
         "ClearLogs": "Clear logs",
         "Autoscrolling": "Autoscrolling indicator / activator",

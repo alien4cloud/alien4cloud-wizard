@@ -286,6 +286,13 @@
         "Deploy": "Activer",
         "Undeploy": "Désactiver"
       },
+      "WorkflowInputsComponent": {
+        "stepTitle": "Données d'entrée de workflow",
+        "stepDescription": "Définir les valeurs d'entrée de workflow.",
+        "Reset": "Réinitialiser",
+        "Clear": "Clear",
+        "Launch": "Lancer"
+      },
       "ActiveDeploymentLogs": {
         "ClearLogs": "Nettoyer",
         "Autoscrolling": "Autoscrolling",

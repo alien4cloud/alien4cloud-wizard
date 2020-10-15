@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Deployment, InstanceInformation, TopologyDTO} from '@app/core/models';
 import {Observable} from "rxjs";
-import {BOOTSTRAP_SETTINGS, BootstrapSettings} from "@alien4cloud/wizard4cloud-commons";
+import {AbstractPropertyValue, BOOTSTRAP_SETTINGS, BootstrapSettings} from "@alien4cloud/wizard4cloud-commons";
 import {GenericService} from "@alien4cloud/wizard4cloud-commons";
 
 @Injectable({
@@ -53,10 +53,24 @@ export class ApplicationDeploymentService extends GenericService {
     }));
   }
 
-  launchWorkflow(applicationId: string, environmentId: string, workflowName: string): Observable<String> {
+  getLastWorkflowInputs(applicationId: string, environmentId: string, workflowName: string): Observable<Map<string, AbstractPropertyValue>> {
+    let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId, "workflowName": workflowName};
+    let url = this.baseUrl + this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/workflows/@{workflowName}/last_inputs", params);
+    return this.handleResult<Map<string, AbstractPropertyValue>>(this.http.get(url, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=UTF-8',
+      })
+    }));
+  }
+
+  launchWorkflow(applicationId: string, environmentId: string, workflowName: string, inputs?: any): Observable<string> {
     let params = {"applicationId": applicationId, "applicationEnvironmentId": environmentId, "workflowName": workflowName};
     let url = this.baseUrl + this.getParametrizedUrl("/applications/@{applicationId}/environments/@{applicationEnvironmentId}/workflows/@{workflowName}", params);
-    return this.handleResult<String>(this.http.post(url, {}, {
+    let body = {};
+    if (inputs) {
+      body = { inputs: inputs };
+    }
+    return this.handleResult<string>(this.http.post(url, body, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=UTF-8',
       })

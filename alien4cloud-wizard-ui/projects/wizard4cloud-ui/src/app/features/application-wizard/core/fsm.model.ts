@@ -35,6 +35,7 @@ export interface ApplicationWizardMachineSchema {
     deploymentForm: {};
     deploymentSubmitting:{},
     activeDeploymentForm:{},
+    workflowInputsForm:{},
     undeploymentSubmitting:{},
     deleteApplicationForm:{},
     applicationDeleting:{},
@@ -92,6 +93,11 @@ export interface ApplicationWizardMachineContext {
    * The active deployment status if exist.
    */
   deploymentStatus: DeploymentStatus;
+
+  /**
+   * The workflowId when the workflow needs inputs.
+   */
+  workflowId: string;
 
   /**
    * The active deployment progress data if exist.

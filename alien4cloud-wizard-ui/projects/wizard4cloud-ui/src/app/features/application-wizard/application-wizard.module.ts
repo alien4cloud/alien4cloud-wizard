@@ -27,6 +27,7 @@ import { LinkyModule } from 'angular-linky';
 import { ActiveDeploymentLogsComponent } from './wizard-forms/active-deployment-logs/active-deployment-logs.component';
 import { WorkflowProgressBarComponent } from './wizard-forms/workflow-progress-bar/workflow-progress-bar.component';
 import {W4cCommonsModule} from "@alien4cloud/wizard4cloud-commons";
+import {WorkflowInputsComponent} from "@app/features/application-wizard/wizard-forms/workflow-inputs/workflow-inputs.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {W4cCommonsModule} from "@alien4cloud/wizard4cloud-commons";
     DeleteApplicationFormComponent,
     DeploymentArtifactsComponent,
     ActiveDeploymentLogsComponent,
-    WorkflowProgressBarComponent
+    WorkflowProgressBarComponent,
+    WorkflowInputsComponent
   ],
   imports: [
     SharedModule,
@@ -71,6 +73,7 @@ import {W4cCommonsModule} from "@alien4cloud/wizard4cloud-commons";
     NodesMatchingComponent,
     DeploymentValidationComponent,
     ActiveDeploymentComponent,
+    WorkflowInputsComponent,
     DeleteApplicationFormComponent,
     WizardSpinnerComponent,
     DeploymentArtifactsComponent

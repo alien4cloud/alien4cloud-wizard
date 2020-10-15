@@ -7,7 +7,7 @@ import {
   ApplicationWizardMachineSchema
 } from "@app/features/application-wizard/core/fsm.model";
 import {
-  ApplicationWizardMachineEvents,
+  ApplicationWizardMachineEvents, DoAskForWorkflowInputs,
   DoSelectEnvironment,
   DoSelectLocation,
   DoSelectTemplate,
@@ -314,6 +314,7 @@ export class AppplicationWizardMachineService {
         _.locations = undefined;
         _.deployment = undefined;
         _.deploymentStatus = undefined;
+        _.workflowId = undefined;
         _.progessBarData = undefined;
       },
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
@@ -333,6 +334,9 @@ export class AppplicationWizardMachineService {
       })),
       assignLocations: assign<ApplicationWizardMachineContext, OnLocationFetched>((_, event) => ({
         locations: event.locations
+      })),
+      assignWorkflowId: assign<ApplicationWizardMachineContext, DoAskForWorkflowInputs>((_, event) => ({
+        workflowId: event.workflowId
       })),
       clearError: assign<ApplicationWizardMachineContext, any>((_, event) => ({
         errorMessage: undefined

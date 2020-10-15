@@ -66,7 +66,7 @@ Then :
 4. declare your component in the ``entryComponents`` of the ``ApplicationWizardModule``.
 5. finally declare your form step in ``core/wizard.service.ts``
 
-Remeber that a form step component should only :
+Remember that a form step component should only :
 * Read values from the fsmContext
 * Send events to the state machine.
 
