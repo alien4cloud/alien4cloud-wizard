@@ -29,8 +29,20 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <w4c-topology-overview *ngIf="isOpenned" [overview]="overview"></w4c-topology-overview>
-      <mat-action-row>
-        <button mat-stroked-button color="primary" (click)="selectTemplate(topology)">{{ 'Wizard.Forms.TemplateSelectionComponent.Use' | translate }}</button>
+      <mat-action-row fxLayout="row" fxFlex="100%">
+        <div fxLayoutAlign="start center" fxFlex="50%" *ngIf="isOpenned && versions.length > 1">
+          <mat-form-field>
+            <mat-label>{{ 'Global.Version' | translate }}</mat-label>
+            <mat-select [(value)]="selected" (selectionChange)="onTopologyVersionSelection(selected)">
+              <mat-option *ngFor="let catalogVersion of versions" [value]="catalogVersion.id">
+                {{catalogVersion.version}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="end center" fxFlex="50%">
+          <button mat-stroked-button color="primary" (click)="selectTemplate()">{{ 'Wizard.Forms.TemplateSelectionComponent.Use' | translate }}</button>
+        </div>
       </mat-action-row>
 
     </mat-expansion-panel>

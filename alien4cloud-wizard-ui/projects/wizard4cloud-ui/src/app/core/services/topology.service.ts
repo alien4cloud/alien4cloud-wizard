@@ -3,7 +3,9 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TranslateService} from "@ngx-translate/core";
 import {BOOTSTRAP_SETTINGS, BootstrapSettings} from "@alien4cloud/wizard4cloud-commons";
 import {GenericResourceService} from "@app/core/services/generic-resource.service";
-import {Topology} from "@app/core/models";
+import {Topology, TopologyDTO} from "@app/core/models";
+import {Observable} from "rxjs";
+import {CatalogVersionResult} from "@app/core/models/catalog.model";
 
 
 export class AppCreationTopoPayload {
@@ -24,6 +26,12 @@ export class TopologyService extends GenericResourceService<Topology> {
     @Inject(BOOTSTRAP_SETTINGS) protected bootstrapSettings: BootstrapSettings
   ) {
     super(http, translate, bootstrapSettings, "/catalog/topologies")
+  }
+
+  getVersions(archiveName: string): Observable<CatalogVersionResult[]> {
+    let urlParams = {archiveName: archiveName};
+    const url = this.getUrl("/@{archiveName}/versions", urlParams);
+    return this.handleResult<CatalogVersionResult[]>(this.http.get(url));
   }
 
 }

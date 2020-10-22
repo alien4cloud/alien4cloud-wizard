@@ -7,6 +7,7 @@ import {WizardFormComponent} from "@app/features/application-wizard/core/wizard.
 import {ReplaySubject, Subscription} from "rxjs";
 import {FacetedSearchFacet, FilteredSearchRequest, Topology, TopologyOverview} from "@app/core/models";
 import {TopologyOverviewService, TopologyService} from "@app/core/services";
+import {CatalogVersionResult} from "@app/core/models/catalog.model";
 
 @Component({
   selector: 'w4c-template-selection',
@@ -29,6 +30,9 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
 
   public topologyTemplates: Topology[];
   overview: TopologyOverview;
+  versions: CatalogVersionResult[];
+  // the selected topology id
+  selected: string;
 
   constructor(
     protected fsm: AppplicationWizardMachineService,
@@ -60,15 +64,27 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
   openDetails(topologyId: string) {
     // TODO: query plugin endpoint to retrieve details
     console.log("Openning ", topologyId);
+    this.selected = topologyId;
+    this.loadTopology(topologyId);
+  }
+
+  selectTemplate() {
+    console.log(`Selected template: id=${this.overview.topologyDTO.topology.id}`);
+    this.fsm.send(new DoSelectTemplate(this.overview.topologyDTO.topology));
+  }
+
+  private loadTopology(topologyId: string) {
     this.overview = undefined;
+    this.versions = [];
     this.topologyOverviewService.getById(topologyId).subscribe(data => {
       this.overview = data;
+      this.topologyService.getVersions(data.topologyDTO.topology.archiveName).subscribe(data => {
+        this.versions = data;
+      });
     });
   }
 
-  selectTemplate(topology: Topology) {
-    console.log(`Selected template: id=${topology.id}`);
-    this.fsm.send(new DoSelectTemplate(topology));
+  onTopologyVersionSelection(selected: string) {
+    this.loadTopology(selected);
   }
-
 }
