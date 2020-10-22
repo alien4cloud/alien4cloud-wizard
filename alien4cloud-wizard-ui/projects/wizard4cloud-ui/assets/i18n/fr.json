@@ -332,8 +332,11 @@
     "Ok" : "Ok",
     "Cancel" : "Annuler",
     "SwitchEnvironment" :"Changer d'environnement",
-    "CurrentEnvironment" :"Environnement actuel"
-
+    "CurrentEnvironment" :"Environnement actuel",
+    "Clipboard": {
+      "Copy": "Copier dans le presse-papier",
+      "Copied": "'{{value}}' copié dans le presse-papier !"
+    }
   },
   "shared": {
     "Home": {

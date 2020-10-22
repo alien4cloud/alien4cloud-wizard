@@ -24,6 +24,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {PropertyEditorComponent} from "@app/shared/components/property-editor/property-editor.component";
 import {WizardRedirectionProviderService} from "@app/core/services/redirection-provider-service";
 import {REDIRECTION_PROVIDER, W4cCommonsModule, W4cMaterialModule} from "@alien4cloud/wizard4cloud-commons";
+import { ClipboardButtonComponent } from './components/clipboard-button/clipboard-button.component';
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -43,7 +44,8 @@ import {REDIRECTION_PROVIDER, W4cCommonsModule, W4cMaterialModule} from "@alien4
     FilterTopologyNodesAttributesPipe,
     SvgNodeTypeImageSourceDirective,
     ManageFormFocusDirective,
-    DeploymentStatusButtonLabel
+    DeploymentStatusButtonLabel,
+    ClipboardButtonComponent
   ],
   imports: [
     W4cMaterialModule,
@@ -67,6 +69,7 @@ import {REDIRECTION_PROVIDER, W4cCommonsModule, W4cMaterialModule} from "@alien4
     ReactiveFormsModule,
     TopologyOverviewComponent,
     TopologyGraphViewerComponent,
+    ClipboardButtonComponent,
     WorkflowGraphViewerComponent,
     FilteredSearchBarComponent,
     PropertyEditorComponent,

@@ -332,7 +332,11 @@
     "Ok" : "Ok",
     "Cancel" : "Cancel",
     "SwitchEnvironment" :"Switch environment",
-    "CurrentEnvironment" :"Current environment"
+    "CurrentEnvironment" :"Current environment",
+    "Clipboard": {
+      "Copy": "Copy to clipboard",
+      "Copied": "'{{value}}' copied to clipboard !"
+    }
   },
   "shared": {
     "Home": {

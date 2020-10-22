@@ -1,0 +1,6 @@
+<button mat-button mat-icon-button
+        (click)="copyToClipboard()"
+        #tooltip="matTooltip"
+        [matTooltip]="'Global.Clipboard.Copy' | translate">
+  <mat-icon inline="true">content_copy</mat-icon>
+</button>

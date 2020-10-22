@@ -1,7 +1,8 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
 import {ApplicationOverview, TopologyOverview} from "@app/core/models";
 import * as _ from 'lodash';
+import {MatTooltip} from "@angular/material/tooltip";
 
 @Component({
   selector: 'w4c-topology-overview',

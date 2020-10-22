@@ -16,7 +16,9 @@
               </tr>
               <tr *ngIf="wizardForm.fsmContext.application">
                 <td class="context-label" align="right">ID: </td>
-                <td class="context-data">{{ wizardForm.fsmContext.application.id }}</td>
+                <td class="context-data">{{ wizardForm.fsmContext.application.id }}
+                  <w4c-clipboard-button [value]="wizardForm.fsmContext.application.id"></w4c-clipboard-button>
+                </td>
               </tr>
               <tr *ngIf="wizardForm.fsmContext.deploymentTopologyDTO">
                 <td class="context-label" align="right">{{ 'Global.Version' | translate }}: </td>
