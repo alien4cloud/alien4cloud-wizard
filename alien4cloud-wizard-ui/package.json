@@ -25,7 +25,6 @@
   },
   "private": true,
   "dependencies": {
-    "@alien4cloud/wizard4cloud-commons": "file:dist/wizard4cloud-commons",
     "@angular/animations": "^8.1.0",
     "@angular/cdk": "^8.0.2",
     "@angular/common": "~8.1.0",
