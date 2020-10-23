@@ -94,7 +94,7 @@ export class LoginService extends GenericService {
   // TODO: manage env
     if (this.isProduction()) {
       // we call the logout url only in production environment
-      this.http.get(this.getUrlPrefix() + '/logout').subscribe(
+      this.http.get('../logout').subscribe(
         data => {
           console.log("Logout called with success", data);
           window.location.assign("../");
