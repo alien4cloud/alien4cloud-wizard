@@ -337,12 +337,6 @@
     "Clipboard": {
       "Copy": "Copier dans le presse-papier",
       "Copied": "'{{value}}' copié dans le presse-papier !"
-    },
-    "Dialog": {
-      "DeleteEnv": {
-        "Title": "Suppression d'environnement",
-        "Message": "Confirmez-vous que vous souhaitez supprimer l'environnement '{{environmentName}}' pour l'application '{{applicationName}}' ?"
-      }
     }
   },
   "shared": {
