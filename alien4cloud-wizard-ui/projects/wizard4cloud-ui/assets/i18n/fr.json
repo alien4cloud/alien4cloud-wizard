@@ -304,7 +304,7 @@
         "message": "Vous avez annulé cet assistant, ou atteint sa fin, mais votre application existe toujours.<p>Vous pouvez supprimer cette application ou quitter simplement l'assistant. Vous pourrez la trouver dans le tableau de bord et réouvrir l'assistant plus tard.</p>",
         "DeleteDialog" : {
           "Title": "Suppression de l'application",
-          "Message": "Confirmez-vous que vous souhaitez supprimer cette application ?"
+          "Message": "Confirmez-vous que vous souhaitez supprimer l'application '{{applicationName}}' ?"
         },
         "Leave": "Quitter sans supprimer",
         "Delete": "Supprimer l'application"
