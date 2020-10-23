@@ -43,4 +43,10 @@ export class ApplicationEnvironmentService extends GenericResourceService<Applic
     return this.handleResult<ApplicationEnvironmentDTO>(this.http.get(url));
   }
 
+  deleteApplicationEnvironment(applicationId: string, environmentId: string): Observable<Boolean> {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId};
+    let url = this.getUrl("/@{environmentId}", urlParams);
+    return this.handleResult<Boolean>(this.http.delete(url));
+  }
+
 }

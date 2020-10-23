@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import {
   Application,
   ApplicationOverview,
-  ApplicationEnvironmentDTO, FacetedSearchFacet, FilteredSearchRequest,
+  ApplicationEnvironmentDTO, FacetedSearchFacet, FilteredSearchRequest, ProgessBarData,
 } from "@app/core/models";
 import {Router} from "@angular/router";
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
@@ -12,7 +12,11 @@ import {ReplaySubject, Subscription} from "rxjs";
 //import {environment} from '../../../../environments/environment';
 import {ToscaTypeShortNamePipe} from "@app/shared";
 import {ApplicationEnvironmentService, ApplicationOverviewService, ApplicationService} from "@app/core/services";
-import {BOOTSTRAP_SETTINGS, BootstrapSettings} from "@alien4cloud/wizard4cloud-commons";
+import {BOOTSTRAP_SETTINGS, BootstrapSettings, ConfirmationDialogComponent} from "@alien4cloud/wizard4cloud-commons";
+import {DoSubmitUndeployment} from "@app/features/application-wizard/core/fsm.events";
+import {TranslateService} from "@ngx-translate/core";
+import {MatDialog} from "@angular/material/dialog";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-application-list',
@@ -28,6 +32,9 @@ export class ApplicationListComponent implements OnInit {
     private router: Router,
     private websocketService: WebsocketSubscriptionManager,
     private toscaTypeShortNamePipe: ToscaTypeShortNamePipe,
+    private translate: TranslateService,
+    private dialog: MatDialog,
+    private toastr: ToastrService,
     @Inject(BOOTSTRAP_SETTINGS) private bootstrapSettings: BootstrapSettings
   ) {
   }
@@ -58,7 +65,7 @@ export class ApplicationListComponent implements OnInit {
 
   private request: FilteredSearchRequest = new FilteredSearchRequest();
 
-  private selected : string ;
+  private selectedEnvironmentId: string ;
 
   ngOnInit() {
     this.loadApplications(0);
@@ -135,7 +142,7 @@ export class ApplicationListComponent implements OnInit {
       this.overview = data;
 
       //dislpay Default Environment in input of selection
-      this.selected = this.overview.applicationEnvironment.id;
+      this.selectedEnvironmentId = this.overview.applicationEnvironment.id;
     });
   }
 
@@ -154,9 +161,57 @@ export class ApplicationListComponent implements OnInit {
       //update overview
       this.overview = data;
       //Display Environment selected in input of selection :
-      this.selected = this.overview.applicationEnvironment.id;
+      this.selectedEnvironmentId = this.overview.applicationEnvironment.id;
     });
   }
 
 
+  deleteEnv() {
+    const title = this.translate.instant("Global.Dialog.DeleteEnv.Title");
+    const appEns: ApplicationEnvironmentDTO[] = this.applicationEnvironments[this.overview.application.id];
+    const appEnvIdx = appEns.findIndex(value => value.id == this.selectedEnvironmentId);
+    const msg = this.translate.instant("Global.Dialog.DeleteEnv.Message", {environmentName: appEns[appEnvIdx].name, applicationName: this.overview.application.name});
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '35%',
+      data: {
+        actionDescription: title,
+        message: msg
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.applicationEnvironmentService.deleteApplicationEnvironment(this.overview.application.id, this.selectedEnvironmentId).subscribe(value => {
+          if (value) {
+            const appEns: ApplicationEnvironmentDTO[] = this.applicationEnvironments[this.overview.application.id];
+            const filteredAppEns: ApplicationEnvironmentDTO[] = appEns.splice(appEnvIdx, 1);
+            this.selectedEnvironmentId = filteredAppEns[0].id;
+            this.applicationEnvironments[this.overview.application.id] = filteredAppEns;
+          }
+        }, error => {
+          this.toastr.error(title, error.message);
+        });
+      }
+    });
+  }
+
+  deleteApp() {
+    const title = this.translate.instant("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Title");
+    const msg = this.translate.instant("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Message", {applicationName: this.overview.application.name});
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '35%',
+      data: {
+        actionDescription: title,
+        message: msg
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.applicationService.delete(this.overview.application.id).subscribe(value => {
+          this.applications = this.applications.filter(value1 => value1.id != this.overview.application.id);
+        }, error => {
+          this.toastr.error(title, error.message);
+        });
+      }
+    });
+  }
 }

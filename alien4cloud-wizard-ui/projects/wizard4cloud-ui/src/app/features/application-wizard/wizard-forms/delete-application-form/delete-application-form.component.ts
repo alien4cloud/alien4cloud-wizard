@@ -23,28 +23,20 @@ export class DeleteApplicationFormComponent extends WizardFormComponent {
 
   openDialog(event: any): void {
     event.stopPropagation();
-    let title = "";
-    let msg = "";
-    this.translate.get("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Title").subscribe(
-      value => {
-        title = value;
-        this.translate.get("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Message").subscribe(value1 => {
-          msg = value1;
-          const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-            width: '35%',
-            data: {
-              actionDescription: title,
-              message: msg
-            }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if(result) {
-              this.fsm.send(new DoDeleteApplication());
-            }
-          });
-
-        })
-      });
+    const title = this.translate.instant("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Title");
+    const msg = this.translate.instant("Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Message", {applicationName: this.fsmContext.application.name});
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '35%',
+      data: {
+        actionDescription: title,
+        message: msg
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.fsm.send(new DoDeleteApplication());
+      }
+    });
   }
 
 }

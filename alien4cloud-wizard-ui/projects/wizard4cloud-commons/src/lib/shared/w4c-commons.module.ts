@@ -17,6 +17,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {AuthInterceptor} from "../core/interceptors/authentication.interceptor";
 import {BOOTSTRAP_SETTINGS, BootstrapSettings} from "../core/models/commons.model";
 import {InitService} from "../core/services/init.service";
+import { ToastrModule } from 'ngx-toastr';
 
 export function getBootstrapSettings(): BootstrapSettings {
   return { production: window['bootstrapSettings'].production, urlPrefix: window['bootstrapSettings'].urlPrefix };
@@ -52,7 +53,8 @@ export function initializeApp(initService: InitService) {
     ReactiveFormsModule,
     RouterModule,
     W4cMaterialModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    ToastrModule.forRoot()
   ],
   exports: [
     LHeaderComponent,

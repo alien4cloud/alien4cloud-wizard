@@ -332,6 +332,7 @@
     "Ok" : "Ok",
     "Cancel" : "Annuler",
     "SwitchEnvironment" :"Changer d'environnement",
+    "DeleteEnvironment" :"Supprimer l'environment",
     "CurrentEnvironment" :"Environnement actuel",
     "Clipboard": {
       "Copy": "Copier dans le presse-papier",

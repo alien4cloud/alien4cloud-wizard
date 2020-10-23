@@ -39,7 +39,7 @@
           <div fxLayoutAlign="start center" fxFlex="50%" *ngIf="isOpenned && applicationEnvironments[application.id].length > 1">
             <mat-form-field>
               <mat-label>{{ 'Global.SwitchEnvironment' | translate }}</mat-label>
-              <mat-select [(value)]="selected" (selectionChange)="onApplicationEnvironmentSelection(application.id,selected)">
+              <mat-select [(value)]="selectedEnvironmentId" (selectionChange)="onApplicationEnvironmentSelection(application.id, selectedEnvironmentId)">
                 <mat-option *ngFor="let environment of applicationEnvironments[application.id]" [value]="environment.id">
                   {{environment.name}}
                 </mat-option>
@@ -47,13 +47,21 @@
             </mat-form-field>
           </div>
           <div fxLayoutAlign="end center" fxFlex="50%">
-            <div fxLayout="row" fxFlex="100%">
+            <div fxLayout="row" fxLayoutAlign="end center" fxFlex="100%">
               <!-- TODO: translate status -->
-              <div fxLayoutAlign="end center" fxFlex="80%">
+              <div style="margin-right:20px">
                 <mat-icon *ngIf="overview" [ngClass]="'w4c-deployment-status-' + overview.deploymentStatus"
                   matTooltip="{{ 'DEPLOYMENT.STATUS.' + overview.deploymentStatus | translate }}">lens</mat-icon>
               </div>
-              <div fxLayoutAlign="end center" fxFlex="20%" style= "margin-right:20px">
+              <div *ngIf="overview && isOpenned && applicationEnvironments[application.id].length > 1 && overview.deploymentStatus == 'UNDEPLOYED'" style="margin-right:20px">
+                <button mat-stroked-button color="primary"
+                        (click)="deleteEnv()">{{ (overview) ? ( 'Global.DeleteEnvironment' | translate) : '' }}</button>
+              </div>
+              <div *ngIf="overview && isOpenned && applicationEnvironments[application.id].length == 1 && overview.deploymentStatus == 'UNDEPLOYED'" style="margin-right:20px">
+                <button mat-stroked-button color="primary"
+                        (click)="deleteApp()">{{ (overview) ? ( 'Wizard.Forms.DeleteApplicationFormComponent.DeleteDialog.Title' | translate) : '' }}</button>
+              </div>
+              <div style="margin-right:20px">
                 <button mat-stroked-button color="primary"
                   (click)="openWizard()">{{ (overview) ? ( ('DEPLOYMENT.Action.' + (overview.deploymentStatus | w4cDeploymentStatusButtonLabel)) | translate) : '' }}</button>
               </div>
