@@ -116,7 +116,7 @@
     "INPUT_ARTIFACT_INVALID": "Invalid input artifact",
     "LOCATION_POLICY": "Location policy",
     "LOCATION_UNAUTHORIZED": "Unauthorized location",
-    "LOCATION_DISABLED": "THe location is disabled",
+    "LOCATION_DISABLED": "The location is disabled",
     "NO_NODE_MATCHES": "No node matches",
     "NODE_NOT_SUBSTITUTED": "Node not substituted",
     "FORBIDDEN_OPERATION": "Forbidden operation",
