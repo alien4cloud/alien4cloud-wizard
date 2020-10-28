@@ -4,16 +4,14 @@ import * as _ from 'lodash';
 import {
   Application,
   ApplicationOverview,
-  ApplicationEnvironmentDTO, FacetedSearchFacet, FilteredSearchRequest, ProgessBarData,
+  ApplicationEnvironmentDTO, FacetedSearchFacet, FilteredSearchRequest
 } from "@app/core/models";
 import {Router} from "@angular/router";
 import {WebsocketSubscriptionManager} from "@app/core/services/websocket-subscription-manager.service";
 import {ReplaySubject, Subscription} from "rxjs";
-//import {environment} from '../../../../environments/environment';
 import {ToscaTypeShortNamePipe} from "@app/shared";
 import {ApplicationEnvironmentService, ApplicationOverviewService, ApplicationService} from "@app/core/services";
-import {BOOTSTRAP_SETTINGS, BootstrapSettings, ConfirmationDialogComponent} from "@alien4cloud/wizard4cloud-commons";
-import {DoSubmitUndeployment} from "@app/features/application-wizard/core/fsm.events";
+import {BOOTSTRAP_SETTINGS, BootstrapSettings, ConfirmationDialogComponent, PaginatorConfig} from "@alien4cloud/wizard4cloud-commons";
 import {TranslateService} from "@ngx-translate/core";
 import {MatDialog} from "@angular/material/dialog";
 import {ToastrService} from "ngx-toastr";
@@ -48,11 +46,7 @@ export class ApplicationListComponent implements OnInit {
   applicationEnvironments: Map<string, ApplicationEnvironmentDTO[]>;
 
   // Paginator config
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  // query = null;
-  pageIndex = 0;
+  paginatorConfig: PaginatorConfig = new PaginatorConfig();
 
   // indicates data loading
   private isLoadingSubject = new ReplaySubject<boolean>(1);
@@ -99,12 +93,12 @@ export class ApplicationListComponent implements OnInit {
     this.isLoadingSubject.next(true);
     let request = this.request;
     request.from = from;
-    request.size = this.pageSize;
+    request.size = this.paginatorConfig.pageSize;
     this.applicationService.search(request)
       .pipe(
       mergeMap(data => {
         this.applications = data.data;
-        this.length = data.totalResults;
+        this.paginatorConfig.length = data.totalResults;
         this.facetsSubject.next(data.facets);
         let applicationIds: string[] = this.applications.map(application => application.id);
         console.log("Applications IDs array length ", applicationIds.length);
@@ -119,12 +113,11 @@ export class ApplicationListComponent implements OnInit {
   }
 
   /**
-   * This is trigerred when something is changed about pagination options.
+   * This is triggered when something is changed about pagination options.
    */
   handlePage(e: any) {
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
-    this.loadApplications(this.pageSize * e.pageIndex);
+    this.paginatorConfig.handlePaginatorEvent(e);
+    this.loadApplications(this.paginatorConfig.getStart());
   }
 
   /**

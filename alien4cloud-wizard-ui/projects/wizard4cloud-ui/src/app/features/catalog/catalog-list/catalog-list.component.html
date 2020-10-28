@@ -19,9 +19,9 @@
       </mat-card-header>
 
       <mat-divider></mat-divider>
-      
+
       <mat-card-content fxLayout="column" fxLayoutAlign="space-between" class="w4c-full-width">
-       
+
         <div class="catalog-description" [style.height]="(catalog.metaProperties | json) != '{}' ? '100px' : '150px'">
           {{catalog.description}}
         </div>
@@ -41,4 +41,10 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <mat-paginator [length]="paginatorConfig.length"
+                 [pageSize]="paginatorConfig.pageSize"
+                 [pageIndex]="paginatorConfig.pageIndex"
+                 [pageSizeOptions]="paginatorConfig.pageSizeOptions"
+                 (page)="handlePaginator($event)">
+  </mat-paginator>
 </div>

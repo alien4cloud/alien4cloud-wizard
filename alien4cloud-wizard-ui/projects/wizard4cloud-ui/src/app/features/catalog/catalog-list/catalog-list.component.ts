@@ -7,7 +7,7 @@ import {CatalogService, ComponentSearchRequest, QueryComponentType} from '@app/c
 import {ReplaySubject} from "rxjs";
 import * as _ from 'lodash';
 import {MetaPropertiesService} from "@app/core/services";
-import {MetaPropConfiguration} from "@alien4cloud/wizard4cloud-commons";
+import {MetaPropConfiguration, PaginatorConfig} from "@alien4cloud/wizard4cloud-commons";
 
 @Component({
   selector: 'w4c-catalog-list',
@@ -31,6 +31,10 @@ export class CatalogListComponent implements OnInit {
   metaPropConfiguration: Map<string, MetaPropConfiguration> = new Map();
 
   catalogs: NodeType[];
+  catalogData: NodeType[];
+
+  // Paginator config
+  paginatorConfig: PaginatorConfig = new PaginatorConfig();
 
   constructor(
     private catalogService: CatalogService,
@@ -61,10 +65,25 @@ export class CatalogListComponent implements OnInit {
   private loadCatalog() {
     this.isLoadingSubject.next(true);
     this.catalogService.search(this.request).subscribe((data) => {
-      this.catalogs = data.data;
+      this.catalogData = data.data;
+      this.paginatorConfig.pageIndex = 0;
+      this.paginatorConfig.length = this.catalogData.length;
+      this.pageCatalog();
       this.facetsSubject.next(data.facets);
       this.isLoadingSubject.next(false);
     })
+  }
+
+  private pageCatalog() {
+    this.catalogs = this.catalogData.slice(this.paginatorConfig.getStart(), this.paginatorConfig.getEnd());
+  }
+
+  /**
+   * This is triggered when something is changed about pagination options.
+   */
+  handlePaginator(e: any) {
+    this.paginatorConfig.handlePaginatorEvent(e);
+    this.pageCatalog();
   }
 
 }
