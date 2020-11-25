@@ -18,6 +18,7 @@ import {AuthInterceptor} from "../core/interceptors/authentication.interceptor";
 import {BOOTSTRAP_SETTINGS, BootstrapSettings} from "../core/models/commons.model";
 import {InitService} from "../core/services/init.service";
 import { ToastrModule } from 'ngx-toastr';
+import {FileDndDirective} from "./directives/file-dnd.directive";
 
 export function getBootstrapSettings(): BootstrapSettings {
   return { production: window['bootstrapSettings'].production, urlPrefix: window['bootstrapSettings'].urlPrefix };
@@ -38,6 +39,7 @@ export function initializeApp(initService: InitService) {
   declarations: [
     LHeaderComponent,
     FooterComponent,
+    FileDndDirective,
 /*
     PropertyEditorComponent,
     ToscaTypeShortNamePipe,
@@ -60,6 +62,7 @@ export function initializeApp(initService: InitService) {
     LHeaderComponent,
     FooterComponent,
     ConfirmationDialogComponent,
+    FileDndDirective,
     CommonModule,
     FlexLayoutModule,
     FormsModule,

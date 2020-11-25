@@ -1,6 +1,6 @@
 {
   "name": "@alien4cloud/wizard4cloud-commons",
-  "version": "0.0.61",
+  "version": "0.0.65",
   "description": "Commons angular lib for simplified wizard UI for alien4cloud (Wizard4Cloud)",
   "peerDependencies": {
     "@angular/common": "^8.1.3",

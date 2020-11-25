@@ -35,4 +35,8 @@
     background-color: mat-color($background);
   }
 
+  .fileover {
+    background-color: mat-color($background, focused-button);
+  }
+
 }
