@@ -47,5 +47,13 @@
 
     </mat-expansion-panel>
   </mat-accordion>
+
+  <mat-paginator [length]="paginatorConfig.length"
+                 [pageSize]="paginatorConfig.pageSize"
+                 [pageIndex]="paginatorConfig.pageIndex"
+                 [pageSizeOptions]="paginatorConfig.pageSizeOptions"
+                 (page)="handlePage($event)">
+  </mat-paginator>
+
 </div>
 <w4c-wizard-control [fsmContext]="fsmContext" [displayBackward]="false"></w4c-wizard-control>

@@ -8,6 +8,7 @@ import {ReplaySubject, Subscription} from "rxjs";
 import {FacetedSearchFacet, FilteredSearchRequest, Topology, TopologyOverview} from "@app/core/models";
 import {TopologyOverviewService, TopologyService} from "@app/core/services";
 import {CatalogVersionResult} from "@app/core/models/catalog.model";
+import {PaginatorConfig} from "@alien4cloud/wizard4cloud-commons";
 
 @Component({
   selector: 'w4c-template-selection',
@@ -19,6 +20,9 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
   // make lodash usable from template
   lodash = _;
 
+  // Paginator config
+  paginatorConfig: PaginatorConfig = new PaginatorConfig();
+
   // indicates data loading
   private isLoadingSubject = new ReplaySubject<boolean>(1);
   isLoading$ = this.isLoadingSubject.asObservable();
@@ -29,6 +33,7 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
   private request: FilteredSearchRequest = new FilteredSearchRequest();
 
   public topologyTemplates: Topology[];
+  private topologyTemplatesBackendData: Topology[];
   overview: TopologyOverview;
   versions: CatalogVersionResult[];
   // the selected topology id
@@ -51,11 +56,19 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
 
   private loadTopologies() {
     this.isLoadingSubject.next(true);
+    this.request.size = 10000;
     this.topologyService.search(this.request).subscribe((data) => {
-      this.topologyTemplates = data.data;
+      this.paginatorConfig.pageIndex = 0;
+      this.paginatorConfig.length = data.totalResults;
+      this.topologyTemplatesBackendData = data.data;
+      this.selectDataFromPagination();
       this.facetsSubject.next(data.facets);
       this.isLoadingSubject.next(false);
     })
+  }
+
+  private selectDataFromPagination() {
+    this.topologyTemplates = this.topologyTemplatesBackendData.slice(this.paginatorConfig.getStart(), this.paginatorConfig.getEnd());
   }
 
   /**
@@ -87,4 +100,13 @@ export class TemplateSelectionComponent extends WizardFormComponent implements O
   onTopologyVersionSelection(selected: string) {
     this.loadTopology(selected);
   }
+
+  /**
+   * This is triggered when something is changed about pagination options.
+   */
+  handlePage(e: any) {
+    this.paginatorConfig.handlePaginatorEvent(e);
+    this.selectDataFromPagination();
+  }
+
 }
