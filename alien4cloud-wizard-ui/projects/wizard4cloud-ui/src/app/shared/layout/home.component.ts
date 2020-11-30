@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Feature, User, HealthService, AuthService} from "@alien4cloud/wizard4cloud-commons";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     healthService: HealthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     healthService.isConnected.subscribe(
       (connected) => {
@@ -84,8 +86,20 @@ export class HomeComponent implements OnInit {
 
   }
 
-  openAddon(contextPath: string) {
-    window.location.assign("../" + contextPath);
+  isFeatureAvailable(feature: Feature) {
+    return feature.allowed && feature.enabled && this.isConnected;
+  }
+
+  openFeature(feature: Feature) {
+    if (this.isFeatureAvailable(feature)) {
+      this.router.navigate([feature.activationLink]);
+    }
+  }
+
+  openAddon(feature: Feature) {
+    if (this.isFeatureAvailable(feature)) {
+      window.location.assign("../" + feature.activationLink);
+    }
   }
 
 }
