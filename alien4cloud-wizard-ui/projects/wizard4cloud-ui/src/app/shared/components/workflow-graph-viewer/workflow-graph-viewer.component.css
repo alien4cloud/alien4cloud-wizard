@@ -7,3 +7,19 @@
   font-family: Verdana,Geneva,sans-serif;
   font-size: smaller;
 }
+
+path.success {
+  stroke: black;
+}
+
+path.failure {
+  stroke: #E74C3C;
+}
+
+marker path.success {
+  fill: black;
+}
+
+marker path.failure {
+  fill: #E74C3C;
+}
