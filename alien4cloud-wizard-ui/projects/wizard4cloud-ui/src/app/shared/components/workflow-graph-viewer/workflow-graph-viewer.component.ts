@@ -81,13 +81,23 @@ export class WorkflowGraphViewerComponent implements OnInit {
 
     let g = new Graph({ directed: true, compound: false, multigraph: true });
     let wf = <Workflow>wfObj;
+
     for (const [key, step] of Object.entries(wf.steps)) {
       console.log(`Adding node ${key}`);
       g.setNode(key, key);
+    }
+
+    for (const [key, step] of Object.entries(wf.steps)) {
       if (step.precedingSteps && step.precedingSteps.length > 0) {
         _.forEach(step.precedingSteps, preceding => {
           console.log(`Adding edge from ${preceding} to ${key}`);
-          g.setEdge(preceding, key);
+          g.setEdge(preceding, key, [], 'success');
+        })
+      }
+      if (step.precedingFailSteps && step.precedingFailSteps.length > 0) {
+        _.forEach(step.precedingFailSteps, preceding => {
+          console.log(`Adding OnFailure edge from ${preceding} to ${key}`);
+          g.setEdge(preceding, key, [], 'failure');
         })
       }
     }
@@ -119,7 +129,7 @@ export class WorkflowGraphViewerComponent implements OnInit {
       this.graph.nodes.push(node);
     });
     _.forEach(g.edges(), e => {
-      this.graph.edges.push(new WfGraphEdge(e.v + "_" + e.w, e.v, e.w, []));
+      this.graph.edges.push(new WfGraphEdge(e.v + "_" + e.w, e.v, e.w, { 'name' : e.name }));
     });
     console.log("WF Graph ", JSON.stringify(this.graph));
   }

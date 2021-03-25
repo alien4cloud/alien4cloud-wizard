@@ -49,7 +49,7 @@ export class WfGraphEdge {
     public id: string,
     public source: string,
     public target: string,
-    public data: any[]
+    public data: any
   ) {}
 }
 
