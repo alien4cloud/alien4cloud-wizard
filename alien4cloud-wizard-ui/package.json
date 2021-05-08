@@ -91,7 +91,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "moment-locales-webpack-plugin": "1.0.7",
-    "ng-packagr": "^9.0.0",
+    "ng-packagr": "^10.1.1",
     "ngx-i18nsupport": "^0.17.1",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "protractor": "~5.4.0",
