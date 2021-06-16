@@ -1,0 +1,42 @@
+<div fxLayout="column">
+  <form class="inputs-form" fxFlexFill>
+    <div fxLayout="row" *ngFor="let pfd of propertieFormDefitions; let i = index">
+      <span class="mat-card-subtitle">{{ i }}</span>
+      <w4c-property-editor fxFlex="90%"
+        [propertyDefinition]="pfd.definition"
+        [id]="pfd.inputName"
+        [label]=""
+        [value]="pfd.value"
+        [propertyEditorContext]="propertyEditorContext"
+        [propertyNameFn]="getPropertyName.bind(this)"
+        (valueChange)="inputValueChanged(pfd.inputName, $event)">
+      </w4c-property-editor>
+      <div fxLayoutAlign="center center">
+        <button mat-stroked-button mat-button mat-icon-button
+                (click)="upEntry(pfd)"
+                [disabled]="i == 0"
+                matTooltip="{{ 'shared.PropertyEditor.MoveUp' | translate }}">
+          <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+        <button mat-stroked-button mat-button mat-icon-button
+                (click)="downEntry(pfd)"
+                [disabled]="i == propertieFormDefitions.length - 1"
+                matTooltip="{{ 'shared.PropertyEditor.MoveDown' | translate }}">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-stroked-button mat-button mat-icon-button
+                (click)="deleteEntry(pfd)"
+                matTooltip="{{ 'Global.Remove' | translate }}">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div fxLayoutAlign="end center">
+    <button mat-stroked-button mat-button mat-icon-button
+            (click)="addEntry()"
+            matTooltip="{{ 'shared.PropertyEditor.AddEntry' | translate }}">
+      <mat-icon>playlist_add</mat-icon>
+    </button>
+  </div>
+</div>

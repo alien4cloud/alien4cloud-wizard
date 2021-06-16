@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppplicationWizardMachineService} from "@app/features/application-wizard/core/fsm.service";
 import {
-  ConstraintError
+  ConstraintError, PropertyFormDefinition
 } from "@app/core/models";
 import {OnFormCompleted} from "@app/features/application-wizard/core/fsm.events";
 import {FormGroup} from "@angular/forms";
@@ -105,11 +105,4 @@ export class DeploymentInputsComponent extends WizardFormComponent implements On
   }
 }
 
-export class PropertyFormDefinition {
-  /** The input name. */
-  inputName: string;
-   /** The property definition. */
-  definition: PropertyDefinition;
-  /** The raw value. */
-  value: AbstractPropertyValue;
-}
+

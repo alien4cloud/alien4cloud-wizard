@@ -4,7 +4,7 @@ import {
   DeploymentStatus, DeploymentTopology,
   DeploymentTopologyDTO, Location,
   LocationMatch,
-  ProgessBarData, Topology
+  ProgessBarData, SuggestionRequestContext, Topology
 } from '@app/core/models';
 import {MetaPropConfiguration} from "@alien4cloud/wizard4cloud-commons";
 
@@ -103,5 +103,7 @@ export interface ApplicationWizardMachineContext {
    * The active deployment progress data if exist.
    */
   progessBarData: ProgessBarData;
+
+  propertyEditionContext: SuggestionRequestContext;
 }
 

@@ -4,7 +4,7 @@ import {
   NodeTemplate,
   PolicyTemplate,
   Version,
-  DeploymentArtifact, Workflow, NodeType
+  DeploymentArtifact, Workflow, NodeType, PolicyType
 } from '@app/core/models';
 import {PropertyDefinition} from "@alien4cloud/wizard4cloud-commons";
 
@@ -41,7 +41,7 @@ export interface AbstractTopologyDTO<T extends Topology> {
   // relationshipTypes: Map<string, RelationshipType>;
   // capabilityTypes: Map<string, CapabilityType>;
   // dataTypes: Map<string, DataType>;
-  // policyTypes: Map<string, PolicyType>;
+  policyTypes: Map<string, PolicyType>;
 }
 
 export interface TopologyDTO extends AbstractTopologyDTO<Topology>{

@@ -334,6 +334,7 @@
     "SwitchEnvironment" :"Switch environment",
     "DeleteEnvironment" :"Delete environment",
     "CurrentEnvironment" :"Current environment",
+    "Remove": "Remove",
     "Clipboard": {
       "Copy": "Copy to clipboard",
       "Copied": "'{{value}}' copied to clipboard !"
@@ -350,7 +351,11 @@
       "Welcome": "Welcome to Wizard4Cloud ! <p>From here you can access following features:</p>"
     },
     "PropertyEditor": {
-      "SetDefault" : "Reset to default value"
+      "SetDefault" : "Reset to default value",
+      "MoveUp" : "Move up",
+      "MoveDown" : "Move down",
+      "AddEntry" : "Add entry",
+      "NotAllowedValue" : "Not allowed value"
     },
     "TopologyOverview": {
       "ShowGraph": "Show graph",

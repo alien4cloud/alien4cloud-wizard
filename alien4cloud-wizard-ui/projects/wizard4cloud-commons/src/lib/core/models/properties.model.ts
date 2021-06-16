@@ -10,6 +10,7 @@ export class PropertyDefinition implements IValue {
   required: boolean;
   description: string;
   suggestionId: string;
+  suggestionPolicy: string;
   constraints: PropertyConstraint[];
   default: PropertyValue<any>;
   definition: boolean;

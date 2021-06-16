@@ -25,6 +25,12 @@ import {PropertyEditorComponent} from "@app/shared/components/property-editor/pr
 import {WizardRedirectionProviderService} from "@app/core/services/redirection-provider-service";
 import {REDIRECTION_PROVIDER, W4cCommonsModule, W4cMaterialModule} from "@alien4cloud/wizard4cloud-commons";
 import { ClipboardButtonComponent } from './components/clipboard-button/clipboard-button.component';
+import { TemplatePropertiesEditorComponent } from './components/template-properties-editor/template-properties-editor.component';
+import { ListPropertyEditorComponent } from './components/list-property-editor/list-property-editor.component';
+import { PropertyFormDialogComponent } from './components/property-form-dialog/property-form-dialog.component';
+import {ConfirmationDialogComponent} from "../../../../wizard4cloud-commons/src/lib/shared/components/confirmation-dialog/confirmation-dialog.component";
+import { DeploymentValidationComponent } from './components/deployment-validation-tasks/deployment-validation.component';
+import { EmphasePipe } from './pipes/emphase.pipe';
 
 /**
  * As it's name indicates, this is a shared module that embed all shared stuffs.
@@ -45,7 +51,12 @@ import { ClipboardButtonComponent } from './components/clipboard-button/clipboar
     SvgNodeTypeImageSourceDirective,
     ManageFormFocusDirective,
     DeploymentStatusButtonLabel,
-    ClipboardButtonComponent
+    ClipboardButtonComponent,
+    TemplatePropertiesEditorComponent,
+    ListPropertyEditorComponent,
+    PropertyFormDialogComponent,
+    DeploymentValidationComponent,
+    EmphasePipe
   ],
   imports: [
     W4cMaterialModule,
@@ -81,7 +92,9 @@ import { ClipboardButtonComponent } from './components/clipboard-button/clipboar
     SvgNodeTypeImageSourceDirective,
     ManageFormFocusDirective,
     DeploymentStatusButtonLabel,
-    TranslateModule
+    TranslateModule,
+    TemplatePropertiesEditorComponent,
+    DeploymentValidationComponent
   ],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA]
   providers: [
@@ -95,6 +108,9 @@ import { ClipboardButtonComponent } from './components/clipboard-button/clipboar
       provide: REDIRECTION_PROVIDER,
       useClass: WizardRedirectionProviderService
     }
+  ],
+  entryComponents: [
+    PropertyFormDialogComponent
   ],
 })
 export class SharedModule {

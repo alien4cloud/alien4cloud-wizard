@@ -41,7 +41,13 @@ import {
   TopologyService
 } from "@app/core/services";
 import * as lodash from 'lodash';
-import {DeploymentStatus, DeploymentTopology, ProgessBarData} from "@app/core/models";
+import {
+  DeploymentStatus,
+  DeploymentTopology,
+  ProgessBarData,
+  SuggestionContextType,
+  SuggestionRequestContext
+} from "@app/core/models";
 
 /**
  * Manages the machine initialization.
@@ -70,6 +76,7 @@ export class AppplicationWizardMachineService {
             mergeMap(applicationId =>
               this.applicationService.getById(applicationId).pipe(map(application => {
                 _.application = application;
+                _.propertyEditionContext.data.applicationId = application.id;
                 return new OnApplicationCreateSucess(applicationId);
               }))
             ),
@@ -98,6 +105,8 @@ export class AppplicationWizardMachineService {
         this.applicationService.getById(event.applicationId).pipe(
           mergeMap(application => {
             _.application = application;
+            _.propertyEditionContext.data.applicationId = event.applicationId;
+            _.propertyEditionContext.data.environmentId = event.environmentId;
             // get the application environment
             return this.applicationEnvironmentService
               .getApplicationEnvironmentDTO(event.applicationId, event.environmentId)
@@ -204,6 +213,7 @@ export class AppplicationWizardMachineService {
             // assign the deployment topology
             _.deploymentTopologyDTO = dto;
             _.deploymentTopology = dto.topology;
+            _.propertyEditionContext.data.topologyId = dto.topology.id;
             return new OnDeploymentTopologyFetched();
               // return new DoSearchLocation(dto);
           })
@@ -280,8 +290,8 @@ export class AppplicationWizardMachineService {
       hasMetapropertiesConfig: context => context.applicationMetapropertiesConfiguration != undefined,
       deploymentTopologyHasInputs: context => context.deploymentTopologyDTO && context.deploymentTopologyDTO.topology.inputs && lodash.size(context.deploymentTopologyDTO.topology.inputs) > 0,
       deploymentTopologyHasInputArtifacts: context => context.deploymentTopologyDTO && context.deploymentTopologyDTO.topology.inputArtifacts && lodash.size(context.deploymentTopologyDTO.topology.inputArtifacts) > 0,
-      shouldAskForMatching: _ => this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopologyDTO.availableSubstitutions.availableSubstitutions)
-        || this.deploymentTopologyService.hasMultipleAvailableSubstitutions(_.deploymentTopologyDTO.availableSubstitutions.availablePoliciesSubstitutions),
+      shouldAskForMatching: _ => this.deploymentTopologyService.hasAvailableSubstitutions(_.deploymentTopologyDTO.availableSubstitutions.availableSubstitutions)
+        || this.deploymentTopologyService.hasAvailableSubstitutions(_.deploymentTopologyDTO.availableSubstitutions.availablePoliciesSubstitutions),
       canUndeploy: context => context.deployment && (
         context.deploymentStatus === DeploymentStatus.DEPLOYED
         || context.deploymentStatus === DeploymentStatus.FAILURE
@@ -316,6 +326,7 @@ export class AppplicationWizardMachineService {
         _.deploymentStatus = undefined;
         _.workflowId = undefined;
         _.progessBarData = undefined;
+        _.propertyEditionContext = new SuggestionRequestContext();
       },
       assignTemplate: assign<ApplicationWizardMachineContext, DoSelectTemplate>((_, event) => ({
         topologyTemplate: event.topology
@@ -324,7 +335,11 @@ export class AppplicationWizardMachineService {
         environments: event.environments
       })),
       assignEnvironment: assign<ApplicationWizardMachineContext, DoSelectEnvironment>((_, event) => ({
-        environment: event.environment
+        environment: event.environment,
+        propertyEditionContext: {type: _.propertyEditionContext.type, data: {..._.propertyEditionContext.data, ...{environmentId: event.environment.id}}}
+      })),
+      setPropertyContextTypeToDeploymentInput: assign<ApplicationWizardMachineContext>((_) => ({
+        propertyEditionContext: {type: SuggestionContextType.DeploymentInput, data: _.propertyEditionContext.data}
       })),
       assignError: assign<ApplicationWizardMachineContext, OnError>((_, event) => ({
         errorMessage: event.message

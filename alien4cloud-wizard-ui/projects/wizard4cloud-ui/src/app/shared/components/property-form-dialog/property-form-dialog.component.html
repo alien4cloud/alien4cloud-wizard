@@ -1,0 +1,17 @@
+<div mat-dialog-title class="w4c-header w4c-dialog-title mat-body" fxLayout="row" fxLayoutAlign="center center" >
+  {{data.propertyName}}
+</div>
+<div mat-dialog-content fxLayout="column" fxLayoutAlign="center center" class="mat-body">
+  <div class="mat-card-subtitle">{{ data.propertyDefinition.description }}</div>
+  <w4c-list-property-editor fxFill *ngIf="data.propertyDefinition.type == 'list'"
+                            [propertyDefinition]="data.propertyDefinition.entrySchema"
+                            [initialValue]="data.propertyValue"
+                            [propertyName]="data.propertyName"
+                            [propertyEditorContext]="data.propertyEditorContext"
+                            (valueChange)="valueChanged($event)">
+  </w4c-list-property-editor>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="center center" class="w4c-dialog-action">
+  <button mat-stroked-button [mat-dialog-close]="false">{{ 'Global.Cancel' | translate }}</button>
+  <button mat-stroked-button [mat-dialog-close]="data.propertyValue" cdkFocusInitial>{{ 'Global.Ok' | translate }}</button>
+</div>

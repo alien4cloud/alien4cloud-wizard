@@ -47,6 +47,7 @@ export interface TopologyValidationResult {
 export interface AbstractTask {
   code: TaskCode;
   source: string;
+  message: string;
 }
 
 export interface RedirectionTask extends AbstractTask {

@@ -38,3 +38,35 @@ export interface Version {
   buildNumber: number;
   qualifier : string ;
 }
+
+export interface Suggestion {
+  value: string;
+  decription: string;
+}
+
+export class SuggestionContextData {
+  applicationId?: string;
+  topologyId?: string;
+  environmentId?: string;
+  nodeId?: string;
+  policyId?: string;
+  resourceId?: string;
+  capabilityId?: string;
+  relationshipId?: string;
+  propertyName?: string;
+}
+
+export enum SuggestionContextType {
+  TopologyEdit = "TopologyEdit",
+  DeploymentInput = "DeploymentInput",
+  OrchestratorResourceConfiguration = "OrchestratorResourceConfiguration",
+  OrchestratorPolicyConfiguration = "OrchestratorPolicyConfiguration",
+  DeploymentNodeMatching = "DeploymentNodeMatching",
+  DeploymentPolicyMatching = "DeploymentPolicyMatching",
+  ServiceConfiguration = "ServiceConfiguration"
+}
+
+export class SuggestionRequestContext {
+  type: SuggestionContextType;
+  data: SuggestionContextData = new SuggestionContextData();
+}

@@ -6,6 +6,7 @@ import {
 import {
   ApplicationWizardMachineEvents
 } from "@app/features/application-wizard/core/fsm.events";
+import {SuggestionRequestContext} from "@app/core/models";
 
 const { log } = actions;
 
@@ -26,7 +27,8 @@ export const context: ApplicationWizardMachineContext = {
   deployment: undefined,
   deploymentStatus: undefined,
   workflowId: undefined,
-  progessBarData: undefined
+  progessBarData: undefined,
+  propertyEditionContext: new SuggestionRequestContext()
 };
 
 /**
@@ -249,7 +251,8 @@ export const applicationWizardMachineConfig: MachineConfig<
         OnDeploymentTopologyFetched: [
           {
           target: 'deploymentInputsForm',
-            cond: 'deploymentTopologyHasInputs'
+            cond: 'deploymentTopologyHasInputs',
+            actions: ['setPropertyContextTypeToDeploymentInput']
           },
           {
             target: 'deploymentInputArtifactsForm',

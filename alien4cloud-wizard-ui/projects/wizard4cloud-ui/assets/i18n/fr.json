@@ -334,6 +334,7 @@
     "SwitchEnvironment" :"Changer d'environnement",
     "DeleteEnvironment" :"Supprimer l'environment",
     "CurrentEnvironment" :"Environnement actuel",
+    "Remove": "Retirer",
     "Clipboard": {
       "Copy": "Copier dans le presse-papier",
       "Copied": "'{{value}}' copié dans le presse-papier !"
@@ -350,7 +351,11 @@
       "Welcome": ""
     },
     "PropertyEditor": {
-      "SetDefault" : "Réinitialiser à la valeur par défaut"
+      "SetDefault" : "Réinitialiser à la valeur par défaut",
+      "MoveUp" : "Vers le haut",
+      "MoveDown" : "Vers le bas",
+      "AddEntry" : "Ajouter",
+      "NotAllowedValue" : "Valeur non autorisée"
     },
     "TopologyOverview": {
       "ShowGraph": "Voir le graphe",

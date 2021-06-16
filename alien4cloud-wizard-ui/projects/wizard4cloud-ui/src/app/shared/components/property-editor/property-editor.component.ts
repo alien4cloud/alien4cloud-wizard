@@ -13,10 +13,15 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import * as _ from "lodash";
 import {debounceTime} from "rxjs/operators";
 import {
-  AbstractPropertyValue,
+  AbstractPropertyValue, ConfirmationDialogComponent,
   PropertyDefinition
 } from "@alien4cloud/wizard4cloud-commons";
 import {PropertyConstraintUtils} from "@alien4cloud/wizard4cloud-commons";
+import {SuggestionService} from "@app/core/services";
+import {MatDialog} from "@angular/material/dialog";
+import {PropertyFormDialogComponent} from "@app/shared/components/property-form-dialog/property-form-dialog.component";
+import {Suggestion, SuggestionContextData, SuggestionRequestContext} from "@app/core/models";
+import {TranslateService} from "@ngx-translate/core";
 
 /**
  * A component to edit something that is related to a PropertyDefinition.
@@ -42,9 +47,14 @@ export class PropertyEditorComponent implements OnInit {
    */
   @Input() label: string;
 
+  @Input() propertyNameFn: Function;
+
+  @Input() propertyName: string;
+
   private rawValue: AbstractPropertyValue;
 
   @Input() public set value(value: AbstractPropertyValue) {
+    console.log("Set value called with: " + JSON.stringify(value));
     this.rawValue = value;
     if (this.initialiazed) {
       this.initValue();
@@ -55,6 +65,10 @@ export class PropertyEditorComponent implements OnInit {
    * If provided, add the created FormControl to this FormGroup.
    */
   @Input() formGroup: FormGroup;
+
+  @Input() propertyEditorContext: SuggestionRequestContext;
+
+  localPropertyEditorContext: SuggestionRequestContext;
 
   @Output() valueChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -67,9 +81,14 @@ export class PropertyEditorComponent implements OnInit {
    */
   private initialiazed = false;
 
+  public suggestions: Suggestion[];
+
   constructor(
     private elementRef: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private suggestionService: SuggestionService,
+    private translateService: TranslateService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -111,6 +130,11 @@ export class PropertyEditorComponent implements OnInit {
         this.initScalarUnits(['Hz', 'KHz', 'MHz', 'GHz']);
         break;
       }
+      case "list": {
+        this.pfd.formType = PropertyFormType.DIALOG;
+        this.pfd.inputType = "text";
+        break;
+      }
       default: {
         this.pfd.inputType = "text";
         // manage SELECT
@@ -123,6 +147,23 @@ export class PropertyEditorComponent implements OnInit {
           this.pfd.inputType = "password";
         }
       }
+
+      if (this.propertyNameFn) {
+        console.log("Calling propertyNameFn");
+        this.propertyName = this.propertyNameFn.call(this, [this.id]);
+      }
+      console.log("Property name is " + this.propertyName);
+      let context: SuggestionRequestContext = new SuggestionRequestContext();
+      let data: SuggestionContextData = new SuggestionContextData();
+      if (this.propertyEditorContext) {
+        context.type = this.propertyEditorContext.type;
+        data = _.merge(data, this.propertyEditorContext.data, {propertyName: this.propertyName});
+        context.data = data;
+      } else {
+        context.data = {propertyName: this.propertyName};
+      }
+      console.log("context is " + JSON.stringify(context));
+      this.localPropertyEditorContext = context;
     }
 
     // init the value before listening to changes.
@@ -130,13 +171,34 @@ export class PropertyEditorComponent implements OnInit {
 
     // subscribe to FormControl changes and emit the value to observer.
     this.pfd.formControl.valueChanges.pipe(debounceTime(300)).subscribe(value => {
-      console.log("Form value changes : ", JSON.stringify(value));
-      if (this.pfd.units) {
-        // in case of scalar units we need to suffixe with the unit
-        this.valueChange.emit(value + " " + this.pfd.unit);
-      } else {
-        this.valueChange.emit(value);
+      if (this.pfd.definition.suggestionId) {
+/*        console.log("propertyEditorContext: " + JSON.stringify(this.propertyEditorContext));
+        let context: SuggestionRequestContext = new SuggestionRequestContext();
+        _.merge(context, this.propertyEditorContext, {data: {propertyName: this.propertyName}});*/
+        console.log("Property name is " + this.propertyName);
+        console.log("propertyEditorContext is " + JSON.stringify(this.propertyEditorContext));
+        console.log("localPropertyEditorContext is " + JSON.stringify(this.localPropertyEditorContext));
+        this.suggestionService.getMatchedSuggestionsContextual(this.pfd.definition.suggestionId, value, this.localPropertyEditorContext).subscribe(suggestions => {
+          this.suggestions = suggestions;
+        });
       }
+
+      setTimeout(() => {
+        if (this.pfd.definition.suggestionId
+            && this.pfd.definition.suggestionPolicy == "Strict"
+            && _.isUndefined(_.find(this.suggestions, suggestion => suggestion.value == value))) {
+              this.pfd.formControl.setErrors({"constraint": this.translateService.instant("shared.PropertyEditor.NotAllowedValue")});
+        } else {
+          console.log("Form value changes : ", JSON.stringify(value));
+          if (this.pfd.units) {
+            // in case of scalar units we need to suffixe with the unit
+            this.valueChange.emit(value + " " + this.pfd.unit);
+          } else {
+            this.valueChange.emit(value);
+          }
+        }
+      }, 300);
+
     });
 
     this.initialiazed = true;
@@ -144,7 +206,7 @@ export class PropertyEditorComponent implements OnInit {
 
   private initValue() {
     console.log("initValue called, this.rawValue:", this.rawValue);
-    if (this.rawValue && this.rawValue.hasOwnProperty('value')) {
+    if (this.rawValue) {
       this.setDisplayableValue(this.rawValue['value']);
     } else {
       // TODO: manage functions
@@ -212,10 +274,29 @@ export class PropertyEditorComponent implements OnInit {
     // Cf. onFocusIn()
     this.renderer.removeClass(this.matFormField.nativeElement, 'mat-focused');
   }
+
+  openPropertyDialog(pfd: PropertyFormDefinition) {
+    const dialogRef = this.dialog.open(PropertyFormDialogComponent, {
+      width: '65%',
+      data: {
+        propertyName: pfd.label,
+        propertyValue: pfd.formControl.value,
+        propertyDefinition: pfd.definition,
+        propertyEditorContext: this.propertyEditorContext
+      }
+    });
+    dialogRef.afterClosed().subscribe(propertyValue => {
+      if (propertyValue) {
+        console.log(`Property value changed for ${pfd.label}: ${propertyValue}`);
+        pfd.formControl.setValue(propertyValue);
+      }
+    })
+  }
+
 }
 
 export enum PropertyFormType {
-  INPUT = "INPUT", CHEKBOX = "CHEKBOX", SELECT = "SELECT", SLIDER = 'SLIDER'
+  INPUT = "INPUT", CHEKBOX = "CHEKBOX", SELECT = "SELECT", SLIDER = 'SLIDER', DIALOG = "DIALOG"
 }
 
 /**

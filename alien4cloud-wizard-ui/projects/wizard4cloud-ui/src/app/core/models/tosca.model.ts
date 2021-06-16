@@ -11,13 +11,21 @@ export interface AbstractToscaType extends HasTags {
   description: string;
 }
 
-export interface AbstractInheritableToscaType extends AbstractToscaType {
-  isAbstract: boolean;
-  derivedFrom: string[];
+export interface HasPropertyDefinitions {
   properties: Map<string, PropertyDefinition>;
 }
 
+export interface AbstractInheritableToscaType extends AbstractToscaType, HasPropertyDefinitions {
+  isAbstract: boolean;
+  derivedFrom: string[];
+}
+
 export interface AbstractInstantiableToscaType extends AbstractInheritableToscaType {
+}
+
+export interface PolicyType extends AbstractInheritableToscaType {
+  //private Set<String> targets;
+  //private Map<String, PolicyTrigger> triggers;
 }
 
 export interface NodeType extends AbstractInstantiableToscaType {

@@ -6,6 +6,7 @@ export * from './application.model';
 export * from './commons.model';
 export * from './tosca.model';
 export * from './wrappers.model';
+export * from './properties-form.model';
 //export * from './properties.model';
 //export * from './properties-constraint.model';
 export * from './rest.model';

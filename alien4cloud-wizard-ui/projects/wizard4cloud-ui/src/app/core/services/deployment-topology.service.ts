@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {
   ConstraintError,
   ConstraintInformation,
-  DeploymentTopologyDTO
+  DeploymentTopologyDTO, UpdatePropertyRequest
 } from "@app/core/models";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
@@ -67,15 +67,15 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
   }
 
   /**
-   * Given a DeploymentTopologyDTO, return true if at least 1 node has several available substitution.
+   * Given a DeploymentTopologyDTO, return true if at least 1 node has available substitution.
    * @param deploymentTopology
    */
-  hasMultipleAvailableSubstitutions( substitutions : Map<string,Set<String>>): boolean {
+  hasAvailableSubstitutions( substitutions : Map<string,Set<String>>): boolean {
     let result: boolean = false;
     // FIXME: more efficient way to do this in a functionnal way ?
     _.forEach(substitutions, (proposals, nodeName) => {
       console.log("Exploring substitutions : ", nodeName);
-      if (_.isArray(proposals) && _.size(proposals) > 1) {
+      if (_.isArray(proposals) && _.size(proposals) > 0) {
         console.log("More than 1 substitution available", nodeName);
         result = true;
       }
@@ -109,6 +109,13 @@ export class DeploymentTopologyService extends GenericResourceService<Deployment
     // }
     return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, formData));
   }
+
+  updatePolicySubstitutionProperty(applicationId: string, environmentId: string, policyId: string, request: UpdatePropertyRequest) {
+    let urlParams = {applicationId: applicationId, environmentId: environmentId, policyId: policyId};
+    let url = this.getUrl("/policies/@{policyId}/substitution/properties", urlParams);
+    return this.handleResult<DeploymentTopologyDTO>(this.http.post(url, request, {}));
+  }
+
 }
 
 /**

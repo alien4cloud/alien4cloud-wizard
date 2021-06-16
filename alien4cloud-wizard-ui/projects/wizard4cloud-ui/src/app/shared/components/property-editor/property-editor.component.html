@@ -6,7 +6,17 @@
          [id]="id"
          [formControl]="pfd.formControl"
          [required]="pfd.definition.required"
+         [matAutocomplete]="filters"
          [type]="pfd.inputType" />
+  <mat-autocomplete #filters="matAutocomplete">
+      <mat-option *ngFor="let suggestion of suggestions"
+                  [value]="suggestion.value">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span [innerHTML]="suggestion.value | w4cEmphase:this.pfd.formControl.value"></span>
+          <span [innerHTML]="suggestion.description | w4cEmphase:this.pfd.formControl.value" class="mat-header-cell"></span>
+        </div>
+      </mat-option>
+  </mat-autocomplete>
   <!-- Text input in long text mode -->
   <textarea *ngIf="pfd.formType == 'INPUT' && isLongText"
             matInput
@@ -14,6 +24,7 @@
             [id]="id"
             [formControl]="pfd.formControl"
             [required]="pfd.definition.required"
+            [matAutocomplete]="filters"
             matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=20>
   </textarea>
   <!-- Slide Toggle for boolean property -->
@@ -61,6 +72,16 @@
       {{validValue}}
     </mat-option>
   </mat-select>
+  <input *ngIf="pfd.formType == 'DIALOG'"
+         matInput
+         placeholder="{{ pfd.label }}"
+         readonly="true"
+         (click)="openPropertyDialog(pfd)"
+         [id]="id"
+         [formControl]="pfd.formControl"
+         [required]="pfd.definition.required"
+         [type]="pfd.inputType"
+         class="clickable" />
   <!-- Display error coming from backend -->
   <mat-error *ngIf="pfd.formControl.hasError('constraint')">
     {{ pfd.formControl.getError('constraint') }}

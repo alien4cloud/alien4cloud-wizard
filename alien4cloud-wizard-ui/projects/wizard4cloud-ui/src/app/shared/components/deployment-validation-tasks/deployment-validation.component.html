@@ -1,0 +1,32 @@
+<div fxLayout="column">
+  <div fxLayout="row">
+    <mat-icon *ngIf="topologyValidationResult.taskList && topologyValidationResult.taskList.length > 0"
+              [matBadge]="topologyValidationResult.taskList.length"
+              (click)="onSwitch()"
+              class="clickable"
+              color="warn">cancel</mat-icon>
+    &nbsp;
+    <mat-icon *ngIf="topologyValidationResult.warningList && topologyValidationResult.warningList.length > 0"
+              [matBadge]="topologyValidationResult.warningList.length"
+              (click)="onSwitch()"
+              class="clickable"
+              color="accent">warning</mat-icon>
+    &nbsp;
+    <mat-icon *ngIf="topologyValidationResult.infoList && topologyValidationResult.infoList.length > 0"
+              (click)="onSwitch()"
+              class="clickable"
+              [matBadge]="topologyValidationResult.infoList.length"
+              color="primary">error_outline</mat-icon>
+  </div>
+  <div fxLayout="column" class="mat-app-background mat-card" *ngIf="displayDetails" [@fade]="'in'">
+    <div *ngFor="let task of topologyValidationResult.taskList" fxLayoutAlign="start center">
+      <mat-icon color="warn">cancel</mat-icon><span>{{ task.message }}</span>
+    </div>
+    <div *ngFor="let task of topologyValidationResult.warningList" fxLayoutAlign="start center">
+      <mat-icon color="accent">warning</mat-icon><span>{{ task.message }}</span>
+    </div>
+    <div *ngFor="let task of topologyValidationResult.infoList" fxLayoutAlign="start center">
+      <mat-icon color="primary">error_outline</mat-icon><span>{{ task.message }}</span>
+    </div>
+  </div>
+</div>
