@@ -1,4 +1,7 @@
-<w4c-deployment-validation-tasks [topologyValidationResult]="fsmContext.deploymentTopologyDTO.validation"></w4c-deployment-validation-tasks>
+<w4c-deployment-validation-tasks [topologyValidationResult]="fsmContext.deploymentTopologyDTO.validation"
+                                 [applicationId]="fsmContext.application.id"
+                                 [environmentId]="fsmContext.environment.id">
+</w4c-deployment-validation-tasks>
 <div fxLayout="column" class="w4c-wizard-form mat-body">
   <div fxLayout="column" fxLayoutAlign="center center">
     <div class="mat-error">{{fsmContext.errorMessage}}</div>
